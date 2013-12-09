@@ -1,0 +1,36 @@
+# Xcode
+*.xcworkspace
+xcuserdata
+build/
+
+# OSX
+.DS_Store
+
+# Visual Studio
+*.suo
+*.ncb
+*.sdf
+*.opensdf
+Debug/
+Release/
+ipch/
+
+# Java
+*.class
+WEB-INF/
+
+# Android
+bin/
+gen/
+build.xml
+local.properties
+project.properties
+proguard.cfg
+proguard-project.txt
+
+# NDK
+obj/
+*.so
+
+# Eclipse
+.metadata/
