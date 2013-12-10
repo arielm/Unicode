@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- source: http://www.madore.org/~david/misc/unitest -->
+<!-- remark: DroidSans does not seem to support "polytonic Greek" -->
+<span script="Grek" font="fonts/DroidSans.ttf">
+Πάτα \u2018παιχνίδι\u2019 όταν είσαι έτοιμος!
+Πόσες σουρικάτες είδες;
+</span>

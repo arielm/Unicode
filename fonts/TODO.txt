@@ -1,0 +1,3 @@
+The content of this folder should be updated with:
+
+https://github.com/android/platform_frameworks_base/tree/master/data/fonts
