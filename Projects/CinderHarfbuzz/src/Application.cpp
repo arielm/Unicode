@@ -8,20 +8,22 @@
 
 /*
  * REQUIREMENTS:
- * - THE REPOSITORY SHOULD BE PLACED UNDER $CINDER/samples
- * - DEPENDS ON THIS BLOCK (TO BE PLACED UNDER $CINDER/blocks): https://github.com/arielm/Freetype
+ * - THE Unicode REPOSITORY SHOULD BE PLACED UNDER $CINDER/samples
+ * - DEPENDS ON FREETYPE (TO BE PLACED UNDER $CINDER/blocks): https://github.com/arielm/Freetype
+ * - INCLUDES HARFBUZZ 0.9.24 (https://github.com/behdad/harfbuzz)
+ *   THE "HAVE_UCDN" AND "HAVE_OT" MACROS MUST BE DEFINED
  *
  * OSX AND iOS:
- * - COMPILED ON OSX 10.5.8 WITH XCode 5.0.2 AND CINDER "VANILLA" 0.8.5
+ * COMPILED ON OSX 10.5.8 WITH XCode 5.0.2 AND CINDER "VANILLA" 0.8.5
  *
  * ANDROID:
- * - COMPILED ON OSX 10.5.8 WITH:
- *   - NDK R8E: http://dl.google.com/android/ndk/android-ndk-r8e-darwin-x86_64.tar.bz2
- *   - JULY 29TH VERSION OF ANDROID SDK: http://dl.google.com/android/adt/adt-bundle-mac-x86_64-20130729.zip
- *   - SAFETYDANK'S FORK OF CINDER: https://github.com/safetydank/Cinder
+ * COMPILED ON OSX 10.5.8 WITH:
+ * - NDK R8E: http://dl.google.com/android/ndk/android-ndk-r8e-darwin-x86_64.tar.bz2
+ * - JULY 29TH VERSION OF ANDROID SDK: http://dl.google.com/android/adt/adt-bundle-mac-x86_64-20130729.zip
+ * - SAFETYDANK'S FORK OF CINDER: https://github.com/safetydank/Cinder
  *
  * WINDOWS:
- * - SHOULD BE TRIVIALLY ADAPTABLE TO VISUAL STUDIO 2012
+ * SHOULD BE TRIVIALLY ADAPTABLE TO VISUAL STUDIO 2012
  */
 
 #include "cinder/app/AppNative.h"
@@ -115,7 +117,7 @@ void Application::drawSpan(const YFont &font, const TextSpan &span, float y)
 
 void Application::drawLine(float y)
 {
-    gl::drawLine(Vec2f(0, y), Vec2f(toPixels(getWindowWidth()), y));
+    gl::drawLine(Vec2f(-9999, y), Vec2f(+9999, y));
 }
 
 CINDER_APP_NATIVE(Application, RendererGl(RendererGl::AA_NONE))

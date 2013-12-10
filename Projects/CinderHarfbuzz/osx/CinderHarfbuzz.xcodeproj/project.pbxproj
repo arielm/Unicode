@@ -155,6 +155,7 @@
 		A84CE6BB185676AF002EA4D3 /* DroidSansArabic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = DroidSansArabic.ttf; path = ../../../assets/fonts/DroidSansArabic.ttf; sourceTree = "<group>"; };
 		A84CE6BC185676AF002EA4D3 /* DroidSansHebrew-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "DroidSansHebrew-Regular.ttf"; path = "../../../assets/fonts/DroidSansHebrew-Regular.ttf"; sourceTree = "<group>"; };
 		A84CE6BD185676AF002EA4D3 /* DroidSans.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = DroidSans.ttf; path = ../../../assets/fonts/DroidSans.ttf; sourceTree = "<group>"; };
+		A84CE7A9185690C5002EA4D3 /* TextSpan.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TextSpan.h; path = ../src/TextSpan.h; sourceTree = "<group>"; };
 		A8C73CC118547DAA0081E110 /* FreetypeHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FreetypeHelper.h; path = ../src/FreetypeHelper.h; sourceTree = "<group>"; };
 		A8C73CC418548E340081E110 /* FreetypeHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FreetypeHelper.cpp; path = ../src/FreetypeHelper.cpp; sourceTree = "<group>"; };
 		A8C73CC91854A9260081E110 /* YFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = YFont.cpp; path = ../src/YFont.cpp; sourceTree = "<group>"; };
@@ -188,6 +189,7 @@
 				A8C73CC418548E340081E110 /* FreetypeHelper.cpp */,
 				A8C73CCA1854A9260081E110 /* YFont.h */,
 				A8C73CC91854A9260081E110 /* YFont.cpp */,
+				A84CE7A9185690C5002EA4D3 /* TextSpan.h */,
 			);
 			name = Source;
 			sourceTree = "<group>";

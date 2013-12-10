@@ -11,6 +11,7 @@
 #include "hb-ft.h"
 
 #include "cinder/app/App.h"
+#include "cinder/Utilities.h"
 
 using namespace std;
 using namespace ci;
@@ -97,13 +98,9 @@ ftHelper(ftHelper)
         error = FT_New_Face(ftHelper->getLib(), descriptor.source->getFilePath().c_str(), descriptor.faceIndex, &face);
     }
     
-    if (error == FT_Err_Unknown_File_Format)
+    if (error)
     {
-        throw runtime_error("FREETYPE ERROR: UNKNOWN FILE FORMAT");
-    }
-    else if (error)
-    {
-        throw runtime_error("FREETYPE ERROR: CAN'T OPEN FILE");
+        throw runtime_error("FREETYPE: ERROR " + toString(error));
     }
     
     if (force_ucs2_charmap(face))
