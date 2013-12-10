@@ -1,3 +1,5 @@
-The content of this folder should be updated with:
-
+1) The content of this folder should be updated with the latest fonts from:
 https://github.com/android/platform_frameworks_base/tree/master/data/fonts
+
+2) We should also consider using fonts from:
+http://www.google.com/fonts/earlyaccess

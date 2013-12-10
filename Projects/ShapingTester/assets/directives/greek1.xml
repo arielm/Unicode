@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- source: http://www.madore.org/~david/misc/unitest -->
 <!-- remark:
-Problem: DroidSans does not seem to support "polytonic Greek"
-Reference: https://code.google.com/p/android/issues/detail?id=26037#c150
+Problem: DroidSans does not support "polytonic Greek"
 Solution: https://github.com/android/platform_frameworks_base/blob/master/data/fonts/DroidSerif-Regular.ttf
+Reference: https://code.google.com/p/android/issues/detail?id=26037#c150
 -->
 <span script="Grek" font="fonts/DroidSerif-Regular.ttf">
     Ἰοὺ ἰού· τὰ πάντʼ ἂν ἐξήκοι σαφῆ.
