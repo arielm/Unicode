@@ -17,6 +17,9 @@
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		A809523B16F360660011FAA3 /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = A809523A16F360660011FAA3 /* icon.icns */; };
 		A809530916F361E20011FAA3 /* Application.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A809530316F361E20011FAA3 /* Application.cpp */; };
+		A845AEA918572F0D00D78B2A /* DroidSansArabic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A845AEA618572F0D00D78B2A /* DroidSansArabic.ttf */; };
+		A845AEAA18572F0D00D78B2A /* DroidSansHebrew-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A845AEA718572F0D00D78B2A /* DroidSansHebrew-Regular.ttf */; };
+		A845AEAB18572F0D00D78B2A /* DroidSans.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A845AEA818572F0D00D78B2A /* DroidSans.ttf */; };
 		A84CE6A018567656002EA4D3 /* hb-set.cc in Sources */ = {isa = PBXBuildFile; fileRef = A84CE64B18567656002EA4D3 /* hb-set.cc */; };
 		A84CE6A118567656002EA4D3 /* hb-shape-plan.cc in Sources */ = {isa = PBXBuildFile; fileRef = A84CE64E18567656002EA4D3 /* hb-shape-plan.cc */; };
 		A84CE6A218567656002EA4D3 /* hb-shape.cc in Sources */ = {isa = PBXBuildFile; fileRef = A84CE65018567656002EA4D3 /* hb-shape.cc */; };
@@ -44,9 +47,6 @@
 		A84CE6B818567656002EA4D3 /* hb-ot-shape-normalize.cc in Sources */ = {isa = PBXBuildFile; fileRef = A84CE69818567656002EA4D3 /* hb-ot-shape-normalize.cc */; };
 		A84CE6B918567656002EA4D3 /* hb-ot-shape.cc in Sources */ = {isa = PBXBuildFile; fileRef = A84CE69A18567656002EA4D3 /* hb-ot-shape.cc */; };
 		A84CE6BA18567656002EA4D3 /* hb-ot-tag.cc in Sources */ = {isa = PBXBuildFile; fileRef = A84CE69B18567656002EA4D3 /* hb-ot-tag.cc */; };
-		A84CE6BE185676AF002EA4D3 /* DroidSansArabic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A84CE6BB185676AF002EA4D3 /* DroidSansArabic.ttf */; };
-		A84CE6BF185676AF002EA4D3 /* DroidSansHebrew-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A84CE6BC185676AF002EA4D3 /* DroidSansHebrew-Regular.ttf */; };
-		A84CE6C0185676AF002EA4D3 /* DroidSans.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A84CE6BD185676AF002EA4D3 /* DroidSans.ttf */; };
 		A8C73CC518548E340081E110 /* FreetypeHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A8C73CC418548E340081E110 /* FreetypeHelper.cpp */; };
 		A8C73CCB1854A9260081E110 /* YFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A8C73CC91854A9260081E110 /* YFont.cpp */; };
 /* End PBXBuildFile section */
@@ -67,6 +67,9 @@
 		8D1107320486CEB800E47090 /* CinderHarfbuzz.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CinderHarfbuzz.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A809523A16F360660011FAA3 /* icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = icon.icns; sourceTree = "<group>"; };
 		A809530316F361E20011FAA3 /* Application.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Application.cpp; path = ../src/Application.cpp; sourceTree = "<group>"; };
+		A845AEA618572F0D00D78B2A /* DroidSansArabic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = DroidSansArabic.ttf; path = ../../../fonts/DroidSansArabic.ttf; sourceTree = "<group>"; };
+		A845AEA718572F0D00D78B2A /* DroidSansHebrew-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "DroidSansHebrew-Regular.ttf"; path = "../../../fonts/DroidSansHebrew-Regular.ttf"; sourceTree = "<group>"; };
+		A845AEA818572F0D00D78B2A /* DroidSans.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = DroidSans.ttf; path = ../../../fonts/DroidSans.ttf; sourceTree = "<group>"; };
 		A84CE64B18567656002EA4D3 /* hb-set.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "hb-set.cc"; path = "../../../hb/hb-set.cc"; sourceTree = "<group>"; };
 		A84CE64C18567656002EA4D3 /* hb-set.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "hb-set.h"; path = "../../../hb/hb-set.h"; sourceTree = "<group>"; };
 		A84CE64D18567656002EA4D3 /* hb-shape-plan-private.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = "hb-shape-plan-private.hh"; path = "../../../hb/hb-shape-plan-private.hh"; sourceTree = "<group>"; };
@@ -152,9 +155,6 @@
 		A84CE69D18567656002EA4D3 /* hb-ot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "hb-ot.h"; path = "../../../hb/hb-ot.h"; sourceTree = "<group>"; };
 		A84CE69E18567656002EA4D3 /* hb-private.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = "hb-private.hh"; path = "../../../hb/hb-private.hh"; sourceTree = "<group>"; };
 		A84CE69F18567656002EA4D3 /* hb-set-private.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = "hb-set-private.hh"; path = "../../../hb/hb-set-private.hh"; sourceTree = "<group>"; };
-		A84CE6BB185676AF002EA4D3 /* DroidSansArabic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = DroidSansArabic.ttf; path = ../../../assets/fonts/DroidSansArabic.ttf; sourceTree = "<group>"; };
-		A84CE6BC185676AF002EA4D3 /* DroidSansHebrew-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "DroidSansHebrew-Regular.ttf"; path = "../../../assets/fonts/DroidSansHebrew-Regular.ttf"; sourceTree = "<group>"; };
-		A84CE6BD185676AF002EA4D3 /* DroidSans.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = DroidSans.ttf; path = ../../../assets/fonts/DroidSans.ttf; sourceTree = "<group>"; };
 		A84CE7A9185690C5002EA4D3 /* TextSpan.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TextSpan.h; path = ../src/TextSpan.h; sourceTree = "<group>"; };
 		A8C73CC118547DAA0081E110 /* FreetypeHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FreetypeHelper.h; path = ../src/FreetypeHelper.h; sourceTree = "<group>"; };
 		A8C73CC418548E340081E110 /* FreetypeHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FreetypeHelper.cpp; path = ../src/FreetypeHelper.cpp; sourceTree = "<group>"; };
@@ -242,9 +242,9 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				A84CE6BB185676AF002EA4D3 /* DroidSansArabic.ttf */,
-				A84CE6BC185676AF002EA4D3 /* DroidSansHebrew-Regular.ttf */,
-				A84CE6BD185676AF002EA4D3 /* DroidSans.ttf */,
+				A845AEA618572F0D00D78B2A /* DroidSansArabic.ttf */,
+				A845AEA718572F0D00D78B2A /* DroidSansHebrew-Regular.ttf */,
+				A845AEA818572F0D00D78B2A /* DroidSans.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -420,10 +420,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A84CE6BF185676AF002EA4D3 /* DroidSansHebrew-Regular.ttf in Resources */,
-				A84CE6C0185676AF002EA4D3 /* DroidSans.ttf in Resources */,
+				A845AEAA18572F0D00D78B2A /* DroidSansHebrew-Regular.ttf in Resources */,
+				A845AEAB18572F0D00D78B2A /* DroidSans.ttf in Resources */,
 				A809523B16F360660011FAA3 /* icon.icns in Resources */,
-				A84CE6BE185676AF002EA4D3 /* DroidSansArabic.ttf in Resources */,
+				A845AEA918572F0D00D78B2A /* DroidSansArabic.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
