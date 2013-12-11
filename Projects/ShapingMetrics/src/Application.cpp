@@ -20,8 +20,6 @@ using namespace ci;
 using namespace app;
 
 const float FONT_SIZE = 48;
-const float Y0 = 80;
-const float LINE_H = 96;
 
 class Application : public AppNative
 {
@@ -29,7 +27,7 @@ class Application : public AppNative
     
     shared_ptr<Directive> currentDirective;
     shared_ptr<YFont> currentFont;
-    vector<ShapeLayout> lineLayouts;
+    ShapeLayout layout;
    
 public:
     void prepareSettings(Settings *settings);
@@ -45,7 +43,7 @@ public:
 
 void Application::prepareSettings(Settings *settings)
 {
-    settings->setWindowSize(1280, 720);
+    settings->setWindowSize(1024, 512);
 }
 
 void Application::setup()
@@ -71,13 +69,7 @@ void Application::draw()
     
     // ---
     
-    float y = Y0;
-    
-    for (auto layout : lineLayouts)
-    {
-        drawShapeLayout(*currentFont, layout, y);
-        y += LINE_H;
-    }
+    drawShapeLayout(*currentFont, layout, 256);
 }
 
 void Application::drawShapeLayout(YFont &font, const ShapeLayout &layout, float y)
@@ -134,12 +126,7 @@ void Application::applyDirective(shared_ptr<Directive> directive)
     currentDirective = directive;
     currentFont = make_shared<YFont>(ftHelper, directive->fontPath, FONT_SIZE);
     
-    lineLayouts.clear();
-
-    for (auto line : directive->lines)
-    {
-        lineLayouts.push_back(currentFont->createLayout(TextSpan(line, directive->script, directive->direction)));
-    }
+    layout = currentFont->createLayout(directive->span);
     
     getWindow()->setTitle(currentFont->getName());
 }

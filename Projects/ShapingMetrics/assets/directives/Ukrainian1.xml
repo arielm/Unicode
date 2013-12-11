@@ -3,8 +3,4 @@
 <!-- remark: DroidSansFallback is missing some Ukrainian letters like 'ie' -->
 <span script="Cyrl" font="fonts/DroidSans.ttf">
     Що таке Юнікод?
-    Юнікод надає унікальний код для кожного символу,
-    якою б не була платформа,
-    якою б не була програма,
-    якою б не була мова.
 </span>

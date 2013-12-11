@@ -18,6 +18,9 @@ struct TextSpan
     hb_script_t script;
     hb_direction_t direction;
     
+    TextSpan()
+    {}
+    
     TextSpan(const std::string &text, hb_script_t script = HB_SCRIPT_LATIN, hb_direction_t direction = HB_DIRECTION_LTR)
     :
     text(text),

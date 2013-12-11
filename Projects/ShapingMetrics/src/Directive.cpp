@@ -24,36 +24,30 @@ Directive::Directive(DataSourceRef source)
     fontPath = getFontPath(rootElement.getAttributeValue<string>("font", DEFAULT_FONT_PATH));
 
     auto scriptTag = rootElement.getAttributeValue<string>("script", DEFAULT_SCRIPT_TAG);
-    script = hb_script_from_string(scriptTag.c_str(), -1);
-    direction = hb_script_get_horizontal_direction(script);
+    auto script = hb_script_from_string(scriptTag.c_str(), -1);
+    auto direction = hb_script_get_horizontal_direction(script);
     
-    initText(rootElement.getValue());
+    span = TextSpan(getText(rootElement.getValue()), script, direction);
 }
 
 Directive::Directive(const string &text, const fs::path &fontPath , hb_script_t script, hb_direction_t direction)
 :
-fontPath(fontPath),
-script(script),
-direction(direction)
+fontPath(fontPath)
 {
-    initText(text);
+    span = TextSpan(getText(text), script, direction);
 }
 
 Directive::Directive(const std::exception &e)
 :
-fontPath(DEFAULT_FONT_PATH),
-script(DEFAULT_SCRIPT),
-direction(DEFAULT_DIRECTION)
+fontPath(DEFAULT_FONT_PATH)
 {
-    initText("ERROR:\n" + string(e.what()));
+    span = TextSpan("ERROR:\n" + string(e.what()));
 }
 
 Directive::Directive(const fs::path &fontPath, const Directive &baseDirective)
 :
 fontPath(fontPath),
-script(baseDirective.script),
-direction(baseDirective.direction),
-lines(baseDirective.lines)
+span(baseDirective.span)
 {}
 
 fs::path Directive::getFontPath(const fs::path virtualPath)
@@ -74,7 +68,7 @@ fs::path Directive::getFontPath(const fs::path virtualPath)
     }
 }
 
-void Directive::initText(const string &text)
+string Directive::getText(const string &text)
 {
     auto rawLines = split(text, '\n');
     
@@ -84,7 +78,9 @@ void Directive::initText(const string &text)
         
         if (!trimmed.empty())
         {
-            lines.push_back(trimmed);
+            return trimmed;
         }
     }
+    
+    return "";
 }
