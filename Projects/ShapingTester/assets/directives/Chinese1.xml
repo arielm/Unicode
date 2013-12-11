@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- source: http://www.madore.org/~david/misc/unitest -->
 <!-- remark: not sure if this is the correct script -->
-<lines script="Hani" font="fonts/DroidSansFallback.ttf">
+<text script="Hani" font="fonts/DroidSansFallback.ttf">
     子曰：「學而時習之，不亦說乎？有朋自遠方來，不亦樂乎？
     人不知而不慍，不亦君子乎？」
     
     有子曰：「其為人也孝弟，而好犯上者，鮮矣；
     不好犯上，而好作亂者，未之有也。君子務本，本立而道生。
     孝弟也者，其為仁之本與！」
-</lines>
+</text>

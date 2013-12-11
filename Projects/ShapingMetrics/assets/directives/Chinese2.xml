@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- source: http://www.unicode.org/standard/translations/s-chinese.html -->
 <!-- remark: not sure if this is the correct script -->
-<span script="Hani" font="fonts/DroidSansFallback.ttf">
+<text script="Hani" font="fonts/DroidSansFallback.ttf">
     Unicode给每个字符提供了一个唯一的数字，
-</span>
+</text>

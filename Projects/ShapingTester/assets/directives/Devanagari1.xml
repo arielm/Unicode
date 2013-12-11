@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- source: http://www.madore.org/~david/misc/unitest -->
-<lines script="Deva" font="fonts/DroidSansDevanagari-Regular.ttf">
+<text script="Deva" font="fonts/DroidSansDevanagari-Regular.ttf">
     पशुपतिरपि तान्यहानि कृच्छ्राद्
     अगमयदद्रिसुतासमागमोत्कः ।
     कमपरमवशं न विप्रकुर्युर्
     विभुमपि तं यदमी स्पृशन्ति भावाः ॥
-</lines>
+</text>

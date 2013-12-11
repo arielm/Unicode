@@ -22,12 +22,11 @@ class Directive
 {
 public:
     std::vector<std::string> lines;
-
-    ci::fs::path fontPath;
     hb_script_t script;
     hb_direction_t direction;
+    ci::fs::path fontPath;
     
-    Directive(const std::string &text, const ci::fs::path &virtualFontPath = DEFAULT_FONT_PATH, hb_script_t script = DEFAULT_SCRIPT, hb_direction_t direction = DEFAULT_DIRECTION);
+    Directive(const std::string &text, hb_script_t script = DEFAULT_SCRIPT, hb_direction_t direction = DEFAULT_DIRECTION, const ci::fs::path &virtualFontPath = DEFAULT_FONT_PATH);
     Directive(ci::DataSourceRef source);
     Directive(const std::exception &e);
     Directive(const ci::fs::path &fontPath, const Directive &baseDirective);

@@ -19,7 +19,7 @@ using namespace app;
 Directive::Directive(DataSourceRef source)
 {
     XmlTree doc(source);
-    auto rootElement = doc.getChild("lines");
+    auto rootElement = doc.getChild("text");
     
     fontPath = getFontPath(rootElement.getAttributeValue<string>("font", DEFAULT_FONT_PATH));
 
@@ -30,7 +30,7 @@ Directive::Directive(DataSourceRef source)
     initText(rootElement.getValue());
 }
 
-Directive::Directive(const string &text, const fs::path &virtualFontPath , hb_script_t script, hb_direction_t direction)
+Directive::Directive(const string &text, hb_script_t script, hb_direction_t direction, const fs::path &virtualFontPath)
 :
 script(script),
 direction(direction)
@@ -41,19 +41,19 @@ direction(direction)
 
 Directive::Directive(const std::exception &e)
 :
-fontPath(DEFAULT_FONT_PATH),
 script(DEFAULT_SCRIPT),
-direction(DEFAULT_DIRECTION)
+direction(DEFAULT_DIRECTION),
+fontPath(DEFAULT_FONT_PATH)
 {
     initText("ERROR:\n" + string(e.what()));
 }
 
 Directive::Directive(const fs::path &fontPath, const Directive &baseDirective)
 :
-fontPath(fontPath),
 script(baseDirective.script),
 direction(baseDirective.direction),
-lines(baseDirective.lines)
+lines(baseDirective.lines),
+fontPath(fontPath)
 {}
 
 fs::path Directive::getFontPath(const fs::path virtualFontPath)
