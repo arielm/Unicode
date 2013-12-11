@@ -19,7 +19,7 @@ using namespace app;
 Directive::Directive(DataSourceRef source)
 {
     XmlTree doc(source);
-    auto rootElement = doc.getChild("span");
+    auto rootElement = doc.getChild("lines");
     
     fontPath = getFontPath(rootElement.getAttributeValue<string>("font", DEFAULT_FONT_PATH));
 

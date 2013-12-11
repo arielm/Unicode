@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- source: http://www.unicode.org/standard/translations/thai.html -->
 <!-- remark: punctuation is missing -->
-<span script="Thai" font="fonts/DroidSansThai.ttf">
+<lines script="Thai" font="fonts/DroidSansThai.ttf">
     Unicode คืออะไร?
     Unicode กำหนดหมายเลขเฉพาะสำหรับทุกอักขระ
     โดยไม่สนใจว่าเป็นแพล็ตฟอร์มใด
     ไม่ขึ้นกับว่าจะเป็นโปรแกรมใด
     และไม่ว่าจะเป็นภาษาใด
-</span>
+</lines>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- source: http://www.madore.org/~david/misc/unitest -->
-<span script="Arab" font="/Library/Fonts/AdobeArabic-Regular.otf">
+<lines script="Arab" font="/Library/Fonts/AdobeArabic-Regular.otf">
     بِسْمِ ٱللّٰهِ ٱلرَّحْمـَبنِ ٱلرَّحِيمِ
     ٱلْحَمْدُ لِلّٰهِ رَبِّ ٱلْعَالَمِينَ
     ٱلرَّحْمـَبنِ ٱلرَّحِيمِ
@@ -8,4 +8,4 @@
     إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ
     ٱهْدِنَــــا ٱلصِّرَاطَ ٱلمُسْتَقِيمَ
     صِرَاطَ ٱلَّذِينَ أَنعَمْتَ عَلَيهِمْ غَيرِ ٱلمَغضُوبِ عَلَيهِمْ وَلاَ ٱلضَّالِّينَ
-</span>
+</lines>

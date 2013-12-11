@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- source: http://www.unicode.org/standard/translations/turkish.html -->
-<span script="Latn" font="fonts/DroidSans.ttf">
+<lines script="Latn" font="fonts/DroidSans.ttf">
     Evrensel Kod Nedir?
     Evrensel Kod her yazı karakteri için bir ve yalnız bir sayı şart koşar,
     hangi altyapı,
     hangi yazılım,
     hangi dil olursa olsun.
-</span>
+</lines>

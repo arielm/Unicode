@@ -166,20 +166,20 @@ void YFont::drawLayout(const ShapeLayout &layout, const Vec2f &origin)
     glPushMatrix();
     gl::translate(origin);
     
-    for (auto entry : layout)
+    for (auto shape : layout)
     {
-        if (entry.codepoint)
+        if (shape.codepoint)
         {
-            YGlyph *glyph = getGlyph(entry.codepoint);
+            YGlyph *glyph = getGlyph(shape.codepoint);
             
             if (glyph && glyph->texture)
             {
-                gl::draw(glyph->texture, entry.position + glyph->offset);
+                gl::draw(glyph->texture, shape.position + glyph->offset);
             }
         }
         else
         {
-            gl::drawStrokedRect(Rectf(entry.position, entry.position + Vec2f(entry.advance, -entry.advance)));
+            gl::drawStrokedRect(Rectf(shape.position, shape.position + Vec2f(shape.advance, -shape.advance)));
         }
     }
     
