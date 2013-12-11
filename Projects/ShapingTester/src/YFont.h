@@ -15,7 +15,21 @@
 
 #include <map>
 
-typedef std::vector<std::pair<uint32_t, ci::Vec2f>> LineLayout;
+struct Shape
+{
+    uint32_t codepoint;
+    ci::Vec2f position;
+    float advance;
+    
+    Shape(uint32_t codepoint, const ci::Vec2f &position, float advance)
+    :
+    codepoint(codepoint),
+    position(position),
+    advance(advance)
+    {}
+};
+
+typedef std::vector<Shape> ShapeLayout;
 
 class YGlyph
 {
@@ -40,8 +54,8 @@ public:
     YFont(std::shared_ptr<FreetypeHelper> ftHelper, const ci::fs::path &filePath, float size);
     ~YFont();
     
-    LineLayout createLayout(const TextSpan &span) const;
-    void drawLayout(const LineLayout &layout, const ci::Vec2f &origin);
+    ShapeLayout createLayout(const TextSpan &span);
+    void drawLayout(const ShapeLayout &layout, const ci::Vec2f &origin);
     std::string getName() const;
 
 protected:

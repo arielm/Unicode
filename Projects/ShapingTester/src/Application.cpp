@@ -21,13 +21,9 @@
  * http://unicode.org/iso15924/iso15924-codes.html
  */
 
-/*
- * OR  DRAG-AND-DROP SOME FONT-FILE (.TTF OR .OTF)
- *
- * IF NOTHING IS DISPLAYED, IT'S LIKELY BECAUSE THE FONT LACKS THE
- * PROPER UNICODE CHARACTERS (FONT-SUBSTITUTION IS NOT HANDLED YET)
- */
-// RUNNING THE FOLLOWING IN OSX TERMINAL WILL PLACE SYMLINKS OF YOUR SYSTEM FONTS IN ~/Documents/Fonts
+// OR  DRAG-AND-DROP SOME FONT-FILE (.TTF OR .OTF)
+//
+// THE FOLLOWING COMMANDS WILL PLACE SYMLINKS OF YOUR SYSTEM FONTS IN ~/Documents/Fonts ON OSX:
 // ln -s /Library/Fonts/* ~/Documents/Fonts/
 // ln -s /System/Library/Fonts/* ~/Documents/Fonts/
 
@@ -50,14 +46,14 @@ class Application : public AppNative
     
     shared_ptr<Directive> currentDirective;
     shared_ptr<YFont> currentFont;
-    vector<LineLayout> lineLayouts;
+    vector<ShapeLayout> lineLayouts;
    
 public:
     void prepareSettings(Settings *settings);
     void setup();
     
     void draw();
-    void drawLineLayout(YFont &font, const LineLayout &layout, float y);
+    void drawShapeLayout(YFont &font, const ShapeLayout &layout, float y);
     void drawLine(float y);
     
     void fileDrop(FileDropEvent event);
@@ -96,12 +92,12 @@ void Application::draw()
     
     for (auto layout : lineLayouts)
     {
-        drawLineLayout(*currentFont, layout, y);
+        drawShapeLayout(*currentFont, layout, y);
         y += LINE_H;
     }
 }
 
-void Application::drawLineLayout(YFont &font, const LineLayout &layout, float y)
+void Application::drawShapeLayout(YFont &font, const ShapeLayout &layout, float y)
 {
     glColor4f(1, 1, 1, 1);
     font.drawLayout(layout, Vec2f(24, y));

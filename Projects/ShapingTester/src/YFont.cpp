@@ -128,7 +128,7 @@ YFont::~YFont()
     FT_Done_Face(face);
 }
 
-LineLayout YFont::createLayout(const TextSpan &span) const
+ShapeLayout YFont::createLayout(const TextSpan &span)
 {
     hb_buffer_reset(hbBuffer);
     
@@ -146,7 +146,7 @@ LineLayout YFont::createLayout(const TextSpan &span) const
     // ---
 
     Vec2f p;
-    LineLayout layout;
+    ShapeLayout layout;
     
     for (int i = 0; i < glyphCount; i++)
     {
@@ -154,24 +154,36 @@ LineLayout YFont::createLayout(const TextSpan &span) const
         Vec2f offset(pos.x_offset, -pos.y_offset);
         Vec2f advance(pos.x_advance, pos.y_advance);
         
-        layout.push_back(make_pair(glyph_info[i].codepoint, p + offset * scale));
+        layout.push_back(Shape(glyph_info[i].codepoint, p + offset * scale, advance.x * scale.x));
         p += advance * scale;
     }
     
     return layout;
 }
 
-void YFont::drawLayout(const LineLayout &layout, const Vec2f &origin)
+void YFont::drawLayout(const ShapeLayout &layout, const Vec2f &origin)
 {
+    glPushMatrix();
+    gl::translate(origin);
+    
     for (auto entry : layout)
     {
-        YGlyph *glyph = getGlyph(entry.first);
-        
-        if (glyph && glyph->texture)
+        if (entry.codepoint)
         {
-            gl::draw(glyph->texture, origin + entry.second + glyph->offset);
+            YGlyph *glyph = getGlyph(entry.codepoint);
+            
+            if (glyph && glyph->texture)
+            {
+                gl::draw(glyph->texture, entry.position + glyph->offset);
+            }
+        }
+        else
+        {
+            gl::drawStrokedRect(Rectf(entry.position, entry.position + Vec2f(entry.advance, -entry.advance)));
         }
     }
+    
+    glPopMatrix();
 }
 
 string YFont::getName() const
