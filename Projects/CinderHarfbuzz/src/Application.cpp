@@ -6,26 +6,6 @@
  * https://github.com/arielm/Unicode/blob/master/LICENSE.md
  */
 
-/*
- * REQUIREMENTS:
- * - THE Unicode REPOSITORY SHOULD BE PLACED UNDER $CINDER/samples
- * - DEPENDS ON FREETYPE (TO BE PLACED UNDER $CINDER/blocks): https://github.com/arielm/Freetype
- * - INCLUDES HARFBUZZ 0.9.24 (https://github.com/behdad/harfbuzz)
- *   THE "HAVE_UCDN" AND "HAVE_OT" MACROS MUST BE DEFINED
- *
- * OSX AND iOS:
- * COMPILED ON OSX 10.5.8 WITH XCode 5.0.2 AND CINDER "VANILLA" 0.8.5
- *
- * ANDROID:
- * COMPILED ON OSX 10.5.8 WITH:
- * - NDK R8E: http://dl.google.com/android/ndk/android-ndk-r8e-darwin-x86_64.tar.bz2
- * - JULY 29TH VERSION OF ANDROID SDK: http://dl.google.com/android/adt/adt-bundle-mac-x86_64-20130729.zip
- * - SAFETYDANK'S FORK OF CINDER: https://github.com/safetydank/Cinder
- *
- * WINDOWS:
- * SHOULD BE TRIVIALLY ADAPTABLE TO VISUAL STUDIO 2012
- */
-
 #include "cinder/app/AppNative.h"
 
 #include "YFont.h"

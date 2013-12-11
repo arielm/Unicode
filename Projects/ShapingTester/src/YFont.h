@@ -15,7 +15,7 @@
 
 #include <map>
 
-typedef std::vector<std::pair<uint32_t, ci::Vec2f>>	LineLayout;
+typedef std::vector<std::pair<uint32_t, ci::Vec2f>> LineLayout;
 
 class YGlyph
 {
