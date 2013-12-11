@@ -12,9 +12,6 @@
 
 #include "cinder/Xml.h"
 
-const hb_script_t DEFAULT_SCRIPT = HB_SCRIPT_LATIN;
-const hb_direction_t DEFAULT_DIRECTION = HB_DIRECTION_LTR;
-
 const std::string DEFAULT_SCRIPT_TAG = "Latn";
 const std::string DEFAULT_FONT_PATH = "/Library/Fonts/Arial Unicode.ttf"; // OSX
 
@@ -24,12 +21,12 @@ public:
     TextSpan span;
     ci::fs::path fontPath;
     
-    Directive(const std::string &text, const ci::fs::path &fontPath = DEFAULT_FONT_PATH, hb_script_t script = DEFAULT_SCRIPT, hb_direction_t direction = DEFAULT_DIRECTION);
+    Directive(const TextSpan &span, const ci::fs::path &virtualFontPath = DEFAULT_FONT_PATH);
     Directive(ci::DataSourceRef source);
     Directive(const std::exception &e);
     Directive(const ci::fs::path &fontPath, const Directive &baseDirective);
     
 protected:
-    ci::fs::path getFontPath(const ci::fs::path virtualPath);
+    ci::fs::path getFontPath(const ci::fs::path virtualFontPath);
     std::string getText(const std::string &text);
 };

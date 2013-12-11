@@ -30,11 +30,11 @@ Directive::Directive(DataSourceRef source)
     span = TextSpan(getText(rootElement.getValue()), script, direction);
 }
 
-Directive::Directive(const string &text, const fs::path &fontPath , hb_script_t script, hb_direction_t direction)
+Directive::Directive(const TextSpan &span, const fs::path &virtualFontPath)
 :
-fontPath(fontPath)
+span(span)
 {
-    span = TextSpan(getText(text), script, direction);
+    fontPath = getFontPath(virtualFontPath);
 }
 
 Directive::Directive(const std::exception &e)
@@ -46,21 +46,21 @@ fontPath(DEFAULT_FONT_PATH)
 
 Directive::Directive(const fs::path &fontPath, const Directive &baseDirective)
 :
-fontPath(fontPath),
-span(baseDirective.span)
+span(baseDirective.span),
+fontPath(fontPath)
 {}
 
-fs::path Directive::getFontPath(const fs::path virtualPath)
+fs::path Directive::getFontPath(const fs::path virtualFontPath)
 {
-    fs::path assetPath = App::get()->getAssetPath(virtualPath);
+    fs::path assetPath = App::get()->getAssetPath(virtualFontPath);
     
     if (fs::exists(assetPath))
     {
         return assetPath;
     }
-    else if (fs::exists(virtualPath))
+    else if (fs::exists(virtualFontPath))
     {
-        return virtualPath;
+        return virtualFontPath;
     }
     else
     {

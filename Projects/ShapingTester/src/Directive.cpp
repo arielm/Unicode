@@ -30,12 +30,12 @@ Directive::Directive(DataSourceRef source)
     initText(rootElement.getValue());
 }
 
-Directive::Directive(const string &text, const fs::path &fontPath , hb_script_t script, hb_direction_t direction)
+Directive::Directive(const string &text, const fs::path &virtualFontPath , hb_script_t script, hb_direction_t direction)
 :
-fontPath(fontPath),
 script(script),
 direction(direction)
 {
+    fontPath = getFontPath(virtualFontPath);
     initText(text);
 }
 
@@ -56,17 +56,17 @@ direction(baseDirective.direction),
 lines(baseDirective.lines)
 {}
 
-fs::path Directive::getFontPath(const fs::path virtualPath)
+fs::path Directive::getFontPath(const fs::path virtualFontPath)
 {
-    fs::path assetPath = App::get()->getAssetPath(virtualPath);
+    fs::path assetPath = App::get()->getAssetPath(virtualFontPath);
     
     if (fs::exists(assetPath))
     {
         return assetPath;
     }
-    else if (fs::exists(virtualPath))
+    else if (fs::exists(virtualFontPath))
     {
-        return virtualPath;
+        return virtualFontPath;
     }
     else
     {
