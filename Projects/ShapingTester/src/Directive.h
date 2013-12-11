@@ -30,6 +30,7 @@ public:
     Directive(const std::string &text, const ci::fs::path &fontPath = DEFAULT_FONT_PATH, hb_script_t script = DEFAULT_SCRIPT, hb_direction_t direction = DEFAULT_DIRECTION);
     Directive(ci::DataSourceRef source);
     Directive(const std::exception &e);
+    Directive(const ci::fs::path &fontPath, const Directive &baseDirective);
     
 protected:
     ci::fs::path getFontPath(const ci::fs::path virtualPath);

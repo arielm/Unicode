@@ -48,6 +48,14 @@ direction(DEFAULT_DIRECTION)
     initText("ERROR:\n" + string(e.what()));
 }
 
+Directive::Directive(const fs::path &fontPath, const Directive &baseDirective)
+:
+fontPath(fontPath),
+script(baseDirective.script),
+direction(baseDirective.direction),
+lines(baseDirective.lines)
+{}
+
 fs::path Directive::getFontPath(const fs::path virtualPath)
 {
     fs::path assetPath = App::get()->getAssetPath(virtualPath);

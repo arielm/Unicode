@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- source: http://www.unicode.org/standard/translations/s-chinese.html -->
+<!-- remark: not sure if this is the correct script -->
+<span script="Hani" font="fonts/DroidSansFallback.ttf">
+    什么是Unicode(统一码)?
+    Unicode给每个字符提供了一个唯一的数字，
+    不论是什么平台、
+    不论是什么程序、
+    不论是什么语言。
+</span>
