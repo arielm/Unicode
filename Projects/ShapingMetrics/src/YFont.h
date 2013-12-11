@@ -29,7 +29,28 @@ struct Shape
     {}
 };
 
-typedef std::vector<Shape> ShapeLayout;
+struct ShapeLayout
+{
+    hb_direction_t direction;
+    float advance;
+    
+    std::vector<Shape> shapes;
+    
+    ShapeLayout()
+    {}
+    
+    ShapeLayout(hb_direction_t direction)
+    :
+    direction(direction),
+    advance(0)
+    {}
+    
+    void addShape(const Shape &shape)
+    {
+        shapes.push_back(shape);
+        advance += shape.advance;
+    }
+};
 
 class YGlyph
 {
@@ -55,7 +76,7 @@ public:
     ~YFont();
     
     ShapeLayout createLayout(const TextSpan &span);
-    void drawLayout(const ShapeLayout &layout, const ci::Vec2f &origin);
+    void drawLayout(const ShapeLayout &layout, ci::Vec2f origin);
     std::string getName() const;
 
 protected:

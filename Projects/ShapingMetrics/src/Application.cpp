@@ -7,7 +7,11 @@
  */
 
 /*
- * ...
+ * DONE:
+ *
+ * 1) DOUBLE-CHECKING THAT NON-SPACING-MARKS (LIKE HEBREW VOYELS) ARE NOT INFLUENCING THE WIDTH OF A "SHAPE LAYOUT"
+ *
+ * 2) PROPERLY MEASURING THE WIDTH OF A "SHAPE LAYOUT" (LTR OR RTL)
  */
 
 #include "cinder/app/AppNative.h"
@@ -19,7 +23,7 @@ using namespace std;
 using namespace ci;
 using namespace app;
 
-const float FONT_SIZE = 48;
+const float FONT_SIZE = 64;
 
 class Application : public AppNative
 {
@@ -35,7 +39,8 @@ public:
     
     void draw();
     void drawShapeLayout(YFont &font, const ShapeLayout &layout, float y);
-    void drawLine(float y);
+    void drawVLine(float x);
+    void drawHLine(float y);
     
     void fileDrop(FileDropEvent event);
     void applyDirective(shared_ptr<Directive> directive);
@@ -43,15 +48,15 @@ public:
 
 void Application::prepareSettings(Settings *settings)
 {
-    settings->setWindowSize(1024, 512);
+    settings->setWindowSize(1280, 360);
 }
 
 void Application::setup()
 {
     ftHelper = make_shared<FreetypeHelper>();
     
-//  applyDirective(make_shared<Directive>(TextSpan("drop xml directive")));
-    applyDirective(make_shared<Directive>(TextSpan("מוּ", HB_SCRIPT_HEBREW, HB_DIRECTION_RTL), "fonts/DroidSansHebrew-Regular.ttf"));
+    applyDirective(make_shared<Directive>(TextSpan("drop xml directive")));
+//  applyDirective(make_shared<Directive>(TextSpan("מוּ", HB_SCRIPT_HEBREW, HB_DIRECTION_RTL), "fonts/DroidSansHebrew-Regular.ttf"));
 //  applyDirective(make_shared<Directive>(loadAsset("directives/Hebrew1_osx.xml")));
     
     // ---
@@ -70,23 +75,33 @@ void Application::draw()
     
     // ---
     
-    drawShapeLayout(*currentFont, layout, 256);
+    drawShapeLayout(*currentFont, layout, toPixels(getWindowHeight()) * 0.5f);
 }
 
 void Application::drawShapeLayout(YFont &font, const ShapeLayout &layout, float y)
 {
+    float x = (layout.direction == HB_DIRECTION_LTR) ? 24 : toPixels(getWindowWidth()) - 24;
+    
     glColor4f(1, 1, 1, 1);
-    font.drawLayout(layout, Vec2f(24, y));
+    font.drawLayout(layout, Vec2f(x, y));
     
     glColor4f(1, 0.75f, 0, 0.5f);
-    drawLine(y);
+    drawHLine(y);
     
     glColor4f(1, 1, 0, 0.33f);
-    drawLine(y - font.ascent);
-    drawLine(y + font.descent);
+    drawHLine(y - font.ascent);
+    drawHLine(y + font.descent);
+    
+    glColor4f(1, 0.25f, 0, 0.33f);
+    drawVLine(x);
 }
 
-void Application::drawLine(float y)
+void Application::drawVLine(float x)
+{
+    gl::drawLine(Vec2f(x, -9999), Vec2f(x, +9999));
+}
+
+void Application::drawHLine(float y)
 {
     gl::drawLine(Vec2f(-9999, y), Vec2f(+9999, y));
 }

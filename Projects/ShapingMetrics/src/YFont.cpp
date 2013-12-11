@@ -145,28 +145,31 @@ ShapeLayout YFont::createLayout(const TextSpan &span)
     
     // ---
 
-    Vec2f p;
-    ShapeLayout layout;
+    ShapeLayout layout(span.direction);
     
     for (int i = 0; i < glyphCount; i++)
     {
         const hb_glyph_position_t &pos = glyph_pos[i];
-        Vec2f offset(pos.x_offset, -pos.y_offset);
-        Vec2f advance(pos.x_advance, pos.y_advance);
+        Vec2f position = Vec2f(layout.advance + pos.x_offset * scale.x, -pos.y_offset * scale.y);
+        float advance = pos.x_advance * scale.x;
         
-        layout.push_back(Shape(glyph_info[i].codepoint, p + offset * scale, advance.x * scale.x));
-        p += advance * scale;
+        layout.addShape(Shape(glyph_info[i].codepoint, position, advance));
     }
     
     return layout;
 }
 
-void YFont::drawLayout(const ShapeLayout &layout, const Vec2f &origin)
+void YFont::drawLayout(const ShapeLayout &layout, Vec2f origin)
 {
+    if (layout.direction == HB_DIRECTION_RTL)
+    {
+        origin.x -= layout.advance;
+    }
+
     glPushMatrix();
     gl::translate(origin);
     
-    for (auto shape : layout)
+    for (auto shape : layout.shapes)
     {
         if (shape.codepoint)
         {
