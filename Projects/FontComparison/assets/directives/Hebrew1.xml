@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- source: https://github.com/behdad/harfbuzz/blob/0.9.24/test/shaping/texts/in-tree/shaper-default/script-hebrew/misc/diacritics.txt -->
+<text script="Hebr">
+        לְהַגִּיד בַּבֹּקֶר חַסְדֶּךָ וֶאֱמוּנָתְךָ בַּלֵּילוֹת
+</text>

@@ -76,7 +76,6 @@ public:
     
     ShapeLayout createLayout(const TextSpan &span);
     void drawLayout(const ShapeLayout &layout, ci::Vec2f origin, float scale);
-    void drawMetrics(const ShapeLayout &layout, ci::Vec2f origin, float scale);
     std::string getName() const;
 
 protected:

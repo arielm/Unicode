@@ -189,7 +189,7 @@ void Application::applyDirective(shared_ptr<Directive> directive)
     
     lineLayout = currentFont->createLayout(directive->span);
     
-    getWindow()->setTitle(currentFont->getName() + " | " + directive->getScriptName());
+    getWindow()->setTitle(currentFont->getName() + " - " + directive->getScriptName());
 }
 
 CINDER_APP_NATIVE(Application, RendererGl(RendererGl::AA_NONE))

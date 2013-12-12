@@ -19,17 +19,34 @@ using namespace std;
 using namespace ci;
 using namespace app;
 
-const float MAX_FONT_SIZE = 128;
+const float MAX_FONT_SIZE = 64;
+const float GUTTER = 24;
+
+struct Slot
+{
+    shared_ptr<Directive> directive;
+    shared_ptr<YFont> font;
+    ShapeLayout lineLayout;
+    
+    string getTitle() const
+    {
+        if (font && directive)
+        {
+            return font->getName() + " - " + directive->getScriptName();
+        }
+        else
+        {
+            return "";
+        }
+    }
+};
 
 class Application : public AppNative
 {
     shared_ptr<FreetypeHelper> ftHelper; // THE UNDERLYING FT_Library WILL BE DESTROYED AFTER ALL THE YFont INSTANCES
-    
-    shared_ptr<Directive> currentDirective;
-    shared_ptr<YFont> currentFont;
-    ShapeLayout lineLayout;
-    
-    bool showMetrics;
+
+    Slot slot1;
+    Slot slot2;
    
 public:
     void prepareSettings(Settings *settings);
@@ -37,13 +54,12 @@ public:
     
     void draw();
     void drawLineLayout(YFont &font, const ShapeLayout &layout, float y, float left, float right);
-    void drawVLine(float x);
-    void drawHLine(float y);
+    void drawVLine(float x, float top = numeric_limits<float>::min(), float bottom = numeric_limits<float>::max());
+    void drawHLine(float x, float left = numeric_limits<float>::min(), float right = numeric_limits<float>::max());
     
     void fileDrop(FileDropEvent event);
-    void keyDown(KeyEvent event);
-    
-    void applyDirective(shared_ptr<Directive> directive);
+    void applyDirective(Slot &slot, shared_ptr<Directive> directive);
+    void updateTitle();
 };
 
 void Application::prepareSettings(Settings *settings)
@@ -55,12 +71,15 @@ void Application::setup()
 {
     ftHelper = make_shared<FreetypeHelper>();
     
-    applyDirective(make_shared<Directive>(TextSpan("drop directive or font")));
-//  applyDirective(make_shared<Directive>(TextSpan("וֶאֱמוּנָתְךָ", HB_SCRIPT_HEBREW, HB_DIRECTION_RTL), "fonts/DroidSansHebrew-Regular.ttf"));
-//  applyDirective(make_shared<Directive>(loadAsset("directives/Hebrew1_osx.xml")));
-    
-    showMetrics = true;
-    
+//    applyDirective(slot1, make_shared<Directive>(TextSpan("drop directive or font")));
+//    applyDirective(slot2, make_shared<Directive>(TextSpan("drop directive or font")));
+
+    applyDirective(slot1, make_shared<Directive>(TextSpan("לְהַגִּיד בַּבֹּקֶר חַסְדֶּךָ וֶאֱמוּנָתְךָ בַּלֵּילוֹת", HB_SCRIPT_HEBREW, HB_DIRECTION_RTL)));
+    applyDirective(slot2, make_shared<Directive>(TextSpan("לְהַגִּיד בַּבֹּקֶר חַסְדֶּךָ וֶאֱמוּנָתְךָ בַּלֵּילוֹת", HB_SCRIPT_HEBREW, HB_DIRECTION_RTL), "fonts/DroidSansHebrew-Regular.ttf"));
+
+//    applyDirective(slot1, make_shared<Directive>(loadAsset("directives/Hebrew1.xml")));
+//    applyDirective(slot2, make_shared<Directive>(loadAsset("directives/Hebrew1_osx.xml")));
+
     // ---
     
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -77,7 +96,19 @@ void Application::draw()
     Vec2i windowSize = toPixels(getWindowSize());
     gl::setMatricesWindow(windowSize, true);
     
-    drawLineLayout(*currentFont, lineLayout, windowSize.y * 0.5f, 24, windowSize.x - 24);
+    // ---
+    
+    float y = windowSize.y * 0.5f;
+    float middle = windowSize.x * 0.5f;
+    
+    float left1 = GUTTER;
+    float left2 = middle + GUTTER * 0.5f;
+
+    float right1 = middle - GUTTER * 0.5f;
+    float right2 = windowSize.x - GUTTER;
+    
+    drawLineLayout(*slot1.font, slot1.lineLayout, y, left1, right1);
+    drawLineLayout(*slot2.font, slot2.lineLayout, y, left2, right2);
 }
 
 void Application::drawLineLayout(YFont &font, const ShapeLayout &layout, float y, float left, float right)
@@ -95,30 +126,25 @@ void Application::drawLineLayout(YFont &font, const ShapeLayout &layout, float y
     font.drawLayout(layout, Vec2f(x, y), scale);
     
     glColor4f(1, 0.75f, 0, 0.5f);
-    drawHLine(y);
+    drawHLine(y, left, right);
     
     glColor4f(1, 1, 0, 0.33f);
-    drawHLine(y - font.ascent);
-    drawHLine(y + font.descent);
+    drawHLine(y - font.ascent, left, right);
+    drawHLine(y + font.descent, left, right);
     
     glColor4f(1, 0.25f, 0, 0.33f);
     drawVLine(left);
     drawVLine(right);
-    
-    if (showMetrics)
-    {
-        font.drawMetrics(layout, Vec2f(x, y), scale);
-    }
 }
 
-void Application::drawVLine(float x)
+void Application::drawVLine(float x, float top, float bottom)
 {
-    gl::drawLine(Vec2f(x, -9999), Vec2f(x, +9999));
+    gl::drawLine(Vec2f(x, top), Vec2f(x, bottom));
 }
 
-void Application::drawHLine(float y)
+void Application::drawHLine(float y, float left, float right)
 {
-    gl::drawLine(Vec2f(-9999, y), Vec2f(+9999, y));
+    gl::drawLine(Vec2f(left, y), Vec2f(right, y));
 }
 
 void Application::fileDrop(FileDropEvent event)
@@ -130,41 +156,41 @@ void Application::fileDrop(FileDropEvent event)
         
         if (!is_directory(file))
         {
+            bool isLeft = (event.getX() < toPixels(getWindowWidth()) / 2);
+            Slot &slot = isLeft ? slot1 : slot2;
+            
             if (extension == ".xml")
             {
                 try
                 {
-                    applyDirective(make_shared<Directive>(loadFile(file)));
+                    applyDirective(slot, make_shared<Directive>(loadFile(file)));
                 }
                 catch (exception &e)
                 {
-                    applyDirective(make_shared<Directive>(e));
+                    applyDirective(slot, make_shared<Directive>(e));
                 }
             }
             else if ((extension == ".ttf") || (extension == ".otf") || (extension == ".ttc"))
             {
-                applyDirective(make_shared<Directive>(file, *currentDirective));
+                applyDirective(slot, make_shared<Directive>(file, *slot.directive));
             }
         }
     }
 }
 
-void Application::keyDown(KeyEvent event)
+void Application::applyDirective(Slot &slot, shared_ptr<Directive> directive)
 {
-    if (event.getCode() == KeyEvent::KEY_RETURN)
-    {
-        showMetrics ^= true;
-    }
+    slot.directive = directive;
+    slot.font = make_shared<YFont>(ftHelper, directive->fontPath, MAX_FONT_SIZE);
+    
+    slot.lineLayout = slot.font->createLayout(directive->span);
+    
+    updateTitle();
 }
 
-void Application::applyDirective(shared_ptr<Directive> directive)
+void Application::updateTitle()
 {
-    currentDirective = directive;
-    currentFont = make_shared<YFont>(ftHelper, directive->fontPath, MAX_FONT_SIZE);
-    
-    lineLayout = currentFont->createLayout(directive->span);
-    
-    getWindow()->setTitle(currentFont->getName() + " | " + directive->getScriptName());
+    getWindow()->setTitle(slot1.getTitle() + "  |  " + slot2.getTitle());
 }
 
 CINDER_APP_NATIVE(Application, RendererGl(RendererGl::AA_NONE))

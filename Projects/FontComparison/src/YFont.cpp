@@ -202,43 +202,6 @@ void YFont::drawLayout(const ShapeLayout &layout, Vec2f origin, float scale)
     glPopMatrix();
 }
 
-void YFont::drawMetrics(const ShapeLayout &layout, Vec2f origin, float scale)
-{
-    if (layout.direction == HB_DIRECTION_RTL)
-    {
-        origin.x -= layout.advance * scale;
-    }
-    
-    glPushMatrix();
-    gl::translate(origin);
-    glScalef(scale, scale, 1);
-    
-    for (auto shape : layout.shapes)
-    {
-        if (shape.codepoint)
-        {
-            YGlyph *glyph = getGlyph(shape.codepoint);
-            
-            if (glyph && glyph->texture)
-            {
-                if (shape.advance)
-                {
-                    glColor4f(0.5f, 1, 0.5f, 0.5f);
-                }
-                else
-                {
-                    glColor4f(0, 0.75f, 1, 0.5f);
-                }
-                
-                Vec2f corner(shape.position + glyph->offset);
-                gl::drawStrokedRect(Rectf(corner, corner + glyph->size));
-            }
-        }
-    }
-    
-    glPopMatrix();
-}
-
 string YFont::getName() const
 {
     return string(face->family_name) + " " + string(face->style_name);
