@@ -55,9 +55,8 @@ struct ShapeLayout
 class YGlyph
 {
 public:
-    int width;
-    int height;
     ci::gl::TextureRef texture;
+    ci::Vec2f size;
     ci::Vec2f offset;
     
     YGlyph(unsigned char *data, int width, int height);
@@ -76,7 +75,8 @@ public:
     ~YFont();
     
     ShapeLayout createLayout(const TextSpan &span);
-    void drawLayout(const ShapeLayout &layout, ci::Vec2f origin);
+    void drawLayout(const ShapeLayout &layout, ci::Vec2f origin, float scale);
+    void drawMetrics(const ShapeLayout &layout, ci::Vec2f origin, float scale);
     std::string getName() const;
 
 protected:

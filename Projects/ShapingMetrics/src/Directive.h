@@ -26,6 +26,8 @@ public:
     Directive(const std::exception &e);
     Directive(const ci::fs::path &fontPath, const Directive &baseDirective);
     
+    std::string getScriptName();
+    
 protected:
     ci::fs::path getFontPath(const ci::fs::path virtualFontPath);
     std::string getText(const std::string &text);

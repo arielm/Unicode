@@ -69,7 +69,7 @@ void Application::setup()
 {
     ftHelper = make_shared<FreetypeHelper>();
     
-    applyDirective(make_shared<Directive>("drop xml directive"));
+    applyDirective(make_shared<Directive>("drop directive or font"));
 //  applyDirective(make_shared<Directive>(loadAsset("directives/Hebrew1_osx.xml")));
     
     // ---
@@ -143,10 +143,7 @@ void Application::fileDrop(FileDropEvent event)
             }
             else if ((extension == ".ttf") || (extension == ".otf") || (extension == ".ttc"))
             {
-                if (currentDirective)
-                {
-                    applyDirective(make_shared<Directive>(file, *currentDirective));
-                }
+                applyDirective(make_shared<Directive>(file, *currentDirective));
             }
         }
     }
@@ -164,7 +161,7 @@ void Application::applyDirective(shared_ptr<Directive> directive)
         lineLayouts.push_back(currentFont->createLayout(TextSpan(line, directive->script, directive->direction)));
     }
     
-    getWindow()->setTitle(currentFont->getName());
+    getWindow()->setTitle(currentFont->getName() + " | " + directive->getScriptName());
 }
 
 CINDER_APP_NATIVE(Application, RendererGl(RendererGl::AA_NONE))

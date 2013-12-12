@@ -50,6 +50,13 @@ span(baseDirective.span),
 fontPath(fontPath)
 {}
 
+string Directive::getScriptName()
+{
+    char buf[4];
+    hb_tag_to_string(hb_script_to_iso15924_tag(span.script), buf);
+    return string(buf, 4);
+}
+
 fs::path Directive::getFontPath(const fs::path virtualFontPath)
 {
     fs::path assetPath = App::get()->getAssetPath(virtualFontPath);

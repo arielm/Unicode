@@ -53,17 +53,29 @@ static int nextPowerOfTwo(int x)
 
 YGlyph::YGlyph(unsigned char *data, int width, int height)
 :
-width(width),
-height(height)
+size(width, height)
 {
     if (width * height > 0)
     {
+        int textureWidth = nextPowerOfTwo(width);
+        int textureHeight = nextPowerOfTwo(height);
+        auto textureData = (unsigned char*)calloc(textureWidth * textureHeight, 1); // WE NEED A ZERO-FILLED AREA
+        
+        for (int iy = 0; iy < height; iy++)
+        {
+            for (int ix = 0; ix < width; ix++)
+            {
+                textureData[iy * textureWidth + ix] = data[iy * width + ix];
+            }
+        }
+        
         gl::Texture::Format format;
         format.setInternalFormat(GL_ALPHA);
         format.enableMipmapping(true);
         format.setMinFilter(GL_LINEAR_MIPMAP_LINEAR);
         
-        texture = gl::Texture::create(data, GL_ALPHA, width, height, format);
+        texture = gl::Texture::create(textureData, GL_ALPHA, textureWidth, textureHeight, format);
+        free(textureData);
     }
 }
 
@@ -159,15 +171,16 @@ ShapeLayout YFont::createLayout(const TextSpan &span)
     return layout;
 }
 
-void YFont::drawLayout(const ShapeLayout &layout, Vec2f origin)
+void YFont::drawLayout(const ShapeLayout &layout, Vec2f origin, float scale)
 {
     if (layout.direction == HB_DIRECTION_RTL)
     {
-        origin.x -= layout.advance;
+        origin.x -= layout.advance * scale;
     }
 
     glPushMatrix();
     gl::translate(origin);
+    glScalef(scale, scale, 1);
     
     for (auto shape : layout.shapes)
     {
@@ -183,6 +196,43 @@ void YFont::drawLayout(const ShapeLayout &layout, Vec2f origin)
         else
         {
             gl::drawStrokedRect(Rectf(shape.position, shape.position + Vec2f(shape.advance, -shape.advance)));
+        }
+    }
+    
+    glPopMatrix();
+}
+
+void YFont::drawMetrics(const ShapeLayout &layout, Vec2f origin, float scale)
+{
+    if (layout.direction == HB_DIRECTION_RTL)
+    {
+        origin.x -= layout.advance * scale;
+    }
+    
+    glPushMatrix();
+    gl::translate(origin);
+    glScalef(scale, scale, 1);
+    
+    for (auto shape : layout.shapes)
+    {
+        if (shape.codepoint)
+        {
+            YGlyph *glyph = getGlyph(shape.codepoint);
+            
+            if (glyph && glyph->texture)
+            {
+                if (shape.advance)
+                {
+                    glColor4f(0.5f, 1, 0.5f, 0.5f);
+                }
+                else
+                {
+                    glColor4f(0, 0.75f, 1, 0.5f);
+                }
+                
+                Vec2f corner(shape.position + glyph->offset);
+                gl::drawStrokedRect(Rectf(corner, corner + glyph->size));
+            }
         }
     }
     

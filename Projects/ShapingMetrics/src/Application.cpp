@@ -7,11 +7,32 @@
  */
 
 /*
- * DONE:
+ * FEATURES:
  *
- * 1) DOUBLE-CHECKING THAT NON-SPACING-MARKS (LIKE HEBREW VOYELS) ARE NOT INFLUENCING THE WIDTH OF A "SHAPE LAYOUT"
+ * 1) RENDERING OF A SINGLE-LINE SPAN, PROPERLY SCALED TO FIT THE VIEWPORT
+ *    STRAIGHTFORWARD SCALING AND MIPMAPS ARE USED (INSTEAD OF RASTERIZING FOR EACH SIZE...)
  *
- * 2) PROPERLY MEASURING THE WIDTH OF A "SHAPE LAYOUT" (LTR OR RTL)
+ * 2) SHOWING A BOUNDING-BOX FOR EACH GLYPH:
+ *    - REGULAR CHARACTERS IN GREEN
+ *    - NON-SPACING-MARKS IN BLUE
+ *
+ *
+ * INSTRUCTIONS:
+ *
+ * 1) DRAG-AND-DROP A "DIRECTIVE" XML-FILE
+ *    SEE EXAMPLES IN assets/directives
+ *
+ * 2) OR DRAG FONT-FILE (.TTF, ETC.)
+ *    - USING A FONT FROM assets/fonts
+ *    - OR ANY OTHER FONT ON YOUR SYSTEM
+ *
+ * 2) PRESS "ENTER" TO TOGGLE BOUNDING-BOXES
+ *
+ *
+ * NOTES:
+ *
+ * 1) IN directives/Devanagari1.xml:
+ *    CHECK THE RIGHTMOST "VIRAMA" SIGN: IT CONFIRMS THAT NON-SPACING-MARKS ARE NOT INFLUENCING LAYOUT-WIDTH
  */
 
 #include "cinder/app/AppNative.h"
@@ -23,7 +44,7 @@ using namespace std;
 using namespace ci;
 using namespace app;
 
-const float FONT_SIZE = 64;
+const float MAX_FONT_SIZE = 128;
 
 class Application : public AppNative
 {
@@ -32,6 +53,8 @@ class Application : public AppNative
     shared_ptr<Directive> currentDirective;
     shared_ptr<YFont> currentFont;
     ShapeLayout lineLayout;
+    
+    bool showMetrics;
    
 public:
     void prepareSettings(Settings *settings);
@@ -43,6 +66,8 @@ public:
     void drawHLine(float y);
     
     void fileDrop(FileDropEvent event);
+    void keyDown(KeyEvent event);
+    
     void applyDirective(shared_ptr<Directive> directive);
 };
 
@@ -55,9 +80,11 @@ void Application::setup()
 {
     ftHelper = make_shared<FreetypeHelper>();
     
-//  applyDirective(make_shared<Directive>(TextSpan("drop xml directive")));
-//  applyDirective(make_shared<Directive>(TextSpan("מוּ", HB_SCRIPT_HEBREW, HB_DIRECTION_RTL), "fonts/DroidSansHebrew-Regular.ttf"));
-    applyDirective(make_shared<Directive>(loadAsset("directives/Hebrew1_osx.xml")));
+    applyDirective(make_shared<Directive>(TextSpan("drop directive or font")));
+//  applyDirective(make_shared<Directive>(TextSpan("וֶאֱמוּנָתְךָ", HB_SCRIPT_HEBREW, HB_DIRECTION_RTL), "fonts/DroidSansHebrew-Regular.ttf"));
+//  applyDirective(make_shared<Directive>(loadAsset("directives/Hebrew1_osx.xml")));
+    
+    showMetrics = true;
     
     // ---
     
@@ -81,9 +108,16 @@ void Application::draw()
 void Application::drawLineLayout(YFont &font, const ShapeLayout &layout, float y, float left, float right)
 {
     float x = (layout.direction == HB_DIRECTION_LTR) ? left : right;
+    float width = right - left;
+    float scale = 1;
+    
+    if (layout.advance > width)
+    {
+        scale = width / layout.advance;
+    }
     
     glColor4f(1, 1, 1, 1);
-    font.drawLayout(layout, Vec2f(x, y));
+    font.drawLayout(layout, Vec2f(x, y), scale);
     
     glColor4f(1, 0.75f, 0, 0.5f);
     drawHLine(y);
@@ -93,7 +127,13 @@ void Application::drawLineLayout(YFont &font, const ShapeLayout &layout, float y
     drawHLine(y + font.descent);
     
     glColor4f(1, 0.25f, 0, 0.33f);
-    drawVLine(x);
+    drawVLine(left);
+    drawVLine(right);
+    
+    if (showMetrics)
+    {
+        font.drawMetrics(layout, Vec2f(x, y), scale);
+    }
 }
 
 void Application::drawVLine(float x)
@@ -128,23 +168,28 @@ void Application::fileDrop(FileDropEvent event)
             }
             else if ((extension == ".ttf") || (extension == ".otf") || (extension == ".ttc"))
             {
-                if (currentDirective)
-                {
-                    applyDirective(make_shared<Directive>(file, *currentDirective));
-                }
+                applyDirective(make_shared<Directive>(file, *currentDirective));
             }
         }
+    }
+}
+
+void Application::keyDown(KeyEvent event)
+{
+    if (event.getCode() == KeyEvent::KEY_RETURN)
+    {
+        showMetrics ^= true;
     }
 }
 
 void Application::applyDirective(shared_ptr<Directive> directive)
 {
     currentDirective = directive;
-    currentFont = make_shared<YFont>(ftHelper, directive->fontPath, FONT_SIZE);
+    currentFont = make_shared<YFont>(ftHelper, directive->fontPath, MAX_FONT_SIZE);
     
     lineLayout = currentFont->createLayout(directive->span);
     
-    getWindow()->setTitle(currentFont->getName());
+    getWindow()->setTitle(currentFont->getName() + " | " + directive->getScriptName());
 }
 
 CINDER_APP_NATIVE(Application, RendererGl(RendererGl::AA_NONE))
