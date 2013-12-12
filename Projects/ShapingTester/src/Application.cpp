@@ -53,8 +53,8 @@ public:
     void setup();
     
     void draw();
-    void drawShapeLayout(YFont &font, const ShapeLayout &layout, float y);
-    void drawLine(float y);
+    void drawLineLayout(YFont &font, const ShapeLayout &layout, float y);
+    void drawHLine(float y);
     
     void fileDrop(FileDropEvent event);
     void applyDirective(shared_ptr<Directive> directive);
@@ -92,25 +92,25 @@ void Application::draw()
     
     for (auto layout : lineLayouts)
     {
-        drawShapeLayout(*currentFont, layout, y);
+        drawLineLayout(*currentFont, layout, y);
         y += LINE_H;
     }
 }
 
-void Application::drawShapeLayout(YFont &font, const ShapeLayout &layout, float y)
+void Application::drawLineLayout(YFont &font, const ShapeLayout &layout, float y)
 {
     glColor4f(1, 1, 1, 1);
     font.drawLayout(layout, Vec2f(24, y));
     
     glColor4f(1, 0.75f, 0, 0.5f);
-    drawLine(y);
+    drawHLine(y);
     
     glColor4f(1, 1, 0, 0.33f);
-    drawLine(y - font.ascent);
-    drawLine(y + font.descent);
+    drawHLine(y - font.ascent);
+    drawHLine(y + font.descent);
 }
 
-void Application::drawLine(float y)
+void Application::drawHLine(float y)
 {
     gl::drawLine(Vec2f(-9999, y), Vec2f(+9999, y));
 }

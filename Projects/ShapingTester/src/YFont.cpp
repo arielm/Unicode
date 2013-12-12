@@ -90,7 +90,7 @@ ftHelper(ftHelper)
      * TRICK FROM http://code.google.com/p/freetype-gl/
      *
      * - WITHOUT A FRACTIONAL ADVANCE: CHARACTER SPACING LOOKS DUMB
-     * - WITHOUT A FRACTIONAL HEIGHT: SOME CHARACTERS WON'T BE PROPERLY ALIGNED ON THE BASELINE
+     * - WITHOUT A FRACTIONAL HEIGHT: SOME CHARACTERS WON'T BE PERFECTLY ALIGNED ON THE BASELINE
      */
     int res = 64;
     int dpi = 72;
@@ -145,17 +145,17 @@ ShapeLayout YFont::createLayout(const TextSpan &span)
     
     // ---
 
-    Vec2f p;
     ShapeLayout layout;
+    float layoutAdvance = 0;
     
     for (int i = 0; i < glyphCount; i++)
     {
         const hb_glyph_position_t &pos = glyph_pos[i];
-        Vec2f offset(pos.x_offset, -pos.y_offset);
-        Vec2f advance(pos.x_advance, pos.y_advance);
+        Vec2f position = Vec2f(layoutAdvance + pos.x_offset * scale.x, -pos.y_offset * scale.y);
+        float advance = pos.x_advance * scale.x;
         
-        layout.push_back(Shape(glyph_info[i].codepoint, p + offset * scale, advance.x * scale.x));
-        p += advance * scale;
+        layout.push_back(Shape(glyph_info[i].codepoint, position, advance));
+        layoutAdvance += advance;
     }
     
     return layout;

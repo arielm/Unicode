@@ -31,14 +31,14 @@ class Application : public AppNative
     
     shared_ptr<Directive> currentDirective;
     shared_ptr<YFont> currentFont;
-    ShapeLayout layout;
+    ShapeLayout lineLayout;
    
 public:
     void prepareSettings(Settings *settings);
     void setup();
     
     void draw();
-    void drawShapeLayout(YFont &font, const ShapeLayout &layout, float y);
+    void drawLineLayout(YFont &font, const ShapeLayout &layout, float y, float left, float right);
     void drawVLine(float x);
     void drawHLine(float y);
     
@@ -71,16 +71,16 @@ void Application::setup()
 void Application::draw()
 {
     gl::clear(Color::gray(0.5f), false);
-    gl::setMatricesWindow(toPixels(getWindowSize()), true);
+
+    Vec2i windowSize = toPixels(getWindowSize());
+    gl::setMatricesWindow(windowSize, true);
     
-    // ---
-    
-    drawShapeLayout(*currentFont, layout, toPixels(getWindowHeight()) * 0.5f);
+    drawLineLayout(*currentFont, lineLayout, windowSize.y * 0.5f, 24, windowSize.x - 24);
 }
 
-void Application::drawShapeLayout(YFont &font, const ShapeLayout &layout, float y)
+void Application::drawLineLayout(YFont &font, const ShapeLayout &layout, float y, float left, float right)
 {
-    float x = (layout.direction == HB_DIRECTION_LTR) ? 24 : toPixels(getWindowWidth()) - 24;
+    float x = (layout.direction == HB_DIRECTION_LTR) ? left : right;
     
     glColor4f(1, 1, 1, 1);
     font.drawLayout(layout, Vec2f(x, y));
@@ -142,7 +142,7 @@ void Application::applyDirective(shared_ptr<Directive> directive)
     currentDirective = directive;
     currentFont = make_shared<YFont>(ftHelper, directive->fontPath, FONT_SIZE);
     
-    layout = currentFont->createLayout(directive->span);
+    lineLayout = currentFont->createLayout(directive->span);
     
     getWindow()->setTitle(currentFont->getName());
 }
