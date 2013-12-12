@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- source: http://www.unicode.org/standard/translations/ukrainian.html -->
+<!-- remark: DroidSansFallback is missing some Ukrainian letters like 'ie' -->
+<text script="Cyrl" font="fonts/DroidSans.ttf">
+    Що таке Юнікод?
+</text>

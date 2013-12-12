@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- source: http://www.unicode.org/standard/translations/japanese.html -->
+<!-- remark: DroidSansJapanese seems "broken or irrelevant" in term of harfbuzz -->
+<text script="Kana" font="fonts/DroidSansFallback.ttf">
+    ユニコードとは何か？
+</text>
