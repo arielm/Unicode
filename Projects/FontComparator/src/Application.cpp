@@ -74,11 +74,11 @@ void Application::setup()
 //    applyDirective(slot1, make_shared<Directive>(TextSpan("drop directive or font")));
 //    applyDirective(slot2, make_shared<Directive>(TextSpan("drop directive or font")));
 
-    applyDirective(slot1, make_shared<Directive>(TextSpan("לְהַגִּיד בַּבֹּקֶר חַסְדֶּךָ וֶאֱמוּנָתְךָ בַּלֵּילוֹת", HB_SCRIPT_HEBREW, HB_DIRECTION_RTL)));
-    applyDirective(slot2, make_shared<Directive>(TextSpan("לְהַגִּיד בַּבֹּקֶר חַסְדֶּךָ וֶאֱמוּנָתְךָ בַּלֵּילוֹת", HB_SCRIPT_HEBREW, HB_DIRECTION_RTL), "fonts/DroidSansHebrew-Regular.ttf"));
+//    applyDirective(slot1, make_shared<Directive>(TextSpan("לְהַגִּיד בַּבֹּקֶר חַסְדֶּךָ וֶאֱמוּנָתְךָ בַּלֵּילוֹת", HB_SCRIPT_HEBREW, HB_DIRECTION_RTL)));
+//    applyDirective(slot2, make_shared<Directive>(TextSpan("לְהַגִּיד בַּבֹּקֶר חַסְדֶּךָ וֶאֱמוּנָתְךָ בַּלֵּילוֹת", HB_SCRIPT_HEBREW, HB_DIRECTION_RTL), "fonts/DroidSansHebrew-Regular.ttf"));
 
-//    applyDirective(slot1, make_shared<Directive>(loadAsset("directives/Hebrew1.xml")));
-//    applyDirective(slot2, make_shared<Directive>(loadAsset("directives/Hebrew1_osx.xml")));
+    applyDirective(slot1, make_shared<Directive>(loadAsset("directives/Hebrew1.xml")));
+    applyDirective(slot2, make_shared<Directive>(loadAsset("directives/Hebrew1_osx.xml")));
 
     // ---
     
