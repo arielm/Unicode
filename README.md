@@ -20,6 +20,7 @@ So far, [Harfbuzz](https://github.com/behdad/harfbuzz) have been tested as a sol
 
 1. [CinderHarfbuzz](Projects/CinderHarfbuzz)
 2. [ShapingTester](Projects/ShapingTester)
+3. [ShapingMetrics](Projects/ShapingMetrics)
 
 More work remains, notably testing the performance on low-end mobile devices with limited processing-power and memory.
 
@@ -52,7 +53,7 @@ The folder hierarchy should look like:
 Tested with OSX 10.5.8 and XCode 5.0.2.  
 TODO: test with OSX 10.7.x and XCode 4.6.x  
 
-**Building for Android**
+**Running on Android**
 
 Prerequisites:
 
