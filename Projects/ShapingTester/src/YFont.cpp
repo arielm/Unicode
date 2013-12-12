@@ -52,18 +52,26 @@ static int nextPowerOfTwo(int x)
 }
 
 YGlyph::YGlyph(unsigned char *data, int width, int height)
-:
-width(width),
-height(height)
 {
     if (width * height > 0)
     {
+        int textureWidth = nextPowerOfTwo(width);
+        int textureHeight = nextPowerOfTwo(height);
+        auto textureData = (unsigned char*)calloc(textureWidth * textureHeight, 1); // WE NEED A ZERO-FILLED AREA
+        
+        for (int iy = 0; iy < height; iy++)
+        {
+            for (int ix = 0; ix < width; ix++)
+            {
+                textureData[iy * textureWidth + ix] = data[iy * width + ix];
+            }
+        }
+        
         gl::Texture::Format format;
         format.setInternalFormat(GL_ALPHA);
-        format.enableMipmapping(true);
-        format.setMinFilter(GL_LINEAR_MIPMAP_LINEAR);
         
-        texture = gl::Texture::create(data, GL_ALPHA, width, height, format);
+        texture = gl::Texture::create(textureData, GL_ALPHA, textureWidth, textureHeight, format);
+        free(textureData);
     }
 }
 

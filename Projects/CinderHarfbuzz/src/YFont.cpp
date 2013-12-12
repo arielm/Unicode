@@ -57,9 +57,6 @@ YGlyph::YGlyph(unsigned char *data, int width, int height)
 {
     if (width * height > 0)
     {
-        /*
-         * NON-POWER-OF-TWO TEXTURE ARE NOT SUPPORTED ON iOS NOR ANDROID (OPENGL-ES1)
-         */
         int textureWidth = nextPowerOfTwo(width);
         int textureHeight = nextPowerOfTwo(height);
         auto textureData = (unsigned char*)calloc(textureWidth * textureHeight, 1); // WE NEED A ZERO-FILLED AREA
@@ -74,8 +71,6 @@ YGlyph::YGlyph(unsigned char *data, int width, int height)
         
         gl::Texture::Format format;
         format.setInternalFormat(GL_ALPHA);
-        format.enableMipmapping(true);
-        format.setMinFilter(GL_LINEAR_MIPMAP_LINEAR);
         
         texture = gl::Texture::create(textureData, GL_ALPHA, textureWidth, textureHeight, format);
         free(textureData);

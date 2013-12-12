@@ -34,8 +34,6 @@ typedef std::vector<Shape> ShapeLayout;
 class YGlyph
 {
 public:
-    int width;
-    int height;
     ci::gl::TextureRef texture;
     ci::Vec2f offset;
     
