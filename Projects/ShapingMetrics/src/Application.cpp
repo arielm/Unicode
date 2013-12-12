@@ -55,9 +55,9 @@ void Application::setup()
 {
     ftHelper = make_shared<FreetypeHelper>();
     
-    applyDirective(make_shared<Directive>(TextSpan("drop xml directive")));
+//  applyDirective(make_shared<Directive>(TextSpan("drop xml directive")));
 //  applyDirective(make_shared<Directive>(TextSpan("מוּ", HB_SCRIPT_HEBREW, HB_DIRECTION_RTL), "fonts/DroidSansHebrew-Regular.ttf"));
-//  applyDirective(make_shared<Directive>(loadAsset("directives/Hebrew1_osx.xml")));
+    applyDirective(make_shared<Directive>(loadAsset("directives/Hebrew1_osx.xml")));
     
     // ---
     
@@ -126,7 +126,7 @@ void Application::fileDrop(FileDropEvent event)
                     applyDirective(make_shared<Directive>(e));
                 }
             }
-            else if ((extension == ".ttf") || (extension == ".otf"))
+            else if ((extension == ".ttf") || (extension == ".otf") || (extension == ".ttc"))
             {
                 if (currentDirective)
                 {

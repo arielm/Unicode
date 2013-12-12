@@ -37,8 +37,8 @@ using namespace ci;
 using namespace app;
 
 const float FONT_SIZE = 48;
-const float Y0 = 80;
-const float LINE_H = 96;
+const float LINE_TOP = 90;
+const float LINE_SPACING = 90;
 
 class Application : public AppNative
 {
@@ -53,7 +53,7 @@ public:
     void setup();
     
     void draw();
-    void drawLineLayout(YFont &font, const ShapeLayout &layout, float y);
+    void drawLineLayout(YFont &font, const ShapeLayout &layout, float y, float left, float right);
     void drawHLine(float y);
     
     void fileDrop(FileDropEvent event);
@@ -84,23 +84,29 @@ void Application::setup()
 void Application::draw()
 {
     gl::clear(Color::gray(0.5f), false);
-    gl::setMatricesWindow(toPixels(getWindowSize()), true);
+    
+    Vec2i windowSize = toPixels(getWindowSize());
+    gl::setMatricesWindow(windowSize, true);
     
     // ---
     
-    float y = Y0;
+    float y = LINE_TOP;
+    float left = 24;
+    float right = windowSize.x - 24;
     
     for (auto layout : lineLayouts)
     {
-        drawLineLayout(*currentFont, layout, y);
-        y += LINE_H;
+        drawLineLayout(*currentFont, layout, y, left, right);
+        y += LINE_SPACING;
     }
 }
 
-void Application::drawLineLayout(YFont &font, const ShapeLayout &layout, float y)
+void Application::drawLineLayout(YFont &font, const ShapeLayout &layout, float y, float left, float right)
 {
+    float x = (layout.direction == HB_DIRECTION_LTR) ? left : right;
+    
     glColor4f(1, 1, 1, 1);
-    font.drawLayout(layout, Vec2f(24, y));
+    font.drawLayout(layout, Vec2f(x, y));
     
     glColor4f(1, 0.75f, 0, 0.5f);
     drawHLine(y);
@@ -135,7 +141,7 @@ void Application::fileDrop(FileDropEvent event)
                     applyDirective(make_shared<Directive>(e));
                 }
             }
-            else if ((extension == ".ttf") || (extension == ".otf"))
+            else if ((extension == ".ttf") || (extension == ".otf") || (extension == ".ttc"))
             {
                 if (currentDirective)
                 {
