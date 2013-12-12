@@ -7,7 +7,23 @@
  */
 
 /*
- * ...
+ * FEATURES:
+ *
+ * 1) COMPARING BETWEEN TWO FONTS
+ *
+ * 2) TODO: POSSIBILITY TO CHANGE THE SCALE OF ONE OF THE FONTS
+ *
+ * 3) TODO: POSSIBILITY TO SHOW A VERTICAL LINE (FOR EASY COMPARISON BETWEEN THE FONTS...)
+ *
+ *
+ * INSTRUCTIONS:
+ *
+ * 1) DRAG-AND-DROP A "DIRECTIVE" XML-FILE IN ONE OF THE TWO SLOTS
+ *    SEE EXAMPLES IN assets/directives
+ *
+ * 2) OR DRAG A FONT-FILE (.TTF, ETC.)
+ *    - USING A FONT FROM assets/fonts
+ *    - OR ANY OTHER FONT ON YOUR SYSTEM
  */
 
 #include "cinder/app/AppNative.h"
@@ -44,22 +60,23 @@ struct Slot
 class Application : public AppNative
 {
     shared_ptr<FreetypeHelper> ftHelper; // THE UNDERLYING FT_Library WILL BE DESTROYED AFTER ALL THE YFont INSTANCES
-
+    
     Slot slot1;
     Slot slot2;
-   
+    
 public:
     void prepareSettings(Settings *settings);
     void setup();
     
     void draw();
-    void drawLineLayout(YFont &font, const ShapeLayout &layout, float y, float left, float right);
+    void drawLineLayout(YFont &font, const ShapeLayout &layout, float y, float left, float right, float scale);
     void drawVLine(float x, float top = numeric_limits<float>::min(), float bottom = numeric_limits<float>::max());
     void drawHLine(float x, float left = numeric_limits<float>::min(), float right = numeric_limits<float>::max());
     
     void fileDrop(FileDropEvent event);
     void applyDirective(Slot &slot, shared_ptr<Directive> directive);
     void updateTitle();
+    float getLayoutScale(const ShapeLayout &layout, float left, float right);
 };
 
 void Application::prepareSettings(Settings *settings)
@@ -71,15 +88,15 @@ void Application::setup()
 {
     ftHelper = make_shared<FreetypeHelper>();
     
-//    applyDirective(slot1, make_shared<Directive>(TextSpan("drop directive or font")));
-//    applyDirective(slot2, make_shared<Directive>(TextSpan("drop directive or font")));
-
-//    applyDirective(slot1, make_shared<Directive>(TextSpan("לְהַגִּיד בַּבֹּקֶר חַסְדֶּךָ וֶאֱמוּנָתְךָ בַּלֵּילוֹת", HB_SCRIPT_HEBREW, HB_DIRECTION_RTL)));
-//    applyDirective(slot2, make_shared<Directive>(TextSpan("לְהַגִּיד בַּבֹּקֶר חַסְדֶּךָ וֶאֱמוּנָתְךָ בַּלֵּילוֹת", HB_SCRIPT_HEBREW, HB_DIRECTION_RTL), "fonts/DroidSansHebrew-Regular.ttf"));
-
-    applyDirective(slot1, make_shared<Directive>(loadAsset("directives/Hebrew1.xml")));
-    applyDirective(slot2, make_shared<Directive>(loadAsset("directives/Hebrew1_osx.xml")));
-
+    applyDirective(slot1, make_shared<Directive>(TextSpan("drop directive or font")));
+    applyDirective(slot2, make_shared<Directive>(TextSpan("drop directive or font")));
+    
+//  applyDirective(slot1, make_shared<Directive>(TextSpan("לְהַגִּיד בַּבֹּקֶר חַסְדֶּךָ וֶאֱמוּנָתְךָ בַּלֵּילוֹת", HB_SCRIPT_HEBREW, HB_DIRECTION_RTL)));
+//  applyDirective(slot2, make_shared<Directive>(TextSpan("לְהַגִּיד בַּבֹּקֶר חַסְדֶּךָ וֶאֱמוּנָתְךָ בַּלֵּילוֹת", HB_SCRIPT_HEBREW, HB_DIRECTION_RTL), "fonts/DroidSansHebrew-Regular.ttf"));
+    
+//  applyDirective(slot1, make_shared<Directive>(loadAsset("directives/Hebrew1.xml")));
+//  applyDirective(slot2, make_shared<Directive>(loadAsset("directives/Hebrew1_osx.xml")));
+    
     // ---
     
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -92,7 +109,7 @@ void Application::setup()
 void Application::draw()
 {
     gl::clear(Color::gray(0.5f), false);
-
+    
     Vec2i windowSize = toPixels(getWindowSize());
     gl::setMatricesWindow(windowSize, true);
     
@@ -103,24 +120,19 @@ void Application::draw()
     
     float left1 = GUTTER;
     float left2 = middle + GUTTER * 0.5f;
-
+    
     float right1 = middle - GUTTER * 0.5f;
     float right2 = windowSize.x - GUTTER;
     
-    drawLineLayout(*slot1.font, slot1.lineLayout, y, left1, right1);
-    drawLineLayout(*slot2.font, slot2.lineLayout, y, left2, right2);
+    float scale = min(getLayoutScale(slot1.lineLayout, left1, right1), getLayoutScale(slot2.lineLayout, left2, right2));
+    
+    drawLineLayout(*slot1.font, slot1.lineLayout, y, left1, right1, scale);
+    drawLineLayout(*slot2.font, slot2.lineLayout, y, left2, right2, scale);
 }
 
-void Application::drawLineLayout(YFont &font, const ShapeLayout &layout, float y, float left, float right)
+void Application::drawLineLayout(YFont &font, const ShapeLayout &layout, float y, float left, float right, float scale)
 {
     float x = (layout.direction == HB_DIRECTION_LTR) ? left : right;
-    float width = right - left;
-    float scale = 1;
-    
-    if (layout.advance > width)
-    {
-        scale = width / layout.advance;
-    }
     
     glColor4f(1, 1, 1, 1);
     font.drawLayout(layout, Vec2f(x, y), scale);
@@ -193,4 +205,18 @@ void Application::updateTitle()
     getWindow()->setTitle(slot1.getTitle() + "  |  " + slot2.getTitle());
 }
 
-CINDER_APP_NATIVE(Application, RendererGl(RendererGl::AA_NONE))
+float Application::getLayoutScale(const ShapeLayout &layout, float left, float right)
+{
+    float width = right - left;
+    
+    if (layout.advance > width)
+    {
+        return width / layout.advance;
+    }
+    else
+    {
+        return 1;
+    }
+}
+
+CINDER_APP_NATIVE(Application, RendererGl(RendererGl::AA_MSAA_4))
