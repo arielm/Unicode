@@ -11,12 +11,12 @@
  *
  * 1) COMPARING TWO FONTS
  *
- * 2) TODO: POSSIBILITY TO CHANGE THE SCALE OF ONE OF THE FONTS
+ * 2) TODO: RESET FONT-SCALE BY PRESSING ENTER
  *
  *
  * INSTRUCTIONS:
  *
- * 1) IN OF THE TWO "SLOTS" (LEFT OR RIGHT), DRAG-AND-DROP:
+ * 1) DRAG-AND-DROP IN ONE OF THE LEFT OR RIGHT SLOTS:
  *    A) A "DIRECTIVE" .XML FILE:
  *       SEE EXAMPLES IN assets/directives
  *    B) A FONT FILE (.TTF OR .OTF):
@@ -24,6 +24,8 @@
  *       OR USE ANY FONT FROM YOUR SYSTEM
  *
  * 2) CONTROL HORIZONTAL GUIDE-LINE VIA MOUSE-DRAG
+ *
+ * 3) CHANGE RIGHT-SLOT FONT-SCALE VIA MOUSE-WHEEL
  */
 
 #include "cinder/app/AppNative.h"
@@ -38,17 +40,27 @@ using namespace app;
 const float MAX_FONT_SIZE = 96;
 const float GUTTER = 24;
 
+const float SCALE_MIN = 0.5f;
+const float SCALE_MAX = 2.0f;
+const float SCALE_FACTOR = 0.02f;
+
 struct Slot
 {
     shared_ptr<Directive> directive;
     shared_ptr<YFont> font;
     ShapeLayout lineLayout;
+    float scale;
+    
+    Slot()
+    :
+    scale(1)
+    {}
     
     string getTitle() const
     {
         if (font && directive)
         {
-            return font->getName() + " - " + directive->getScriptName();
+            return font->getName() + " - " + directive->getScriptName() + " [" + toString(scale) + "]";
         }
         else
         {
@@ -77,18 +89,19 @@ public:
     void setup();
     
     void draw();
-    void drawLineLayout(YFont &font, const ShapeLayout &layout, float y, float left, float right, float scale);
+    void drawLineLayout(YFont &font, const ShapeLayout &layout, float y, float left, float right, float zoom);
     void drawVLine(float x, float top = numeric_limits<float>::min(), float bottom = numeric_limits<float>::max());
     void drawHLine(float y, float left = numeric_limits<float>::min(), float right = numeric_limits<float>::max());
     
     void mouseDown(MouseEvent event);
     void mouseDrag(MouseEvent event);
     void mouseUp(MouseEvent event);
-    
+    void mouseWheel(MouseEvent event);
     void fileDrop(FileDropEvent event);
+    
     void applyDirective(Slot &slot, shared_ptr<Directive> directive);
     void updateTitle();
-    float getLayoutScale(const ShapeLayout &layout, float left, float right);
+    float getLayoutZoom(const ShapeLayout &layout, float left, float right, float scale);
 };
 
 void Application::prepareSettings(Settings *settings)
@@ -136,10 +149,10 @@ void Application::draw()
     float right1 = middle - GUTTER * 0.5f;
     float right2 = windowSize.x - GUTTER;
     
-    float scale = min(getLayoutScale(slot1.lineLayout, left1, right1), getLayoutScale(slot2.lineLayout, left2, right2));
+    float zoom = min(getLayoutZoom(slot1.lineLayout, left1, right1, slot1.scale), getLayoutZoom(slot2.lineLayout, left2, right2, slot2.scale));
     
-    drawLineLayout(*slot1.font, slot1.lineLayout, y, left1, right1, scale);
-    drawLineLayout(*slot2.font, slot2.lineLayout, y, left2, right2, scale);
+    drawLineLayout(*slot1.font, slot1.lineLayout, y, left1, right1, zoom * slot1.scale);
+    drawLineLayout(*slot2.font, slot2.lineLayout, y, left2, right2, zoom * slot2.scale);
     
     // ---
     
@@ -150,12 +163,12 @@ void Application::draw()
     }
 }
 
-void Application::drawLineLayout(YFont &font, const ShapeLayout &layout, float y, float left, float right, float scale)
+void Application::drawLineLayout(YFont &font, const ShapeLayout &layout, float y, float left, float right, float zoom)
 {
     float x = (layout.direction == HB_DIRECTION_LTR) ? left : right;
     
     glColor4f(1, 1, 1, 1);
-    font.drawLayout(layout, Vec2f(x, y), scale);
+    font.drawLayout(layout, Vec2f(x, y), zoom);
     
     glColor4f(1, 0.75f, 0, 0.5f);
     drawHLine(y, left, right);
@@ -163,7 +176,7 @@ void Application::drawLineLayout(YFont &font, const ShapeLayout &layout, float y
     glColor4f(1, 1, 0, 0.33f);
     drawHLine(y - font.ascent, left, right);
     drawHLine(y + font.descent, left, right);
-    
+
     glColor4f(1, 0.25f, 0, 0.33f);
     drawVLine(left);
     drawVLine(right);
@@ -195,6 +208,14 @@ void Application::mouseUp(MouseEvent event)
     mousePressed = false;
 }
 
+void Application::mouseWheel(MouseEvent event)
+{
+    slot2.scale += event.getWheelIncrement() * math<float>::exp(slot2.scale) * SCALE_FACTOR;
+    slot2.scale = math<float>::clamp(slot2.scale, SCALE_MIN, SCALE_MAX);
+    
+    updateTitle();
+}
+
 void Application::fileDrop(FileDropEvent event)
 {
     if (event.getNumFiles() == 1)
@@ -218,7 +239,7 @@ void Application::fileDrop(FileDropEvent event)
                     applyDirective(slot, make_shared<Directive>(e));
                 }
             }
-            else if ((extension == ".ttf") || (extension == ".otf") || (extension == ".ttc"))
+            else if ((extension == ".ttf") || (extension == ".otf"))
             {
                 applyDirective(slot, make_shared<Directive>(file, *slot.directive));
             }
@@ -241,13 +262,13 @@ void Application::updateTitle()
     getWindow()->setTitle(slot1.getTitle() + "  |  " + slot2.getTitle());
 }
 
-float Application::getLayoutScale(const ShapeLayout &layout, float left, float right)
+float Application::getLayoutZoom(const ShapeLayout &layout, float left, float right, float scale)
 {
     float width = right - left;
     
-    if (layout.advance > width)
+    if (layout.advance * scale > width)
     {
-        return width / layout.advance;
+        return width / (layout.advance * scale);
     }
     else
     {

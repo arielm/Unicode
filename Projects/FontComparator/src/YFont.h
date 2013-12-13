@@ -75,7 +75,7 @@ public:
     ~YFont();
     
     ShapeLayout createLayout(const TextSpan &span);
-    void drawLayout(const ShapeLayout &layout, ci::Vec2f origin, float scale);
+    void drawLayout(const ShapeLayout &layout, ci::Vec2f origin, float zoom);
     std::string getName() const;
 
 protected:

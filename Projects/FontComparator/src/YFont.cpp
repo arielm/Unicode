@@ -171,16 +171,16 @@ ShapeLayout YFont::createLayout(const TextSpan &span)
     return layout;
 }
 
-void YFont::drawLayout(const ShapeLayout &layout, Vec2f origin, float scale)
+void YFont::drawLayout(const ShapeLayout &layout, Vec2f origin, float zoom)
 {
     if (layout.direction == HB_DIRECTION_RTL)
     {
-        origin.x -= layout.advance * scale;
+        origin.x -= layout.advance * zoom;
     }
 
     glPushMatrix();
     gl::translate(origin);
-    glScalef(scale, scale, 1);
+    glScalef(zoom, zoom, 1);
     
     for (auto shape : layout.shapes)
     {
