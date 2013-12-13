@@ -11,7 +11,7 @@
  *
  * 1) COMPARING TWO FONTS
  *
- * 2) TODO: RESET FONT-SCALE BY PRESSING ENTER
+ * 2) TWEAKING THE SCALE OF ONE FONT RELATIVE TO THE OTHER
  *
  *
  * INSTRUCTIONS:
@@ -25,7 +25,9 @@
  *
  * 2) CONTROL HORIZONTAL GUIDE-LINE VIA MOUSE-DRAG
  *
- * 3) CHANGE RIGHT-SLOT FONT-SCALE VIA MOUSE-WHEEL
+ * 3) CHANGE THE FONT-SCALE IN RIGHT-SLOT VIA MOUSE-WHEEL
+ *
+ * 4) RESET FONT-SCALE BY PRESSING ENTER
  */
 
 #include "cinder/app/AppNative.h"
@@ -42,7 +44,8 @@ const float GUTTER = 24;
 
 const float SCALE_MIN = 0.5f;
 const float SCALE_MAX = 2.0f;
-const float SCALE_FACTOR = 0.02f;
+const float SCALE_WHEEL_FACTOR = 0.05f;
+const float SCALE_KEYBOARD_INCREMENT = 0.01f;
 
 struct Slot
 {
@@ -88,8 +91,10 @@ public:
     void prepareSettings(Settings *settings);
     void setup();
     
+    void update();
     void draw();
-    void drawLineLayout(YFont &font, const ShapeLayout &layout, float y, float left, float right, float zoom);
+    
+    void drawSlot(const Slot &slot, float y, float left, float right, float zoom);
     void drawVLine(float x, float top = numeric_limits<float>::min(), float bottom = numeric_limits<float>::max());
     void drawHLine(float y, float left = numeric_limits<float>::min(), float right = numeric_limits<float>::max());
     
@@ -97,11 +102,12 @@ public:
     void mouseDrag(MouseEvent event);
     void mouseUp(MouseEvent event);
     void mouseWheel(MouseEvent event);
+    void keyDown(KeyEvent event);
     void fileDrop(FileDropEvent event);
     
     void applyDirective(Slot &slot, shared_ptr<Directive> directive);
     void updateTitle();
-    float getLayoutZoom(const ShapeLayout &layout, float left, float right, float scale);
+    float getSlotZoom(const Slot &slot, float left, float right);
 };
 
 void Application::prepareSettings(Settings *settings)
@@ -116,8 +122,8 @@ void Application::setup()
     applyDirective(slot1, make_shared<Directive>(TextSpan("drop directive or font")));
     applyDirective(slot2, make_shared<Directive>(TextSpan("drop directive or font")));
     
-//  applyDirective(slot1, make_shared<Directive>(TextSpan("לְהַגִּיד בַּבֹּקֶר חַסְדֶּךָ וֶאֱמוּנָתְךָ בַּלֵּילוֹת", HB_SCRIPT_HEBREW, HB_DIRECTION_RTL)));
-//  applyDirective(slot2, make_shared<Directive>(TextSpan("לְהַגִּיד בַּבֹּקֶר חַסְדֶּךָ וֶאֱמוּנָתְךָ בַּלֵּילוֹת", HB_SCRIPT_HEBREW, HB_DIRECTION_RTL), "fonts/DroidSansHebrew-Regular.ttf"));
+//  applyDirective(slot1, make_shared<Directive>(TextSpan("ABCDE abcde 0123456789"), "fonts/DroidSans.ttf"));
+//  applyDirective(slot2, make_shared<Directive>(TextSpan("אבגדה 0123456789", HB_SCRIPT_HEBREW, HB_DIRECTION_RTL), "fonts/DroidSansHebrew-Regular.ttf"));
     
 //  applyDirective(slot1, make_shared<Directive>(loadAsset("directives/Hebrew1.xml")));
 //  applyDirective(slot2, make_shared<Directive>(loadAsset("directives/Hebrew1_osx.xml")));
@@ -129,6 +135,11 @@ void Application::setup()
     
     glDisable(GL_DEPTH_TEST);
     glDepthMask(GL_FALSE);
+}
+
+void Application::update()
+{
+    updateTitle();
 }
 
 void Application::draw()
@@ -149,10 +160,10 @@ void Application::draw()
     float right1 = middle - GUTTER * 0.5f;
     float right2 = windowSize.x - GUTTER;
     
-    float zoom = min(getLayoutZoom(slot1.lineLayout, left1, right1, slot1.scale), getLayoutZoom(slot2.lineLayout, left2, right2, slot2.scale));
+    float zoom = min(getSlotZoom(slot1, left1, right1), getSlotZoom(slot2, left2, right2));
     
-    drawLineLayout(*slot1.font, slot1.lineLayout, y, left1, right1, zoom * slot1.scale);
-    drawLineLayout(*slot2.font, slot2.lineLayout, y, left2, right2, zoom * slot2.scale);
+    drawSlot(slot1, y, left1, right1, zoom);
+    drawSlot(slot2, y, left2, right2, zoom);
     
     // ---
     
@@ -163,19 +174,19 @@ void Application::draw()
     }
 }
 
-void Application::drawLineLayout(YFont &font, const ShapeLayout &layout, float y, float left, float right, float zoom)
+void Application::drawSlot(const Slot &slot, float y, float left, float right, float zoom)
 {
-    float x = (layout.direction == HB_DIRECTION_LTR) ? left : right;
+    float x = (slot.lineLayout.direction == HB_DIRECTION_LTR) ? left : right;
     
     glColor4f(1, 1, 1, 1);
-    font.drawLayout(layout, Vec2f(x, y), zoom);
+    slot.font->drawLayout(slot.lineLayout, Vec2f(x, y), slot.scale * zoom);
     
     glColor4f(1, 0.75f, 0, 0.5f);
     drawHLine(y, left, right);
     
     glColor4f(1, 1, 0, 0.33f);
-    drawHLine(y - font.ascent, left, right);
-    drawHLine(y + font.descent, left, right);
+    drawHLine(y - slot.font->ascent, left, right);
+    drawHLine(y + slot.font->descent, left, right);
 
     glColor4f(1, 0.25f, 0, 0.33f);
     drawVLine(left);
@@ -210,10 +221,26 @@ void Application::mouseUp(MouseEvent event)
 
 void Application::mouseWheel(MouseEvent event)
 {
-    slot2.scale += event.getWheelIncrement() * math<float>::exp(slot2.scale) * SCALE_FACTOR;
+    slot2.scale += event.getWheelIncrement() * math<float>::exp(slot2.scale) * SCALE_WHEEL_FACTOR;
     slot2.scale = math<float>::clamp(slot2.scale, SCALE_MIN, SCALE_MAX);
-    
-    updateTitle();
+}
+
+void Application::keyDown(KeyEvent event)
+{
+    switch (event.getCode())
+    {
+        case KeyEvent::KEY_RETURN:
+            slot2.scale = 1;
+            break;
+            
+        case KeyEvent::KEY_UP:
+            slot2.scale = math<float>::clamp(slot2.scale + SCALE_KEYBOARD_INCREMENT, SCALE_MIN, SCALE_MAX);
+            break;
+            
+        case KeyEvent::KEY_DOWN:
+            slot2.scale = math<float>::clamp(slot2.scale - SCALE_KEYBOARD_INCREMENT, SCALE_MIN, SCALE_MAX);
+            break;
+    }
 }
 
 void Application::fileDrop(FileDropEvent event)
@@ -253,8 +280,6 @@ void Application::applyDirective(Slot &slot, shared_ptr<Directive> directive)
     slot.font = make_shared<YFont>(ftHelper, directive->fontPath, MAX_FONT_SIZE);
     
     slot.lineLayout = slot.font->createLayout(directive->span);
-    
-    updateTitle();
 }
 
 void Application::updateTitle()
@@ -262,13 +287,13 @@ void Application::updateTitle()
     getWindow()->setTitle(slot1.getTitle() + "  |  " + slot2.getTitle());
 }
 
-float Application::getLayoutZoom(const ShapeLayout &layout, float left, float right, float scale)
+float Application::getSlotZoom(const Slot &slot, float left, float right)
 {
     float width = right - left;
     
-    if (layout.advance * scale > width)
+    if (slot.lineLayout.advance * slot.scale > width)
     {
-        return width / (layout.advance * scale);
+        return width / slot.lineLayout.advance / slot.scale;
     }
     else
     {
