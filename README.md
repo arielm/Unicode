@@ -21,6 +21,7 @@ So far, [Harfbuzz](https://github.com/behdad/harfbuzz) have been tested as a sol
 1. [CinderHarfbuzz](Projects/CinderHarfbuzz)
 2. [ShapingTester](Projects/ShapingTester)
 3. [ShapingMetrics](Projects/ShapingMetrics)
+4. [FontComparator](Projects/FontComparator)
 
 More work remains, notably testing the performance on low-end mobile devices with limited processing-power and memory.
 
@@ -50,8 +51,8 @@ The folder hierarchy should look like:
 1. Enter the relevant folder in `Projects`
 2. Open the relevant XCode project (under `osx` or `ios`)
 
+Tested with OSX 10.7.5 and XCode 4.6.2.  
 Tested with OSX 10.5.8 and XCode 5.0.2.  
-TODO: test with OSX 10.7.x and XCode 4.6.x  
 
 **Running on Android**
 
