@@ -9,21 +9,21 @@
 /*
  * FEATURES:
  *
- * 1) COMPARING BETWEEN TWO FONTS
+ * 1) COMPARING TWO FONTS
  *
  * 2) TODO: POSSIBILITY TO CHANGE THE SCALE OF ONE OF THE FONTS
- *
- * 3) TODO: POSSIBILITY TO SHOW A VERTICAL LINE (FOR EASY COMPARISON BETWEEN THE FONTS...)
  *
  *
  * INSTRUCTIONS:
  *
- * 1) DRAG-AND-DROP A "DIRECTIVE" XML-FILE IN ONE OF THE TWO SLOTS
- *    SEE EXAMPLES IN assets/directives
+ * 1) IN OF THE TWO "SLOTS" (LEFT OR RIGHT), DRAG-AND-DROP:
+ *    A) A "DIRECTIVE" .XML FILE:
+ *       SEE EXAMPLES IN assets/directives
+ *    B) A FONT FILE (.TTF OR .OTF):
+ *       SEE FONTS IN assets/fonts
+ *       OR USE ANY FONT FROM YOUR SYSTEM
  *
- * 2) OR DRAG A FONT-FILE (.TTF, ETC.)
- *    - USING A FONT FROM assets/fonts
- *    - OR ANY OTHER FONT ON YOUR SYSTEM
+ * 2) CONTROL HORIZONTAL GUIDE-LINE VIA MOUSE-DRAG
  */
 
 #include "cinder/app/AppNative.h"
@@ -35,7 +35,7 @@ using namespace std;
 using namespace ci;
 using namespace app;
 
-const float MAX_FONT_SIZE = 64;
+const float MAX_FONT_SIZE = 96;
 const float GUTTER = 24;
 
 struct Slot
@@ -64,14 +64,26 @@ class Application : public AppNative
     Slot slot1;
     Slot slot2;
     
+    bool mousePressed;
+    float mouseY;
+    
 public:
+    Application()
+    :
+    mousePressed(false)
+    {}
+
     void prepareSettings(Settings *settings);
     void setup();
     
     void draw();
     void drawLineLayout(YFont &font, const ShapeLayout &layout, float y, float left, float right, float scale);
     void drawVLine(float x, float top = numeric_limits<float>::min(), float bottom = numeric_limits<float>::max());
-    void drawHLine(float x, float left = numeric_limits<float>::min(), float right = numeric_limits<float>::max());
+    void drawHLine(float y, float left = numeric_limits<float>::min(), float right = numeric_limits<float>::max());
+    
+    void mouseDown(MouseEvent event);
+    void mouseDrag(MouseEvent event);
+    void mouseUp(MouseEvent event);
     
     void fileDrop(FileDropEvent event);
     void applyDirective(Slot &slot, shared_ptr<Directive> directive);
@@ -128,6 +140,14 @@ void Application::draw()
     
     drawLineLayout(*slot1.font, slot1.lineLayout, y, left1, right1, scale);
     drawLineLayout(*slot2.font, slot2.lineLayout, y, left2, right2, scale);
+    
+    // ---
+    
+    if (mousePressed)
+    {
+        glColor4f(0, 0.5f, 1, 0.75f);
+        drawHLine(mouseY);
+    }
 }
 
 void Application::drawLineLayout(YFont &font, const ShapeLayout &layout, float y, float left, float right, float scale)
@@ -157,6 +177,22 @@ void Application::drawVLine(float x, float top, float bottom)
 void Application::drawHLine(float y, float left, float right)
 {
     gl::drawLine(Vec2f(left, y), Vec2f(right, y));
+}
+
+void Application::mouseDown(MouseEvent event)
+{
+    mousePressed = true;
+    mouseY = event.getY();
+}
+
+void Application::mouseDrag(MouseEvent event)
+{
+    mouseY = event.getY();
+}
+
+void Application::mouseUp(MouseEvent event)
+{
+    mousePressed = false;
 }
 
 void Application::fileDrop(FileDropEvent event)
