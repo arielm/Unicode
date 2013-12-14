@@ -14,7 +14,9 @@ ShapingMetrics
 
 ![Screenshot](screenshot.png)
 
-Installation instructions and more at https://github.com/arielm/Unicode
+Installation instructions and more at https://github.com/arielm/Unicode  
+
+Executable available for OSX: [v1.0.0](https://github.com/arielm/Unicode/releases/download/v1.0.0/Unicode-1.0.0.zip)
 
 **Creating symbolic links to access your system's fonts via the Finder on OSX 10.7 and 10.8**
 
