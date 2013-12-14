@@ -10,7 +10,7 @@ ShapingTester
 
 Installation instructions and more at https://github.com/arielm/Unicode
 
-**How to manipulate your system's font in the Finder on OSX 10.7 and 10.8**
+**Creating symbolic links to access your system's fonts via the Finder on OSX 10.7 and 10.8**
 
 `mkdir ~/Documents/Fonts`  
 `ln -s /Library/Fonts/* ~/Documents/Fonts`  
