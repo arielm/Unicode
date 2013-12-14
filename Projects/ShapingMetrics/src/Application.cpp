@@ -6,35 +6,6 @@
  * https://github.com/arielm/Unicode/blob/master/LICENSE.md
  */
 
-/*
- * FEATURES:
- *
- * 1) RENDERING OF A SINGLE-LINE SPAN, PROPERLY SCALED TO FIT THE VIEWPORT
- *    STRAIGHTFORWARD SCALING AND MIPMAPS ARE USED (INSTEAD OF RASTERIZING FOR EACH SIZE...)
- *
- * 2) SHOWING A BOUNDING-BOX FOR EACH GLYPH:
- *    - REGULAR CHARACTERS IN GREEN
- *    - NON-SPACING-MARKS IN BLUE
- *
- *
- * INSTRUCTIONS:
- *
- * 1) DRAG-AND-DROP A "DIRECTIVE" XML-FILE
- *    SEE EXAMPLES IN assets/directives
- *
- * 2) OR DRAG A FONT-FILE (.TTF OR .OTF)
- *    - USING A FONT FROM assets/fonts
- *    - OR ANY OTHER FONT ON YOUR SYSTEM
- *
- * 2) PRESS "ENTER" TO TOGGLE BOUNDING-BOXES
- *
- *
- * NOTES:
- *
- * 1) IN directives/Devanagari1.xml:
- *    CHECK THE RIGHTMOST "VIRAMA" SIGN: IT CONFIRMS THAT NON-SPACING-MARKS ARE NOT INFLUENCING LAYOUT-WIDTH
- */
-
 #include "cinder/app/AppNative.h"
 
 #include "YFont.h"
@@ -166,7 +137,7 @@ void Application::fileDrop(FileDropEvent event)
                     applyDirective(make_shared<Directive>(e));
                 }
             }
-            else if ((extension == ".ttf") || (extension == ".otf") || (extension == ".ttc"))
+            else if ((extension == ".ttf") || (extension == ".otf"))
             {
                 applyDirective(make_shared<Directive>(file, *currentDirective));
             }

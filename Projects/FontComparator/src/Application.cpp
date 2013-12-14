@@ -6,30 +6,6 @@
  * https://github.com/arielm/Unicode/blob/master/LICENSE.md
  */
 
-/*
- * FEATURES:
- *
- * 1) COMPARING TWO FONTS
- *
- * 2) TWEAKING THE SCALE OF ONE FONT RELATIVE TO THE OTHER
- *
- *
- * INSTRUCTIONS:
- *
- * 1) DRAG-AND-DROP IN ONE OF THE LEFT OR RIGHT SLOTS:
- *    A) A "DIRECTIVE" XML FILE:
- *       SEE EXAMPLES IN assets/directives
- *    B) A FONT FILE (.TTF OR .OTF):
- *       USING A FONT FROM assets/fonts
- *       OR ANY OTHER FONT ON YOUR SYSTEM
- *
- * 2) CONTROL HORIZONTAL GUIDE-LINE VIA MOUSE-DRAG
- *
- * 3) CHANGE THE FONT-SCALE IN RIGHT-SLOT VIA MOUSE-WHEEL OR THE UP/DOWN KEYS
- *
- * 4) RESET FONT-SCALE BY PRESSING ENTER
- */
-
 #include "cinder/app/AppNative.h"
 
 #include "YFont.h"
