@@ -1,7 +1,7 @@
 The Unicode test suite for Cinder & C++11
 =========================================
 
-The goal is to provide building blocks for handling Unicode text rendering from the ground-up on OSX, iOS and Android (Windows support should be trivial to add, contributions are welcome...)  
+The goal is to provide building blocks for handling Unicode text rendering from the ground-up on OSX, iOS and Android (**Windows support should be trivial to add, contributions are welcome!**)  
 
 **Topics of interest**
 
@@ -28,7 +28,7 @@ More work remains, notably testing the performance on low-end mobile devices wit
 Installation
 ------------
 
-The instructions are for OSX but everything should work similarely on Windows (contributions are welcome.)  
+The instructions are for OSX.  
 
 1. Download [Cinder 0.8.5 Vanilla](http://libcinder.org/releases/cinder_0.8.5_mac.zip)
 2. Unzip and rename the "cinder_0.8.5_mac" folder to "Cinder"
