@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- source: http://www.unicode.org/standard/translations/s-chinese.html -->
+<!-- translation: Long live the invincible Mao Zedong Thought -->
+<!-- source: http://en.wikipedia.org/wiki/Simplified_Chinese_characters#Distribution_and_use -->
 <!-- remark: simplified chinese -->
 <text script="Hani" font="fonts/DroidSansFallback.ttf">
-    Unicode给每个字符提供了一个唯一的数字，
+    战无不胜的毛泽东思想万岁
 </text>

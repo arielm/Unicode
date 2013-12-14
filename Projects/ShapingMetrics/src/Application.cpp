@@ -22,7 +22,7 @@
  * 1) DRAG-AND-DROP A "DIRECTIVE" XML-FILE
  *    SEE EXAMPLES IN assets/directives
  *
- * 2) OR DRAG A FONT-FILE (.TTF, ETC.)
+ * 2) OR DRAG A FONT-FILE (.TTF OR .OTF)
  *    - USING A FONT FROM assets/fonts
  *    - OR ANY OTHER FONT ON YOUR SYSTEM
  *
