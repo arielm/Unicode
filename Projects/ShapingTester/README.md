@@ -18,4 +18,4 @@ Installation instructions and more at https://github.com/arielm/Unicode
 
 **Remarks**
 
-This is a minimal test: RTL alignment is not handled and rendering is not optimized.
+Rendering is not optimized.
