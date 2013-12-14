@@ -11,4 +11,4 @@ Installation instructions and more at https://github.com/arielm/Unicode
 
 **Remarks**
 
-RTL alignment is not handled and rendering is not optimized (consider the projects in this repository as iterations...)
+RTL alignment is not handled and **rendering is not optimized** (consider each of the projects in this repository as an iteration...)
