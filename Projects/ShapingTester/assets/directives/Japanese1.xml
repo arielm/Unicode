@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- source: http://www.unicode.org/standard/translations/japanese.html -->
 <!-- remark: DroidSansJapanese seems "broken or irrelevant" in term of harfbuzz -->
-<!-- remark: not sure if this is the correct script -->
 <text script="Kana" font="fonts/DroidSansFallback.ttf">
     ユニコードとは何か？
     ユニコードは、すべての文字に固有の番号を付与します

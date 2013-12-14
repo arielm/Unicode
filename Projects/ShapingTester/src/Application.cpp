@@ -6,27 +6,6 @@
  * https://github.com/arielm/Unicode/blob/master/LICENSE.md
  */
 
-/*
- * DRAG-AND-DROP SOME "XML DIRECTIVE":
- * SEE assets/directives
- *
- * THE "font" ATTRIBUTE SHOULD POINT TO A FONT-FILE ON YOUR DISK, E.G.
- * "/Library/Fonts/AdobeHebrew-Regular.otf"
- *
- * OR TO ONE OF THE FILES IN assets/fonts, E.G.
- * "fonts/DroidSansFallback.ttf"
- *
- * THE "script" ATTRIBUTE SHOULD BE ONE OF:
- * https://github.com/behdad/harfbuzz/blob/0.9.24/src/hb-common.h#L151-274
- * http://unicode.org/iso15924/iso15924-codes.html
- */
-
-// OR  DRAG-AND-DROP SOME FONT-FILE (.TTF OR .OTF)
-//
-// THE FOLLOWING COMMANDS WILL PLACE SYMLINKS OF YOUR SYSTEM FONTS IN ~/Documents/Fonts ON OSX:
-// ln -s /Library/Fonts/* ~/Documents/Fonts/
-// ln -s /System/Library/Fonts/* ~/Documents/Fonts/
-
 #include "cinder/app/AppNative.h"
 
 #include "YFont.h"
@@ -141,7 +120,7 @@ void Application::fileDrop(FileDropEvent event)
                     applyDirective(make_shared<Directive>(e));
                 }
             }
-            else if ((extension == ".ttf") || (extension == ".otf") || (extension == ".ttc"))
+            else if ((extension == ".ttf") || (extension == ".otf"))
             {
                 applyDirective(make_shared<Directive>(file, *currentDirective));
             }
