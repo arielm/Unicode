@@ -25,10 +25,6 @@ So far, [Harfbuzz](https://github.com/behdad/harfbuzz) have been tested as a sol
 
 More work remains, notably testing the performance on low-end mobile devices with limited processing-power and memory.
 
-**Remarks**
-
-Rendering in the current projects is not optimized at all. Eventually, texture-atlases and vertex-buffers will be used.
-
 Installation
 ------------
 
