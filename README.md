@@ -1,7 +1,7 @@
 The Unicode test suite for Cinder & C++11
 =========================================
 
-The goal is to provide building blocks for handling Unicode text rendering from the ground-up on OSX, iOS and Android (**Windows support should be trivial to add, contributions are welcome!**)  
+The goal is to provide building blocks for handling Unicode text rendering from the ground-up on OSX, iOS and Android (**Windows support should be trivial to add**, contributions are welcome...)  
 
 **Topics of interest**
 
@@ -56,7 +56,7 @@ Prerequisites:
 
 1. [Safetydank's fork of Cinder](https://github.com/safetydank/Cinder)
 2. [NDK r8e](http://dl.google.com/android/ndk/android-ndk-r8e-darwin-x86_64.tar.bz2)
-3. [July 29th version of Android SDK](http://dl.google.com/android/adt/adt-bundle-mac-x86_64-20130729.zip)
+3. [ADT 22.0.5](http://dl.google.com/android/adt/adt-bundle-mac-x86_64-20130729.zip)
 
 Then:
 
