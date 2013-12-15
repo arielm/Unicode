@@ -14,6 +14,12 @@ The goal is to provide building blocks for handling Unicode text rendering from 
 
 [Freetype](http://www.freetype.org) should be used behind the scenes. In addition, existing quality open-source fonts should be evaluated, starting with [those bundled with the Android platform](fonts).
 
+**Motivations and scope**
+
+The goal is to provide support for internationalization in interactive applications and games created with Cinder. Currently, there is no appropriate cross-platform solution due the lack of public C++ API for text-rendering on Android. 
+
+This is, however, not going to replace OS solutions like *CoreText*, and not all the features implemented in modern browsers will be supported. For example, *automatic-language-detection* is out-of-scope (some contextual info will be required for each piece of text...)
+
 **Progress**
 
 So far, [Harfbuzz](https://github.com/behdad/harfbuzz) have been tested as a solution for shaping via the following projects:
@@ -23,7 +29,7 @@ So far, [Harfbuzz](https://github.com/behdad/harfbuzz) have been tested as a sol
 3. [ShapingMetrics](Projects/ShapingMetrics)
 4. [FontComparator](Projects/FontComparator)
 
-More work remains, notably testing the performance on low-end mobile devices with limited processing-power and memory.
+More work remains, notably testing how Harfbuzz performs on low-end mobile devices with limited processing-power and memory.
 
 Installation
 ------------
