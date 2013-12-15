@@ -7,7 +7,7 @@
  */
 
 /*
- * TESTING LANGUAGE-SPECIFIC FEATURES, AS DESCRIBE IN:
+ * TESTING LANGUAGE-SPECIFIC FEATURES, AS DESCRIBED IN:
  * http://www.mail-archive.com/harfbuzz@lists.freedesktop.org/msg03194.html
  *
  *
