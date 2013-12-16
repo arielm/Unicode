@@ -8,7 +8,7 @@ It works only for the first letter, with *Verdana.ttf* (version installed on OSX
 Reference: https://bugs.webkit.org/show_bug.cgi?id=37984
 
 **English vs Romanian**  
-It works as intended with DejaVuSerif.ttf (version 2.34)  
+It works as intended with *DejaVuSerif.ttf* (version 2.34)  
 Reference: http://en.wikipedia.org/wiki/Pango  
 
 **Arabic vs Sindhi**  
