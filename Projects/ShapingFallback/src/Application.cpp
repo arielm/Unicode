@@ -16,8 +16,8 @@
  *
  *
  * UPDATE:
- * - IT IS NOT WORKING AS INTENDED WHEN INTRODUCING DIACRITICS!
- * - LET'S TRY TO MAKE USE OF THE CLUSTER INFO, AS IN MAPNIK...
+ * - SOME PROGRESS (NOW USING THE CLUSTER INFO)
+ * - STILL SOME ISSUES WITH DIACRITICS...
  */
 
 #include "cinder/app/AppNative.h"
@@ -72,9 +72,9 @@ void Application::draw()
 {
     gl::clear(Color::gray(0.5f), false);
     gl::setMatricesWindow(toPixels(getWindowSize()), true);
-    
-    drawSpan(*font1, *font2, TextSpan("אב;גד 123ו", HB_SCRIPT_HEBREW, HB_DIRECTION_RTL, "he"), 128);
-    drawSpan(*font1, *font2, TextSpan("אֱב;גד 123וּ", HB_SCRIPT_HEBREW, HB_DIRECTION_RTL, "he"), 256); // NOT WORKING AS INTENDED
+
+    drawSpan(*font1, *font2, TextSpan("זֹאת הִיא הַשְּׁאֵלָה", HB_SCRIPT_HEBREW, HB_DIRECTION_RTL, "he"), 128); // NOT WORKING AS INTENDED: SOME OF THE DIACRITICS ARE MISSING
+    drawSpan(*font1, *font2, TextSpan("אֱב;גד 123וּ", HB_SCRIPT_HEBREW, HB_DIRECTION_RTL, "he"), 256); // WORKING AS INTENDED
 }
 
 void Application::drawSpan(YFont &font1, YFont &font2, const TextSpan &span, float y)
@@ -90,7 +90,7 @@ void Application::drawSpan(YFont &font1, YFont &font2, const TextSpan &span, flo
     const char *shapers[]  = { "ot", "fallback", NULL };
     hb_buffer_t *buffer = hb_buffer_create();
 
-    vector<Shape> shapes;
+    map<uint32_t, Shape> shapes;
 
     /*
      * FIRST PASS
@@ -99,8 +99,8 @@ void Application::drawSpan(YFont &font1, YFont &font2, const TextSpan &span, flo
     span.apply(buffer);
     hb_shape_full(font1.hbFont, buffer, NULL, 0, shapers);
     
-    unsigned int glyphCount;
-    auto glyph_info = hb_buffer_get_glyph_infos(buffer, &glyphCount);
+    auto glyphCount = hb_buffer_get_length(buffer);
+    auto glyph_info = hb_buffer_get_glyph_infos(buffer, nullptr);
     auto glyph_pos = hb_buffer_get_glyph_positions(buffer, nullptr);
     
     for (int i = 0; i < glyphCount; i++)
@@ -111,13 +111,12 @@ void Application::drawSpan(YFont &font1, YFont &font2, const TextSpan &span, flo
         
         if (codepoint)
         {
-            shapes.emplace_back(&font1, codepoint, offset, advance);
+            shapes[glyph_info[i].cluster] = Shape(&font1, codepoint, offset, advance);
         }
-        else
-        {
-            shapes.emplace_back(); // MAKING ROOM FOR LATER
-        }
+        
+//      cout << codepoint << " | " << glyph_info[i].cluster << " | " << advance * font1.scale.x << endl;
     }
+//  cout << endl;
 
     hb_buffer_clear_contents(buffer);
 
@@ -128,6 +127,10 @@ void Application::drawSpan(YFont &font1, YFont &font2, const TextSpan &span, flo
     span.apply(buffer);
     hb_shape_full(font2.hbFont, buffer, NULL, 0, shapers);
     
+    glyphCount = hb_buffer_get_length(buffer);
+    glyph_info = hb_buffer_get_glyph_infos(buffer, nullptr);
+    glyph_pos = hb_buffer_get_glyph_positions(buffer, nullptr);
+    
     for (int i = 0; i < glyphCount; i++)
     {
         auto codepoint = glyph_info[i].codepoint;
@@ -136,9 +139,12 @@ void Application::drawSpan(YFont &font1, YFont &font2, const TextSpan &span, flo
         
         if (codepoint)
         {
-            shapes[i].update(&font2, codepoint, offset, advance);
+            shapes[glyph_info[i].cluster] = Shape(&font2, codepoint, offset, advance);
         }
+        
+//      cout << codepoint << " | " << glyph_info[i].cluster << " | " << advance * font2.scale.x << endl;
     }
+//  cout << endl;
     
     hb_buffer_destroy(buffer);
     
@@ -147,9 +153,9 @@ void Application::drawSpan(YFont &font1, YFont &font2, const TextSpan &span, flo
     glPushMatrix();
     glTranslatef(x, y, 0);
     
-    for (int i = 0; i < glyphCount; i++)
+    for (auto it = shapes.rbegin(); it != shapes.rend(); ++it)
     {
-        float advance = shapes[i].draw();
+        float advance = it->second.draw();
         glTranslatef(advance, 0, 0);
     }
     

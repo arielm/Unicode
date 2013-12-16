@@ -51,11 +51,6 @@ static int nextPowerOfTwo(int x)
     return result;
 }
 
-Shape::Shape()
-:
-font(NULL)
-{}
-
 Shape::Shape(YFont *font, hb_codepoint_t codepoint, const Vec2f &offset, float advance)
 :
 font(font),
@@ -63,14 +58,6 @@ codepoint(codepoint),
 offset(offset),
 advance(advance)
 {}
-
-void Shape::update(YFont *font, hb_codepoint_t codepoint, const Vec2f &offset, float advance)
-{
-    this->font = font;
-    this->codepoint = codepoint;
-    this->offset = offset;
-    this->advance = advance;
-}
 
 float Shape::draw()
 {
