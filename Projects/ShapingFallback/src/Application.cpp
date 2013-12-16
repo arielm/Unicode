@@ -11,15 +11,13 @@
  * https://github.com/mapnik/mapnik/blob/64d5153aeaeb1c9e736bfead297dfea39b066d2c/include/mapnik/text/harfbuzz_shaper.hpp
  *
  *
- * DroidSansHebrew-Regular.ttf IS ONLY CONTAINING HEBREW CHARACTERS AND DIACRITICS
+ * DroidSansHebrew-Regular.ttf IS ONLY CONTAINING HEBREW LETTERS AND DIACRITICS
  * THEREFORE, WE RELY ON DroidSans.ttf FOR ANYTHING ELSE
  *
  *
  * UPDATE:
- * - SOME PROGRESS WITH CLUSTERS AND DIACRITICS, BUT STILL NOT THERE
- *   - std::multimap IS NOT THE RIGHT CONTAINER:
- *     DIACRITICS ARE PLACE AFTER THE LETTER,
- *     WHICH IS PROBLEMATIC WITH THE CURRENT ADVANCEMENT METHOD
+ * - NOW SEEMS TO WORKS AS INTENDED
+ * - LET'S FIND A MORE ELEGANT WAY TO HANDLE THIS...
  */
 
 #include "cinder/app/AppNative.h"
@@ -154,10 +152,19 @@ void Application::drawSpan(YFont &font1, YFont &font2, const TextSpan &span, flo
     glPushMatrix();
     glTranslatef(x, y, 0);
     
+    uint32_t lastCluster = -1;
+    float advance = 0;
+    
     for (auto it = shapes.rbegin(); it != shapes.rend(); ++it)
     {
-        float advance = it->second.draw();
-        glTranslatef(advance, 0, 0);
+        if (it->first != lastCluster)
+        {
+            glTranslatef(advance, 0, 0);
+            advance = 0;
+            lastCluster = it->first;
+        }
+
+        advance += it->second.draw();
     }
     
     glPopMatrix();
