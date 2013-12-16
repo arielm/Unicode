@@ -3,7 +3,7 @@ LanguageFeatures
 
 I was not sure about the necessity to specify a *language* when peforming shaping with Harfbuzz so I asked [this question](http://www.mail-archive.com/harfbuzz@lists.freedesktop.org/msg03194.html) in the mailing list. The answer is that it can make a difference, as demonstrated in this project:  
 
-**Russian vs Cyrillic**  
+**Russian vs Serbian**  
 It works only for the first letter, with *DejaVuSerif.ttf* (version 2.34)  
 Reference: https://bugs.webkit.org/show_bug.cgi?id=37984
 
