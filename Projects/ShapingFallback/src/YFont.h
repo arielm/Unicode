@@ -35,9 +35,7 @@ public:
     ci::Vec2f offset;
     float advance;
     
-    Shape() {}
     Shape(YFont *font, hb_codepoint_t codepoint, const ci::Vec2f &offset, float advance);
-    
     float draw();
 };
 

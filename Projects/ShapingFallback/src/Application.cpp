@@ -16,8 +16,10 @@
  *
  *
  * UPDATE:
- * - SOME PROGRESS (NOW USING THE CLUSTER INFO)
- * - STILL SOME ISSUES WITH DIACRITICS...
+ * - SOME PROGRESS WITH CLUSTERS AND DIACRITICS, BUT STILL NOT THERE
+ *   - std::multimap IS NOT THE RIGHT CONTAINER:
+ *     DIACRITICS ARE PLACE AFTER THE LETTER,
+ *     WHICH IS PROBLEMATIC WITH THE CURRENT ADVANCEMENT METHOD
  */
 
 #include "cinder/app/AppNative.h"
@@ -73,8 +75,7 @@ void Application::draw()
     gl::clear(Color::gray(0.5f), false);
     gl::setMatricesWindow(toPixels(getWindowSize()), true);
 
-    drawSpan(*font1, *font2, TextSpan("זֹאת הִיא הַשְּׁאֵלָה", HB_SCRIPT_HEBREW, HB_DIRECTION_RTL, "he"), 128); // NOT WORKING AS INTENDED: SOME OF THE DIACRITICS ARE MISSING
-    drawSpan(*font1, *font2, TextSpan("אֱב;גד 123וּ", HB_SCRIPT_HEBREW, HB_DIRECTION_RTL, "he"), 256); // WORKING AS INTENDED
+    drawSpan(*font1, *font2, TextSpan("וְהָהַר, מַהוּ לַזֵּה? – זֹאת הִיא הַשְּׁאֵלָה.", HB_SCRIPT_HEBREW, HB_DIRECTION_RTL, "he"), 256);
 }
 
 void Application::drawSpan(YFont &font1, YFont &font2, const TextSpan &span, float y)
@@ -90,7 +91,7 @@ void Application::drawSpan(YFont &font1, YFont &font2, const TextSpan &span, flo
     const char *shapers[]  = { "ot", "fallback", NULL };
     hb_buffer_t *buffer = hb_buffer_create();
 
-    map<uint32_t, Shape> shapes;
+    multimap<uint32_t, Shape> shapes;
 
     /*
      * FIRST PASS
@@ -111,7 +112,7 @@ void Application::drawSpan(YFont &font1, YFont &font2, const TextSpan &span, flo
         
         if (codepoint)
         {
-            shapes[glyph_info[i].cluster] = Shape(&font1, codepoint, offset, advance);
+            shapes.emplace(glyph_info[i].cluster, Shape(&font1, codepoint, offset, advance));
         }
         
 //      cout << codepoint << " | " << glyph_info[i].cluster << " | " << advance * font1.scale.x << endl;
@@ -139,7 +140,7 @@ void Application::drawSpan(YFont &font1, YFont &font2, const TextSpan &span, flo
         
         if (codepoint)
         {
-            shapes[glyph_info[i].cluster] = Shape(&font2, codepoint, offset, advance);
+            shapes.emplace(glyph_info[i].cluster, Shape(&font2, codepoint, offset, advance));
         }
         
 //      cout << codepoint << " | " << glyph_info[i].cluster << " | " << advance * font2.scale.x << endl;
