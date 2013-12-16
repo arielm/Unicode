@@ -31,12 +31,11 @@ class Shape
 {
 public:
     YFont *font;
-    uint32_t cluster;
     hb_codepoint_t codepoint;
     ci::Vec2f offset;
     float advance;
     
-    Shape(uint32_t cluster);
+    Shape();
     Shape(YFont *font, hb_codepoint_t codepoint, const ci::Vec2f &offset, float advance);
     
     void update(YFont *font, hb_codepoint_t codepoint, const ci::Vec2f &offset, float advance);
@@ -55,20 +54,16 @@ public:
 class YFont
 {
 public:
+    ci::ColorA color;
     ci::Vec2f scale;
-    
-    float leading;
-    float ascent;
-    float descent;
-    
     hb_font_t *hbFont;
     
-    YFont(std::shared_ptr<FreetypeHelper> ftHelper, const FontDescriptor &descriptor, float size);
+    YFont(std::shared_ptr<FreetypeHelper> ftHelper, const FontDescriptor &descriptor, float size, const ci::ColorA &color);
     ~YFont();
     
     YGlyph* createGlyph(uint32_t codepoint) const;
     
 protected:
     std::shared_ptr<FreetypeHelper> ftHelper;
-    FT_Face face;
+    FT_Face ftFace;
 };

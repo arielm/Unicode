@@ -51,16 +51,14 @@ static int nextPowerOfTwo(int x)
     return result;
 }
 
-Shape::Shape(uint32_t cluster)
+Shape::Shape()
 :
-font(NULL),
-cluster(cluster)
+font(NULL)
 {}
 
 Shape::Shape(YFont *font, hb_codepoint_t codepoint, const Vec2f &offset, float advance)
 :
 font(font),
-cluster(-1),
 codepoint(codepoint),
 offset(offset),
 advance(advance)
@@ -68,8 +66,6 @@ advance(advance)
 
 void Shape::update(YFont *font, hb_codepoint_t codepoint, const Vec2f &offset, float advance)
 {
-    cluster = -1;
-    
     this->font = font;
     this->codepoint = codepoint;
     this->offset = offset;
@@ -86,6 +82,7 @@ float Shape::draw()
         {
             if (glyph->texture)
             {
+                gl::color(font->color);
                 gl::draw(glyph->texture, glyph->offset + offset * font->scale);
             }
             
@@ -124,18 +121,19 @@ YGlyph::YGlyph(unsigned char *data, int width, int height)
     }
 }
 
-YFont::YFont(shared_ptr<FreetypeHelper> ftHelper, const FontDescriptor &descriptor, float size)
+YFont::YFont(shared_ptr<FreetypeHelper> ftHelper, const FontDescriptor &descriptor, float size, const ColorA &color)
 :
-ftHelper(ftHelper)
+ftHelper(ftHelper),
+color(color)
 {
-    FT_Error error = FT_New_Face(ftHelper->getLib(), descriptor.source->getFilePath().c_str(), descriptor.faceIndex, &face);
+    FT_Error error = FT_New_Face(ftHelper->getLib(), descriptor.source->getFilePath().c_str(), descriptor.faceIndex, &ftFace);
     
     if (error)
     {
         throw runtime_error("FREETYPE: ERROR " + toString(error));
     }
     
-    if (force_ucs2_charmap(face))
+    if (force_ucs2_charmap(ftFace))
     {
         throw runtime_error("HARFBUZZ: FONT IS BROKEN OR IRRELEVANT");
     }
@@ -153,7 +151,7 @@ ftHelper(ftHelper)
     int dpi = 72;
     
     scale = Vec2f::one() / Vec2f(res, res) / 64;
-    FT_Set_Char_Size(face, size * 64, 0, dpi * res, dpi * res);
+    FT_Set_Char_Size(ftFace, size * 64, 0, dpi * res, dpi * res);
     
     FT_Matrix matrix =
     {
@@ -163,32 +161,28 @@ ftHelper(ftHelper)
         int((1.0 / res) * 0x10000L)
     };
     
-    FT_Set_Transform(face, &matrix, NULL);
-    
-    leading = face->size->metrics.height * scale.y;
-    ascent = face->size->metrics.ascender * scale.y;
-    descent = -face->size->metrics.descender * scale.y;
+    FT_Set_Transform(ftFace, &matrix, NULL);
     
     // ---
     
-    hbFont = hb_ft_font_create(face, NULL);
+    hbFont = hb_ft_font_create(ftFace, NULL);
 }
 
 YFont::~YFont()
 {
     hb_font_destroy(hbFont);
-    FT_Done_Face(face);
+    FT_Done_Face(ftFace);
 }
 
 YGlyph* YFont::createGlyph(uint32_t codepoint) const
 {
     if (codepoint > 0)
     {
-        FT_Error error = FT_Load_Glyph(face, codepoint, FT_LOAD_DEFAULT | FT_LOAD_FORCE_AUTOHINT);
+        FT_Error error = FT_Load_Glyph(ftFace, codepoint, FT_LOAD_DEFAULT | FT_LOAD_FORCE_AUTOHINT);
         
         if (!error)
         {
-            FT_GlyphSlot slot = face->glyph;
+            FT_GlyphSlot slot = ftFace->glyph;
             
             FT_Glyph glyph;
             error = FT_Get_Glyph(slot, &glyph);

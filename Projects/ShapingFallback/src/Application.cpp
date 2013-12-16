@@ -7,8 +7,15 @@
  */
 
 /*
- * INVESTIGATING "FALLBACK", AS TAKING PLACE IN:
- * https://github.com/mapnik/mapnik/blob/master/include/mapnik/text/harfbuzz_shaper.hpp#L61
+ * DEMONSTRATING SHAPING FALLBACK, AS TAKING PLACE IN:
+ * https://github.com/mapnik/mapnik/blob/64d5153aeaeb1c9e736bfead297dfea39b066d2c/include/mapnik/text/harfbuzz_shaper.hpp
+ *
+ *
+ * DroidSansHebrew-Regular.ttf IS ONLY CONTAINING HEBREW CHARACTERS AND DIACRITICS
+ * THEREFORE, WE RELY ON DroidSans.ttf FOR ANYTHING ELSE
+ *
+ *
+ * KEEPING THE CODE DELIBERATELY NOT OPTIMIZED TO FACILITATE UNDERSTANDING
  */
 
 #include "cinder/app/AppNative.h"
@@ -47,8 +54,8 @@ void Application::setup()
 {
     ftHelper = make_shared<FreetypeHelper>();
 
-    font1 = make_shared<YFont>(ftHelper, FontDescriptor(loadAsset("fonts/DroidSansHebrew-Regular.ttf")), FONT_SIZE);
-    font2 = make_shared<YFont>(ftHelper, FontDescriptor(loadAsset("fonts/DroidSans.ttf")), FONT_SIZE);
+    font1 = make_shared<YFont>(ftHelper, FontDescriptor(loadAsset("fonts/DroidSansHebrew-Regular.ttf")), FONT_SIZE, ColorA(1, 1, 1, 1));
+    font2 = make_shared<YFont>(ftHelper, FontDescriptor(loadAsset("fonts/DroidSans.ttf")), FONT_SIZE, ColorA(1, 1, 0.5f, 1));
     
     // ---
     
@@ -64,47 +71,40 @@ void Application::draw()
     gl::clear(Color::gray(0.5f), false);
     gl::setMatricesWindow(toPixels(getWindowSize()), true);
     
-    drawSpan(*font1, *font2, TextSpan("אב;גד 123ה", HB_SCRIPT_HEBREW, HB_DIRECTION_RTL, "he"), 256);
+    drawSpan(*font1, *font2, TextSpan("אֱב;גד 123וּ", HB_SCRIPT_HEBREW, HB_DIRECTION_RTL, "he"), 256);
 }
 
 void Application::drawSpan(YFont &font1, YFont &font2, const TextSpan &span, float y)
 {
-    glColor4f(1, 1, 1, 1);
     drawSpan(font1, font2, span, 24, y);
     
     glColor4f(1, 0.75f, 0, 0.5f);
     drawHLine(y);
-    
-    glColor4f(1, 1, 0, 0.33f);
-    drawHLine(y - font1.ascent);
-    drawHLine(y + font1.descent);
 }
 
 void Application::drawSpan(YFont &font1, YFont &font2, const TextSpan &span, float x, float y)
 {
-    vector<Shape> shapes;
-
     const char *shapers[]  = { "ot", "fallback", NULL };
-    hb_buffer_t *hbBuffer = hb_buffer_create();
+    hb_buffer_t *buffer = hb_buffer_create();
+
+    vector<Shape> shapes;
 
     /*
      * FIRST PASS
      */
 
-    span.apply(hbBuffer);
-    hb_shape_full(font1.hbFont, hbBuffer, NULL, 0, shapers);
+    span.apply(buffer);
+    hb_shape_full(font1.hbFont, buffer, NULL, 0, shapers);
     
     unsigned int glyphCount;
-    hb_glyph_info_t *glyph_info = hb_buffer_get_glyph_infos(hbBuffer, &glyphCount);
-    hb_glyph_position_t *glyph_pos = hb_buffer_get_glyph_positions(hbBuffer, nullptr);
+    auto glyph_info = hb_buffer_get_glyph_infos(buffer, &glyphCount);
+    auto glyph_pos = hb_buffer_get_glyph_positions(buffer, nullptr);
     
     for (int i = 0; i < glyphCount; i++)
     {
         auto codepoint = glyph_info[i].codepoint;
-        
-        const hb_glyph_position_t &pos = glyph_pos[i];
-        Vec2f offset(pos.x_offset, -pos.y_offset);
-        float advance = pos.x_advance;
+        Vec2f offset(glyph_pos[i].x_offset, -glyph_pos[i].y_offset);
+        float advance = glyph_pos[i].x_advance;
         
         if (codepoint)
         {
@@ -112,26 +112,24 @@ void Application::drawSpan(YFont &font1, YFont &font2, const TextSpan &span, flo
         }
         else
         {
-            shapes.emplace_back(glyph_info[i].cluster);
+            shapes.emplace_back(); // MAKING ROOM FOR LATER
         }
     }
 
-    hb_buffer_clear_contents(hbBuffer);
+    hb_buffer_clear_contents(buffer);
 
     /*
      * SECOND PASS
      */
     
-    span.apply(hbBuffer);
-    hb_shape_full(font2.hbFont, hbBuffer, NULL, 0, shapers);
+    span.apply(buffer);
+    hb_shape_full(font2.hbFont, buffer, NULL, 0, shapers);
     
     for (int i = 0; i < glyphCount; i++)
     {
         auto codepoint = glyph_info[i].codepoint;
-        
-        const hb_glyph_position_t &pos = glyph_pos[i];
-        Vec2f offset(pos.x_offset, -pos.y_offset);
-        float advance = pos.x_advance;
+        Vec2f offset(glyph_pos[i].x_offset, -glyph_pos[i].y_offset);
+        float advance = glyph_pos[i].x_advance;
         
         if (codepoint)
         {
@@ -139,7 +137,7 @@ void Application::drawSpan(YFont &font1, YFont &font2, const TextSpan &span, flo
         }
     }
     
-    hb_buffer_destroy(hbBuffer);
+    hb_buffer_destroy(buffer);
     
     // ---
     
