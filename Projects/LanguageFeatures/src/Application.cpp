@@ -7,23 +7,7 @@
  */
 
 /*
- * TESTING LANGUAGE-SPECIFIC FEATURES, AS A FOLLOW-UP TO:
- * http://www.mail-archive.com/harfbuzz@lists.freedesktop.org/msg03194.html
- *
- *
- * RESULTS:
- *
- * 1) RUSSIAN VS CYRILLIC:
- *    - IT WORKS ONLY FOR THE FIRST LETTER
- *    - REFERENCE: https://bugs.webkit.org/show_bug.cgi?id=37984
- *
- * - ENGLISH VS ROMANIAN:
- *   - IT WORKS AS INTENDED
- *   - REFERENCE: http://en.wikipedia.org/wiki/Pango
- *
- * - ARABIC VS SINDHI:
- *   - IT WORKS AS INTENDED WITH ScheherazadeRegOT.ttf
- *   - REFERENCE: http://scripts.sil.org/cms/scripts/page.php?item_id=Scheherazade
+ * REFERENCE: https://github.com/arielm/Unicode/tree/master/Projects/LanguageFeatures
  */
 
 #include "cinder/app/AppNative.h"
