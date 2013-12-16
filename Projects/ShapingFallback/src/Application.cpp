@@ -7,7 +7,7 @@
  */
 
 /*
- * DEMONSTRATING SHAPING FALLBACK, AS TAKING PLACE IN:
+ * TESTING SHAPING FALLBACK, AS TAKING PLACE IN:
  * https://github.com/mapnik/mapnik/blob/64d5153aeaeb1c9e736bfead297dfea39b066d2c/include/mapnik/text/harfbuzz_shaper.hpp
  *
  *
@@ -15,7 +15,9 @@
  * THEREFORE, WE RELY ON DroidSans.ttf FOR ANYTHING ELSE
  *
  *
- * KEEPING THE CODE DELIBERATELY NOT OPTIMIZED TO FACILITATE UNDERSTANDING
+ * UPDATE:
+ * - IT IS NOT WORKING AS INTENDED WHEN INTRODUCING DIACRITICS!
+ * - LET'S TRY TO MAKE USE OF THE CLUSTER INFO, AS IN MAPNIK...
  */
 
 #include "cinder/app/AppNative.h"
@@ -71,7 +73,8 @@ void Application::draw()
     gl::clear(Color::gray(0.5f), false);
     gl::setMatricesWindow(toPixels(getWindowSize()), true);
     
-    drawSpan(*font1, *font2, TextSpan("אֱב;גד 123וּ", HB_SCRIPT_HEBREW, HB_DIRECTION_RTL, "he"), 256);
+    drawSpan(*font1, *font2, TextSpan("אב;גד 123ו", HB_SCRIPT_HEBREW, HB_DIRECTION_RTL, "he"), 128);
+    drawSpan(*font1, *font2, TextSpan("אֱב;גד 123וּ", HB_SCRIPT_HEBREW, HB_DIRECTION_RTL, "he"), 256); // NOT WORKING AS INTENDED
 }
 
 void Application::drawSpan(YFont &font1, YFont &font2, const TextSpan &span, float y)
