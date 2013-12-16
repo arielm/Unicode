@@ -9,27 +9,9 @@
 #pragma once
 
 #include "FreetypeHelper.h"
+#include "TextSpan.h"
 
 #include "cinder/gl/Texture.h"
-
-#include "hb.h"
-
-struct TextSpan
-{
-    std::string text;
-    
-    hb_script_t script;
-    hb_direction_t direction;
-    std::string lang;
-    
-    TextSpan(const std::string &text, hb_script_t script, hb_direction_t direction, const std::string &lang)
-    :
-    text(text),
-    script(script),
-    direction(direction),
-    lang(lang)
-    {}
-};
 
 struct FontDescriptor
 {

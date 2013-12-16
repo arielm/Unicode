@@ -7,7 +7,6 @@
  */
 
 /*
- * TODO:
  * INVESTIGATING "FALLBACK", AS TAKING PLACE IN:
  * https://github.com/mapnik/mapnik/blob/master/include/mapnik/text/harfbuzz_shaper.hpp#L61
  */
@@ -28,7 +27,6 @@ class Application : public AppNative
     
     shared_ptr<YFont> font1;
     shared_ptr<YFont> font2;
-    shared_ptr<YFont> font3;
    
 public:
     void prepareSettings(Settings *settings);
@@ -49,8 +47,7 @@ void Application::setup()
     ftHelper = make_shared<FreetypeHelper>();
 
     font1 = make_shared<YFont>(ftHelper, FontDescriptor(loadAsset("fonts/DroidSans.ttf")), FONT_SIZE);
-    font2 = make_shared<YFont>(ftHelper, FontDescriptor(loadFile("/Library/Fonts/Verdana.ttf")), FONT_SIZE); // OSX
-    font3 = make_shared<YFont>(ftHelper, FontDescriptor(loadAsset("fonts/DroidKufi-Regular.ttf")), FONT_SIZE);
+    font2 = make_shared<YFont>(ftHelper, FontDescriptor(loadAsset("fonts/DroidSansHebrew-Regular.ttf")), FONT_SIZE);
     
     // ---
     
@@ -66,9 +63,8 @@ void Application::draw()
     gl::clear(Color::gray(0.5f), false);
     gl::setMatricesWindow(toPixels(getWindowSize()), true);
     
-    drawSpan(*font1, TextSpan("бгдпт", HB_SCRIPT_CYRILLIC, HB_DIRECTION_LTR, "ru"), 128);
-    drawSpan(*font2, TextSpan("şţ", HB_SCRIPT_LATIN, HB_DIRECTION_LTR, "en"), 256);
-    drawSpan(*font3, TextSpan("ههه ۴۵۶۷", HB_SCRIPT_ARABIC, HB_DIRECTION_RTL, "ar"), 384);
+    drawSpan(*font1, TextSpan("אבגדה 0123456789", HB_SCRIPT_LATIN, HB_DIRECTION_LTR, "en"), 128);
+    drawSpan(*font2, TextSpan("אבגדה 0123456789", HB_SCRIPT_HEBREW, HB_DIRECTION_RTL, "he"), 384);
 }
 
 void Application::drawSpan(const YFont &font, const TextSpan &span, float y)

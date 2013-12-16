@@ -140,7 +140,11 @@ void YFont::drawSpan(const TextSpan &span, float x, float y) const
     
     hb_buffer_set_direction(hbBuffer, span.direction);
     hb_buffer_set_script(hbBuffer, span.script);
-    hb_buffer_set_language(hbBuffer, hb_language_from_string(span.lang.data(), -1));
+    
+    if (!span.lang.empty())
+    {
+        hb_buffer_set_language(hbBuffer, hb_language_from_string(span.lang.data(), -1));
+    }
     
     size_t textSize = span.text.size();
     hb_buffer_add_utf8(hbBuffer, span.text.data(), textSize, 0, textSize);
