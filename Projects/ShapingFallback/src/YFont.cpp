@@ -123,64 +123,12 @@ ftHelper(ftHelper)
     // ---
     
     hbFont = hb_ft_font_create(face, NULL);
-    hbBuffer = hb_buffer_create();
 }
 
 YFont::~YFont()
 {
-    hb_buffer_destroy(hbBuffer);
     hb_font_destroy(hbFont);
-    
     FT_Done_Face(face);
-}
-
-void YFont::drawSpan(const TextSpan &span, float x, float y) const
-{
-    hb_buffer_reset(hbBuffer);
-    
-    hb_buffer_set_direction(hbBuffer, span.direction);
-    hb_buffer_set_script(hbBuffer, span.script);
-    
-    if (!span.lang.empty())
-    {
-        hb_buffer_set_language(hbBuffer, hb_language_from_string(span.lang.data(), -1));
-    }
-    
-    size_t textSize = span.text.size();
-    hb_buffer_add_utf8(hbBuffer, span.text.data(), textSize, 0, textSize);
-    hb_shape(hbFont, hbBuffer, NULL, 0);
-    
-    unsigned int glyphCount;
-    hb_glyph_info_t *glyph_info = hb_buffer_get_glyph_infos(hbBuffer, &glyphCount);
-    hb_glyph_position_t *glyph_pos = hb_buffer_get_glyph_positions(hbBuffer, &glyphCount);
-    
-    // ---
-    
-    glPushMatrix();
-    glTranslatef(x, y, 0);
-    
-    for (int i = 0; i < glyphCount; i++)
-    {
-        const hb_glyph_position_t &pos = glyph_pos[i];
-        Vec2f offset(pos.x_offset, -pos.y_offset);
-        Vec2f advance(pos.x_advance, pos.y_advance);
-        
-        YGlyph *glyph = createGlyph(glyph_info[i].codepoint);
-        
-        if (glyph)
-        {
-            if (glyph->texture)
-            {
-                gl::draw(glyph->texture, glyph->offset + offset * scale);
-            }
-            
-            delete glyph;
-        }
-        
-        gl::translate(advance * scale);
-    }
-    
-    glPopMatrix();
 }
 
 YGlyph* YFont::createGlyph(uint32_t codepoint) const

@@ -43,17 +43,14 @@ public:
     float ascent;
     float descent;
     
+    hb_font_t *hbFont;
+    
     YFont(std::shared_ptr<FreetypeHelper> ftHelper, const FontDescriptor &descriptor, float size);
     ~YFont();
     
-    void drawSpan(const TextSpan &span, float x, float y) const;
+    YGlyph* createGlyph(uint32_t codepoint) const;
     
 protected:
     std::shared_ptr<FreetypeHelper> ftHelper;
     FT_Face face;
-    
-    hb_font_t *hbFont;
-    hb_buffer_t *hbBuffer;
-    
-    YGlyph* createGlyph(uint32_t codepoint) const;
 };
