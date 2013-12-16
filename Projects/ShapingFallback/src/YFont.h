@@ -13,6 +13,8 @@
 
 #include "cinder/gl/Texture.h"
 
+class YFont;
+
 struct FontDescriptor
 {
     ci::DataSourceRef source;
@@ -23,6 +25,22 @@ struct FontDescriptor
     source(source),
     faceIndex(faceIndex)
     {}
+};
+
+class Shape
+{
+public:
+    YFont *font;
+    uint32_t cluster;
+    hb_codepoint_t codepoint;
+    ci::Vec2f offset;
+    float advance;
+    
+    Shape(uint32_t cluster);
+    Shape(YFont *font, hb_codepoint_t codepoint, const ci::Vec2f &offset, float advance);
+    
+    void update(YFont *font, hb_codepoint_t codepoint, const ci::Vec2f &offset, float advance);
+    float draw();
 };
 
 class YGlyph

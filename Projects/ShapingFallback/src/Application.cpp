@@ -33,8 +33,8 @@ public:
     void setup();
     
     void draw();
-    void drawSpan(const YFont &font1, const YFont &font2, const TextSpan &span, float y);
-    void drawSpan(const YFont &font, const TextSpan &span, float x, float y);
+    void drawSpan(YFont &font1, YFont &font2, const TextSpan &span, float y);
+    void drawSpan(YFont &font1, YFont &font2, const TextSpan &span, float x, float y);
     void drawHLine(float y);
 };
 
@@ -64,13 +64,13 @@ void Application::draw()
     gl::clear(Color::gray(0.5f), false);
     gl::setMatricesWindow(toPixels(getWindowSize()), true);
     
-    drawSpan(*font1, *font2, TextSpan("אבגדה 0123456789", HB_SCRIPT_HEBREW, HB_DIRECTION_RTL, "he"), 256);
+    drawSpan(*font1, *font2, TextSpan("אב;גד 123ה", HB_SCRIPT_HEBREW, HB_DIRECTION_RTL, "he"), 256);
 }
 
-void Application::drawSpan(const YFont &font1, const YFont &font2, const TextSpan &span, float y)
+void Application::drawSpan(YFont &font1, YFont &font2, const TextSpan &span, float y)
 {
     glColor4f(1, 1, 1, 1);
-    drawSpan(font1, span, 24, y);
+    drawSpan(font1, font2, span, 24, y);
     
     glColor4f(1, 0.75f, 0, 0.5f);
     drawHLine(y);
@@ -80,9 +80,59 @@ void Application::drawSpan(const YFont &font1, const YFont &font2, const TextSpa
     drawHLine(y + font1.descent);
 }
 
-void Application::drawSpan(const YFont &font, const TextSpan &span, float x, float y)
+void Application::drawSpan(YFont &font1, YFont &font2, const TextSpan &span, float x, float y)
 {
+    const char *shapers[]  = { "ot", "fallback", NULL };
     hb_buffer_t *hbBuffer = hb_buffer_create();
+    
+    size_t textSize = span.text.size();
+    vector<Shape> shapes;
+
+    /*
+     * FIRST PASS
+     */
+
+    hb_buffer_set_direction(hbBuffer, span.direction);
+    hb_buffer_set_script(hbBuffer, span.script);
+    
+    if (!span.lang.empty())
+    {
+        hb_buffer_set_language(hbBuffer, hb_language_from_string(span.lang.data(), -1));
+    }
+    
+    hb_buffer_add_utf8(hbBuffer, span.text.data(), textSize, 0, textSize);
+    hb_shape_full(font1.hbFont, hbBuffer, NULL, 0, shapers);
+    
+    unsigned int glyphCount;
+    hb_glyph_info_t *glyph_info = hb_buffer_get_glyph_infos(hbBuffer, &glyphCount);
+    hb_glyph_position_t *glyph_pos = hb_buffer_get_glyph_positions(hbBuffer, nullptr);
+    
+    for (int i = 0; i < glyphCount; i++)
+    {
+        auto codepoint = glyph_info[i].codepoint;
+        auto cluster = glyph_info[i].cluster;
+        
+        const hb_glyph_position_t &pos = glyph_pos[i];
+        Vec2f offset(pos.x_offset, -pos.y_offset);
+        float advance = pos.x_advance;
+        
+        if (codepoint)
+        {
+            shapes.emplace_back(&font1, codepoint, offset, advance);
+        }
+        else
+        {
+            shapes.emplace_back(cluster);
+        }
+        
+//      cout << codepoint << " | " << cluster << " | " << advance * font1.scale.x << endl;
+    }
+
+    /*
+     * SECOND PASS
+     */
+    
+    hb_buffer_clear_contents(hbBuffer);
     
     hb_buffer_set_direction(hbBuffer, span.direction);
     hb_buffer_set_script(hbBuffer, span.script);
@@ -92,13 +142,24 @@ void Application::drawSpan(const YFont &font, const TextSpan &span, float x, flo
         hb_buffer_set_language(hbBuffer, hb_language_from_string(span.lang.data(), -1));
     }
     
-    size_t textSize = span.text.size();
     hb_buffer_add_utf8(hbBuffer, span.text.data(), textSize, 0, textSize);
-    hb_shape(font.hbFont, hbBuffer, NULL, 0);
+    hb_shape_full(font2.hbFont, hbBuffer, NULL, 0, shapers);
     
-    unsigned int glyphCount;
-    hb_glyph_info_t *glyph_info = hb_buffer_get_glyph_infos(hbBuffer, &glyphCount);
-    hb_glyph_position_t *glyph_pos = hb_buffer_get_glyph_positions(hbBuffer, &glyphCount);
+    for (int i = 0; i < glyphCount; i++)
+    {
+        auto codepoint = glyph_info[i].codepoint;
+        
+        const hb_glyph_position_t &pos = glyph_pos[i];
+        Vec2f offset(pos.x_offset, -pos.y_offset);
+        float advance = pos.x_advance;
+        
+        if (codepoint)
+        {
+            shapes[i].update(&font2, codepoint, offset, advance);
+        }
+        
+//      cout << codepoint << " | " << cluster << " | " << advance * font2.scale.x << endl;
+    }
     
     // ---
     
@@ -107,23 +168,8 @@ void Application::drawSpan(const YFont &font, const TextSpan &span, float x, flo
     
     for (int i = 0; i < glyphCount; i++)
     {
-        const hb_glyph_position_t &pos = glyph_pos[i];
-        Vec2f offset(pos.x_offset, -pos.y_offset);
-        Vec2f advance(pos.x_advance, pos.y_advance);
-        
-        YGlyph *glyph = font.createGlyph(glyph_info[i].codepoint);
-        
-        if (glyph)
-        {
-            if (glyph->texture)
-            {
-                gl::draw(glyph->texture, glyph->offset + offset * font.scale);
-            }
-            
-            delete glyph;
-        }
-        
-        gl::translate(advance * font.scale);
+        float advance = shapes[i].draw();
+        glTranslatef(advance, 0, 0);
     }
     
     glPopMatrix();
