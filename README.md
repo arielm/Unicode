@@ -29,6 +29,7 @@ So far, [Harfbuzz](https://github.com/behdad/harfbuzz) have been tested as a sol
 3. [ShapingMetrics](Projects/ShapingMetrics)
 4. [FontComparator](Projects/FontComparator)
 5. [LanguageFeatures](Projects/LanguageFeatures)
+6. [ShapingFallback](Projects/ShapingFallback)
 
 More work remains, notably testing how Harfbuzz performs on low-end mobile devices with limited processing-power and memory.
 
