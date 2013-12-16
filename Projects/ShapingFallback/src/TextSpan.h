@@ -6,14 +6,15 @@
  * https://github.com/arielm/Unicode/blob/master/LICENSE.md
  */
 
+#pragma once
+
 #include "hb.h"
 
 #include <string>
 
-#pragma once
-
-struct TextSpan
+class TextSpan
 {
+public:
     std::string text;
     hb_script_t script;
     hb_direction_t direction;
@@ -29,4 +30,18 @@ struct TextSpan
     direction(direction),
     lang(lang)
     {}
+    
+    void apply(hb_buffer_t *buffer) const
+    {
+        hb_buffer_set_direction(buffer, direction);
+        hb_buffer_set_script(buffer, script);
+        
+        if (!lang.empty())
+        {
+            hb_buffer_set_language(buffer, hb_language_from_string(lang.data(), -1));
+        }
+        
+        auto textSize = text.size();
+        hb_buffer_add_utf8(buffer, text.data(), textSize, 0, textSize);
+    }
 };
