@@ -7,16 +7,23 @@
  */
 
 /*
- * TESTING LANGUAGE-SPECIFIC FEATURES, AS DESCRIBED IN:
+ * TESTING LANGUAGE-SPECIFIC FEATURES, AS A FOLLOW-UP TO:
  * http://www.mail-archive.com/harfbuzz@lists.freedesktop.org/msg03194.html
  *
  *
  * RESULTS:
  *
- * - WEBKIT EXAMPLE: IT WORKS ONLY FOR THE FIRST LETTER
- * - PANGO EXAMPLE: IT WORKS AS INTENDED
- * - SCHEHERAZADE EXAMPLE: IT DOES NOT WORK AS INTENDED:
- *   - TRYING "snd" INSTEAD OF "sd" FOR LANGUAGE IS NOT HELPING...
+ * 1) RUSSIAN VS CYRILLIC:
+ *    - IT WORKS ONLY FOR THE FIRST LETTER
+ *    - REFERENCE: https://bugs.webkit.org/show_bug.cgi?id=37984
+ *
+ * - ENGLISH VS ROMANIAN:
+ *   - IT WORKS AS INTENDED
+ *   - REFERENCE: http://en.wikipedia.org/wiki/Pango
+ *
+ * - ARABIC VS SINDHI:
+ *   - IT WORKS AS INTENDED WITH ScheherazadeRegOT.ttf
+ *   - REFERENCE: http://scripts.sil.org/cms/scripts/page.php?item_id=Scheherazade
  */
 
 #include "cinder/app/AppNative.h"
@@ -28,7 +35,25 @@ using namespace ci;
 using namespace app;
 
 const float FONT_SIZE = 56;
-const fs::path EXTERNAL_FONTS_DIRECTORY = "/Users/arielm/Downloads/fonts";
+
+struct MultiSpan
+{
+    std::string text;
+    hb_script_t script;
+    hb_direction_t direction;
+    
+    std::string lang1;
+    std::string lang2;
+    
+    MultiSpan(const std::string &text, hb_script_t script, hb_direction_t direction, const std::string &lang1, const std::string &lang2)
+    :
+    text(text),
+    script(script),
+    direction(direction),
+    lang1(lang1),
+    lang2(lang2)
+    {}
+};
 
 class Application : public AppNative
 {
@@ -43,7 +68,7 @@ public:
     void setup();
     
     void draw();
-    void drawSpan(const YFont &font, const TextSpan &span1, const TextSpan &span2, float y);
+    void drawSpans(const YFont &font, const MultiSpan &spans, float y);
     void drawHLine(float y);
 };
 
@@ -55,10 +80,10 @@ void Application::prepareSettings(Settings *settings)
 void Application::setup()
 {
     ftHelper = make_shared<FreetypeHelper>();
-    
-    font1 = make_shared<YFont>(ftHelper, FontDescriptor(loadFile(EXTERNAL_FONTS_DIRECTORY / "dejavu-fonts-ttf-2.34/ttf/DejaVuSerif.ttf")), FONT_SIZE);
-    font2 = make_shared<YFont>(ftHelper, FontDescriptor(loadFile("/Library/Fonts/Verdana.ttf")), FONT_SIZE);
-    font3 = make_shared<YFont>(ftHelper, FontDescriptor(loadFile(EXTERNAL_FONTS_DIRECTORY / "Scheherazade-2.010/Scheherazade-R.ttf")), FONT_SIZE);
+
+    font1 = make_shared<YFont>(ftHelper, FontDescriptor(loadResource("DejaVuSerif.ttf")), FONT_SIZE);
+    font2 = make_shared<YFont>(ftHelper, FontDescriptor(loadFile("/Library/Fonts/Verdana.ttf")), FONT_SIZE); // OSX
+    font3 = make_shared<YFont>(ftHelper, FontDescriptor(loadResource("ScheherazadeRegOT.ttf")), FONT_SIZE);
     
     // ---
     
@@ -74,16 +99,16 @@ void Application::draw()
     gl::clear(Color::gray(0.5f), false);
     gl::setMatricesWindow(toPixels(getWindowSize()), true);
     
-    drawSpan(*font1, TextSpan("бгдпт", HB_SCRIPT_CYRILLIC, HB_DIRECTION_LTR, "ru"), TextSpan("бгдпт", HB_SCRIPT_CYRILLIC, HB_DIRECTION_LTR, "sr"), 128);
-    drawSpan(*font2, TextSpan("şţ", HB_SCRIPT_LATIN, HB_DIRECTION_LTR, "en"), TextSpan("şţ", HB_SCRIPT_LATIN, HB_DIRECTION_LTR, "ro"), 256);
-    drawSpan(*font3, TextSpan("ههه ۴۵۶۷", HB_SCRIPT_ARABIC, HB_DIRECTION_RTL, "ar"), TextSpan("ههه ۴۵۶۷", HB_SCRIPT_ARABIC, HB_DIRECTION_RTL, "sd"), 384);
+    drawSpans(*font1, MultiSpan("бгдпт", HB_SCRIPT_CYRILLIC, HB_DIRECTION_LTR, "ru", "sr"), 128);
+    drawSpans(*font2, MultiSpan("şţ", HB_SCRIPT_LATIN, HB_DIRECTION_LTR, "en", "ro"), 256);
+    drawSpans(*font3, MultiSpan("ههه ۴۵۶۷", HB_SCRIPT_ARABIC, HB_DIRECTION_RTL, "ar", "sd"), 384);
 }
 
-void Application::drawSpan(const YFont &font, const TextSpan &span1, const TextSpan &span2, float y)
+void Application::drawSpans(const YFont &font, const MultiSpan &spans, float y)
 {
     glColor4f(1, 1, 1, 1);
-    font.drawSpan(span1, 24, y);
-    font.drawSpan(span2, 512 + 24, y);
+    font.drawSpan(TextSpan(spans.text, spans.script, spans.direction, spans.lang1), 24, y);
+    font.drawSpan(TextSpan(spans.text, spans.script, spans.direction, spans.lang2), 512 + 24, y);
     
     glColor4f(1, 0.75f, 0, 0.5f);
     drawHLine(y);

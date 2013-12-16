@@ -15,6 +15,8 @@
 		5323E6B20EAFCA74003A9687 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5323E6B10EAFCA74003A9687 /* CoreVideo.framework */; };
 		5323E6B60EAFCA7E003A9687 /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5323E6B50EAFCA7E003A9687 /* QTKit.framework */; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+		A801FB85185EED600071DEFF /* DejaVuSerif.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A801FB83185EED600071DEFF /* DejaVuSerif.ttf */; };
+		A801FB86185EED600071DEFF /* ScheherazadeRegOT.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A801FB84185EED600071DEFF /* ScheherazadeRegOT.ttf */; };
 		A809523B16F360660011FAA3 /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = A809523A16F360660011FAA3 /* icon.icns */; };
 		A809530916F361E20011FAA3 /* Application.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A809530316F361E20011FAA3 /* Application.cpp */; };
 		A84CE6A018567656002EA4D3 /* hb-set.cc in Sources */ = {isa = PBXBuildFile; fileRef = A84CE64B18567656002EA4D3 /* hb-set.cc */; };
@@ -62,6 +64,8 @@
 		5323E6B10EAFCA74003A9687 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = /System/Library/Frameworks/CoreVideo.framework; sourceTree = "<absolute>"; };
 		5323E6B50EAFCA7E003A9687 /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = /System/Library/Frameworks/QTKit.framework; sourceTree = "<absolute>"; };
 		8D1107320486CEB800E47090 /* LanguageFeatures.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LanguageFeatures.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A801FB83185EED600071DEFF /* DejaVuSerif.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = DejaVuSerif.ttf; path = ../resources/DejaVuSerif.ttf; sourceTree = "<group>"; };
+		A801FB84185EED600071DEFF /* ScheherazadeRegOT.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = ScheherazadeRegOT.ttf; path = ../resources/ScheherazadeRegOT.ttf; sourceTree = "<group>"; };
 		A809523A16F360660011FAA3 /* icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = icon.icns; sourceTree = "<group>"; };
 		A809530316F361E20011FAA3 /* Application.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Application.cpp; path = ../src/Application.cpp; sourceTree = "<group>"; };
 		A84CE64B18567656002EA4D3 /* hb-set.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "hb-set.cc"; path = "../../../hb/hb-set.cc"; sourceTree = "<group>"; };
@@ -234,6 +238,8 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				A801FB83185EED600071DEFF /* DejaVuSerif.ttf */,
+				A801FB84185EED600071DEFF /* ScheherazadeRegOT.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -410,6 +416,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				A809523B16F360660011FAA3 /* icon.icns in Resources */,
+				A801FB86185EED600071DEFF /* ScheherazadeRegOT.ttf in Resources */,
+				A801FB85185EED600071DEFF /* DejaVuSerif.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
