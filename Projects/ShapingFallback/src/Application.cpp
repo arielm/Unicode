@@ -7,17 +7,7 @@
  */
 
 /*
- * TESTING SHAPING FALLBACK, AS TAKING PLACE IN:
- * https://github.com/mapnik/mapnik/blob/64d5153aeaeb1c9e736bfead297dfea39b066d2c/include/mapnik/text/harfbuzz_shaper.hpp
- *
- *
- * A FONT LIKE DroidSansHebrew-Regular.ttf IS ONLY CONTAINING HEBREW LETTERS AND DIACRITICS
- * THEREFORE, WE RELY ON DroidSans.ttf FOR ANYTHING ELSE...
- *
- *
- * UPDATE:
- * - DIACRITICS CORRECTLY POSITIONED
- * - SHOWING THE ASCENT AND DESCENT OF THE "MAIN FONT"
+ * REFERENCE: https://github.com/arielm/Unicode/tree/master/Projects/ShapingFallback
  */
 
 #include "cinder/app/AppNative.h"
