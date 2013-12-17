@@ -16,14 +16,16 @@
  *
  *
  * UPDATE:
- * - REMOVED THE "{ "ot", "fallback" } SHAPER-DEFINITION, AS IT SEEMS A NO-OP
- * - EVERYTHING IN PLACE
- * - JUST BEFORE "MERGING THE PASSES"...
+ * - INTRODUCING FONT-LISTS
+ * - DRAWING RTL SPANS FROM THE RIGHT
+ * - "PASSES MERGED"
+ * - PROBLEM: DIACRITICS ARE MIS-POSITIONED IN THAI AND HINDI!
  */
 
 #include "cinder/app/AppNative.h"
 
 #include "YFont.h"
+#include "Cluster.h"
 
 using namespace std;
 using namespace ci;
@@ -37,14 +39,20 @@ class Application : public AppNative
     
     shared_ptr<YFont> font1;
     shared_ptr<YFont> font2;
-   
+    shared_ptr<YFont> font3;
+    shared_ptr<YFont> font4;
+    
+    FontList fontList1;
+    FontList fontList2;
+    FontList fontList3;
+    
 public:
     void prepareSettings(Settings *settings);
     void setup();
     
     void draw();
-    void drawSpan(YFont &font1, YFont &font2, const TextSpan &span, float y);
-    void drawSpan(YFont &font1, YFont &font2, const TextSpan &span, float x, float y);
+    void drawSpan(const FontList &fontList, const TextSpan &span, float y, float left, float right);
+    void drawSpan(const FontList &fontList, const TextSpan &span, float x, float y);
     void drawHLine(float y);
 };
 
@@ -57,8 +65,19 @@ void Application::setup()
 {
     ftHelper = make_shared<FreetypeHelper>();
 
-    font1 = make_shared<YFont>(ftHelper, FontDescriptor(loadAsset("fonts/DroidSansHebrew-Regular.ttf")), FONT_SIZE, ColorA(1, 1, 1, 1));
-    font2 = make_shared<YFont>(ftHelper, FontDescriptor(loadAsset("fonts/DroidSans.ttf")), FONT_SIZE, ColorA(1, 1, 0.5f, 1));
+    font1 = make_shared<YFont>(ftHelper, FontDescriptor(loadAsset("fonts/DroidSans.ttf")), FONT_SIZE, ColorA(1, 1, 0.5f, 1));
+    font2 = make_shared<YFont>(ftHelper, FontDescriptor(loadAsset("fonts/DroidSansHebrew-Regular.ttf")), FONT_SIZE, ColorA(1, 1, 1, 1));
+    font3 = make_shared<YFont>(ftHelper, FontDescriptor(loadAsset("fonts/DroidSansThai.ttf")), FONT_SIZE, ColorA(1, 1, 1, 1));
+    font4 = make_shared<YFont>(ftHelper, FontDescriptor(loadAsset("fonts/DroidSansDevanagari-Regular.ttf")), FONT_SIZE, ColorA(1, 1, 1, 1));
+    
+    fontList1.push_back(font2);
+    fontList1.push_back(font1);
+    
+    fontList2.push_back(font3);
+    fontList2.push_back(font1);
+    
+    fontList3.push_back(font4);
+    fontList3.push_back(font1);
     
     // ---
     
@@ -72,99 +91,92 @@ void Application::setup()
 void Application::draw()
 {
     gl::clear(Color::gray(0.5f), false);
-    gl::setMatricesWindow(toPixels(getWindowSize()), true);
+    
+    Vec2i windowSize = toPixels(getWindowSize());
+    gl::setMatricesWindow(windowSize, true);
+    
+    float left = 24;
+    float right = windowSize.x - 24;
+    
+    // ---
 
-    drawSpan(*font1, *font2, TextSpan("וְהָהַר, מַהוּ לַזֵּה? – זֹאת הִיא הַשְּׁאֵלָה.", HB_SCRIPT_HEBREW, HB_DIRECTION_RTL, "he"), 256); // http://goo.gl/M1Z8kl
+    drawSpan(fontList1, TextSpan("וְהָהַר, מַהוּ לַזֵּה? – זֹאת הִיא הַשְּׁאֵלָה.", HB_SCRIPT_HEBREW, HB_DIRECTION_RTL, "he"), 128, left, right); // http://goo.gl/M1Z8kl
+    drawSpan(fontList2, TextSpan("Unicode คืออะไร?", HB_SCRIPT_THAI, HB_DIRECTION_LTR, "th"), 256, left, right); // http://www.unicode.org/standard/translations/thai.html
+    drawSpan(fontList3, TextSpan("यूनिकोड क्या है?", HB_SCRIPT_DEVANAGARI, HB_DIRECTION_LTR, "hi"), 384, left, right); // http://www.unicode.org/standard/translations/hindi.html
 }
 
-void Application::drawSpan(YFont &font1, YFont &font2, const TextSpan &span, float y)
+void Application::drawSpan(const FontList &fontList, const TextSpan &span, float y, float left, float right)
 {
-    drawSpan(font1, font2, span, 24, y);
+    float x = (span.direction == HB_DIRECTION_LTR) ? left : right;
+    
+    drawSpan(fontList, span, x, y);
     
     glColor4f(1, 0.75f, 0, 0.5f);
     drawHLine(y);
 }
 
-void Application::drawSpan(YFont &font1, YFont &font2, const TextSpan &span, float x, float y)
+void Application::drawSpan(const FontList &fontList, const TextSpan &span, float x, float y)
 {
     hb_buffer_t *buffer = hb_buffer_create();
+    
     map<uint32_t, Cluster> clusters;
-
-    /*
-     * FIRST PASS
-     */
-
-    span.apply(buffer);
-    hb_shape(font1.hbFont, buffer, NULL, 0);
+    float combinedAdvance = 0;
     
-    auto glyphCount = hb_buffer_get_length(buffer);
-    auto glyph_info = hb_buffer_get_glyph_infos(buffer, nullptr);
-    auto glyph_pos = hb_buffer_get_glyph_positions(buffer, nullptr);
-    
-    for (int i = 0; i < glyphCount; i++)
+    for (auto font : fontList)
     {
-        auto codepoint = glyph_info[i].codepoint;
+        span.apply(buffer);
+        hb_shape(font->hbFont, buffer, NULL, 0);
         
-        if (codepoint)
+        auto glyphCount = hb_buffer_get_length(buffer);
+        auto glyphInfos = hb_buffer_get_glyph_infos(buffer, nullptr);
+        auto glyphPositions = hb_buffer_get_glyph_positions(buffer, nullptr);
+        
+        bool hasMissingGlyphs = false;
+        
+        for (int i = 0; i < glyphCount; i++)
         {
-            Vec2f offset(glyph_pos[i].x_offset, -glyph_pos[i].y_offset);
-            float advance = glyph_pos[i].x_advance;
+            auto codepoint = glyphInfos[i].codepoint;
+            auto cluster = glyphInfos[i].cluster;
             
-            auto key = glyph_info[i].cluster;
-            auto result = clusters.find(key);
+            auto it = clusters.find(cluster);
+            bool clusterExists = (it != clusters.end());
             
-            if (result == clusters.end())
+            if (codepoint)
             {
-                clusters.insert(make_pair(key, Cluster(&font1, codepoint, offset, advance)));
+                if (clusterExists && (it->second.font != font.get()))
+                {
+                    continue; // CLUSTER ALREADY DEFINED WITH ANOTHER FONT, E.G. SPACE
+                }
+                else
+                {
+                    auto offset = Vec2f(glyphPositions[i].x_offset, -glyphPositions[i].y_offset) * font->scale;
+                    float advance = glyphPositions[i].x_advance * font->scale.x;
+                    
+                    if (clusterExists)
+                    {
+                        it->second.addShape(codepoint, offset, advance);
+                    }
+                    else
+                    {
+                        clusters.insert(make_pair(cluster, Cluster(font.get(), codepoint, offset, advance)));
+                    }
+                    
+                    combinedAdvance += advance;
+                }
             }
-            else if (result->second.font != &font1)
+            else if (!clusterExists)
             {
-                continue; // CLUSTER ALREADY DEFINED, E.G. SPACES
-            }
-            else
-            {
-                result->second.addShape(codepoint, offset, advance);
+                hasMissingGlyphs = true;
             }
         }
-    }
-
-    hb_buffer_clear_contents(buffer);
-
-    /*
-     * SECOND PASS
-     */
-    
-    span.apply(buffer);
-    hb_shape(font2.hbFont, buffer, NULL, 0);
-    
-    glyphCount = hb_buffer_get_length(buffer);
-    glyph_info = hb_buffer_get_glyph_infos(buffer, nullptr);
-    glyph_pos = hb_buffer_get_glyph_positions(buffer, nullptr);
-    
-    for (int i = 0; i < glyphCount; i++)
-    {
-        auto codepoint = glyph_info[i].codepoint;
         
-        if (codepoint)
+        if (!hasMissingGlyphs)
         {
-            Vec2f offset(glyph_pos[i].x_offset, -glyph_pos[i].y_offset);
-            float advance = glyph_pos[i].x_advance;
-            
-            auto key = glyph_info[i].cluster;
-            auto result = clusters.find(key);
-            
-            if (result == clusters.end())
-            {
-                clusters.insert(make_pair(key, Cluster(&font2, codepoint, offset, advance)));
-            }
-            else if (result->second.font != &font2)
-            {
-                continue; // CLUSTER ALREADY DEFINED, E.G. SPACES
-            }
-            else
-            {
-                result->second.addShape(codepoint, offset, advance);
-            }
+            break;
+        }
+        else
+        {
+            hb_buffer_clear_contents(buffer);
         }
     }
     
@@ -173,12 +185,26 @@ void Application::drawSpan(YFont &font1, YFont &font2, const TextSpan &span, flo
     // ---
     
     glPushMatrix();
-    glTranslatef(x, y, 0);
     
-    for (auto it = clusters.rbegin(); it != clusters.rend(); ++it)
+    if (span.direction == HB_DIRECTION_RTL)
     {
-        float advance = it->second.draw();
-        glTranslatef(advance, 0, 0);
+        glTranslatef(x - combinedAdvance, y, 0);
+        
+        for (auto it = clusters.rbegin(); it != clusters.rend(); ++it)
+        {
+            float advance = it->second.draw();
+            glTranslatef(advance, 0, 0);
+        }
+    }
+    else
+    {
+        glTranslatef(x, y, 0);
+        
+        for (auto it = clusters.begin(); it != clusters.end(); ++it)
+        {
+            float advance = it->second.draw();
+            glTranslatef(advance, 0, 0);
+        }
     }
     
     glPopMatrix();

@@ -13,7 +13,7 @@
 
 #include "cinder/gl/Texture.h"
 
-class YFont;
+typedef std::vector<std::shared_ptr<class YFont>> FontList;
 
 struct FontDescriptor
 {
@@ -27,22 +27,8 @@ struct FontDescriptor
     {}
 };
 
-class Cluster
+struct YGlyph
 {
-public:
-    YFont *font;
-    float combinedAdvance;
-    std::vector<std::pair<hb_codepoint_t, ci::Vec2f>> shapes;
-    
-    Cluster(YFont *font, hb_codepoint_t codepoint, const ci::Vec2f &offset, float advance);
-    
-    void addShape(hb_codepoint_t codepoint, const ci::Vec2f &offset, float advance);
-    float draw();
-};
-
-class YGlyph
-{
-public:
     ci::gl::TextureRef texture;
     ci::Vec2f offset;
     

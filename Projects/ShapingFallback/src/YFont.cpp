@@ -51,41 +51,6 @@ static int nextPowerOfTwo(int x)
     return result;
 }
 
-Cluster::Cluster(YFont *font, hb_codepoint_t codepoint, const Vec2f &offset, float advance)
-:
-font(font),
-combinedAdvance(advance)
-{
-    shapes.emplace_back(codepoint, offset);
-}
-
-void Cluster::addShape(hb_codepoint_t codepoint, const Vec2f &offset, float advance)
-{
-    shapes.emplace_back(codepoint, offset);
-    combinedAdvance += advance;
-}
-
-float Cluster::draw()
-{
-    for (auto shape : shapes)
-    {
-        YGlyph *glyph = font->createGlyph(shape.first);
-        
-        if (glyph)
-        {
-            if (glyph->texture)
-            {
-                gl::color(font->color);
-                gl::draw(glyph->texture, glyph->offset + shape.second * font->scale);
-            }
-            
-            delete glyph;
-        }
-    }
-    
-    return combinedAdvance * font->scale.x;
-}
-
 YGlyph::YGlyph(unsigned char *data, int width, int height)
 {
     if (width * height > 0)
