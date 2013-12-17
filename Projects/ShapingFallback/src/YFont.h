@@ -42,6 +42,10 @@ public:
     ci::Vec2f scale;
     hb_font_t *hbFont;
     
+    float leading;
+    float ascent;
+    float descent;
+    
     YFont(std::shared_ptr<FreetypeHelper> ftHelper, const FontDescriptor &descriptor, float size, const ci::ColorA &color);
     ~YFont();
     

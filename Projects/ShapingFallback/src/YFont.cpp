@@ -117,6 +117,10 @@ color(color)
     
     FT_Set_Transform(ftFace, &matrix, NULL);
     
+    leading = ftFace->size->metrics.height * scale.y;
+    ascent = ftFace->size->metrics.ascender * scale.y;
+    descent = -ftFace->size->metrics.descender * scale.y;
+    
     // ---
     
     hbFont = hb_ft_font_create(ftFace, NULL);

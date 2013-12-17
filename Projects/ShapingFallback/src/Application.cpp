@@ -11,15 +11,13 @@
  * https://github.com/mapnik/mapnik/blob/64d5153aeaeb1c9e736bfead297dfea39b066d2c/include/mapnik/text/harfbuzz_shaper.hpp
  *
  *
- * DroidSansHebrew-Regular.ttf IS ONLY CONTAINING HEBREW LETTERS AND DIACRITICS
- * THEREFORE, WE RELY ON DroidSans.ttf FOR ANYTHING ELSE
+ * A FONT LIKE DroidSansHebrew-Regular.ttf IS ONLY CONTAINING HEBREW LETTERS AND DIACRITICS
+ * THEREFORE, WE RELY ON DroidSans.ttf FOR ANYTHING ELSE...
  *
  *
  * UPDATE:
- * - INTRODUCING FONT-LISTS
- * - DRAWING RTL SPANS FROM THE RIGHT
- * - "PASSES MERGED"
- * - PROBLEM: DIACRITICS ARE MIS-POSITIONED IN THAI AND HINDI!
+ * - DIACRITICS CORRECTLY POSITIONED
+ * - SHOWING THE ASCENT AND DESCENT OF THE "MAIN FONT"
  */
 
 #include "cinder/app/AppNative.h"
@@ -113,6 +111,10 @@ void Application::drawSpan(const FontList &fontList, const TextSpan &span, float
     
     glColor4f(1, 0.75f, 0, 0.5f);
     drawHLine(y);
+    
+    glColor4f(1, 1, 0, 0.25f);
+    drawHLine(y - fontList[0]->ascent);
+    drawHLine(y + fontList[0]->descent);
 }
 
 void Application::drawSpan(const FontList &fontList, const TextSpan &span, float x, float y)
@@ -128,8 +130,8 @@ void Application::drawSpan(const FontList &fontList, const TextSpan &span, float
         hb_shape(font->hbFont, buffer, NULL, 0);
         
         auto glyphCount = hb_buffer_get_length(buffer);
-        auto glyphInfos = hb_buffer_get_glyph_infos(buffer, nullptr);
-        auto glyphPositions = hb_buffer_get_glyph_positions(buffer, nullptr);
+        auto glyphInfos = hb_buffer_get_glyph_infos(buffer, NULL);
+        auto glyphPositions = hb_buffer_get_glyph_positions(buffer, NULL);
         
         bool hasMissingGlyphs = false;
         
@@ -139,20 +141,20 @@ void Application::drawSpan(const FontList &fontList, const TextSpan &span, float
             auto cluster = glyphInfos[i].cluster;
             
             auto it = clusters.find(cluster);
-            bool clusterExists = (it != clusters.end());
+            bool clusterFound = (it != clusters.end());
             
             if (codepoint)
             {
-                if (clusterExists && (it->second.font != font.get()))
+                if (clusterFound && (it->second.font != font.get()))
                 {
-                    continue; // CLUSTER ALREADY DEFINED WITH ANOTHER FONT, E.G. SPACE
+                    continue; // CLUSTER FOUND, WITH ANOTHER FONT (E.G. SPACE)
                 }
                 else
                 {
                     auto offset = Vec2f(glyphPositions[i].x_offset, -glyphPositions[i].y_offset) * font->scale;
                     float advance = glyphPositions[i].x_advance * font->scale.x;
                     
-                    if (clusterExists)
+                    if (clusterFound)
                     {
                         it->second.addShape(codepoint, offset, advance);
                     }
@@ -164,7 +166,7 @@ void Application::drawSpan(const FontList &fontList, const TextSpan &span, float
                     combinedAdvance += advance;
                 }
             }
-            else if (!clusterExists)
+            else if (!clusterFound)
             {
                 hasMissingGlyphs = true;
             }
@@ -172,7 +174,7 @@ void Application::drawSpan(const FontList &fontList, const TextSpan &span, float
         
         if (!hasMissingGlyphs)
         {
-            break;
+            break; // NO NEED TO PROCEED TO THE NEXT FONT IN THE LIST
         }
         else
         {
