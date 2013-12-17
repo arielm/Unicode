@@ -18,7 +18,6 @@
  * UPDATE:
  * - NOW SEEMS TO WORKS AS INTENDED
  * - LET'S FIND A MORE ELEGANT WAY TO HANDLE THIS: WORKING ON IT...
- * - FIXED PROBLEM WITH "DOUBLE SPACES"
  */
 
 #include "cinder/app/AppNative.h"
@@ -87,7 +86,7 @@ void Application::drawSpan(YFont &font1, YFont &font2, const TextSpan &span, flo
 
 void Application::drawSpan(YFont &font1, YFont &font2, const TextSpan &span, float x, float y)
 {
-    const char *shapers[]  = { "ot", "fallback", NULL };
+    const char *shapers[]  = { "ot", "fallback", NULL }; // XXX: THIS DOESN'T SEEM TO BE NECESSARY
     hb_buffer_t *buffer = hb_buffer_create();
 
     map<uint32_t, Cluster> clusters;
@@ -109,23 +108,24 @@ void Application::drawSpan(YFont &font1, YFont &font2, const TextSpan &span, flo
         
         if (codepoint)
         {
+            Vec2f offset(glyph_pos[i].x_offset, -glyph_pos[i].y_offset);
+            float advance = glyph_pos[i].x_advance;
+            
             auto key = glyph_info[i].cluster;
             auto result = clusters.find(key);
             
             if (result == clusters.end())
             {
-                clusters.emplace(key, &font1);
+                clusters.insert(make_pair(key, Cluster(&font1, codepoint, offset, advance)));
             }
             else if (result->second.font != &font1)
             {
-//                cout << "SPACE" << endl;
-                continue;
+                continue; // ALREADY DEFINED, E.G. SPACES
             }
-        
-            Vec2f offset(glyph_pos[i].x_offset, -glyph_pos[i].y_offset);
-            float advance = glyph_pos[i].x_advance;
-            
-            clusters[key].addShape(codepoint, offset, advance);
+            else
+            {
+                result->second.addShape(codepoint, offset, advance);
+            }
         }
         
 //      cout << codepoint << " | " << glyph_info[i].cluster << " | " << advance * font1.scale.x << endl;
@@ -151,23 +151,24 @@ void Application::drawSpan(YFont &font1, YFont &font2, const TextSpan &span, flo
         
         if (codepoint)
         {
+            Vec2f offset(glyph_pos[i].x_offset, -glyph_pos[i].y_offset);
+            float advance = glyph_pos[i].x_advance;
+            
             auto key = glyph_info[i].cluster;
             auto result = clusters.find(key);
             
             if (result == clusters.end())
             {
-                clusters.emplace(key, &font2);
+                clusters.insert(make_pair(key, Cluster(&font2, codepoint, offset, advance)));
             }
             else if (result->second.font != &font2)
             {
-//                cout << "SPACE" << endl;
-                continue;
+                continue; // ALREADY DEFINED, E.G. SPACES
             }
-            
-            Vec2f offset(glyph_pos[i].x_offset, -glyph_pos[i].y_offset);
-            float advance = glyph_pos[i].x_advance;
-            
-            clusters[key].addShape(codepoint, offset, advance);
+            else
+            {
+                result->second.addShape(codepoint, offset, advance);
+            }
         }
         
 //      cout << codepoint << " | " << glyph_info[i].cluster << " | " << advance * font2.scale.x << endl;

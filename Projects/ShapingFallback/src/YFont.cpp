@@ -51,18 +51,18 @@ static int nextPowerOfTwo(int x)
     return result;
 }
 
-Cluster::Cluster(YFont *font)
+Cluster::Cluster(YFont *font, hb_codepoint_t codepoint, const Vec2f &offset, float advance)
 :
 font(font),
-combinedAdvance(0)
-{}
+combinedAdvance(advance)
+{
+    shapes.emplace_back(codepoint, offset);
+}
 
 void Cluster::addShape(hb_codepoint_t codepoint, const Vec2f &offset, float advance)
 {
     shapes.emplace_back(codepoint, offset);
     combinedAdvance += advance;
-    
-//    cout << "\t" << codepoint << " | " << advance << endl;
 }
 
 float Cluster::draw()

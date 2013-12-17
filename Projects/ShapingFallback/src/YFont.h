@@ -32,11 +32,9 @@ class Cluster
 public:
     YFont *font;
     float combinedAdvance;
-    
     std::vector<std::pair<hb_codepoint_t, ci::Vec2f>> shapes;
     
-    Cluster() {} // FIXME
-    Cluster(YFont *font);
+    Cluster(YFont *font, hb_codepoint_t codepoint, const ci::Vec2f &offset, float advance);
     
     void addShape(hb_codepoint_t codepoint, const ci::Vec2f &offset, float advance);
     float draw();
