@@ -16,8 +16,9 @@
  *
  *
  * UPDATE:
- * - NOW SEEMS TO WORKS AS INTENDED
- * - LET'S FIND A MORE ELEGANT WAY TO HANDLE THIS: WORKING ON IT...
+ * - REMOVED THE "{ "ot", "fallback" } SHAPER-DEFINITION, AS IT SEEMS A NO-OP
+ * - EVERYTHING IN PLACE
+ * - JUST BEFORE "MERGING THE PASSES"...
  */
 
 #include "cinder/app/AppNative.h"
@@ -86,9 +87,7 @@ void Application::drawSpan(YFont &font1, YFont &font2, const TextSpan &span, flo
 
 void Application::drawSpan(YFont &font1, YFont &font2, const TextSpan &span, float x, float y)
 {
-    const char *shapers[]  = { "ot", "fallback", NULL }; // XXX: THIS DOESN'T SEEM TO BE NECESSARY
     hb_buffer_t *buffer = hb_buffer_create();
-
     map<uint32_t, Cluster> clusters;
 
     /*
@@ -96,7 +95,7 @@ void Application::drawSpan(YFont &font1, YFont &font2, const TextSpan &span, flo
      */
 
     span.apply(buffer);
-    hb_shape_full(font1.hbFont, buffer, NULL, 0, shapers);
+    hb_shape(font1.hbFont, buffer, NULL, 0);
     
     auto glyphCount = hb_buffer_get_length(buffer);
     auto glyph_info = hb_buffer_get_glyph_infos(buffer, nullptr);
@@ -120,17 +119,14 @@ void Application::drawSpan(YFont &font1, YFont &font2, const TextSpan &span, flo
             }
             else if (result->second.font != &font1)
             {
-                continue; // ALREADY DEFINED, E.G. SPACES
+                continue; // CLUSTER ALREADY DEFINED, E.G. SPACES
             }
             else
             {
                 result->second.addShape(codepoint, offset, advance);
             }
         }
-        
-//      cout << codepoint << " | " << glyph_info[i].cluster << " | " << advance * font1.scale.x << endl;
     }
-//  cout << endl;
 
     hb_buffer_clear_contents(buffer);
 
@@ -139,7 +135,7 @@ void Application::drawSpan(YFont &font1, YFont &font2, const TextSpan &span, flo
      */
     
     span.apply(buffer);
-    hb_shape_full(font2.hbFont, buffer, NULL, 0, shapers);
+    hb_shape(font2.hbFont, buffer, NULL, 0);
     
     glyphCount = hb_buffer_get_length(buffer);
     glyph_info = hb_buffer_get_glyph_infos(buffer, nullptr);
@@ -163,17 +159,14 @@ void Application::drawSpan(YFont &font1, YFont &font2, const TextSpan &span, flo
             }
             else if (result->second.font != &font2)
             {
-                continue; // ALREADY DEFINED, E.G. SPACES
+                continue; // CLUSTER ALREADY DEFINED, E.G. SPACES
             }
             else
             {
                 result->second.addShape(codepoint, offset, advance);
             }
         }
-        
-//      cout << codepoint << " | " << glyph_info[i].cluster << " | " << advance * font2.scale.x << endl;
     }
-//  cout << endl;
     
     hb_buffer_destroy(buffer);
 
