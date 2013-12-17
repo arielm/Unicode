@@ -56,7 +56,7 @@ void Application::setup()
     font2 = make_shared<YFont>(ftHelper, FontDescriptor(loadFile("/Library/Fonts/AdobeHebrew-Regular.otf")), FONT_SIZE);
     font3 = make_shared<YFont>(ftHelper, FontDescriptor(loadFile("/Library/Fonts/AdobeArabic-Regular.otf")), FONT_SIZE);
 #else // CUSTOM FONTS LOADED FROM THE RESOURCE-BUNDLE ON OSX AND iOS OR FROM THE ASSETS ON ANDROID
-    font1 = make_shared<YFont>(ftHelper, FontDescriptor(loadFile("/Library/Fonts/Arial Unicode.ttf")), FONT_SIZE);
+    font1 = make_shared<YFont>(ftHelper, FontDescriptor(loadResource("DroidSans.ttf")), FONT_SIZE);
     font2 = make_shared<YFont>(ftHelper, FontDescriptor(loadResource("DroidSansHebrew-Regular.ttf")), FONT_SIZE);
     font3 = make_shared<YFont>(ftHelper, FontDescriptor(loadResource("DroidSansArabic.ttf")), FONT_SIZE);
 #endif
@@ -79,7 +79,7 @@ void Application::draw()
     gl::clear(Color::gray(0.5f), false);
     gl::setMatricesWindow(toPixels(getWindowSize()), true);
     
-    drawSpan(*font1, TextSpan("Unicode คืออะไร?", HB_SCRIPT_THAI, HB_DIRECTION_LTR, "th") , 128); // http://goo.gl/TG3BPN
+    drawSpan(*font1, TextSpan("Exquis, exquis! Vive la mère Ubu.", HB_SCRIPT_LATIN, HB_DIRECTION_LTR, "fr") , 128); // http://goo.gl/TG3BPN
     drawSpan(*font2, TextSpan("לְהַגִּיד בַּבֹּקֶר חַסְדֶּךָ וֶאֱמוּנָתְךָ בַּלֵּילוֹת", HB_SCRIPT_HEBREW, HB_DIRECTION_RTL, "he") , 256); // http://goo.gl/9UBdl8
     drawSpan(*font3, TextSpan("ما هي الشفرة الموحدة يونيكود؟", HB_SCRIPT_ARABIC, HB_DIRECTION_RTL, "ar") , 384); // http://goo.gl/1xErNU
 }
