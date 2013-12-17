@@ -27,15 +27,18 @@ struct FontDescriptor
     {}
 };
 
-class Shape
+class Cluster
 {
 public:
     YFont *font;
-    hb_codepoint_t codepoint;
-    ci::Vec2f offset;
-    float advance;
+    float combinedAdvance;
     
-    Shape(YFont *font, hb_codepoint_t codepoint, const ci::Vec2f &offset, float advance);
+    std::vector<std::pair<hb_codepoint_t, ci::Vec2f>> shapes;
+    
+    Cluster() {} // FIXME
+    Cluster(YFont *font);
+    
+    void addShape(hb_codepoint_t codepoint, const ci::Vec2f &offset, float advance);
     float draw();
 };
 

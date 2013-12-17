@@ -80,7 +80,7 @@ void Application::draw()
     gl::setMatricesWindow(toPixels(getWindowSize()), true);
     
     drawSpan(*font1, TextSpan("Exquis, exquis! Vive la mère Ubu.", HB_SCRIPT_LATIN, HB_DIRECTION_LTR, "fr") , 128); // http://goo.gl/TG3BPN
-    drawSpan(*font2, TextSpan("וְהָהַר, מַהוּ לַזֵּה? – זֹאת הִיא הַשְּׁאֵלָה.", HB_SCRIPT_HEBREW, HB_DIRECTION_RTL, "he") , 256); // http://goo.gl/9UBdl8
+    drawSpan(*font2, TextSpan("לְהַגִּיד בַּבֹּקֶר חַסְדֶּךָ וֶאֱמוּנָתְךָ בַּלֵּילוֹת", HB_SCRIPT_HEBREW, HB_DIRECTION_RTL, "he") , 256); // http://goo.gl/9UBdl8
     drawSpan(*font3, TextSpan("ما هي الشفرة الموحدة يونيكود؟", HB_SCRIPT_ARABIC, HB_DIRECTION_RTL, "ar") , 384); // http://goo.gl/1xErNU
 }
 

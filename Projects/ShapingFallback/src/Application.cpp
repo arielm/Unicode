@@ -17,7 +17,8 @@
  *
  * UPDATE:
  * - NOW SEEMS TO WORKS AS INTENDED
- * - LET'S FIND A MORE ELEGANT WAY TO HANDLE THIS...
+ * - LET'S FIND A MORE ELEGANT WAY TO HANDLE THIS: WORKING ON IT...
+ * - FIXED PROBLEM WITH "DOUBLE SPACES"
  */
 
 #include "cinder/app/AppNative.h"
@@ -73,7 +74,7 @@ void Application::draw()
     gl::clear(Color::gray(0.5f), false);
     gl::setMatricesWindow(toPixels(getWindowSize()), true);
 
-    drawSpan(*font1, *font2, TextSpan("וְהָהַר, מַהוּ לַזֵּה? – זֹאת הִיא הַשְּׁאֵלָה.", HB_SCRIPT_HEBREW, HB_DIRECTION_RTL, "he"), 256);
+    drawSpan(*font1, *font2, TextSpan("וְהָהַר, מַהוּ לַזֵּה? – זֹאת הִיא הַשְּׁאֵלָה.", HB_SCRIPT_HEBREW, HB_DIRECTION_RTL, "he"), 256); // http://goo.gl/M1Z8kl
 }
 
 void Application::drawSpan(YFont &font1, YFont &font2, const TextSpan &span, float y)
@@ -89,7 +90,7 @@ void Application::drawSpan(YFont &font1, YFont &font2, const TextSpan &span, flo
     const char *shapers[]  = { "ot", "fallback", NULL };
     hb_buffer_t *buffer = hb_buffer_create();
 
-    multimap<uint32_t, Shape> shapes;
+    map<uint32_t, Cluster> clusters;
 
     /*
      * FIRST PASS
@@ -105,12 +106,26 @@ void Application::drawSpan(YFont &font1, YFont &font2, const TextSpan &span, flo
     for (int i = 0; i < glyphCount; i++)
     {
         auto codepoint = glyph_info[i].codepoint;
-        Vec2f offset(glyph_pos[i].x_offset, -glyph_pos[i].y_offset);
-        float advance = glyph_pos[i].x_advance;
         
         if (codepoint)
         {
-            shapes.emplace(glyph_info[i].cluster, Shape(&font1, codepoint, offset, advance));
+            auto key = glyph_info[i].cluster;
+            auto result = clusters.find(key);
+            
+            if (result == clusters.end())
+            {
+                clusters.emplace(key, &font1);
+            }
+            else if (result->second.font != &font1)
+            {
+//                cout << "SPACE" << endl;
+                continue;
+            }
+        
+            Vec2f offset(glyph_pos[i].x_offset, -glyph_pos[i].y_offset);
+            float advance = glyph_pos[i].x_advance;
+            
+            clusters[key].addShape(codepoint, offset, advance);
         }
         
 //      cout << codepoint << " | " << glyph_info[i].cluster << " | " << advance * font1.scale.x << endl;
@@ -133,12 +148,26 @@ void Application::drawSpan(YFont &font1, YFont &font2, const TextSpan &span, flo
     for (int i = 0; i < glyphCount; i++)
     {
         auto codepoint = glyph_info[i].codepoint;
-        Vec2f offset(glyph_pos[i].x_offset, -glyph_pos[i].y_offset);
-        float advance = glyph_pos[i].x_advance;
         
         if (codepoint)
         {
-            shapes.emplace(glyph_info[i].cluster, Shape(&font2, codepoint, offset, advance));
+            auto key = glyph_info[i].cluster;
+            auto result = clusters.find(key);
+            
+            if (result == clusters.end())
+            {
+                clusters.emplace(key, &font2);
+            }
+            else if (result->second.font != &font2)
+            {
+//                cout << "SPACE" << endl;
+                continue;
+            }
+            
+            Vec2f offset(glyph_pos[i].x_offset, -glyph_pos[i].y_offset);
+            float advance = glyph_pos[i].x_advance;
+            
+            clusters[key].addShape(codepoint, offset, advance);
         }
         
 //      cout << codepoint << " | " << glyph_info[i].cluster << " | " << advance * font2.scale.x << endl;
@@ -146,25 +175,16 @@ void Application::drawSpan(YFont &font1, YFont &font2, const TextSpan &span, flo
 //  cout << endl;
     
     hb_buffer_destroy(buffer);
-    
+
     // ---
     
     glPushMatrix();
     glTranslatef(x, y, 0);
     
-    uint32_t lastCluster = -1;
-    float advance = 0;
-    
-    for (auto it = shapes.rbegin(); it != shapes.rend(); ++it)
+    for (auto it = clusters.rbegin(); it != clusters.rend(); ++it)
     {
-        if (it->first != lastCluster)
-        {
-            glTranslatef(advance, 0, 0);
-            advance = 0;
-            lastCluster = it->first;
-        }
-
-        advance += it->second.draw();
+        float advance = it->second.draw();
+        glTranslatef(advance, 0, 0);
     }
     
     glPopMatrix();
