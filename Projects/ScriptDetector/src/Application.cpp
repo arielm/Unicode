@@ -8,6 +8,14 @@
 
 /*
  * IMPLEMENTING icu/source/extra/scrptrun/srtest.cpp
+ *
+ *
+ * TODO:
+ *
+ * 1) COMPILE ON ANDROID AND iOS:
+ *    - CHECK IF THE DEFINES (SEE IN Prefix.pch) HELP ON ANDROID
+ *
+ * 2) USE std::string
  */
 
 #include "cinder/app/AppNative.h"
@@ -34,15 +42,9 @@ int32_t testLength = sizeof testChars / sizeof testChars[0];
 class Application : public AppNative
 {
 public:
-    void prepareSettings(Settings *settings);
     void setup();
     void draw();
 };
-
-void Application::prepareSettings(Settings *settings)
-{
-    settings->setWindowSize(1024, 512);
-}
 
 void Application::setup()
 {
