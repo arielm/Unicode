@@ -18,7 +18,7 @@ The goal is to provide building blocks for handling Unicode text rendering from 
 
 The goal is to provide support for internationalization in interactive applications and games created with Cinder. Currently, there is no appropriate cross-platform solution due the lack of public C++ API for text-rendering on Android. 
 
-This is, however, not intended to be a replacement for OS solutions like *CoreText*, and not all the features implemented in modern browsers will be supported. For example, *automatic-language-detection* is out-of-scope (i.e. some contextual info will be required for each piece of text...)
+Take in count, however, that only a subset of the features available in OS solutions like *CoreText* (or even in modern browsers) are going to be implemented.
 
 **Progress**
 
