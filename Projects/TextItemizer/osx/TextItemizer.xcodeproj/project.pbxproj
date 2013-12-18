@@ -51,6 +51,13 @@
 		A871F37718611FD9001D0F98 /* propname.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A871F37518611FD9001D0F98 /* propname.cpp */; };
 		A871F37C18612092001D0F98 /* uinvchar.c in Sources */ = {isa = PBXBuildFile; fileRef = A871F37A18612092001D0F98 /* uinvchar.c */; };
 		A871F37E18612160001D0F98 /* uchar.c in Sources */ = {isa = PBXBuildFile; fileRef = A871F37D18612160001D0F98 /* uchar.c */; };
+		A871F3811861C0B3001D0F98 /* ubidi.c in Sources */ = {isa = PBXBuildFile; fileRef = A871F3801861C0B3001D0F98 /* ubidi.c */; };
+		A871F3861861C120001D0F98 /* ubidi_props.c in Sources */ = {isa = PBXBuildFile; fileRef = A871F3841861C120001D0F98 /* ubidi_props.c */; };
+		A871F38D1861D185001D0F98 /* bytestream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A871F38B1861D185001D0F98 /* bytestream.cpp */; };
+		A871F38F1861D238001D0F98 /* unistr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A871F38E1861D238001D0F98 /* unistr.cpp */; };
+		A871F3911861D26F001D0F98 /* appendable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A871F3901861D26F001D0F98 /* appendable.cpp */; };
+		A871F3C21861D2F3001D0F98 /* stringpiece.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A871F3C11861D2F3001D0F98 /* stringpiece.cpp */; };
+		A871F3C41861D34D001D0F98 /* ustrtrns.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A871F3C31861D34D001D0F98 /* ustrtrns.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -187,6 +194,18 @@
 		A871F37B18612092001D0F98 /* uinvchar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = uinvchar.h; path = ../../../icu/common/uinvchar.h; sourceTree = "<group>"; };
 		A871F37D18612160001D0F98 /* uchar.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = uchar.c; path = ../../../icu/common/uchar.c; sourceTree = "<group>"; };
 		A871F37F186121A5001D0F98 /* uchar_props_data.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = uchar_props_data.h; path = ../../../icu/common/uchar_props_data.h; sourceTree = "<group>"; };
+		A871F3801861C0B3001D0F98 /* ubidi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ubidi.c; path = ../../../icu/common/ubidi.c; sourceTree = "<group>"; };
+		A871F3821861C0BB001D0F98 /* ubidi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ubidi.h; sourceTree = "<group>"; };
+		A871F3831861C120001D0F98 /* ubidi_props_data.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ubidi_props_data.h; path = ../../../icu/common/ubidi_props_data.h; sourceTree = "<group>"; };
+		A871F3841861C120001D0F98 /* ubidi_props.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ubidi_props.c; path = ../../../icu/common/ubidi_props.c; sourceTree = "<group>"; };
+		A871F3851861C120001D0F98 /* ubidiimp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ubidiimp.h; path = ../../../icu/common/ubidiimp.h; sourceTree = "<group>"; };
+		A871F38B1861D185001D0F98 /* bytestream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = bytestream.cpp; path = ../../../icu/common/bytestream.cpp; sourceTree = "<group>"; };
+		A871F38C1861D185001D0F98 /* bytestream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = bytestream.h; path = ../../../icu/common/bytestream.h; sourceTree = "<group>"; };
+		A871F38E1861D238001D0F98 /* unistr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = unistr.cpp; path = ../../../icu/common/unistr.cpp; sourceTree = "<group>"; };
+		A871F3901861D26F001D0F98 /* appendable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = appendable.cpp; path = ../../../icu/common/appendable.cpp; sourceTree = "<group>"; };
+		A871F3C01861D28E001D0F98 /* appendable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = appendable.h; sourceTree = "<group>"; };
+		A871F3C11861D2F3001D0F98 /* stringpiece.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = stringpiece.cpp; path = ../../../icu/common/stringpiece.cpp; sourceTree = "<group>"; };
+		A871F3C31861D34D001D0F98 /* ustrtrns.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ustrtrns.cpp; path = ../../../icu/common/ustrtrns.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -306,6 +325,16 @@
 		A871F2BE18611846001D0F98 /* common */ = {
 			isa = PBXGroup;
 			children = (
+				A871F3C31861D34D001D0F98 /* ustrtrns.cpp */,
+				A871F3C11861D2F3001D0F98 /* stringpiece.cpp */,
+				A871F3901861D26F001D0F98 /* appendable.cpp */,
+				A871F38E1861D238001D0F98 /* unistr.cpp */,
+				A871F38B1861D185001D0F98 /* bytestream.cpp */,
+				A871F38C1861D185001D0F98 /* bytestream.h */,
+				A871F3831861C120001D0F98 /* ubidi_props_data.h */,
+				A871F3841861C120001D0F98 /* ubidi_props.c */,
+				A871F3851861C120001D0F98 /* ubidiimp.h */,
+				A871F3801861C0B3001D0F98 /* ubidi.c */,
 				A871F37F186121A5001D0F98 /* uchar_props_data.h */,
 				A871F37D18612160001D0F98 /* uchar.c */,
 				A871F37A18612092001D0F98 /* uinvchar.c */,
@@ -388,6 +417,8 @@
 		A871F2E718611864001D0F98 /* unicode */ = {
 			isa = PBXGroup;
 			children = (
+				A871F3C01861D28E001D0F98 /* appendable.h */,
+				A871F3821861C0BB001D0F98 /* ubidi.h */,
 				A871F37918612048001D0F98 /* ustringtrie.h */,
 				A871F3781861202E001D0F98 /* bytestrie.h */,
 				A871F36918611D84001D0F98 /* unorm.h */,
@@ -500,8 +531,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A871F3C41861D34D001D0F98 /* ustrtrns.cpp in Sources */,
 				A871F32918611864001D0F98 /* ustring.cpp in Sources */,
 				A871F37718611FD9001D0F98 /* propname.cpp in Sources */,
+				A871F38F1861D238001D0F98 /* unistr.cpp in Sources */,
 				A871F32118611864001D0F98 /* uhash.c in Sources */,
 				A871F32318611864001D0F98 /* uloc.cpp in Sources */,
 				A871F31818611864001D0F98 /* locmap.c in Sources */,
@@ -513,19 +546,23 @@
 				A871F31E18611864001D0F98 /* udatamem.c in Sources */,
 				A809530916F361E20011FAA3 /* Application.cpp in Sources */,
 				A871F32518611864001D0F98 /* umutex.cpp in Sources */,
+				A871F38D1861D185001D0F98 /* bytestream.cpp in Sources */,
 				A871F35F18611C42001D0F98 /* normalizer2impl.cpp in Sources */,
 				A871F36E18611D92001D0F98 /* unormcmp.cpp in Sources */,
 				A871F32418611864001D0F98 /* umapfile.c in Sources */,
 				A871F31618611864001D0F98 /* cstring.c in Sources */,
 				A871F37C18612092001D0F98 /* uinvchar.c in Sources */,
 				A871F32618611864001D0F98 /* uobject.cpp in Sources */,
+				A871F3C21861D2F3001D0F98 /* stringpiece.cpp in Sources */,
 				A871F32818611864001D0F98 /* uscript.c in Sources */,
 				A871F31718611864001D0F98 /* cwchar.c in Sources */,
 				A871F31918611864001D0F98 /* uarrsort.c in Sources */,
 				A871F31B18611864001D0F98 /* ucln_cmn.c in Sources */,
 				A871F31A18611864001D0F98 /* ucase.cpp in Sources */,
 				A871F37318611E91001D0F98 /* uvector.cpp in Sources */,
+				A871F3911861D26F001D0F98 /* appendable.cpp in Sources */,
 				A871F32A18611864001D0F98 /* utrie2.cpp in Sources */,
+				A871F3861861C120001D0F98 /* ubidi_props.c in Sources */,
 				A871F37E18612160001D0F98 /* uchar.c in Sources */,
 				A871F31C18611864001D0F98 /* ucmndata.c in Sources */,
 				A871F32218611864001D0F98 /* uiter.cpp in Sources */,
@@ -533,6 +570,7 @@
 				A871F32018611864001D0F98 /* uenum.c in Sources */,
 				A871F31518611864001D0F98 /* cmemory.c in Sources */,
 				A871F31418611864001D0F98 /* charstr.cpp in Sources */,
+				A871F3811861C0B3001D0F98 /* ubidi.c in Sources */,
 				A871F35E18611C42001D0F98 /* normalizer2.cpp in Sources */,
 				A871F36418611CF2001D0F98 /* unifilt.cpp in Sources */,
 			);
@@ -610,10 +648,11 @@
 				HEADER_SEARCH_PATHS = (
 					"\"$(CINDER_PATH)/boost\"",
 					"\"$(CINDER_PATH)/blocks/Freetype/include\"",
+					../../../icu/common,
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				SDKROOT = macosx;
-				USER_HEADER_SEARCH_PATHS = "../include \"$(CINDER_PATH)/include\" ../../../icu/common";
+				USER_HEADER_SEARCH_PATHS = "../include \"$(CINDER_PATH)/include\"";
 			};
 			name = Debug;
 		};
@@ -630,10 +669,11 @@
 				HEADER_SEARCH_PATHS = (
 					"\"$(CINDER_PATH)/boost\"",
 					"\"$(CINDER_PATH)/blocks/Freetype/include\"",
+					../../../icu/common,
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				SDKROOT = macosx;
-				USER_HEADER_SEARCH_PATHS = "../include \"$(CINDER_PATH)/include\" ../../../icu/common";
+				USER_HEADER_SEARCH_PATHS = "../include \"$(CINDER_PATH)/include\"";
 			};
 			name = Release;
 		};

@@ -616,10 +616,11 @@
 				HEADER_SEARCH_PATHS = (
 					"\"$(CINDER_PATH)/boost\"",
 					"\"$(CINDER_PATH)/blocks/Freetype/include\"",
+					../../../icu/common,
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				SDKROOT = macosx;
-				USER_HEADER_SEARCH_PATHS = "../include \"$(CINDER_PATH)/include\" ../../../icu/common";
+				USER_HEADER_SEARCH_PATHS = "../include \"$(CINDER_PATH)/include\"";
 			};
 			name = Debug;
 		};
@@ -636,10 +637,11 @@
 				HEADER_SEARCH_PATHS = (
 					"\"$(CINDER_PATH)/boost\"",
 					"\"$(CINDER_PATH)/blocks/Freetype/include\"",
+					../../../icu/common,
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				SDKROOT = macosx;
-				USER_HEADER_SEARCH_PATHS = "../include \"$(CINDER_PATH)/include\" ../../../icu/common";
+				USER_HEADER_SEARCH_PATHS = "../include \"$(CINDER_PATH)/include\"";
 			};
 			name = Release;
 		};

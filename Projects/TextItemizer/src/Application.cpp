@@ -14,6 +14,10 @@
 
 #include "cinder/app/AppNative.h"
 
+#include <unicode/unistr.h>
+#include <unicode/uscript.h>
+#include <unicode/ubidi.h>
+
 using namespace std;
 using namespace ci;
 using namespace app;
@@ -26,7 +30,17 @@ public:
 };
 
 void Application::setup()
-{}
+{
+    string foo = "привет";
+    UnicodeString uFoo = UnicodeString::fromUTF8(foo);
+    
+    UnicodeString uBar("לְהַגִּיד בַּבֹּקֶר חַסְדֶּךָ וֶאֱמוּנָתְךָ בַּלֵּילוֹת");
+    
+    string bar;
+    uBar.toUTF8String(bar);
+    
+    cout << bar << endl;
+}
 
 void Application::draw()
 {
