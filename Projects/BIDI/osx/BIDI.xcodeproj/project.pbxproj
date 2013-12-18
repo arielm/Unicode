@@ -73,10 +73,9 @@
 		530D8ED2F6EB414F805B7B9E /* Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = "\"\""; path = Prefix.pch; sourceTree = "<group>"; };
 		5323E6B10EAFCA74003A9687 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = /System/Library/Frameworks/CoreVideo.framework; sourceTree = "<absolute>"; };
 		5323E6B50EAFCA7E003A9687 /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = /System/Library/Frameworks/QTKit.framework; sourceTree = "<absolute>"; };
-		8D1107320486CEB800E47090 /* TextItemizer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TextItemizer.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8D1107320486CEB800E47090 /* BIDI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BIDI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A809523A16F360660011FAA3 /* icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = icon.icns; sourceTree = "<group>"; };
 		A809530316F361E20011FAA3 /* Application.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Application.cpp; path = ../src/Application.cpp; sourceTree = "<group>"; };
-		A871F3C51861D4C6001D0F98 /* TextItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TextItem.h; path = ../src/TextItem.h; sourceTree = "<group>"; };
 		A871F4741861F1C3001D0F98 /* uvector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = uvector.h; path = ../../../icu/common/uvector.h; sourceTree = "<group>"; };
 		A871F4751861F1C3001D0F98 /* uvector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = uvector.cpp; path = ../../../icu/common/uvector.cpp; sourceTree = "<group>"; };
 		A871F4761861F1C3001D0F98 /* utypes.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = utypes.c; path = ../../../icu/common/utypes.c; sourceTree = "<group>"; };
@@ -232,7 +231,6 @@
 			isa = PBXGroup;
 			children = (
 				A809530316F361E20011FAA3 /* Application.cpp */,
-				A871F3C51861D4C6001D0F98 /* TextItem.h */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -264,12 +262,12 @@
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8D1107320486CEB800E47090 /* TextItemizer.app */,
+				8D1107320486CEB800E47090 /* BIDI.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		29B97314FDCFA39411CA2CEA /* TextItemizer */ = {
+		29B97314FDCFA39411CA2CEA /* BIDI */ = {
 			isa = PBXGroup;
 			children = (
 				A871F2BD18611842001D0F98 /* icu */,
@@ -279,7 +277,7 @@
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
 			);
-			name = TextItemizer;
+			name = BIDI;
 			sourceTree = "<group>";
 		};
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
@@ -473,9 +471,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		8D1107260486CEB800E47090 /* TextItemizer */ = {
+		8D1107260486CEB800E47090 /* BIDI */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "TextItemizer" */;
+			buildConfigurationList = C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "BIDI" */;
 			buildPhases = (
 				8D1107290486CEB800E47090 /* Resources */,
 				8D11072C0486CEB800E47090 /* Sources */,
@@ -485,10 +483,10 @@
 			);
 			dependencies = (
 			);
-			name = TextItemizer;
+			name = BIDI;
 			productInstallPath = "$(HOME)/Applications";
-			productName = TextItemizer;
-			productReference = 8D1107320486CEB800E47090 /* TextItemizer.app */;
+			productName = BIDI;
+			productReference = 8D1107320486CEB800E47090 /* BIDI.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -498,7 +496,7 @@
 			isa = PBXProject;
 			attributes = {
 			};
-			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "TextItemizer" */;
+			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "BIDI" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 1;
@@ -508,11 +506,11 @@
 				French,
 				German,
 			);
-			mainGroup = 29B97314FDCFA39411CA2CEA /* TextItemizer */;
+			mainGroup = 29B97314FDCFA39411CA2CEA /* BIDI */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				8D1107260486CEB800E47090 /* TextItemizer */,
+				8D1107260486CEB800E47090 /* BIDI */,
 			);
 		};
 /* End PBXProject section */
@@ -604,7 +602,7 @@
 					"\"$(CINDER_PATH)/lib/libcinder_d.a\"",
 					"\"$(CINDER_PATH)/blocks/Freetype/lib/osx/libfreetype.a\"",
 				);
-				PRODUCT_NAME = TextItemizer;
+				PRODUCT_NAME = BIDI;
 				SYMROOT = ./build;
 				WRAPPER_EXTENSION = app;
 			};
@@ -630,7 +628,7 @@
 					"\"$(CINDER_PATH)/lib/libcinder.a\"",
 					"\"$(CINDER_PATH)/blocks/Freetype/lib/osx/libfreetype.a\"",
 				);
-				PRODUCT_NAME = TextItemizer;
+				PRODUCT_NAME = BIDI;
 				STRIP_INSTALLED_PRODUCT = YES;
 				SYMROOT = ./build;
 				WRAPPER_EXTENSION = app;
@@ -682,7 +680,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "TextItemizer" */ = {
+		C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "BIDI" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C01FCF4B08A954540054247B /* Debug */,
@@ -691,7 +689,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "TextItemizer" */ = {
+		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "BIDI" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C01FCF4F08A954540054247B /* Debug */,

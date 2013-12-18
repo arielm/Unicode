@@ -1,0 +1,7 @@
+#ifdef __OBJC__
+    #import <Cocoa/Cocoa.h>
+#endif
+
+//#define U_HAVE_NL_LANGINFO_CODESET 0
+//#define _REENTRANT
+#define U_COMMON_IMPLEMENTATION
