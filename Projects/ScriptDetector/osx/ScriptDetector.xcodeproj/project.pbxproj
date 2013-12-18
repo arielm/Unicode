@@ -59,6 +59,8 @@
 		A871F4701861E644001D0F98 /* utrie2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A871F4451861E644001D0F98 /* utrie2.cpp */; };
 		A871F4711861E644001D0F98 /* utypes.c in Sources */ = {isa = PBXBuildFile; fileRef = A871F4471861E644001D0F98 /* utypes.c */; };
 		A871F4721861E644001D0F98 /* uvector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A871F4481861E644001D0F98 /* uvector.cpp */; };
+		A871F5261862091A001D0F98 /* ubidiwrt.c in Sources */ = {isa = PBXBuildFile; fileRef = A871F5241862091A001D0F98 /* ubidiwrt.c */; };
+		A871F5271862091A001D0F98 /* ubidiln.c in Sources */ = {isa = PBXBuildFile; fileRef = A871F5251862091A001D0F98 /* ubidiln.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -209,6 +211,8 @@
 		A871F4471861E644001D0F98 /* utypes.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = utypes.c; path = ../../../icu/common/utypes.c; sourceTree = "<group>"; };
 		A871F4481861E644001D0F98 /* uvector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = uvector.cpp; path = ../../../icu/common/uvector.cpp; sourceTree = "<group>"; };
 		A871F4491861E644001D0F98 /* uvector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = uvector.h; path = ../../../icu/common/uvector.h; sourceTree = "<group>"; };
+		A871F5241862091A001D0F98 /* ubidiwrt.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ubidiwrt.c; path = ../../../icu/common/ubidiwrt.c; sourceTree = "<group>"; };
+		A871F5251862091A001D0F98 /* ubidiln.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ubidiln.c; path = ../../../icu/common/ubidiln.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -330,6 +334,8 @@
 		A871F3C61861E631001D0F98 /* common */ = {
 			isa = PBXGroup;
 			children = (
+				A871F5241862091A001D0F98 /* ubidiwrt.c */,
+				A871F5251862091A001D0F98 /* ubidiln.c */,
 				A871F3C71861E644001D0F98 /* appendable.cpp */,
 				A871F3C81861E644001D0F98 /* bytestream.cpp */,
 				A871F3C91861E644001D0F98 /* bytestream.h */,
@@ -542,6 +548,7 @@
 				A871F4601861E644001D0F98 /* uhash.c in Sources */,
 				A871F44D1861E644001D0F98 /* cmemory.c in Sources */,
 				A871F44F1861E644001D0F98 /* cwchar.c in Sources */,
+				A871F5271862091A001D0F98 /* ubidiln.c in Sources */,
 				A871F4611861E644001D0F98 /* uinvchar.c in Sources */,
 				A871F44E1861E644001D0F98 /* cstring.c in Sources */,
 				A871F4531861E644001D0F98 /* propname.cpp in Sources */,
@@ -553,6 +560,7 @@
 				A871F45D1861E644001D0F98 /* udatamem.c in Sources */,
 				A871F4511861E644001D0F98 /* normalizer2.cpp in Sources */,
 				A871F45C1861E644001D0F98 /* udata.cpp in Sources */,
+				A871F5261862091A001D0F98 /* ubidiwrt.c in Sources */,
 				A871F4571861E644001D0F98 /* ubidi.c in Sources */,
 				A871F46B1861E644001D0F98 /* uobject.cpp in Sources */,
 				A871F170186116D9001D0F98 /* scrptrun.cpp in Sources */,
