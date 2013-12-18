@@ -11,10 +11,13 @@
  * http://people.w3.org/rishida/scripts/bidi/
  *
  *
- * STEP 1:
- * USING THE FOLLOWING FOR BIDI:
+ * bidi1:
+ * USING THE FOLLOWING:
  * https://github.com/mapnik/mapnik/blob/64d5153aeaeb1c9e736bfead297dfea39b066d2c/src/text/itemizer.cpp#L90-131
  *
+ * bidi2:
+ * USING THE FOLLOWING (TODO):
+ * 
  */
 
 #include "cinder/app/AppNative.h"
@@ -27,29 +30,22 @@ using namespace std;
 using namespace ci;
 using namespace app;
 
-static void spit(const UnicodeString &text, UBiDiDirection direction, int32_t start, int32_t end)
+static void spitRun(const UnicodeString &text, UBiDiDirection direction, int32_t start, int32_t end)
 {
     std::string tmp;
     text.tempSubString(start, end - start).toUTF8String(tmp);
-    
-    cout << direction << " [" << start << " | " << end << "]" << endl;
+
+    cout << ((direction == UBIDI_RTL) ? "RTL " : "") << "[" << start << " | " << end << "]" << endl;
     cout << tmp << endl << endl;
 }
 
-class Application : public AppNative
+static void bidi1(const string &input)
 {
-public:
-    void setup();
-    void draw();
-};
-
-void Application::setup()
-{
-    UnicodeString text("The title is مفتاح معايير الويب in Arabic.");
+    auto text = UnicodeString::fromUTF8(input);
     
     int32_t start = 0;
     int32_t end = text.length();
-
+    
     UErrorCode error = U_ZERO_ERROR;
     int32_t length = end - start;
     UBiDi *bidi = ubidi_openSized(length, 0, &error);
@@ -67,7 +63,7 @@ void Application::setup()
         UBiDiDirection direction = ubidi_getDirection(bidi);
         if (direction != UBIDI_MIXED)
         {
-            spit(text, direction, start, end);
+            spitRun(text, direction, start, end);
         }
         else
         {
@@ -82,7 +78,7 @@ void Application::setup()
                     int32_t run_start;
                     direction = ubidi_getVisualRun(bidi, i, &run_start, &length);
                     run_start += start; //Add offset to compensate offset in setPara
-                    spit(text, direction, run_start, run_start + length);
+                    spitRun(text, direction, run_start, run_start + length);
                 }
             }
         }
@@ -94,6 +90,18 @@ void Application::setup()
     }
     
     ubidi_close(bidi);
+}
+
+class Application : public AppNative
+{
+public:
+    void setup();
+    void draw();
+};
+
+void Application::setup()
+{
+    bidi1("The title is مفتاح معايير الويب in Arabic.");
 }
 
 void Application::draw()
