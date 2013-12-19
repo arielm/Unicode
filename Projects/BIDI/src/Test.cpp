@@ -71,7 +71,7 @@ void Test::spitRun(const UnicodeString &text, UBiDiDirection direction, int32_t 
     output << tmp << endl;
     
 #ifdef SPIT_DETAILS
-    output << endl;
+    output << " " << endl;
 #endif
 }
 
@@ -132,7 +132,7 @@ void Test::bidiMapnik(const string &input, UBiDiLevel paraLevel)
     
     // ---
     
-    output << endl;
+    output << " " << endl;
 }
 
 // ---------------------------------------- ANDROID ----------------------------------------
@@ -271,5 +271,5 @@ void Test::bidiAndroid(const string &input, int dirFlags)
     
     // ---
     
-    output << endl;
+    output << " " << endl;
 }

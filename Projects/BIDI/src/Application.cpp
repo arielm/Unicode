@@ -32,7 +32,7 @@ public:
 
 void Application::setup()
 {
-    Test(console()).run();
+    Test(console()).run(); // TESTED ON OSX, iOS AND ANDROID
 }
 
 void Application::draw()
