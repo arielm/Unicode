@@ -2,12 +2,16 @@ LOCAL_PATH := $(call my-dir)
 include $(CLEAR_VARS)
 
 CINDER_PATH = ../../../../../../../Cinder
+HB_PATH = ../../../../hb
 ICU_PATH = ../../../../icu/
 
 LOCAL_C_INCLUDES += $(LOCAL_PATH)/../../src
 FILE_LIST := $(wildcard $(LOCAL_PATH)/../../src/*.cpp)
 LOCAL_SRC_FILES += $(FILE_LIST:$(LOCAL_PATH)/%=%)
 
+LOCAL_C_INCLUDES += $(LOCAL_PATH)/$(CINDER_PATH)/blocks/Freetype/include
+
+include $(LOCAL_PATH)/$(HB_PATH)/Android.mk
 include $(LOCAL_PATH)/$(ICU_PATH)/Android.mk
 
 #LOCAL_CFLAGS += -DDEBUG

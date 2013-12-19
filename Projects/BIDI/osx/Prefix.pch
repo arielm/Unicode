@@ -2,4 +2,8 @@
     #import <Cocoa/Cocoa.h>
 #endif
 
+#define HAVE_UCDN
+#define HAVE_OT
+#define HB_NO_MT
+
 #define U_COMMON_IMPLEMENTATION
