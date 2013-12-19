@@ -9,13 +9,12 @@
 #pragma once
 
 #include "FreetypeHelper.h"
-#include "TextSpan.h"
 
 #include "cinder/gl/Texture.h"
 
-#include <map>
+#include "hb.h"
 
-typedef std::vector<std::shared_ptr<class YFont>> FontList;
+#include <map>
 
 struct FontDescriptor
 {
