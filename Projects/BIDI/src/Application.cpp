@@ -18,9 +18,8 @@
 #include "cinder/app/AppNative.h"
 
 #include "YFont.h"
+#include "BidiProcessor.h"
 #include "TextLayout.h"
-
-#include "Test.h"
 
 using namespace std;
 using namespace ci;
@@ -41,6 +40,11 @@ class Application : public AppNative
     
     TextLayout layout1;
     TextLayout layout2;
+    TextLayout layout3;
+    TextLayout layout4;
+    TextLayout layout5;
+    TextLayout layout6;
+    TextLayout layout7;
     
 public:
     void prepareSettings(Settings *settings);
@@ -54,13 +58,11 @@ public:
 
 void Application::prepareSettings(Settings *settings)
 {
-    settings->setWindowSize(1280, 512);
+    settings->setWindowSize(1280, 720);
 }
 
 void Application::setup()
 {
-    Test(console()).run();
-    
     ftHelper = make_shared<FreetypeHelper>();
     
     font1 = make_shared<YFont>(ftHelper, FontDescriptor(loadAsset("fonts/DroidSans.ttf")), FONT_SIZE, ColorA(1, 1, 0.5f, 1));
@@ -74,22 +76,14 @@ void Application::setup()
     fontLists[HB_SCRIPT_ARABIC].push_back(font1);
     
     // ---
-    
-    vector<TextSpan> spans1;
-    spans1.emplace_back(".", HB_SCRIPT_HEBREW, HB_DIRECTION_RTL, "he");
-    spans1.emplace_back("ERCIM", HB_SCRIPT_HEBREW, HB_DIRECTION_LTR, "he");
-    spans1.emplace_back(") מעביר את שירותי הארחה באירופה ל - ", HB_SCRIPT_HEBREW, HB_DIRECTION_RTL, "he");
-    spans1.emplace_back("World Wide Web Consortium", HB_SCRIPT_HEBREW, HB_DIRECTION_LTR, "he");
-    spans1.emplace_back(" (", HB_SCRIPT_HEBREW, HB_DIRECTION_RTL, "he");
-    spans1.emplace_back("W3C", HB_SCRIPT_HEBREW, HB_DIRECTION_LTR, "he");
-    
-    vector<TextSpan> spans2;
-    spans2.emplace_back("The title is ", HB_SCRIPT_ARABIC, HB_DIRECTION_LTR, "ar");
-    spans2.emplace_back("مفتاح معايير الويب", HB_SCRIPT_ARABIC, HB_DIRECTION_RTL, "ar");
-    spans2.emplace_back(" in Arabic.", HB_SCRIPT_ARABIC, HB_DIRECTION_LTR, "ar");
-    
-    layout1 = createLayout(spans1);
-    layout2 = createLayout(spans2);
+
+    layout1 = createLayout(BidiProcessor("The title is مفتاح معايير الويب in Arabic.", HB_SCRIPT_ARABIC, "ar", HB_DIRECTION_LTR).getRuns());
+    layout2 = createLayout(BidiProcessor("The title is \"مفتاح معايير الويب!\u200f\" in Arabic.", HB_SCRIPT_ARABIC, "ar", HB_DIRECTION_LTR).getRuns());
+    layout3 = createLayout(BidiProcessor("The names of these states in Arabic are مصر,‎ البحرين and الكويت respectively.", HB_SCRIPT_ARABIC, "ar", HB_DIRECTION_LTR).getRuns());
+    layout4 = createLayout(BidiProcessor("W3C‏ (World Wide Web Consortium) מעביר את שירותי הארחה באירופה ל - ERCIM.", HB_SCRIPT_HEBREW, "he", HB_DIRECTION_RTL).getRuns());
+    layout5 = createLayout(BidiProcessor("The title says \"W3C, פעילות הבינאום\" in Hebrew.", HB_SCRIPT_HEBREW, "he", HB_DIRECTION_LTR).getRuns());
+    layout6 = createLayout(BidiProcessor("one two ثلاثة four خمسة", HB_SCRIPT_ARABIC, "ar", HB_DIRECTION_LTR).getRuns());
+    layout7 = createLayout(BidiProcessor("one two ثلاثة 1234 خمسة", HB_SCRIPT_ARABIC, "ar", HB_DIRECTION_LTR).getRuns());
     
     // ---
     
@@ -112,8 +106,13 @@ void Application::draw()
     
     // ---
     
-    drawLayout(layout1, 128, left, right, true);
-    drawLayout(layout2, 256, left, right, false);
+    drawLayout(layout1, 90, left, right, true);
+    drawLayout(layout2, 180, left, right, false);
+    drawLayout(layout3, 270, left, right, false);
+    drawLayout(layout4, 360, left, right, false);
+    drawLayout(layout5, 450, left, right, false);
+    drawLayout(layout6, 540, left, right, false);
+    drawLayout(layout7, 630, left, right, false);
 }
 
 void Application::drawLayout(TextLayout &layout, float y, float left, float right, bool rtl)

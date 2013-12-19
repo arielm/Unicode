@@ -19,13 +19,14 @@ void Cluster::addShape(hb_codepoint_t codepoint, const Vec2f &offset, float adva
 
 float Cluster::draw(const Vec2f &position)
 {
+    gl::color(font->color);
+
     for (auto shape : shapes)
     {
         YGlyph *glyph = font->getGlyph(shape.codepoint);
         
         if (glyph && glyph->texture)
         {
-            gl::color(font->color);
             gl::draw(glyph->texture, position + shape.position + glyph->offset);
         }
     }

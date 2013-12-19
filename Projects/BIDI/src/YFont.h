@@ -9,9 +9,10 @@
 #pragma once
 
 #include "FreetypeHelper.h"
-#include "TextSpan.h"
 
 #include "cinder/gl/Texture.h"
+
+#include "hb.h"
 
 #include <map>
 

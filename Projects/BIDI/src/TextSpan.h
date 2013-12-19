@@ -17,24 +17,21 @@ class TextSpan
 public:
     std::string text;
     hb_script_t script;
-    hb_direction_t direction;
     std::string lang;
+    hb_direction_t direction;
     
-    TextSpan()
-    {}
-    
-    TextSpan(const std::string &text, hb_script_t script = HB_SCRIPT_LATIN, hb_direction_t direction = HB_DIRECTION_LTR, const std::string &lang = "")
+    TextSpan(const std::string &text, hb_script_t script = HB_SCRIPT_LATIN, const std::string &lang = "", hb_direction_t direction = HB_DIRECTION_LTR)
     :
     text(text),
     script(script),
-    direction(direction),
-    lang(lang)
+    lang(lang),
+    direction(direction)
     {}
     
     void apply(hb_buffer_t *buffer) const
     {
-        hb_buffer_set_direction(buffer, direction);
         hb_buffer_set_script(buffer, script);
+        hb_buffer_set_direction(buffer, direction);
         
         if (!lang.empty())
         {
