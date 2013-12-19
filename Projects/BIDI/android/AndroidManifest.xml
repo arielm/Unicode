@@ -1,27 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- BEGIN_INCLUDE(manifest) -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
         package="org.libcinder.BIDI"
         android:versionCode="1"
         android:versionName="1.0">
-
     <uses-sdk android:minSdkVersion="10" />
-
     <application android:label="BIDI" android:hasCode="false">
-
         <activity android:name="android.app.NativeActivity"
                 android:label="BIDI"
                 android:configChanges="keyboardHidden|orientation"
                 android:screenOrientation="landscape"
                 android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
-            <meta-data android:name="android.app.lib_name"
-                    android:value="BIDI" />
+            <meta-data android:name="android.app.lib_name" android:value="BIDI" />
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
     </application>
-
 </manifest> 
-<!-- END_INCLUDE(manifest) -->
