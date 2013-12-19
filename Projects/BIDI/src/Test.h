@@ -32,6 +32,6 @@ public:
     static void start(const std::string &title);
     static void spitRun(const UnicodeString &text, UBiDiDirection direction, int32_t start, int32_t end);
     
-    static void bidiMapnik(const std::string &input, UBiDiLevel paraLevel = UBIDI_DEFAULT_LTR);
+    static void bidiMapnik (const std::string &input, UBiDiLevel paraLevel = UBIDI_DEFAULT_LTR);
     static void bidiAndroid(const std::string &input, int dirFlags = kBidi_Default_LTR);
 };
