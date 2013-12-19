@@ -32,7 +32,7 @@ public:
 
 void Application::setup()
 {
-    Test::run();
+    Test(console()).run();
 }
 
 void Application::draw()

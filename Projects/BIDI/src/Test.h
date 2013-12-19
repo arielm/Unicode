@@ -22,8 +22,8 @@
  * AS LONG AS WE DON'T NECESSARLY USE A paraLevel
  * OF "UBIDI_DEFAULT_LTR" IN ubidi_setPara()
  *
- * THE ANDROID-PLATFORM IS SHOWING US THE WAY:
- * THE POSSIBILITY TO USE kBidi_LTR (0) OR kBidi_RTL(1)
+ * THE CODE FROM THE ANDROID-PLATFORM IS SHOWING US THE WAY:
+ * A POSSIBILITY TO USE kBidi_LTR (0) OR kBidi_RTL(1)
  * (NOTE THE LACK OF ICU CONSTANT FOR THESE VALUES)
  * BTW: USING "UBIDI_DEFAULT_LTR" WOULD NOT HAVE HELPED FOR TEST #4
  */
@@ -33,6 +33,8 @@
 #include "unicode/unistr.h"
 #include "unicode/uscript.h"
 #include "unicode/ubidi.h"
+
+#include <iostream>
 
 enum
 {
@@ -58,12 +60,16 @@ enum
 
 class Test
 {
+    std::ostream &output;
+    
 public:
-    static void run();
+    Test(std::ostream &output);
     
-    static void start(const std::string &title);
-    static void spitRun(const UnicodeString &text, UBiDiDirection direction, int32_t start, int32_t end);
+    void run();
     
-    static void bidiMapnik (const std::string &input, UBiDiLevel paraLevel = UBIDI_DEFAULT_LTR);
-    static void bidiAndroid(const std::string &input, int dirFlags = kBidi_Default_LTR);
+    void spitComment(const std::string &text);
+    void spitRun(const UnicodeString &text, UBiDiDirection direction, int32_t start, int32_t end);
+    
+    void bidiMapnik (const std::string &input, UBiDiLevel paraLevel = UBIDI_DEFAULT_LTR);
+    void bidiAndroid(const std::string &input, int dirFlags = kBidi_Default_LTR);
 };

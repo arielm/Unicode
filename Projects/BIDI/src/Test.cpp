@@ -1,8 +1,11 @@
 #include "Test.h"
 
-#include <iostream>
-
 using namespace std;
+
+Test::Test(ostream &output)
+:
+output(output)
+{}
 
 void Test::run()
 {
@@ -11,31 +14,31 @@ void Test::run()
      * http://people.w3.org/rishida/scripts/bidi/
      */
     
-    start("1");
+    spitComment("1");
     bidiMapnik("The title is مفتاح معايير الويب in Arabic.");
     bidiAndroid("The title is مفتاح معايير الويب in Arabic.");
     
-    start("2");
+    spitComment("2");
     bidiMapnik ("The title is \"مفتاح معايير الويب!\u200f\" in Arabic.");
     bidiAndroid("The title is \"مفتاح معايير الويب!\u200f\" in Arabic.");
     
-    start("3");
+    spitComment("3");
     bidiMapnik ("The names of these states in Arabic are مصر,‎ البحرين and الكويت respectively.");
     bidiAndroid("The names of these states in Arabic are مصر,‎ البحرين and الكويت respectively.");
     
-    start("4");
+    spitComment("4");
     bidiMapnik ("W3C‏ (World Wide Web Consortium) מעביר את שירותי הארחה באירופה ל - ERCIM.", kBidi_RTL);
     bidiAndroid("W3C‏ (World Wide Web Consortium) מעביר את שירותי הארחה באירופה ל - ERCIM.", kBidi_RTL);
     
-    start("5");
+    spitComment("5");
     bidiMapnik ("The title says \"W3C, פעילות הבינאום\" in Hebrew.");
     bidiAndroid("The title says \"W3C, פעילות הבינאום\" in Hebrew.");
     
-    start("6");
+    spitComment("6");
     bidiMapnik ("one two ثلاثة four خمسة");
     bidiAndroid("one two ثلاثة four خمسة");
     
-    start("7");
+    spitComment("7");
     bidiMapnik ("one two ثلاثة 1234 خمسة");
     bidiAndroid("one two ثلاثة 1234 خمسة");
     
@@ -43,14 +46,14 @@ void Test::run()
      * JUST CHECKING IF DIACRITICS ARE PROPERLY HANDLED
      */
     
-    start("10");
+    spitComment("10");
     bidiMapnik ("וְהָהַר, מַהוּ לַזֵּה? – זֹאת הִיא הַשְּׁאֵלָה.", kBidi_RTL);
     bidiAndroid("וְהָהַר, מַהוּ לַזֵּה? – זֹאת הִיא הַשְּׁאֵלָה.", kBidi_RTL);
 }
 
-void Test::start(const string &title)
+void Test::spitComment(const string &text)
 {
-    cout << "-------------------- " << title << " --------------------" << endl << endl;
+    output << "-------------------- " << text << " --------------------" << endl << endl;
 }
 
 /*
@@ -62,13 +65,13 @@ void Test::spitRun(const UnicodeString &text, UBiDiDirection direction, int32_t 
     text.tempSubString(start, end - start).toUTF8String(tmp);
 
 #ifdef SPIT_DETAILS
-    cout << ((direction == UBIDI_RTL) ? "RTL " : "") << "[" << start << " | " << end << "]" << endl;
+    output << ((direction == UBIDI_RTL) ? "RTL " : "") << "[" << start << " | " << end << "]" << endl;
 #endif
     
-    cout << tmp << endl;
+    output << tmp << endl;
     
 #ifdef SPIT_DETAILS
-    cout << endl;
+    output << endl;
 #endif
 }
 
@@ -88,7 +91,7 @@ void Test::bidiMapnik(const string &input, UBiDiLevel paraLevel)
     
     if (!bidi || U_FAILURE(error))
     {
-        cout << "Failed to create bidi object: " << u_errorName(error) << endl;
+        output << "Failed to create bidi object: " << u_errorName(error) << endl;
         throw;
     }
     
@@ -121,7 +124,7 @@ void Test::bidiMapnik(const string &input, UBiDiLevel paraLevel)
     }
     else
     {
-        cout << "ICU error: " << u_errorName(error) << endl;
+        output << "ICU error: " << u_errorName(error) << endl;
         throw;
     }
     
@@ -129,7 +132,7 @@ void Test::bidiMapnik(const string &input, UBiDiLevel paraLevel)
     
     // ---
     
-    cout << endl;
+    output << endl;
 }
 
 // ---------------------------------------- ANDROID ----------------------------------------
@@ -268,5 +271,5 @@ void Test::bidiAndroid(const string &input, int dirFlags)
     
     // ---
     
-    cout << endl;
+    output << endl;
 }
