@@ -56,7 +56,7 @@ enum
     kDirection_Mask = 0x1
 };
 
-//#define SPIT_DETAILS
+#define SPIT_DETAILS
 
 class Test
 {

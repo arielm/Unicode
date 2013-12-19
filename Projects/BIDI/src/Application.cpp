@@ -20,11 +20,15 @@
 #include "YFont.h"
 #include "TextLayout.h"
 
+#include "Test.h"
+
 using namespace std;
 using namespace ci;
 using namespace app;
 
 const float FONT_SIZE = 32;
+
+typedef vector<shared_ptr<YFont>> FontList;
 
 class Application : public AppNative
 {
@@ -43,7 +47,7 @@ public:
     void setup();
     void draw();
     
-    TextLayout createLayout(const TextSpan &span);
+    TextLayout createLayout(const vector<TextSpan> &spans);
     void drawLayout(TextLayout &layout, float y, float left, float right, bool rtl = false);
     void drawHLine(float y);
 };
@@ -55,6 +59,8 @@ void Application::prepareSettings(Settings *settings)
 
 void Application::setup()
 {
+    Test(console()).run();
+    
     ftHelper = make_shared<FreetypeHelper>();
     
     font1 = make_shared<YFont>(ftHelper, FontDescriptor(loadAsset("fonts/DroidSans.ttf")), FONT_SIZE, ColorA(1, 1, 0.5f, 1));
@@ -69,8 +75,21 @@ void Application::setup()
     
     // ---
     
-    layout1 = createLayout(TextSpan("W3C‏ (World Wide Web Consortium) מעביר את שירותי הארחה באירופה ל - ERCIM.", HB_SCRIPT_HEBREW, HB_DIRECTION_RTL, "he"));
-    layout2 = createLayout(TextSpan("The title is \"مفتاح معايير الويب!\u200f\" in Arabic.", HB_SCRIPT_ARABIC, HB_DIRECTION_RTL, "ar"));
+    vector<TextSpan> spans1;
+    spans1.emplace_back(".", HB_SCRIPT_HEBREW, HB_DIRECTION_RTL, "he");
+    spans1.emplace_back("ERCIM", HB_SCRIPT_HEBREW, HB_DIRECTION_LTR, "he");
+    spans1.emplace_back(") מעביר את שירותי הארחה באירופה ל - ", HB_SCRIPT_HEBREW, HB_DIRECTION_RTL, "he");
+    spans1.emplace_back("World Wide Web Consortium", HB_SCRIPT_HEBREW, HB_DIRECTION_LTR, "he");
+    spans1.emplace_back(" (", HB_SCRIPT_HEBREW, HB_DIRECTION_RTL, "he");
+    spans1.emplace_back("W3C", HB_SCRIPT_HEBREW, HB_DIRECTION_LTR, "he");
+    
+    vector<TextSpan> spans2;
+    spans2.emplace_back("The title is ", HB_SCRIPT_ARABIC, HB_DIRECTION_LTR, "ar");
+    spans2.emplace_back("مفتاح معايير الويب", HB_SCRIPT_ARABIC, HB_DIRECTION_RTL, "ar");
+    spans2.emplace_back(" in Arabic.", HB_SCRIPT_ARABIC, HB_DIRECTION_LTR, "ar");
+    
+    layout1 = createLayout(spans1);
+    layout2 = createLayout(spans2);
     
     // ---
     
@@ -106,90 +125,91 @@ void Application::drawLayout(TextLayout &layout, float y, float left, float righ
     drawHLine(y);
 }
 
-TextLayout Application::createLayout(const TextSpan &span)
+TextLayout Application::createLayout(const vector<TextSpan> &spans)
 {
     hb_buffer_t *buffer = hb_buffer_create();
     
     TextLayout layout;
-    map<uint32_t, Cluster> clusters;
     float combinedAdvance = 0;
-
-    for (auto font : fontLists[span.script])
+    map<uint32_t, Cluster> clusters;
+    
+    for (auto span : spans)
     {
-        span.apply(buffer);
-        hb_shape(font->hbFont, buffer, NULL, 0);
-        
-        auto glyphCount = hb_buffer_get_length(buffer);
-        auto glyphInfos = hb_buffer_get_glyph_infos(buffer, NULL);
-        auto glyphPositions = hb_buffer_get_glyph_positions(buffer, NULL);
-        
-        bool hasMissingGlyphs = false;
-        
-        for (int i = 0; i < glyphCount; i++)
+        clusters.clear();
+
+        for (auto font : fontLists[span.script])
         {
-            auto codepoint = glyphInfos[i].codepoint;
-            auto cluster = glyphInfos[i].cluster;
+            hb_buffer_clear_contents(buffer);
             
-            auto it = clusters.find(cluster);
-            bool clusterFound = (it != clusters.end());
+            span.apply(buffer);
+            hb_shape(font->hbFont, buffer, NULL, 0);
             
-            if (codepoint)
+            auto glyphCount = hb_buffer_get_length(buffer);
+            auto glyphInfos = hb_buffer_get_glyph_infos(buffer, NULL);
+            auto glyphPositions = hb_buffer_get_glyph_positions(buffer, NULL);
+            
+            bool hasMissingGlyphs = false;
+            
+            for (int i = 0; i < glyphCount; i++)
             {
-                if (clusterFound && (it->second.font != font.get()))
+                auto codepoint = glyphInfos[i].codepoint;
+                auto cluster = glyphInfos[i].cluster;
+                
+                auto it = clusters.find(cluster);
+                bool clusterFound = (it != clusters.end());
+                
+                if (codepoint)
                 {
-                    continue; // CLUSTER FOUND, WITH ANOTHER FONT (E.G. SPACE)
-                }
-                else
-                {
-                    auto offset = Vec2f(glyphPositions[i].x_offset, -glyphPositions[i].y_offset) * font->scale;
-                    float advance = glyphPositions[i].x_advance * font->scale.x;
-                    
-                    if (clusterFound)
+                    if (clusterFound && (it->second.font != font.get()))
                     {
-                        it->second.addShape(codepoint, offset, advance);
+                        continue; // CLUSTER FOUND, WITH ANOTHER FONT (E.G. SPACE)
                     }
                     else
                     {
-                        clusters.insert(make_pair(cluster, Cluster(font.get(), codepoint, offset, advance)));
+                        auto offset = Vec2f(glyphPositions[i].x_offset, -glyphPositions[i].y_offset) * font->scale;
+                        float advance = glyphPositions[i].x_advance * font->scale.x;
+                        
+                        if (clusterFound)
+                        {
+                            it->second.addShape(codepoint, offset, advance);
+                        }
+                        else
+                        {
+                            clusters.insert(make_pair(cluster, Cluster(font.get(), codepoint, offset, advance)));
+                        }
+                        
+                        combinedAdvance += advance;
                     }
-                    
-                    combinedAdvance += advance;
+                }
+                else if (!clusterFound)
+                {
+                    hasMissingGlyphs = true;
                 }
             }
-            else if (!clusterFound)
+            
+            if (!hasMissingGlyphs)
             {
-                hasMissingGlyphs = true;
+                break; // NO NEED TO PROCEED TO THE NEXT FONT IN THE LIST
             }
         }
         
-        if (!hasMissingGlyphs)
+        if (span.direction == HB_DIRECTION_RTL)
         {
-            break; // NO NEED TO PROCEED TO THE NEXT FONT IN THE LIST
+            for (auto it = clusters.rbegin(); it != clusters.rend(); ++it)
+            {
+                layout.addCluster(it->second);
+            }
         }
         else
         {
-            hb_buffer_clear_contents(buffer);
+            for (auto it = clusters.begin(); it != clusters.end(); ++it)
+            {
+                layout.addCluster(it->second);
+            }
         }
     }
     
     hb_buffer_destroy(buffer);
-    
-    // ---
-    
-    if (span.direction == HB_DIRECTION_RTL)
-    {
-        for (auto it = clusters.rbegin(); it != clusters.rend(); ++it)
-        {
-            layout.addCluster(it->second);
-        }
-    }
-    else
-    {
-        for (auto it = clusters.begin(); it != clusters.end(); ++it)
-        {
-            layout.addCluster(it->second);
-        }
-    }
     
     return layout;
 }
