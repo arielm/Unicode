@@ -4,6 +4,50 @@
 
 using namespace std;
 
+void Test::run()
+{
+    /*
+     * USING BIDI TEXT EXAMPLES FROM:
+     * http://people.w3.org/rishida/scripts/bidi/
+     */
+    
+    start("1");
+    bidiMapnik("The title is مفتاح معايير الويب in Arabic.");
+    bidiAndroid("The title is مفتاح معايير الويب in Arabic.");
+    
+    start("2");
+    bidiMapnik ("The title is \"مفتاح معايير الويب!\u200f\" in Arabic.");
+    bidiAndroid("The title is \"مفتاح معايير الويب!\u200f\" in Arabic.");
+    
+    start("3");
+    bidiMapnik ("The names of these states in Arabic are مصر,‎ البحرين and الكويت respectively.");
+    bidiAndroid("The names of these states in Arabic are مصر,‎ البحرين and الكويت respectively.");
+    
+    start("4");
+    bidiMapnik ("W3C‏ (World Wide Web Consortium) מעביר את שירותי הארחה באירופה ל - ERCIM.", kBidi_RTL);
+    bidiAndroid("W3C‏ (World Wide Web Consortium) מעביר את שירותי הארחה באירופה ל - ERCIM.", kBidi_RTL);
+    
+    start("5");
+    bidiMapnik ("The title says \"W3C, פעילות הבינאום\" in Hebrew.");
+    bidiAndroid("The title says \"W3C, פעילות הבינאום\" in Hebrew.");
+    
+    start("6");
+    bidiMapnik ("one two ثلاثة four خمسة");
+    bidiAndroid("one two ثلاثة four خمسة");
+    
+    start("7");
+    bidiMapnik ("one two ثلاثة 1234 خمسة");
+    bidiAndroid("one two ثلاثة 1234 خمسة");
+    
+    /*
+     * JUST CHECKING IF DIACRITICS ARE PROPERLY HANDLED
+     */
+    
+    start("10");
+    bidiMapnik ("וְהָהַר, מַהוּ לַזֵּה? – זֹאת הִיא הַשְּׁאֵלָה.", kBidi_RTL);
+    bidiAndroid("וְהָהַר, מַהוּ לַזֵּה? – זֹאת הִיא הַשְּׁאֵלָה.", kBidi_RTL);
+}
+
 void Test::start(const string &title)
 {
     cout << "-------------------- " << title << " --------------------" << endl << endl;

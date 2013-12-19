@@ -1,3 +1,33 @@
+/*
+ * THE UNICODE TEST SUITE FOR CINDER: https://github.com/arielm/Unicode
+ * COPYRIGHT (C) 2013, ARIEL MALKA ALL RIGHTS RESERVED.
+ *
+ * THE FOLLOWING SOURCE-CODE IS DISTRIBUTED UNDER THE MODIFIED BSD LICENSE:
+ * https://github.com/arielm/Unicode/blob/master/LICENSE.md
+ */
+
+/*
+ * TESTING TWO METHODS FOR BIDI:
+ *
+ * bidiMapnik() IS USING THE FOLLOWING:
+ * https://github.com/mapnik/mapnik/blob/64d5153aeaeb1c9e736bfead297dfea39b066d2c/src/text/itemizer.cpp#L90-131
+ *
+ * bidiAndroid() IS USING THE FOLLOWING:
+ * https://github.com/android/platform_frameworks_base/blob/677726b376402937f53ddb192dc97078b92b7c9e/core/jni/android/graphics/TextLayoutCache.cpp#L356-485
+ *
+ *
+ * RESULTS:
+ *
+ * THE 2 METHODS PRODUCE SIMILAR RESULTS:
+ * AS LONG AS WE DON'T NECESSARLY USE A paraLevel
+ * OF "UBIDI_DEFAULT_LTR" IN ubidi_setPara()
+ *
+ * THE ANDROID-PLATFORM IS SHOWING US THE WAY:
+ * THE POSSIBILITY TO USE kBidi_LTR (0) OR kBidi_RTL(1)
+ * (NOTE THE LACK OF ICU CONSTANT FOR THESE VALUES)
+ * BTW: USING "UBIDI_DEFAULT_LTR" WOULD NOT HAVE HELPED FOR TEST #4
+ */
+
 #pragma once
 
 #include "unicode/unistr.h"
@@ -29,6 +59,8 @@ enum
 class Test
 {
 public:
+    static void run();
+    
     static void start(const std::string &title);
     static void spitRun(const UnicodeString &text, UBiDiDirection direction, int32_t start, int32_t end);
     
