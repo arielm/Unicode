@@ -18,7 +18,7 @@
 #include "cinder/app/AppNative.h"
 
 #include "YFont.h"
-#include "Cluster.h"
+#include "TextLayout.h"
 
 using namespace std;
 using namespace ci;
@@ -30,20 +30,21 @@ class Application : public AppNative
 {
     shared_ptr<FreetypeHelper> ftHelper; // THE UNDERLYING FT_Library WILL BE DESTROYED AFTER ALL THE YFont INSTANCES
     
+    map<hb_script_t, FontList> fontLists;
     shared_ptr<YFont> font1;
     shared_ptr<YFont> font2;
     shared_ptr<YFont> font3;
     
-    FontList fontList1;
-    FontList fontList2;
+    TextLayout layout1;
+    TextLayout layout2;
     
 public:
     void prepareSettings(Settings *settings);
     void setup();
-    
     void draw();
-    void drawSpan(const FontList &fontList, const TextSpan &span, float y, float left, float right);
-    void drawSpan(const FontList &fontList, const TextSpan &span, float x, float y);
+    
+    TextLayout createLayout(const TextSpan &span);
+    void drawLayout(TextLayout &layout, float y, float left, float right, bool rtl = false);
     void drawHLine(float y);
 };
 
@@ -60,11 +61,16 @@ void Application::setup()
     font2 = make_shared<YFont>(ftHelper, FontDescriptor(loadAsset("fonts/DroidSansHebrew-Regular.ttf")), FONT_SIZE, ColorA(1, 1, 1, 1));
     font3 = make_shared<YFont>(ftHelper, FontDescriptor(loadAsset("fonts/DroidNaskh-Regular.ttf")), FONT_SIZE, ColorA(1, 1, 1, 1));
     
-    fontList1.push_back(font2);
-    fontList1.push_back(font1);
+    fontLists[HB_SCRIPT_HEBREW].push_back(font2);
+    fontLists[HB_SCRIPT_HEBREW].push_back(font1);
     
-    fontList2.push_back(font3);
-    fontList2.push_back(font1);
+    fontLists[HB_SCRIPT_ARABIC].push_back(font3);
+    fontLists[HB_SCRIPT_ARABIC].push_back(font1);
+    
+    // ---
+    
+    layout1 = createLayout(TextSpan("W3C‏ (World Wide Web Consortium) מעביר את שירותי הארחה באירופה ל - ERCIM.", HB_SCRIPT_HEBREW, HB_DIRECTION_RTL, "he"));
+    layout2 = createLayout(TextSpan("The title is \"مفتاح معايير الويب!\u200f\" in Arabic.", HB_SCRIPT_ARABIC, HB_DIRECTION_RTL, "ar"));
     
     // ---
     
@@ -87,32 +93,28 @@ void Application::draw()
     
     // ---
     
-    drawSpan(fontList1, TextSpan("W3C‏ (World Wide Web Consortium) מעביר את שירותי הארחה באירופה ל - ERCIM.", HB_SCRIPT_HEBREW, HB_DIRECTION_RTL, "he"), 128, left, right);
-    drawSpan(fontList2, TextSpan("The title is \"مفتاح معايير الويب!\u200f\" in Arabic.", HB_SCRIPT_ARABIC, HB_DIRECTION_RTL, "ar"), 256, left, right);
+    drawLayout(layout1, 128, left, right, true);
+    drawLayout(layout2, 256, left, right, false);
 }
 
-void Application::drawSpan(const FontList &fontList, const TextSpan &span, float y, float left, float right)
+void Application::drawLayout(TextLayout &layout, float y, float left, float right, bool rtl)
 {
-    float x = (span.direction == HB_DIRECTION_LTR) ? left : right;
-    
-    drawSpan(fontList, span, x, y);
+    float x = rtl ? (right - layout.advance) : left;
+    layout.draw(Vec2f(x, y));
     
     glColor4f(1, 0.75f, 0, 0.5f);
     drawHLine(y);
-    
-    glColor4f(1, 1, 0, 0.25f);
-    drawHLine(y - fontList[0]->ascent);
-    drawHLine(y + fontList[0]->descent);
 }
 
-void Application::drawSpan(const FontList &fontList, const TextSpan &span, float x, float y)
+TextLayout Application::createLayout(const TextSpan &span)
 {
     hb_buffer_t *buffer = hb_buffer_create();
     
+    TextLayout layout;
     map<uint32_t, Cluster> clusters;
     float combinedAdvance = 0;
-    
-    for (auto font : fontList)
+
+    for (auto font : fontLists[span.script])
     {
         span.apply(buffer);
         hb_shape(font->hbFont, buffer, NULL, 0);
@@ -174,30 +176,22 @@ void Application::drawSpan(const FontList &fontList, const TextSpan &span, float
     
     // ---
     
-    glPushMatrix();
-    
     if (span.direction == HB_DIRECTION_RTL)
     {
-        glTranslatef(x - combinedAdvance, y, 0);
-        
         for (auto it = clusters.rbegin(); it != clusters.rend(); ++it)
         {
-            float advance = it->second.draw();
-            glTranslatef(advance, 0, 0);
+            layout.addCluster(it->second);
         }
     }
     else
     {
-        glTranslatef(x, y, 0);
-        
         for (auto it = clusters.begin(); it != clusters.end(); ++it)
         {
-            float advance = it->second.draw();
-            glTranslatef(advance, 0, 0);
+            layout.addCluster(it->second);
         }
     }
     
-    glPopMatrix();
+    return layout;
 }
 
 void Application::drawHLine(float y)
