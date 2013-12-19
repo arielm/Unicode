@@ -44,6 +44,8 @@
 		A857CAE9186350B400250AEC /* hb-ucdn.cc in Sources */ = {isa = PBXBuildFile; fileRef = A857CA94186350B400250AEC /* hb-ucdn.cc */; };
 		A857CAEA186350B400250AEC /* hb-unicode.cc in Sources */ = {isa = PBXBuildFile; fileRef = A857CA95186350B400250AEC /* hb-unicode.cc */; };
 		A857CAEB186350B400250AEC /* ucdn.c in Sources */ = {isa = PBXBuildFile; fileRef = A857CABE186350B400250AEC /* ucdn.c */; };
+		A857CAF218635ABE00250AEC /* FreetypeHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A857CAEC18635ABE00250AEC /* FreetypeHelper.cpp */; };
+		A857CAF318635ABE00250AEC /* YFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A857CAED18635ABE00250AEC /* YFont.cpp */; };
 		A871F52E18625BAE001D0F98 /* Test.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A871F52C18625BAE001D0F98 /* Test.cpp */; };
 		A871F89C18633321001D0F98 /* wintz.c in Sources */ = {isa = PBXBuildFile; fileRef = A871F73F18633320001D0F98 /* wintz.c */; };
 		A871F89D18633321001D0F98 /* uvectr64.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A871F74118633320001D0F98 /* uvectr64.cpp */; };
@@ -319,6 +321,12 @@
 		A857CACE186350B400250AEC /* hb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = hb.h; path = ../../../hb/hb.h; sourceTree = "<group>"; };
 		A857CACF186350B400250AEC /* ucdn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ucdn.h; path = ../../../hb/ucdn.h; sourceTree = "<group>"; };
 		A857CAD0186350B400250AEC /* unicodedata_db.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = unicodedata_db.h; path = ../../../hb/unicodedata_db.h; sourceTree = "<group>"; };
+		A857CAEC18635ABE00250AEC /* FreetypeHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FreetypeHelper.cpp; path = ../src/FreetypeHelper.cpp; sourceTree = "<group>"; };
+		A857CAED18635ABE00250AEC /* YFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = YFont.cpp; path = ../src/YFont.cpp; sourceTree = "<group>"; };
+		A857CAEE18635ABE00250AEC /* Cluster.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Cluster.h; path = ../src/Cluster.h; sourceTree = "<group>"; };
+		A857CAEF18635ABE00250AEC /* FreetypeHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FreetypeHelper.h; path = ../src/FreetypeHelper.h; sourceTree = "<group>"; };
+		A857CAF018635ABE00250AEC /* TextSpan.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextSpan.h; path = ../src/TextSpan.h; sourceTree = "<group>"; };
+		A857CAF118635ABE00250AEC /* YFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YFont.h; path = ../src/YFont.h; sourceTree = "<group>"; };
 		A871F52C18625BAE001D0F98 /* Test.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Test.cpp; path = ../src/Test.cpp; sourceTree = "<group>"; };
 		A871F52D18625BAE001D0F98 /* Test.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Test.h; path = ../src/Test.h; sourceTree = "<group>"; };
 		A871F73E18633320001D0F98 /* wintz.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = wintz.h; path = ../../../icu/common/wintz.h; sourceTree = "<group>"; };
@@ -697,6 +705,12 @@
 				A809530316F361E20011FAA3 /* Application.cpp */,
 				A871F52D18625BAE001D0F98 /* Test.h */,
 				A871F52C18625BAE001D0F98 /* Test.cpp */,
+				A857CAEF18635ABE00250AEC /* FreetypeHelper.h */,
+				A857CAEC18635ABE00250AEC /* FreetypeHelper.cpp */,
+				A857CAF118635ABE00250AEC /* YFont.h */,
+				A857CAED18635ABE00250AEC /* YFont.cpp */,
+				A857CAF018635ABE00250AEC /* TextSpan.h */,
+				A857CAEE18635ABE00250AEC /* Cluster.h */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -1339,6 +1353,7 @@
 				A857CAE1186350B400250AEC /* hb-ot-shape-fallback.cc in Sources */,
 				A871F8EA18633321001D0F98 /* ucnv2022.cpp in Sources */,
 				A871F90618633321001D0F98 /* ubidiln.c in Sources */,
+				A857CAF318635ABE00250AEC /* YFont.cpp in Sources */,
 				A871F8F818633321001D0F98 /* ucnv_bld.cpp in Sources */,
 				A871F8FB18633321001D0F98 /* uchriter.cpp in Sources */,
 				A871F93218633321001D0F98 /* icuplug.c in Sources */,
@@ -1366,6 +1381,7 @@
 				A871F8FA18633321001D0F98 /* ucln_cmn.c in Sources */,
 				A871F91818633321001D0F98 /* rbbistbl.cpp in Sources */,
 				A871F8D318633321001D0F98 /* umapfile.c in Sources */,
+				A857CAF218635ABE00250AEC /* FreetypeHelper.cpp in Sources */,
 				A871F91518633321001D0F98 /* resbund.cpp in Sources */,
 				A871F93918633321001D0F98 /* cwchar.c in Sources */,
 				A871F8D818633321001D0F98 /* uinvchar.c in Sources */,
