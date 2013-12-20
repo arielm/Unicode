@@ -1,6 +1,0 @@
-#if defined( __OBJC__ )
-	#import <UIKit/UIKit.h>
-	#import <Foundation/Foundation.h>
-#endif
-
-#define U_COMMON_IMPLEMENTATION
