@@ -15,8 +15,6 @@
 		5323E6B20EAFCA74003A9687 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5323E6B10EAFCA74003A9687 /* CoreVideo.framework */; };
 		5323E6B60EAFCA7E003A9687 /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5323E6B50EAFCA7E003A9687 /* QTKit.framework */; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
-		A801FB85185EED600071DEFF /* DejaVuSerif.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A801FB83185EED600071DEFF /* DejaVuSerif.ttf */; };
-		A801FB86185EED600071DEFF /* ScheherazadeRegOT.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A801FB84185EED600071DEFF /* ScheherazadeRegOT.ttf */; };
 		A809523B16F360660011FAA3 /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = A809523A16F360660011FAA3 /* icon.icns */; };
 		A809530916F361E20011FAA3 /* Application.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A809530316F361E20011FAA3 /* Application.cpp */; };
 		A84CE6A018567656002EA4D3 /* hb-set.cc in Sources */ = {isa = PBXBuildFile; fileRef = A84CE64B18567656002EA4D3 /* hb-set.cc */; };
@@ -46,6 +44,8 @@
 		A84CE6B818567656002EA4D3 /* hb-ot-shape-normalize.cc in Sources */ = {isa = PBXBuildFile; fileRef = A84CE69818567656002EA4D3 /* hb-ot-shape-normalize.cc */; };
 		A84CE6B918567656002EA4D3 /* hb-ot-shape.cc in Sources */ = {isa = PBXBuildFile; fileRef = A84CE69A18567656002EA4D3 /* hb-ot-shape.cc */; };
 		A84CE6BA18567656002EA4D3 /* hb-ot-tag.cc in Sources */ = {isa = PBXBuildFile; fileRef = A84CE69B18567656002EA4D3 /* hb-ot-tag.cc */; };
+		A886DFEC186502B30081060D /* DejaVuSerif.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A886DFEB186502B30081060D /* DejaVuSerif.ttf */; };
+		A886DFEE186502BA0081060D /* ScheherazadeRegOT.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A886DFED186502BA0081060D /* ScheherazadeRegOT.ttf */; };
 		A8C73CC518548E340081E110 /* FreetypeHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A8C73CC418548E340081E110 /* FreetypeHelper.cpp */; };
 		A8C73CCB1854A9260081E110 /* YFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A8C73CC91854A9260081E110 /* YFont.cpp */; };
 /* End PBXBuildFile section */
@@ -64,8 +64,6 @@
 		5323E6B10EAFCA74003A9687 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = /System/Library/Frameworks/CoreVideo.framework; sourceTree = "<absolute>"; };
 		5323E6B50EAFCA7E003A9687 /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = /System/Library/Frameworks/QTKit.framework; sourceTree = "<absolute>"; };
 		8D1107320486CEB800E47090 /* LanguageFeatures.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LanguageFeatures.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		A801FB83185EED600071DEFF /* DejaVuSerif.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = DejaVuSerif.ttf; path = ../resources/DejaVuSerif.ttf; sourceTree = "<group>"; };
-		A801FB84185EED600071DEFF /* ScheherazadeRegOT.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = ScheherazadeRegOT.ttf; path = ../resources/ScheherazadeRegOT.ttf; sourceTree = "<group>"; };
 		A809523A16F360660011FAA3 /* icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = icon.icns; sourceTree = "<group>"; };
 		A809530316F361E20011FAA3 /* Application.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Application.cpp; path = ../src/Application.cpp; sourceTree = "<group>"; };
 		A84CE64B18567656002EA4D3 /* hb-set.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "hb-set.cc"; path = "../../../hb/hb-set.cc"; sourceTree = "<group>"; };
@@ -153,6 +151,8 @@
 		A84CE69D18567656002EA4D3 /* hb-ot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "hb-ot.h"; path = "../../../hb/hb-ot.h"; sourceTree = "<group>"; };
 		A84CE69E18567656002EA4D3 /* hb-private.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = "hb-private.hh"; path = "../../../hb/hb-private.hh"; sourceTree = "<group>"; };
 		A84CE69F18567656002EA4D3 /* hb-set-private.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = "hb-set-private.hh"; path = "../../../hb/hb-set-private.hh"; sourceTree = "<group>"; };
+		A886DFEB186502B30081060D /* DejaVuSerif.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = DejaVuSerif.ttf; path = ../resources/DejaVu/DejaVuSerif.ttf; sourceTree = "<group>"; };
+		A886DFED186502BA0081060D /* ScheherazadeRegOT.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = ScheherazadeRegOT.ttf; path = ../resources/Scheherazade/ScheherazadeRegOT.ttf; sourceTree = "<group>"; };
 		A8C73CC118547DAA0081E110 /* FreetypeHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FreetypeHelper.h; path = ../src/FreetypeHelper.h; sourceTree = "<group>"; };
 		A8C73CC418548E340081E110 /* FreetypeHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FreetypeHelper.cpp; path = ../src/FreetypeHelper.cpp; sourceTree = "<group>"; };
 		A8C73CC91854A9260081E110 /* YFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = YFont.cpp; path = ../src/YFont.cpp; sourceTree = "<group>"; };
@@ -238,8 +238,8 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				A801FB83185EED600071DEFF /* DejaVuSerif.ttf */,
-				A801FB84185EED600071DEFF /* ScheherazadeRegOT.ttf */,
+				A886DFED186502BA0081060D /* ScheherazadeRegOT.ttf */,
+				A886DFEB186502B30081060D /* DejaVuSerif.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -416,8 +416,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				A809523B16F360660011FAA3 /* icon.icns in Resources */,
-				A801FB86185EED600071DEFF /* ScheherazadeRegOT.ttf in Resources */,
-				A801FB85185EED600071DEFF /* DejaVuSerif.ttf in Resources */,
+				A886DFEE186502BA0081060D /* ScheherazadeRegOT.ttf in Resources */,
+				A886DFEC186502B30081060D /* DejaVuSerif.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

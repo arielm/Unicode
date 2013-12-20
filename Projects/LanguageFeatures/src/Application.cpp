@@ -65,9 +65,9 @@ void Application::setup()
 {
     ftHelper = make_shared<FreetypeHelper>();
 
-    font1 = make_shared<YFont>(ftHelper, FontDescriptor(loadResource("DejaVuSerif.ttf")), FONT_SIZE);
+    font1 = make_shared<YFont>(ftHelper, FontDescriptor(loadResource("DejaVuSerif.ttf")), FONT_SIZE); // http://dejavu-fonts.org
     font2 = make_shared<YFont>(ftHelper, FontDescriptor(loadFile("/Library/Fonts/Verdana.ttf")), FONT_SIZE); // OSX
-    font3 = make_shared<YFont>(ftHelper, FontDescriptor(loadResource("ScheherazadeRegOT.ttf")), FONT_SIZE);
+    font3 = make_shared<YFont>(ftHelper, FontDescriptor(loadResource("ScheherazadeRegOT.ttf")), FONT_SIZE); // http://www.google.com/fonts/earlyaccess
     
     // ---
     
