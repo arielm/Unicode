@@ -14,7 +14,7 @@ public:
     BidiProcessor(const std::string &input, hb_script_t script = HB_SCRIPT_LATIN, const std::string &lang = "", hb_direction_t direction = HB_DIRECTION_LTR);
     
     std::vector<TextSpan> getRuns() const;
-    
+
     static hb_direction_t uciDirectionToHB(UBiDiDirection direction);
     static UBiDiDirection hbDirectionToUCI(hb_direction_t direction);
 
@@ -24,5 +24,6 @@ protected:
     
     std::vector<TextSpan> runs;
 
-    void addRun(const UnicodeString &text, UBiDiDirection direction, int32_t start, int32_t end);
+    void addRun(const std::string &text, hb_direction_t direction);
+    void addRun(const UnicodeString &input, UBiDiDirection direction, int32_t start, int32_t end);
 };

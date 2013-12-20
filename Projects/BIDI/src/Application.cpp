@@ -106,10 +106,10 @@ void Application::draw()
     
     // ---
     
-    drawLayout(layout1, 90, left, right, true);
+    drawLayout(layout1, 90, left, right, false);
     drawLayout(layout2, 180, left, right, false);
     drawLayout(layout3, 270, left, right, false);
-    drawLayout(layout4, 360, left, right, false);
+    drawLayout(layout4, 360, left, right, true);
     drawLayout(layout5, 450, left, right, false);
     drawLayout(layout6, 540, left, right, false);
     drawLayout(layout7, 630, left, right, false);
