@@ -3,26 +3,25 @@
 #include "TextSpan.h"
 
 #include "unicode/unistr.h"
-#include "unicode/uscript.h"
+#include "unicode/uscript.h" // ???
 #include "unicode/ubidi.h"
 
 #include <vector>
 
-class BidiProcessor
+class TextGroup
 {
 public:
-    BidiProcessor(const std::string &input, hb_script_t script = HB_SCRIPT_LATIN, const std::string &lang = "", hb_direction_t direction = HB_DIRECTION_LTR);
-    
-    std::vector<TextSpan> getRuns() const;
+    hb_direction_t overallDirection;
+    std::vector<TextSpan> runs;
 
+    TextGroup(const std::string &input, hb_script_t script = HB_SCRIPT_LATIN, const std::string &lang = "", hb_direction_t overallDirection = HB_DIRECTION_LTR);
+    
     static hb_direction_t uciDirectionToHB(UBiDiDirection direction);
     static UBiDiDirection hbDirectionToUCI(hb_direction_t direction);
 
 protected:
     hb_script_t script;
     std::string lang;
-    
-    std::vector<TextSpan> runs;
 
     void addRun(const std::string &text, hb_direction_t direction);
     void addRun(const UnicodeString &input, UBiDiDirection direction, int32_t start, int32_t end);

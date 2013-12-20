@@ -47,7 +47,7 @@
 		A857CAF218635ABE00250AEC /* FreetypeHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A857CAEC18635ABE00250AEC /* FreetypeHelper.cpp */; };
 		A857CAF318635ABE00250AEC /* YFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A857CAED18635ABE00250AEC /* YFont.cpp */; };
 		A857CAF51863674000250AEC /* TextLayout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A857CAF41863674000250AEC /* TextLayout.cpp */; };
-		A857CAF818639C6300250AEC /* BidiProcessor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A857CAF618639C6300250AEC /* BidiProcessor.cpp */; };
+		A857CAF818639C6300250AEC /* TextGroup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A857CAF618639C6300250AEC /* TextGroup.cpp */; };
 		A871F52E18625BAE001D0F98 /* Test.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A871F52C18625BAE001D0F98 /* Test.cpp */; };
 		A871F89C18633321001D0F98 /* wintz.c in Sources */ = {isa = PBXBuildFile; fileRef = A871F73F18633320001D0F98 /* wintz.c */; };
 		A871F89D18633321001D0F98 /* uvectr64.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A871F74118633320001D0F98 /* uvectr64.cpp */; };
@@ -330,8 +330,8 @@
 		A857CAF018635ABE00250AEC /* TextSpan.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextSpan.h; path = ../src/TextSpan.h; sourceTree = "<group>"; };
 		A857CAF118635ABE00250AEC /* YFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YFont.h; path = ../src/YFont.h; sourceTree = "<group>"; };
 		A857CAF41863674000250AEC /* TextLayout.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TextLayout.cpp; path = ../src/TextLayout.cpp; sourceTree = "<group>"; };
-		A857CAF618639C6300250AEC /* BidiProcessor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BidiProcessor.cpp; path = ../src/BidiProcessor.cpp; sourceTree = "<group>"; };
-		A857CAF718639C6300250AEC /* BidiProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BidiProcessor.h; path = ../src/BidiProcessor.h; sourceTree = "<group>"; };
+		A857CAF618639C6300250AEC /* TextGroup.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TextGroup.cpp; path = ../src/TextGroup.cpp; sourceTree = "<group>"; };
+		A857CAF718639C6300250AEC /* TextGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextGroup.h; path = ../src/TextGroup.h; sourceTree = "<group>"; };
 		A871F52C18625BAE001D0F98 /* Test.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Test.cpp; path = ../src/Test.cpp; sourceTree = "<group>"; };
 		A871F52D18625BAE001D0F98 /* Test.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Test.h; path = ../src/Test.h; sourceTree = "<group>"; };
 		A871F73E18633320001D0F98 /* wintz.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = wintz.h; path = ../../../icu/common/wintz.h; sourceTree = "<group>"; };
@@ -715,8 +715,8 @@
 				A857CAF118635ABE00250AEC /* YFont.h */,
 				A857CAED18635ABE00250AEC /* YFont.cpp */,
 				A857CAF018635ABE00250AEC /* TextSpan.h */,
-				A857CAF718639C6300250AEC /* BidiProcessor.h */,
-				A857CAF618639C6300250AEC /* BidiProcessor.cpp */,
+				A857CAF718639C6300250AEC /* TextGroup.h */,
+				A857CAF618639C6300250AEC /* TextGroup.cpp */,
 				A857CAEE18635ABE00250AEC /* TextLayout.h */,
 				A857CAF41863674000250AEC /* TextLayout.cpp */,
 			);
@@ -1505,7 +1505,7 @@
 				A871F8BB18633321001D0F98 /* usc_impl.c in Sources */,
 				A871F8DC18633321001D0F98 /* uhash_us.cpp in Sources */,
 				A871F92F18633321001D0F98 /* locbased.cpp in Sources */,
-				A857CAF818639C6300250AEC /* BidiProcessor.cpp in Sources */,
+				A857CAF818639C6300250AEC /* TextGroup.cpp in Sources */,
 				A857CADA186350B400250AEC /* hb-ot-shape-complex-arabic.cc in Sources */,
 				A871F8BD18633321001D0F98 /* uresbund.cpp in Sources */,
 				A871F90218633321001D0F98 /* ucasemap_titlecase_brkiter.cpp in Sources */,

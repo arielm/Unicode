@@ -1,11 +1,12 @@
-#include "BidiProcessor.h"
+#include "TextGroup.h"
 
 using namespace std;
 
-BidiProcessor::BidiProcessor(const string &input, hb_script_t script, const string &lang, hb_direction_t direction)
+TextGroup::TextGroup(const string &input, hb_script_t script, const string &lang, hb_direction_t overallDirection)
 :
 script(script),
-lang(lang)
+lang(lang),
+overallDirection(overallDirection)
 {
     if (hb_script_get_horizontal_direction(script) == HB_DIRECTION_LTR)
     {
@@ -19,7 +20,7 @@ lang(lang)
         UErrorCode error = U_ZERO_ERROR;
         UBiDi *bidi = ubidi_openSized(length, 0, &error);
         
-        ubidi_setPara(bidi, text.getBuffer(), length, hbDirectionToUCI(direction), 0, &error);
+        ubidi_setPara(bidi, text.getBuffer(), length, hbDirectionToUCI(overallDirection), 0, &error);
         auto direction = ubidi_getDirection(bidi);
         
         if (direction != UBIDI_MIXED)
@@ -42,27 +43,22 @@ lang(lang)
     }
 }
 
-vector<TextSpan> BidiProcessor::getRuns() const
-{
-    return runs;
-}
-
-hb_direction_t BidiProcessor::uciDirectionToHB(UBiDiDirection direction)
+hb_direction_t TextGroup::uciDirectionToHB(UBiDiDirection direction)
 {
     return (direction == UBIDI_RTL) ? HB_DIRECTION_RTL : HB_DIRECTION_LTR;
 }
 
-UBiDiDirection BidiProcessor::hbDirectionToUCI(hb_direction_t direction)
+UBiDiDirection TextGroup::hbDirectionToUCI(hb_direction_t direction)
 {
     return (direction == HB_DIRECTION_RTL) ? UBIDI_RTL : UBIDI_LTR;
 }
 
-void BidiProcessor::addRun(const string &text, hb_direction_t direction)
+void TextGroup::addRun(const string &text, hb_direction_t direction)
 {
     runs.emplace_back(text, script, lang, direction);
 }
 
-void BidiProcessor::addRun(const UnicodeString &input, UBiDiDirection direction, int32_t start, int32_t end)
+void TextGroup::addRun(const UnicodeString &input, UBiDiDirection direction, int32_t start, int32_t end)
 {
     string text;
     input.tempSubString(start, end - start).toUTF8String(text);

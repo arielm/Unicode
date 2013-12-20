@@ -6,19 +6,10 @@
  * https://github.com/arielm/Unicode/blob/master/LICENSE.md
  */
 
-/*
- * TODO:
- *
- * 1) RENDER RUNS WITH HARFBUZZ
- *    - INSIGHT: HARFBUZZ-DIRECTION IS GOING TO BE DEFINED AT THE BIDI STAGE
- *      I.E. A BIDI CALL WITH "FORCE-LTR" OR "FORCE-RTL" WOULD NOT
- *      USE ICU-BIDI, SOLELY AFFECTING THE HARFBUZZ-DIRECTION FLAG
- */
-
 #include "cinder/app/AppNative.h"
 
 #include "YFont.h"
-#include "BidiProcessor.h"
+#include "TextGroup.h"
 #include "TextLayout.h"
 
 using namespace std;
@@ -77,13 +68,13 @@ void Application::setup()
     
     // ---
 
-    layout1 = createLayout(BidiProcessor("The title is مفتاح معايير الويب in Arabic.", HB_SCRIPT_ARABIC, "ar", HB_DIRECTION_LTR).getRuns());
-    layout2 = createLayout(BidiProcessor("The title is \"مفتاح معايير الويب!\u200f\" in Arabic.", HB_SCRIPT_ARABIC, "ar", HB_DIRECTION_LTR).getRuns());
-    layout3 = createLayout(BidiProcessor("The names of these states in Arabic are مصر,‎ البحرين and الكويت respectively.", HB_SCRIPT_ARABIC, "ar", HB_DIRECTION_LTR).getRuns());
-    layout4 = createLayout(BidiProcessor("W3C‏ (World Wide Web Consortium) מעביר את שירותי הארחה באירופה ל - ERCIM.", HB_SCRIPT_HEBREW, "he", HB_DIRECTION_RTL).getRuns());
-    layout5 = createLayout(BidiProcessor("The title says \"W3C, פעילות הבינאום\" in Hebrew.", HB_SCRIPT_HEBREW, "he", HB_DIRECTION_LTR).getRuns());
-    layout6 = createLayout(BidiProcessor("one two ثلاثة four خمسة", HB_SCRIPT_ARABIC, "ar", HB_DIRECTION_LTR).getRuns());
-    layout7 = createLayout(BidiProcessor("one two ثلاثة 1234 خمسة", HB_SCRIPT_ARABIC, "ar", HB_DIRECTION_LTR).getRuns());
+    layout1 = createLayout(TextGroup("The title is مفتاح معايير الويب in Arabic.", HB_SCRIPT_ARABIC, "ar", HB_DIRECTION_LTR).runs);
+    layout2 = createLayout(TextGroup("The title is \"مفتاح معايير الويب!\u200f\" in Arabic.", HB_SCRIPT_ARABIC, "ar", HB_DIRECTION_LTR).runs);
+    layout3 = createLayout(TextGroup("The names of these states in Arabic are مصر,‎ البحرين and الكويت respectively.", HB_SCRIPT_ARABIC, "ar", HB_DIRECTION_LTR).runs);
+    layout4 = createLayout(TextGroup("W3C‏ (World Wide Web Consortium) מעביר את שירותי הארחה באירופה ל - ERCIM.", HB_SCRIPT_HEBREW, "he", HB_DIRECTION_RTL).runs);
+    layout5 = createLayout(TextGroup("The title says \"W3C, פעילות הבינאום\" in Hebrew.", HB_SCRIPT_HEBREW, "he", HB_DIRECTION_LTR).runs);
+    layout6 = createLayout(TextGroup("one two ثلاثة four خمسة", HB_SCRIPT_ARABIC, "ar", HB_DIRECTION_LTR).runs);
+    layout7 = createLayout(TextGroup("one two ثلاثة 1234 خمسة", HB_SCRIPT_ARABIC, "ar", HB_DIRECTION_LTR).runs);
     
     // ---
     
