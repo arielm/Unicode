@@ -8,12 +8,6 @@
 
 /*
  * IMPLEMENTING icu/source/extra/scrptrun/srtest.cpp
- *
- *
- * TODO:
- *
- * 1) COMPILE ON ANDROID AND iOS:
- *    SEE THE DEFINES IN Prefix.pch
  */
 
 #include "cinder/app/AppNative.h"
@@ -37,8 +31,8 @@ void Application::setup()
 {
     const string input = " ॆहिन्दी العربية Русский English 漢孵とひらがなとカタカナ𐐀𐐁𐐂𐐃";
     
-    UnicodeString tmp = UnicodeString::fromUTF8(input);
-    ScriptRun scriptRun(tmp.getBuffer(), tmp.length());
+    UnicodeString text = UnicodeString::fromUTF8(input);
+    ScriptRun scriptRun(text.getBuffer(), text.length());
     
     while (scriptRun.next())
     {

@@ -24,7 +24,7 @@
  *
  * NOTES:
  *
- * 1) SEE THE Test CLASS FOR THE ORIGINAL CODE
+ * 1) SEE Test.h FOR THE ORIGINAL CODE
  *    ON WHICH OUR BIDI IMPLEMENTATION IS BASED
  *
  * 2) RTL TEXT IS RENDERED IN YELLOW
@@ -32,6 +32,10 @@
  * 3) ITEMIZATION (STYLE, SCRIPT) IS NOT HANDLED
  *    IMPLEMENTATION DEMONSTRATED IN THE MAPNIK PROJECT:
  *    https://github.com/mapnik/mapnik/blob/64d5153aeaeb1c9e736bfead297dfea39b066d2c/src/text/itemizer.cpp
+ *
+ * 4) APPROPRIATE FOR ONE-LINERS
+ *    SAMPLE-CODE TAKING WHOLE PARAGRAPHS INTO CONSIDERATION:
+ *    http://www.icu-project.org/apiref/icu4c/ubidi_8h.html#details
  */
 
 #include "cinder/app/AppNative.h"
