@@ -3,6 +3,9 @@
 #include "TextGroup.h"
 #include "YFont.h"
 
+const ci::ColorA colorLTR = ci::ColorA(1, 1, 1, 1);
+const ci::ColorA colorRTL = ci::ColorA(1, 1, 0.5f, 1);
+
 struct Shape
 {
     hb_codepoint_t codepoint;
@@ -21,10 +24,12 @@ class Cluster
 {
 public:
     YFont *font;
+    ci::ColorA color;
+
     float combinedAdvance;
     std::vector<Shape> shapes;
     
-    Cluster(YFont *font, hb_codepoint_t codepoint, const ci::Vec2f &offset, float advance);
+    Cluster(YFont *font, const ci::ColorA &color, hb_codepoint_t codepoint, const ci::Vec2f &offset, float advance);
     
     void addShape(hb_codepoint_t codepoint, const ci::Vec2f &offset, float advance);
     float draw(const ci::Vec2f &position);

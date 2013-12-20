@@ -3,9 +3,10 @@
 using namespace std;
 using namespace ci;
 
-Cluster::Cluster(YFont *font, hb_codepoint_t codepoint, const Vec2f &offset, float advance)
+Cluster::Cluster(YFont *font, const ColorA &color, hb_codepoint_t codepoint, const Vec2f &offset, float advance)
 :
 font(font),
+color(color),
 combinedAdvance(advance)
 {
     shapes.emplace_back(codepoint, offset, advance);
@@ -19,14 +20,13 @@ void Cluster::addShape(hb_codepoint_t codepoint, const Vec2f &offset, float adva
 
 float Cluster::draw(const Vec2f &position)
 {
-    gl::color(font->color);
-    
     for (auto shape : shapes)
     {
         YGlyph *glyph = font->getGlyph(shape.codepoint);
         
         if (glyph && glyph->texture)
         {
+            gl::color(color);
             gl::draw(glyph->texture, position + shape.position + glyph->offset);
         }
     }
@@ -113,7 +113,8 @@ void TextLayout::process(map<hb_script_t, FontList> &fontMap, const vector<TextS
                         }
                         else
                         {
-                            runClusters.insert(make_pair(cluster, Cluster(font.get(), codepoint, offset, advance)));
+                            const ColorA color = (run.direction == HB_DIRECTION_LTR) ? colorLTR : colorRTL;
+                            runClusters.insert(make_pair(cluster, Cluster(font.get(), color, codepoint, offset, advance)));
                         }
                         
                         combinedAdvance += advance;

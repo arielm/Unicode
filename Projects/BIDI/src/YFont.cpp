@@ -75,10 +75,9 @@ YGlyph::YGlyph(unsigned char *data, int width, int height)
     }
 }
 
-YFont::YFont(shared_ptr<FreetypeHelper> ftHelper, const FontDescriptor &descriptor, float size, const ColorA &color)
+YFont::YFont(shared_ptr<FreetypeHelper> ftHelper, const FontDescriptor &descriptor, float size)
 :
-ftHelper(ftHelper),
-color(color)
+ftHelper(ftHelper)
 {
     FT_Error error = FT_New_Face(ftHelper->getLib(), descriptor.source->getFilePath().c_str(), descriptor.faceIndex, &ftFace);
     

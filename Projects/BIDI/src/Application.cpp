@@ -27,7 +27,9 @@
  * 1) SEE THE Test CLASS FOR THE ORIGINAL CODE
  *    ON WHICH OUR BIDI IMPLEMENTATION IS BASED
  *
- * 2) ITEMIZATION (STYLE, SCRIPT) IS NOT HANDLED
+ * 2) RTL TEXT IS RENDERED IN YELLOW
+ *
+ * 3) ITEMIZATION (STYLE, SCRIPT) IS NOT HANDLED
  *    IMPLEMENTATION DEMONSTRATED IN THE MAPNIK PROJECT:
  *    https://github.com/mapnik/mapnik/blob/64d5153aeaeb1c9e736bfead297dfea39b066d2c/src/text/itemizer.cpp
  */
@@ -70,9 +72,9 @@ void Application::setup()
 {
     ftHelper = make_shared<FreetypeHelper>();
     
-    auto font1 = make_shared<YFont>(ftHelper, FontDescriptor(loadAsset("fonts/DroidSans.ttf")), FONT_SIZE, ColorA(1, 1, 0.5f, 1));
-    auto font2 = make_shared<YFont>(ftHelper, FontDescriptor(loadAsset("fonts/DroidSansHebrew-Regular.ttf")), FONT_SIZE, ColorA(1, 1, 1, 1));
-    auto font3 = make_shared<YFont>(ftHelper, FontDescriptor(loadAsset("fonts/DroidNaskh-Regular.ttf")), FONT_SIZE, ColorA(1, 1, 1, 1));
+    auto font1 = make_shared<YFont>(ftHelper, FontDescriptor(loadAsset("fonts/DroidSans.ttf")), FONT_SIZE);
+    auto font2 = make_shared<YFont>(ftHelper, FontDescriptor(loadAsset("fonts/DroidSansHebrew-Regular.ttf")), FONT_SIZE);
+    auto font3 = make_shared<YFont>(ftHelper, FontDescriptor(loadAsset("fonts/DroidNaskh-Regular.ttf")), FONT_SIZE);
     
     fontMap[HB_SCRIPT_HEBREW].push_back(font2);
     fontMap[HB_SCRIPT_HEBREW].push_back(font1);

@@ -41,7 +41,6 @@ struct YGlyph
 class YFont
 {
 public:
-    ci::ColorA color;
     ci::Vec2f scale;
     hb_font_t *hbFont;
     
@@ -49,7 +48,7 @@ public:
     float ascent;
     float descent;
     
-    YFont(std::shared_ptr<FreetypeHelper> ftHelper, const FontDescriptor &descriptor, float size, const ci::ColorA &color);
+    YFont(std::shared_ptr<FreetypeHelper> ftHelper, const FontDescriptor &descriptor, float size);
     ~YFont();
     
     YGlyph* getGlyph(uint32_t codepoint);
