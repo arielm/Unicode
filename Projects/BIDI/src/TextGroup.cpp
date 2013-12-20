@@ -20,7 +20,7 @@ overallDirection(overallDirection)
         UErrorCode error = U_ZERO_ERROR;
         UBiDi *bidi = ubidi_openSized(length, 0, &error);
         
-        ubidi_setPara(bidi, text.getBuffer(), length, hbDirectionToUCI(overallDirection), 0, &error);
+        ubidi_setPara(bidi, text.getBuffer(), length, hbDirectionToUBIDILevel(overallDirection), 0, &error);
         auto direction = ubidi_getDirection(bidi);
         
         if (direction != UBIDI_MIXED)
@@ -48,9 +48,13 @@ hb_direction_t TextGroup::uciDirectionToHB(UBiDiDirection direction)
     return (direction == UBIDI_RTL) ? HB_DIRECTION_RTL : HB_DIRECTION_LTR;
 }
 
-UBiDiDirection TextGroup::hbDirectionToUCI(hb_direction_t direction)
+/*
+ * WE WANT TO FORCE A DIRECTION (I.E. NOT DETERMINING THE PARAGRAPH-LEVEL FROM THE TEXT)
+ * SEE: http://www.icu-project.org/apiref/icu4c/ubidi_8h.html#abdfe9e113a19dd8521d3b7ac8220fe11
+ */
+UBiDiLevel TextGroup::hbDirectionToUBIDILevel(hb_direction_t direction)
 {
-    return (direction == HB_DIRECTION_RTL) ? UBIDI_RTL : UBIDI_LTR;
+    return (direction == HB_DIRECTION_RTL) ? 1 : 0;
 }
 
 void TextGroup::addRun(const string &text, hb_direction_t direction)

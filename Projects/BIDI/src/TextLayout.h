@@ -1,5 +1,6 @@
 #pragma once
 
+#include "TextGroup.h"
 #include "YFont.h"
 
 struct Shape
@@ -32,11 +33,17 @@ public:
 class TextLayout
 {
 public:
+    hb_direction_t overallDirection;
     float advance;
     std::vector<std::pair<Cluster, float>> clusters;
     
-    TextLayout();
+    TextLayout() {}
+    TextLayout(std::map<hb_script_t, FontList> &fontMap, const TextSpan &span);
+    TextLayout(std::map<hb_script_t, FontList> &fontMap, const TextGroup &group);
 
     void addCluster(const Cluster &cluster);
     void draw(const ci::Vec2f &position);
+    
+protected:
+    void process(std::map<hb_script_t, FontList> &fontMap, const std::vector<TextSpan> &runs);
 };

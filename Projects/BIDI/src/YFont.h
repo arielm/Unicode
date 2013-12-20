@@ -16,6 +16,8 @@
 
 #include <map>
 
+typedef std::vector<std::shared_ptr<class YFont>> FontList;
+
 struct FontDescriptor
 {
     ci::DataSourceRef source;

@@ -11,7 +11,7 @@ void Test::run()
 {
     /*
      * USING BIDI TEXT EXAMPLES FROM:
-     * http://people.w3.org/rishida/scripts/bidi/
+     * http://people.w3.org/rishida/scripts/bidi
      */
     
     spitComment("1");
