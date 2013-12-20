@@ -20,9 +20,6 @@ public:
     hb_direction_t direction;
     std::string lang;
     
-    TextSpan()
-    {}
-    
     TextSpan(const std::string &text, hb_script_t script = HB_SCRIPT_LATIN, hb_direction_t direction = HB_DIRECTION_LTR, const std::string &lang = "")
     :
     text(text),

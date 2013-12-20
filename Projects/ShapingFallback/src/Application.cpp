@@ -13,6 +13,7 @@
 #include "cinder/app/AppNative.h"
 
 #include "YFont.h"
+#include "TextSpan.h"
 #include "Cluster.h"
 
 using namespace std;
@@ -20,6 +21,8 @@ using namespace ci;
 using namespace app;
 
 const float FONT_SIZE = 56;
+
+typedef vector<shared_ptr<YFont>> FontList;
 
 class Application : public AppNative
 {
@@ -52,7 +55,7 @@ void Application::prepareSettings(Settings *settings)
 void Application::setup()
 {
     ftHelper = make_shared<FreetypeHelper>();
-
+    
     font1 = make_shared<YFont>(ftHelper, FontDescriptor(loadAsset("fonts/DroidSans.ttf")), FONT_SIZE, ColorA(1, 1, 0.5f, 1));
     font2 = make_shared<YFont>(ftHelper, FontDescriptor(loadAsset("fonts/DroidSansHebrew-Regular.ttf")), FONT_SIZE, ColorA(1, 1, 1, 1));
     font3 = make_shared<YFont>(ftHelper, FontDescriptor(loadAsset("fonts/DroidSansThai.ttf")), FONT_SIZE, ColorA(1, 1, 1, 1));
@@ -87,7 +90,7 @@ void Application::draw()
     float right = windowSize.x - 24;
     
     // ---
-
+    
     drawSpan(fontList1, TextSpan("וְהָהַר, מַהוּ לַזֵּה? – זֹאת הִיא הַשְּׁאֵלָה.", HB_SCRIPT_HEBREW, HB_DIRECTION_RTL, "he"), 128, left, right); // http://goo.gl/M1Z8kl
     drawSpan(fontList2, TextSpan("Unicode คืออะไร?", HB_SCRIPT_THAI, HB_DIRECTION_LTR, "th"), 256, left, right); // http://www.unicode.org/standard/translations/thai.html
     drawSpan(fontList3, TextSpan("यूनिकोड क्या है?", HB_SCRIPT_DEVANAGARI, HB_DIRECTION_LTR, "hi"), 384, left, right); // http://www.unicode.org/standard/translations/hindi.html
@@ -116,6 +119,8 @@ void Application::drawSpan(const FontList &fontList, const TextSpan &span, float
     
     for (auto font : fontList)
     {
+        hb_buffer_clear_contents(buffer);
+        
         span.apply(buffer);
         hb_shape(font->hbFont, buffer, NULL, 0);
         
@@ -166,14 +171,10 @@ void Application::drawSpan(const FontList &fontList, const TextSpan &span, float
         {
             break; // NO NEED TO PROCEED TO THE NEXT FONT IN THE LIST
         }
-        else
-        {
-            hb_buffer_clear_contents(buffer);
-        }
     }
     
     hb_buffer_destroy(buffer);
-
+    
     // ---
     
     glPushMatrix();

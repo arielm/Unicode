@@ -39,19 +39,15 @@ public:
     
     float draw()
     {
+        ci::gl::color(font->color);
+
         for (auto shape : shapes)
         {
-            YGlyph *glyph = font->createGlyph(shape.codepoint);
+            YGlyph *glyph = font->getGlyph(shape.codepoint);
             
-            if (glyph)
+            if (glyph && glyph->texture)
             {
-                if (glyph->texture)
-                {
-                    ci::gl::color(font->color);
-                    ci::gl::draw(glyph->texture, shape.position + glyph->offset);
-                }
-                
-                delete glyph;
+                ci::gl::draw(glyph->texture, shape.position + glyph->offset);
             }
         }
         

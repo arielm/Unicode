@@ -9,11 +9,12 @@
 #pragma once
 
 #include "FreetypeHelper.h"
-#include "TextSpan.h"
 
 #include "cinder/gl/Texture.h"
 
-typedef std::vector<std::shared_ptr<class YFont>> FontList;
+#include "hb.h"
+
+#include <map>
 
 struct FontDescriptor
 {
@@ -49,9 +50,14 @@ public:
     YFont(std::shared_ptr<FreetypeHelper> ftHelper, const FontDescriptor &descriptor, float size, const ci::ColorA &color);
     ~YFont();
     
-    YGlyph* createGlyph(uint32_t codepoint) const;
+    YGlyph* getGlyph(uint32_t codepoint);
+    void clearCache();
     
 protected:
     std::shared_ptr<FreetypeHelper> ftHelper;
     FT_Face ftFace;
+    
+    std::map<uint32_t, YGlyph*> cache;
+    
+    YGlyph* createGlyph(uint32_t codepoint) const;
 };

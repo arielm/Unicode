@@ -128,8 +128,41 @@ color(color)
 
 YFont::~YFont()
 {
+    clearCache();
+    
     hb_font_destroy(hbFont);
     FT_Done_Face(ftFace);
+}
+
+YGlyph* YFont::getGlyph(uint32_t codepoint)
+{
+    auto entry = cache.find(codepoint);
+    
+    if (entry == cache.end())
+    {
+        YGlyph *glyph = createGlyph(codepoint);
+        
+        if (glyph)
+        {
+            cache[codepoint] = glyph;
+        }
+        
+        return glyph;
+    }
+    else
+    {
+        return entry->second;
+    }
+}
+
+void YFont::clearCache()
+{
+    for (auto entry : cache)
+    {
+        delete entry.second;
+    }
+    
+    cache.clear();
 }
 
 YGlyph* YFont::createGlyph(uint32_t codepoint) const
