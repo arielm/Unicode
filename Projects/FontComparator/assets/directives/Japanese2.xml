@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- remark: DroidSansJapanese seems "broken or irrelevant" in term of harfbuzz -->
+<!-- remark:
+Problem: DroidSansFallback does not seem fully adapted to Japanese
+Solution: using MTLmr3m.ttf
+Reference: https://code.google.com/p/chromium/issues/detail?id=183830
+ -->
+<text script="Kana" font="fonts/MTLmr3m.ttf">
+    直径 123 ABCdef;
+</text>
