@@ -7,35 +7,7 @@
  */
 
 /*
- * USING BIDI TEXT EXAMPLES FROM:
- * http://people.w3.org/rishida/scripts/bidi
- *
- *
- * FEATURES:
- *
- * 1) SIMPLE BIDI:
- *    TAKES SOME TEXT (SINGLE SCRIPT AND LANGUAGE) WITH "OVERALL DIRECTION"
- *    AND SPLITS IT INTO RUNS (BIDI WILL BE PERFORMED ONLY FOR RTL SCRIPTS)
- *
- * 2) LINE LAYOUT:
- *    TAKES AN ARBITRARY LIST OF TEXT RUNS AND SHAPING THEM INTO
- *    READY TO-BE-RENDERED CLUSTERS, INCLUDING FONT FALLBACK
- *
- *
- * NOTES:
- *
- * 1) SEE Test.h FOR THE ORIGINAL CODE
- *    ON WHICH OUR BIDI IMPLEMENTATION IS BASED
- *
- * 2) RTL TEXT IS RENDERED IN YELLOW
- *
- * 3) ITEMIZATION (STYLE, SCRIPT) IS NOT HANDLED
- *    IMPLEMENTATION DEMONSTRATED IN THE MAPNIK PROJECT:
- *    https://github.com/mapnik/mapnik/blob/64d5153aeaeb1c9e736bfead297dfea39b066d2c/src/text/itemizer.cpp
- *
- * 4) APPROPRIATE FOR ONE-LINERS
- *    SAMPLE-CODE TAKING WHOLE PARAGRAPHS INTO CONSIDERATION:
- *    http://www.icu-project.org/apiref/icu4c/ubidi_8h.html#details
+ * REFERENCE: https://github.com/arielm/Unicode/tree/master/Projects/BIDI
  */
 
 #include "cinder/app/AppNative.h"
@@ -92,7 +64,7 @@ void Application::setup()
     lineLayouts.emplace_back(fontMap, TextGroup("The title is \"مفتاح معايير الويب!\u200f\" in Arabic.", HB_SCRIPT_ARABIC, "ar", HB_DIRECTION_LTR));
     lineLayouts.emplace_back(fontMap, TextGroup("The names of these states in Arabic are مصر,‎ البحرين and الكويت respectively.", HB_SCRIPT_ARABIC, "ar", HB_DIRECTION_LTR));
     lineLayouts.emplace_back(fontMap, TextGroup("W3C‏ (World Wide Web Consortium) מעביר את שירותי הארחה באירופה ל - ERCIM.", HB_SCRIPT_HEBREW, "he", HB_DIRECTION_RTL));
-    lineLayouts.emplace_back(fontMap, TextGroup("The title says \"W3C, פעילות הבינאום\" in Hebrew.", HB_SCRIPT_HEBREW, "he", HB_DIRECTION_LTR));
+    lineLayouts.emplace_back(fontMap, TextGroup("The title says \"W3C פעילות הבינאום,\u200f\" in Hebrew.", HB_SCRIPT_HEBREW, "he", HB_DIRECTION_LTR));
     lineLayouts.emplace_back(fontMap, TextGroup("one two ثلاثة four خمسة", HB_SCRIPT_ARABIC, "ar", HB_DIRECTION_LTR));
     lineLayouts.emplace_back(fontMap, TextGroup("one two ثلاثة 1234 خمسة", HB_SCRIPT_ARABIC, "ar", HB_DIRECTION_LTR));
     
