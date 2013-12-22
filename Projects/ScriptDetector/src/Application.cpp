@@ -29,7 +29,7 @@ public:
 
 void Application::setup()
 {
-    const string input = "The title is مفتاح معايير الويب in Arabic.";
+    const string input = " ॆहिन्दी العربية Русский English 漢孵とひらがなとカタカナ𐐀𐐁𐐂𐐃";
     
     UnicodeString text = UnicodeString::fromUTF8(input);
     ScriptRun scriptRun(text.getBuffer(), text.length());
