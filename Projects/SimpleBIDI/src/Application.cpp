@@ -7,7 +7,7 @@
  */
 
 /*
- * REFERENCE: https://github.com/arielm/Unicode/tree/master/Projects/BIDI
+ * REFERENCE: https://github.com/arielm/Unicode/tree/master/Projects/SimpleBIDI
  */
 
 #include "cinder/app/AppNative.h"

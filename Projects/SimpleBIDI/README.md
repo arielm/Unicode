@@ -1,4 +1,4 @@
-BIDI
+SimpleBIDI
 ----
 
 Using text examples from [what you need to know about the bidi algorithm and inline markup](http://people.w3.org/rishida/scripts/bidi). RTL text runs are rendered in yellow. 
