@@ -40,7 +40,11 @@ void Application::setup()
         auto end = scriptRun.getScriptEnd();
         auto code = scriptRun.getScriptCode();
         
-        printf("Script '%s' from %d to %d.\n", uscript_getName(code), start, end);
+        string tmp;
+        text.tempSubString(start, end - start).toUTF8String(tmp);
+        
+        cout << "SCRIPT '" << uscript_getName(code) << "' FROM " << start << " TO " << end - 1 << endl;
+        cout << tmp << endl << endl;
     }
 }
 
