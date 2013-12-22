@@ -9,12 +9,12 @@ font(font),
 color(color),
 combinedAdvance(advance)
 {
-    shapes.emplace_back(codepoint, offset, advance);
+    shapes.emplace_back(codepoint, offset);
 }
 
 void Cluster::addShape(hb_codepoint_t codepoint, const Vec2f &offset, float advance)
 {
-    shapes.emplace_back(codepoint, Vec2f(combinedAdvance, 0) + offset, advance);
+    shapes.emplace_back(codepoint, Vec2f(combinedAdvance, 0) + offset);
     combinedAdvance += advance;
 }
 

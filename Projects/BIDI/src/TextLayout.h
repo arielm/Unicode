@@ -10,13 +10,11 @@ struct Shape
 {
     hb_codepoint_t codepoint;
     ci::Vec2f position;
-    float advance;
     
-    Shape(uint32_t codepoint, const ci::Vec2f &position, float advance)
+    Shape(hb_codepoint_t codepoint, const ci::Vec2f &position)
     :
     codepoint(codepoint),
-    position(position),
-    advance(advance)
+    position(position)
     {}
 };
 
