@@ -18,22 +18,6 @@ void Cluster::addShape(hb_codepoint_t codepoint, const Vec2f &offset, float adva
     combinedAdvance += advance;
 }
 
-float Cluster::draw(const Vec2f &position)
-{
-    for (auto shape : shapes)
-    {
-        YGlyph *glyph = font->getGlyph(shape.codepoint);
-        
-        if (glyph && glyph->texture)
-        {
-            gl::color(color);
-            gl::draw(glyph->texture, position + shape.position + glyph->offset);
-        }
-    }
-    
-    return combinedAdvance;
-}
-
 TextLayout::TextLayout(map<hb_script_t, FontList> &fontMap, const TextSpan &span)
 :
 overallDirection(span.direction),
@@ -50,23 +34,35 @@ advance(0)
     process(fontMap, group.runs);
 }
 
+void TextLayout::draw(const Vec2f &position)
+{
+    for (auto entry : clusters)
+    {
+        auto cluster = entry.first;
+        auto clusterPosition = Vec2f(entry.second, 0) + position;
+        
+        for (auto shape : entry.first.shapes)
+        {
+            auto glyph = cluster.font->getGlyph(shape.codepoint);
+            
+            if (glyph && glyph->texture)
+            {
+                gl::color(cluster.color);
+                gl::draw(glyph->texture, clusterPosition + shape.position + glyph->offset);
+            }
+        }
+    }
+}
+
 void TextLayout::addCluster(const Cluster &cluster)
 {
     clusters.emplace_back(cluster, advance);
     advance += cluster.combinedAdvance;
 }
 
-void TextLayout::draw(const Vec2f &position)
-{
-    for (auto entry : clusters)
-    {
-        entry.first.draw(Vec2f(entry.second, 0) + position);
-    }
-}
-
 void TextLayout::process(map<hb_script_t, FontList> &fontMap, const vector<TextSpan> &runs)
 {
-    hb_buffer_t *buffer = hb_buffer_create();
+    auto buffer = hb_buffer_create();
     
     float combinedAdvance = 0;
     map<uint32_t, Cluster> runClusters;
