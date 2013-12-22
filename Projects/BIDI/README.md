@@ -5,18 +5,18 @@ Using text examples from [what you need to know about the bidi algorithm and inl
 
 **Features**
 
-1. Simple BIDI reordering: takes some text (single script and language) with *overall direction* and splits it into runs (reordering will be effectively performed only for RTL scripts.)
+1. Simple BIDI reordering: takes some text with *major script and language* and *overall direction* and splits it into runs (reordering will be effectively performed only for RTL scripts.)
 
-2. Line layout: takes a list of text-runs ands shapes them with Harfbuzz (including *font fallback*) into ready-to-be-rendered clusters.
+2. Line layout: takes a list of text-runs ands shapes them with Harfbuzz (including *font fallback*) into ready-to-be-rendered clusters (made of one or more glyphs.)
 
 ![Screenshot](screenshot.png)
 
 **Remarks**
 
-1. [ICU 52.1](http://www.icu-project.org/apiref/icu4c/ubidi_8h.html) is used. It has been properly tested on OSX, iOS and Android.
+1. We rely on [ICU 52.1](http://www.icu-project.org/apiref/icu4c/ubidi_8h.html) for BIDI. It has been properly tested on OSX, iOS and Android.
 
-2. See [Test.h](src/Test.h) for more details about the *starting points*.
+2. See [Test.h](src/Test.h) for a comparision between the two ways of using ICU BIDI which served as a base for [our implementation](src/TextGroup.cpp#L17-42). Note that this is appropriate only for one-liners (performing BIDI together with line-breaking is [partially demonstrated]((http://www.icu-project.org/apiref/icu4c/ubidi_8h.html#details) here.)
 
-3. Itemization (style and script) is not handled. Implementation [demonstrated in Mapnik](https://github.com/mapnik/mapnik/blob/64d5153aeaeb1c9e736bfead297dfea39b066d2c/src/text/itemizer.cpp)...
+3. Lines 1, 2, 3, 6 and 7 are shaped entirely as Arabic while lines 4 and 5 are shaped as Hebrew (that's what we mean by *major script and language*.) Therefore, the LTR text will not be shaped as english. The preferred approach would be to perform *script itemization* prior to BIDI ([demonstrated alongside with *style itemization*](https://github.com/mapnik/mapnik/blob/64d5153aeaeb1c9e736bfead297dfea39b066d2c/src/text/itemizer.cpp) in the Mapnik project...)
 
-4. [This](https://github.com/arielm/Unicode/blob/b8223e13af4480ea1136d20165690c95b875c9ee/Projects/BIDI/src/TextGroup.cpp#L17-42) is appropriate only for one-liners. [That](http://www.icu-project.org/apiref/icu4c/ubidi_8h.html#details) is taking whole paragraphs into consideration...
+4. In lines 2 and 5, we use the Unicode control character U+200F (aka *RLM* or *RIGHT-TO-LEFT MARK*) in order to get punctuation in the right place.
