@@ -30,7 +30,7 @@ So far, [Harfbuzz](https://github.com/behdad/harfbuzz) have been tested as a sol
 4. [FontComparator](Projects/FontComparator)
 5. [LanguageFeatures](Projects/LanguageFeatures)
 6. [ShapingFallback](Projects/ShapingFallback)
-7. [BIDI](Projects/BIDI)
+7. [SimpleBIDI](Projects/SimpleBIDI)
 
 More work remains, notably testing how Harfbuzz performs on low-end mobile devices with limited processing-power and memory.
 
