@@ -7,14 +7,15 @@
  */
 
 /*
- * ...
+ * TODO:
+ *
+ * 1) USE FontTree.xml INSTEAD OF CREATING sansSerifFont BY CODE
  */
 
 #include "cinder/app/AppNative.h"
 
 #include "YFont.h"
 #include "TextLayout.h"
-
 #include "Language.h"
 
 using namespace std;
@@ -25,11 +26,14 @@ const float FONT_SIZE = 32;
 const float LINE_TOP = 90;
 const float LINE_SPACING = 90;
 
+typedef std::map<std::string, FontList> FontTree;
+
 class Application : public AppNative
 {
     shared_ptr<FreetypeHelper> ftHelper; // THE UNDERLYING FT_Library WILL BE DESTROYED AFTER ALL THE YFont INSTANCES
+    map<string, hb_script_t> scriptMap;
     
-    FontTree fontTree;
+    FontTree sansSerifFont;
     vector<TextLayout> lineLayouts;
     
 public:
@@ -39,6 +43,9 @@ public:
     void draw();
     void drawLineLayout(TextLayout &layout, float y, float left, float right);
     void drawHLine(float y);
+    
+    TextLayout createLayout(FontTree &fontTree, const string &text, const string &lang) const;
+    TextSpan createRun(const string &text, const string &lang) const;
 };
 
 void Application::prepareSettings(Settings *settings)
@@ -48,38 +55,54 @@ void Application::prepareSettings(Settings *settings)
 
 void Application::setup()
 {
-//    size_t count = sizeof(HB_SCRIPT_for_lang) / sizeof(HBScriptForLang);
-//
-//    for (int i = 0; i < count; i++)
-//    {
-//        cout << HB_SCRIPT_for_lang[i].lang << " | " << HB_SCRIPT_for_lang[i].scripts[0] << endl;
-//    }
-//    
-//    exit(0);
+    size_t count = sizeof(HB_SCRIPT_for_lang) / sizeof(HBScriptForLang);
+
+    for (int i = 0; i < count; i++)
+    {
+        scriptMap[HB_SCRIPT_for_lang[i].lang] = HB_SCRIPT_for_lang[i].scripts[0];
+    }
     
     // ---
     
     ftHelper = make_shared<FreetypeHelper>();
     
+    auto font0 = make_shared<YFont>(ftHelper, FontDescriptor(loadAsset("fonts/DroidSansFallback.ttf")), FONT_SIZE);
     auto font1 = make_shared<YFont>(ftHelper, FontDescriptor(loadAsset("fonts/DroidSans.ttf")), FONT_SIZE);
     auto font2 = make_shared<YFont>(ftHelper, FontDescriptor(loadAsset("fonts/DroidSansHebrew-Regular.ttf")), FONT_SIZE);
     auto font3 = make_shared<YFont>(ftHelper, FontDescriptor(loadAsset("fonts/DroidNaskh-Regular.ttf")), FONT_SIZE);
+    auto font4 = make_shared<YFont>(ftHelper, FontDescriptor(loadAsset("fonts/MTLmr3m.ttf")), FONT_SIZE);
+    auto font5 = make_shared<YFont>(ftHelper, FontDescriptor(loadFile("/Users/arielm/Downloads/fonts/NanumGothic/NanumGothic-Regular.ttf")), FONT_SIZE);
+    auto font6 = make_shared<YFont>(ftHelper, FontDescriptor(loadAsset("fonts/DroidSansThai.ttf")), FONT_SIZE);
+
+    sansSerifFont[""].push_back(font0);
     
-    fontTree[HB_SCRIPT_HEBREW].push_back(font2);
-    fontTree[HB_SCRIPT_HEBREW].push_back(font1);
+    sansSerifFont["ar"].push_back(font3);
+    sansSerifFont["ar"].push_back(font0);
+
+    sansSerifFont["el"].push_back(font1);
+    sansSerifFont["el"].push_back(font0);
+
+    sansSerifFont["he"].push_back(font2);
+    sansSerifFont["he"].push_back(font0);
     
-    fontTree[HB_SCRIPT_ARABIC].push_back(font3);
-    fontTree[HB_SCRIPT_ARABIC].push_back(font1);
+    sansSerifFont["ja"].push_back(font4);
+    sansSerifFont["ja"].push_back(font0);
     
+    sansSerifFont["ko"].push_back(font5);
+    sansSerifFont["ko"].push_back(font0);
+    
+    sansSerifFont["th"].push_back(font6);
+    sansSerifFont["th"].push_back(font0);
+
     // ---
 
-    lineLayouts.emplace_back(fontTree, TextSpan("The title is مفتاح معايير الويب in Arabic.", HB_SCRIPT_ARABIC, "ar", HB_DIRECTION_LTR));
-    lineLayouts.emplace_back(fontTree, TextSpan("The title is \"مفتاح معايير الويب!\u200f\" in Arabic.", HB_SCRIPT_ARABIC, "ar", HB_DIRECTION_LTR));
-    lineLayouts.emplace_back(fontTree, TextSpan("The names of these states in Arabic are مصر,‎ البحرين and الكويت respectively.", HB_SCRIPT_ARABIC, "ar", HB_DIRECTION_LTR));
-    lineLayouts.emplace_back(fontTree, TextSpan("W3C‏ (World Wide Web Consortium) מעביר את שירותי הארחה באירופה ל - ERCIM.", HB_SCRIPT_HEBREW, "he", HB_DIRECTION_RTL));
-    lineLayouts.emplace_back(fontTree, TextSpan("The title says \"W3C פעילות הבינאום,\u200f\" in Hebrew.", HB_SCRIPT_HEBREW, "he", HB_DIRECTION_LTR));
-    lineLayouts.emplace_back(fontTree, TextSpan("one two ثلاثة four خمسة", HB_SCRIPT_ARABIC, "ar", HB_DIRECTION_LTR));
-    lineLayouts.emplace_back(fontTree, TextSpan("one two ثلاثة 1234 خمسة", HB_SCRIPT_ARABIC, "ar", HB_DIRECTION_LTR));
+    lineLayouts.emplace_back(createLayout(sansSerifFont, "Press 'play' when ready!", "en"));
+    lineLayouts.emplace_back(createLayout(sansSerifFont, "ضغطوا على \"تشغيل\" عند الاستعداد!", "ar"));
+    lineLayouts.emplace_back(createLayout(sansSerifFont, "Πάτα \u2018παιχνίδι\u2019 όταν είσαι έτοιμος!", "el"));
+    lineLayouts.emplace_back(createLayout(sansSerifFont, "לַחֲצוּ עַל הַּכַפְּתוֹר כְּשֶּתִהְיוּ מוּכָנִים לִמְנוֹת סוּרִיקָטוֹת!", "he"));
+    lineLayouts.emplace_back(createLayout(sansSerifFont, "じゅんびが できたら [プレイ] を おしてね!", "ja"));
+    lineLayouts.emplace_back(createLayout(sansSerifFont, "준비가 되었으면 '재생'을 누르세요!", "ko"));
+    lineLayouts.emplace_back(createLayout(sansSerifFont, "ถ้าพร้อมแล้ว กด 'เล่น' กันเลย!", "th"));
     
     // ---
     
@@ -124,6 +147,37 @@ void Application::drawLineLayout(TextLayout &layout, float y, float left, float 
 void Application::drawHLine(float y)
 {
     gl::drawLine(Vec2f(-9999, y), Vec2f(+9999, y));
+}
+
+TextSpan Application::createRun(const string &text, const string &lang) const
+{
+    hb_script_t script;
+    auto it = scriptMap.find(lang);
+    
+    if (it == scriptMap.end())
+    {
+        script = HB_SCRIPT_INVALID;
+    }
+    else
+    {
+        script = it->second;
+    }
+    
+    return TextSpan(text, script, lang, hb_script_get_horizontal_direction(script));
+}
+
+TextLayout Application::createLayout(FontTree &fontTree, const string &text, const string &lang) const
+{
+    auto it = fontTree.find(lang);
+    
+    if (it == fontTree.end())
+    {
+        return TextLayout(fontTree[""], createRun(text, lang));
+    }
+    else
+    {
+        return TextLayout(it->second, createRun(text, lang));
+    }
 }
 
 CINDER_APP_NATIVE(Application, RendererGl(RendererGl::AA_NONE))

@@ -32,10 +32,10 @@ public:
     float advance;
     std::vector<std::pair<Cluster, float>> clusters;
     
-    TextLayout(FontTree &fontTree, const TextSpan &span);
+    TextLayout(const FontList &fontList, const TextSpan &span);
     void draw(const ci::Vec2f &position);
     
 protected:
     void addCluster(const Cluster &cluster);
-    void process(FontTree &fontTree, const TextSpan &span);
+    void process(const FontList &fontList, const TextSpan &span);
 };
