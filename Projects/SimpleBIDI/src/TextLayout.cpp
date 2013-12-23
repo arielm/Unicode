@@ -63,13 +63,11 @@ void TextLayout::addCluster(const Cluster &cluster)
 void TextLayout::process(map<hb_script_t, FontList> &fontMap, const vector<TextSpan> &runs)
 {
     auto buffer = hb_buffer_create();
-    
-    float combinedAdvance = 0;
-    map<uint32_t, Cluster> runClusters;
+    map<uint32_t, Cluster> clusterMap;
     
     for (auto run : runs)
     {
-        runClusters.clear();
+        clusterMap.clear();
         
         for (auto font : fontMap[run.script])
         {
@@ -89,8 +87,8 @@ void TextLayout::process(map<hb_script_t, FontList> &fontMap, const vector<TextS
                 auto codepoint = glyphInfos[i].codepoint;
                 auto cluster = glyphInfos[i].cluster;
                 
-                auto it = runClusters.find(cluster);
-                bool clusterFound = (it != runClusters.end());
+                auto it = clusterMap.find(cluster);
+                bool clusterFound = (it != clusterMap.end());
                 
                 if (codepoint)
                 {
@@ -110,10 +108,8 @@ void TextLayout::process(map<hb_script_t, FontList> &fontMap, const vector<TextS
                         else
                         {
                             const ColorA color = (run.direction == HB_DIRECTION_LTR) ? colorLTR : colorRTL;
-                            runClusters.insert(make_pair(cluster, Cluster(font.get(), color, codepoint, offset, advance)));
+                            clusterMap.insert(make_pair(cluster, Cluster(font.get(), color, codepoint, offset, advance)));
                         }
-                        
-                        combinedAdvance += advance;
                     }
                 }
                 else if (!clusterFound)
@@ -130,14 +126,14 @@ void TextLayout::process(map<hb_script_t, FontList> &fontMap, const vector<TextS
         
         if (run.direction == HB_DIRECTION_RTL)
         {
-            for (auto it = runClusters.rbegin(); it != runClusters.rend(); ++it)
+            for (auto it = clusterMap.rbegin(); it != clusterMap.rend(); ++it)
             {
                 addCluster(it->second);
             }
         }
         else
         {
-            for (auto it = runClusters.begin(); it != runClusters.end(); ++it)
+            for (auto it = clusterMap.begin(); it != clusterMap.end(); ++it)
             {
                 addCluster(it->second);
             }
