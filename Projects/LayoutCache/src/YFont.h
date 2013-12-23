@@ -17,6 +17,7 @@
 #include <map>
 
 typedef std::vector<std::shared_ptr<class YFont>> FontList;
+typedef std::map<hb_script_t, FontList> FontTree;
 
 struct FontDescriptor
 {
