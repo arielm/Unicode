@@ -1,6 +1,7 @@
 <VirtualFont>
     <!-- Undefined -->
     <Set>
+        <Ref>assets://fonts/DroidSans.ttf</Ref>
         <Ref>assets://fonts/DroidSansFallback.ttf</Ref>
     </Set>
     <!-- Arabic -->
@@ -22,8 +23,8 @@
         <Ref>assets://fonts/DroidSans.ttf</Ref>
         <Ref>assets://fonts/DroidSansFallback.ttf</Ref>
     </Set>
-    <!-- Hebrew -->
-    <Set lang="he">
+    <!-- Hebrew, Yiddish -->
+    <Set lang="he:yi">
         <Ref>assets://fonts/DroidSansHebrew-Regular.ttf</Ref>
         <Ref>assets://fonts/DroidSansFallback.ttf</Ref>
     </Set>
@@ -40,6 +41,15 @@
     <!-- Thai -->
     <Set lang="th">
         <Ref>assets://fonts/DroidSansThai.ttf</Ref>
+        <Ref>assets://fonts/DroidSansFallback.ttf</Ref>
+    </Set>
+    <!-- Hindi -->
+    <Set lang="hi">
+        <Ref>assets://fonts/DroidSansDevanagari-Regular.ttf</Ref>
+        <Ref>assets://fonts/DroidSansFallback.ttf</Ref>
+    </Set>
+    <!-- Chinese -->
+    <Set lang="zh-cn:zh-mo:zh-sg:zh-tw">
         <Ref>assets://fonts/DroidSansFallback.ttf</Ref>
     </Set>
 </VirtualFont>

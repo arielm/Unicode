@@ -5,6 +5,10 @@
 #include <map>
 #include <string>
 
+/*
+ * DATA FROM pango-script-lang-table.h
+ */
+
 struct HBScriptForLang
 {
     const char lang[7];

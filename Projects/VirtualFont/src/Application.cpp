@@ -12,12 +12,23 @@
  * 1) DISPLAYING TEXT IN ANY LANGUAGE, AS LONG AS THE RIGHT LIST OF FONTS (INCL. FALLBACK)
  *    IS PROVIDED FOR THE LANGUAGE IN QUESTION (VIA THE XML VIRTUAL-FONT SYSTEM)
  *
+ * 2) TEXT IS FROM pango-language-sample-table.h
+ *
  *
  * TODO:
  *
  * 1) PROVIDE "METRICS" PER FONT-SET:
  *    - ASCENT, DESCENT, HEIGHT AND STRIKETHROUGH OFFSET:
  *      - BASED ON FIRST FONT IN SET
+ *
+ * 2) READ TEXT FROM XML FILE
+ *
+ * 3) CREATE VIRTUAL-FONT FOR OSX AND iOS
+ *    AND CREATE iOS AND ANDROID PROJECTS
+ *
+ * 4) START TO MEASURE PERFORMANCE ON iOS AND ANDROID:
+ *    - SHAPING
+ *    - RENDERING
  */
 
 #include "cinder/app/AppNative.h"
@@ -31,8 +42,8 @@ using namespace ci;
 using namespace app;
 
 const float FONT_SIZE = 32;
-const float LINE_TOP = 90;
-const float LINE_SPACING = 90;
+const float LINE_TOP = 66;
+const float LINE_SPACING = 66;
 
 class Application : public AppNative
 {
@@ -55,20 +66,23 @@ public:
 
 void Application::prepareSettings(Settings *settings)
 {
-    settings->setWindowSize(1280, 720);
+    settings->setWindowSize(1280, 736);
 }
 
 void Application::setup()
 {
     auto sansSerifFont = fontManager.loadVirtualFont(loadResource("SansSerif.xml"), FONT_SIZE);
 
-    lineLayouts.emplace_back(createLayout(sansSerifFont, "Натисни «Грати», коли будеш готовий!", "uk"));
-    lineLayouts.emplace_back(createLayout(sansSerifFont, "ضغطوا على \"تشغيل\" عند الاستعداد!", "ar"));
-    lineLayouts.emplace_back(createLayout(sansSerifFont, "Πάτα \u2018παιχνίδι\u2019 όταν είσαι έτοιμος!", "el"));
-    lineLayouts.emplace_back(createLayout(sansSerifFont, "לַחֲצוּ עַל הַּכַפְּתוֹר כְּשֶּתִהְיוּ מוּכָנִים לִמְנוֹת סוּרִיקָטוֹת!", "he"));
-    lineLayouts.emplace_back(createLayout(sansSerifFont, "じゅんびが できたら [プレイ] を おしてね!", "ja"));
-    lineLayouts.emplace_back(createLayout(sansSerifFont, "준비가 되었으면 '재생'을 누르세요!", "ko"));
-    lineLayouts.emplace_back(createLayout(sansSerifFont, "ถ้าพร้อมแล้ว กด 'เล่น' กันเลย!", "th"));
+    lineLayouts.emplace_back(createLayout(sansSerifFont, "Чуєш їх, доцю, га? Кумедна ж ти, прощайся без ґольфів!", "uk"));
+    lineLayouts.emplace_back(createLayout(sansSerifFont, "Θέλει αρετή και τόλμη η ελευθερία. (Ανδρέας Κάλβος)", "el"));
+    lineLayouts.emplace_back(createLayout(sansSerifFont, "نص حكيم له سر قاطع وذو شأن عظيم مكتوب على ثوب أخضر ومغلف بجلد أزرق.", "ar"));
+    lineLayouts.emplace_back(createLayout(sansSerifFont, "איך קען עסן גלאָז און עס טוט מיר נישט װײ.", "yi"));
+    lineLayouts.emplace_back(createLayout(sansSerifFont, "いろはにほへと ちりぬるを 色は匂へど 散りぬるを", "ja"));
+    lineLayouts.emplace_back(createLayout(sansSerifFont, "다람쥐 헌 쳇바퀴에 타고파", "ko"));
+    lineLayouts.emplace_back(createLayout(sansSerifFont, "เป็นมนุษย์สุดประเสริฐเลิศคุณค่า - กว่าบรรดาฝูงสัตว์เดรัจฉาน ...", "th"));
+    lineLayouts.emplace_back(createLayout(sansSerifFont, "नहीं नजर किसी की बुरी नहीं किसी का मुँह काला जो करे सो उपर वाला", "hi"));
+    lineLayouts.emplace_back(createLayout(sansSerifFont, "我能吞下玻璃而不伤身体。", "zh-cn"));
+    lineLayouts.emplace_back(createLayout(sansSerifFont, "Příliš žluťoučký kůň úpěl ďábelské ódy.", "cz"));
     
     // ---
     
