@@ -16,6 +16,8 @@
 
 #include <map>
 
+typedef std::vector<class YFont*> FontList;
+
 struct YGlyph
 {
     ci::gl::TextureRef texture;
@@ -48,5 +50,3 @@ protected:
     
     YGlyph* createGlyph(uint32_t codepoint) const;
 };
-
-typedef std::vector<YFont*> FontList;

@@ -28,6 +28,16 @@ struct FontKey
     }
 };
 
+class FontTree
+{
+public:
+    void add(const std::string &lang, YFont *font);
+    FontList get(const std::string &lang);
+    
+protected:
+    std::map<std::string, FontList> fontListMap;
+};
+
 class FontManager
 {
 public:
@@ -36,7 +46,7 @@ public:
     FontManager();
     
     YFont* getCachedFont(const std::string &ref, float fontSize);
-    void getFontTree(ci::DataSourceRef source, float fontSize);
+    FontTree getFontTree(ci::DataSourceRef source, float fontSize);
     
 protected:
     std::map<FontKey, std::shared_ptr<YFont>> fontMap;

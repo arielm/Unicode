@@ -26,15 +26,11 @@ const float FONT_SIZE = 32;
 const float LINE_TOP = 90;
 const float LINE_SPACING = 90;
 
-typedef std::map<std::string, FontList> FontTree;
-
 class Application : public AppNative
 {
     FontManager fontManager;
     
-    FontTree sansSerifFont;
     vector<TextLayout> lineLayouts;
-    
     map<string, hb_script_t> scriptMap;
     
 public:
@@ -65,29 +61,27 @@ void Application::setup()
     
     // ---
     
-    fontManager.getFontTree(loadResource("SansSerif.xml"), FONT_SIZE);
-    
-    // ---
+    auto sansSerifFont = fontManager.getFontTree(loadResource("SansSerif.xml"), FONT_SIZE);
 
-    sansSerifFont[""].push_back(fontManager.getCachedFont("assets://fonts/DroidSansFallback.ttf", FONT_SIZE));
+    sansSerifFont.add("", fontManager.getCachedFont("assets://fonts/DroidSansFallback.ttf", FONT_SIZE));
     
-    sansSerifFont["ar"].push_back(fontManager.getCachedFont("assets://fonts/DroidNaskh-Regular.ttf", FONT_SIZE));
-    sansSerifFont["ar"].push_back(fontManager.getCachedFont("assets://fonts/DroidSansFallback.ttf", FONT_SIZE));
+    sansSerifFont.add("ar", fontManager.getCachedFont("assets://fonts/DroidNaskh-Regular.ttf", FONT_SIZE));
+    sansSerifFont.add("ar", fontManager.getCachedFont("assets://fonts/DroidSansFallback.ttf", FONT_SIZE));
 
-    sansSerifFont["el"].push_back(fontManager.getCachedFont("assets://fonts/DroidSans.ttf", FONT_SIZE));
-    sansSerifFont["el"].push_back(fontManager.getCachedFont("assets://fonts/DroidSansFallback.ttf", FONT_SIZE));
+    sansSerifFont.add("el", fontManager.getCachedFont("assets://fonts/DroidSans.ttf", FONT_SIZE));
+    sansSerifFont.add("el", fontManager.getCachedFont("assets://fonts/DroidSansFallback.ttf", FONT_SIZE));
 
-    sansSerifFont["he"].push_back(fontManager.getCachedFont("assets://fonts/DroidSansHebrew-Regular.ttf", FONT_SIZE));
-    sansSerifFont["he"].push_back(fontManager.getCachedFont("assets://fonts/DroidSansFallback.ttf", FONT_SIZE));
+    sansSerifFont.add("he", fontManager.getCachedFont("assets://fonts/DroidSansHebrew-Regular.ttf", FONT_SIZE));
+    sansSerifFont.add("he", fontManager.getCachedFont("assets://fonts/DroidSansFallback.ttf", FONT_SIZE));
     
-    sansSerifFont["ja"].push_back(fontManager.getCachedFont("assets://fonts/MTLmr3m.ttf", FONT_SIZE));
-    sansSerifFont["ja"].push_back(fontManager.getCachedFont("assets://fonts/DroidSansFallback.ttf", FONT_SIZE));
+    sansSerifFont.add("ja", fontManager.getCachedFont("assets://fonts/MTLmr3m.ttf", FONT_SIZE));
+    sansSerifFont.add("ja", fontManager.getCachedFont("assets://fonts/DroidSansFallback.ttf", FONT_SIZE));
     
-    sansSerifFont["ko"].push_back(fontManager.getCachedFont("file:///Users/arielm/Downloads/fonts/NanumGothic/NanumGothic-Regular.ttf", FONT_SIZE));
-    sansSerifFont["ko"].push_back(fontManager.getCachedFont("assets://fonts/DroidSansFallback.ttf", FONT_SIZE));
+    sansSerifFont.add("ko", fontManager.getCachedFont("file:///Users/arielm/Downloads/fonts/NanumGothic/NanumGothic-Regular.ttf", FONT_SIZE));
+    sansSerifFont.add("ko", fontManager.getCachedFont("assets://fonts/DroidSansFallback.ttf", FONT_SIZE));
     
-    sansSerifFont["th"].push_back(fontManager.getCachedFont("assets://fonts/DroidSansThai.ttf", FONT_SIZE));
-    sansSerifFont["th"].push_back(fontManager.getCachedFont("assets://fonts/DroidSansFallback.ttf", FONT_SIZE));
+    sansSerifFont.add("th", fontManager.getCachedFont("assets://fonts/DroidSansThai.ttf", FONT_SIZE));
+    sansSerifFont.add("th", fontManager.getCachedFont("assets://fonts/DroidSansFallback.ttf", FONT_SIZE));
 
     // ---
 
@@ -163,16 +157,7 @@ TextSpan Application::createRun(const string &text, const string &lang) const
 
 TextLayout Application::createLayout(FontTree &fontTree, const string &text, const string &lang) const
 {
-    auto it = fontTree.find(lang);
-    
-    if (it == fontTree.end())
-    {
-        return TextLayout(fontTree[""], createRun(text, lang));
-    }
-    else
-    {
-        return TextLayout(it->second, createRun(text, lang));
-    }
+    return TextLayout(fontTree.get(lang), createRun(text, lang));
 }
 
 CINDER_APP_NATIVE(Application, RendererGl(RendererGl::AA_NONE))

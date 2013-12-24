@@ -12,6 +12,28 @@ using namespace app;
 const string REF_FILE = "file://";
 const string REF_ASSETS = "assets://";
 
+void FontTree::add(const string &lang, YFont *font)
+{
+    if (font)
+    {
+        fontListMap[lang].push_back(font);
+    }
+}
+
+FontList FontTree::get(const string &lang)
+{
+    auto it = fontListMap.find(lang);
+    
+    if (it == fontListMap.end())
+    {
+        return fontListMap[""]; // ASSERTION: A "DEFAULT" FONT IS DEFINED
+    }
+    else
+    {
+        return it->second;
+    }
+}
+
 FontManager::FontManager()
 {
     ftHelper = make_shared<FreetypeHelper>();
@@ -41,15 +63,17 @@ YFont* FontManager::getCachedFont(const string &ref, float fontSize)
     return NULL;
 }
 
-void FontManager::getFontTree(DataSourceRef source, float fontSize)
+FontTree FontManager::getFontTree(DataSourceRef source, float fontSize)
 {
-    XmlTree doc(source);
-    auto rootElement = doc.getChild("FontTree");
+//    XmlTree doc(source);
+//    auto rootElement = doc.getChild("FontTree");
+//    
+//    for (auto &fontElement : rootElement.getChildren())
+//    {
+//        
+//    }
     
-    for (auto &fontElement : rootElement.getChildren())
-    {
-        
-    }
+    return FontTree();
 }
 
 fs::path FontManager::getFilePath(const std::string &ref)
