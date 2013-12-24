@@ -16,6 +16,7 @@
 
 #include "YFont.h"
 #include "TextLayout.h"
+
 #include "Language.h"
 
 using namespace std;
@@ -61,18 +62,18 @@ void Application::setup()
     {
         scriptMap[HB_SCRIPT_for_lang[i].lang] = HB_SCRIPT_for_lang[i].scripts[0];
     }
-    
+
     // ---
     
     ftHelper = make_shared<FreetypeHelper>();
     
-    auto font0 = make_shared<YFont>(ftHelper, FontDescriptor(loadAsset("fonts/DroidSansFallback.ttf")), FONT_SIZE);
-    auto font1 = make_shared<YFont>(ftHelper, FontDescriptor(loadAsset("fonts/DroidSans.ttf")), FONT_SIZE);
-    auto font2 = make_shared<YFont>(ftHelper, FontDescriptor(loadAsset("fonts/DroidSansHebrew-Regular.ttf")), FONT_SIZE);
-    auto font3 = make_shared<YFont>(ftHelper, FontDescriptor(loadAsset("fonts/DroidNaskh-Regular.ttf")), FONT_SIZE);
-    auto font4 = make_shared<YFont>(ftHelper, FontDescriptor(loadAsset("fonts/MTLmr3m.ttf")), FONT_SIZE);
-    auto font5 = make_shared<YFont>(ftHelper, FontDescriptor(loadFile("/Users/arielm/Downloads/fonts/NanumGothic/NanumGothic-Regular.ttf")), FONT_SIZE);
-    auto font6 = make_shared<YFont>(ftHelper, FontDescriptor(loadAsset("fonts/DroidSansThai.ttf")), FONT_SIZE);
+    auto font0 = make_shared<YFont>(ftHelper, getAssetPath("fonts/DroidSansFallback.ttf"), FONT_SIZE);
+    auto font1 = make_shared<YFont>(ftHelper, getAssetPath("fonts/DroidSans.ttf"), FONT_SIZE);
+    auto font2 = make_shared<YFont>(ftHelper, getAssetPath("fonts/DroidSansHebrew-Regular.ttf"), FONT_SIZE);
+    auto font3 = make_shared<YFont>(ftHelper, getAssetPath("fonts/DroidNaskh-Regular.ttf"), FONT_SIZE);
+    auto font4 = make_shared<YFont>(ftHelper, getAssetPath("fonts/MTLmr3m.ttf"), FONT_SIZE);
+    auto font5 = make_shared<YFont>(ftHelper, "/Users/arielm/Downloads/fonts/NanumGothic/NanumGothic-Regular.ttf", FONT_SIZE);
+    auto font6 = make_shared<YFont>(ftHelper, getAssetPath("fonts/DroidSansThai.ttf"), FONT_SIZE);
 
     sansSerifFont[""].push_back(font0);
     

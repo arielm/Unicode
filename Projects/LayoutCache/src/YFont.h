@@ -18,18 +18,6 @@
 
 typedef std::vector<std::shared_ptr<class YFont>> FontList;
 
-struct FontDescriptor
-{
-    ci::DataSourceRef source;
-    int faceIndex;
-    
-    FontDescriptor(ci::DataSourceRef source, int faceIndex = 0)
-    :
-    source(source),
-    faceIndex(faceIndex)
-    {}
-};
-
 struct YGlyph
 {
     ci::gl::TextureRef texture;
@@ -48,7 +36,7 @@ public:
     float ascent;
     float descent;
     
-    YFont(std::shared_ptr<FreetypeHelper> ftHelper, const FontDescriptor &descriptor, float size);
+    YFont(std::shared_ptr<FreetypeHelper> ftHelper, const ci::fs::path &filePath, float size);
     ~YFont();
     
     YGlyph* getGlyph(uint32_t codepoint);
