@@ -78,7 +78,7 @@ void TextLayout::process(const FontList &fontList, const TextSpan &run)
             
             if (codepoint)
             {
-                if (clusterFound && (it->second.font != font.get()))
+                if (clusterFound && (it->second.font != font))
                 {
                     continue; // CLUSTER FOUND, WITH ANOTHER FONT (E.G. SPACE)
                 }
@@ -93,7 +93,7 @@ void TextLayout::process(const FontList &fontList, const TextSpan &run)
                     }
                     else
                     {
-                        clusterMap.insert(make_pair(cluster, Cluster(font.get(), codepoint, offset, advance)));
+                        clusterMap.insert(make_pair(cluster, Cluster(font, codepoint, offset, advance)));
                     }
                 }
             }

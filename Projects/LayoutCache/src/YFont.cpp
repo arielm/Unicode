@@ -123,6 +123,7 @@ ftHelper(ftHelper)
     // ---
     
     hbFont = hb_ft_font_create(ftFace, NULL);
+    cout << "FONT CREATED" << endl;
 }
 
 YFont::~YFont()
@@ -131,6 +132,7 @@ YFont::~YFont()
     
     hb_font_destroy(hbFont);
     FT_Done_Face(ftFace);
+    cout << "FONT DESTROYED" << endl;
 }
 
 YGlyph* YFont::getGlyph(uint32_t codepoint)

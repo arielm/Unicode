@@ -14,9 +14,8 @@
 
 #include "cinder/app/AppNative.h"
 
-#include "YFont.h"
 #include "TextLayout.h"
-
+#include "FontManager.h"
 #include "Language.h"
 
 using namespace std;
@@ -31,11 +30,12 @@ typedef std::map<std::string, FontList> FontTree;
 
 class Application : public AppNative
 {
-    shared_ptr<FreetypeHelper> ftHelper; // THE UNDERLYING FT_Library WILL BE DESTROYED AFTER ALL THE YFont INSTANCES
-    map<string, hb_script_t> scriptMap;
+    FontManager fontManager;
     
     FontTree sansSerifFont;
     vector<TextLayout> lineLayouts;
+    
+    map<string, hb_script_t> scriptMap;
     
 public:
     void prepareSettings(Settings *settings);
@@ -62,38 +62,32 @@ void Application::setup()
     {
         scriptMap[HB_SCRIPT_for_lang[i].lang] = HB_SCRIPT_for_lang[i].scripts[0];
     }
-
+    
     // ---
     
-    ftHelper = make_shared<FreetypeHelper>();
+    fontManager.getFontTree(loadResource("SansSerif.xml"), FONT_SIZE);
     
-    auto font0 = make_shared<YFont>(ftHelper, getAssetPath("fonts/DroidSansFallback.ttf"), FONT_SIZE);
-    auto font1 = make_shared<YFont>(ftHelper, getAssetPath("fonts/DroidSans.ttf"), FONT_SIZE);
-    auto font2 = make_shared<YFont>(ftHelper, getAssetPath("fonts/DroidSansHebrew-Regular.ttf"), FONT_SIZE);
-    auto font3 = make_shared<YFont>(ftHelper, getAssetPath("fonts/DroidNaskh-Regular.ttf"), FONT_SIZE);
-    auto font4 = make_shared<YFont>(ftHelper, getAssetPath("fonts/MTLmr3m.ttf"), FONT_SIZE);
-    auto font5 = make_shared<YFont>(ftHelper, "/Users/arielm/Downloads/fonts/NanumGothic/NanumGothic-Regular.ttf", FONT_SIZE);
-    auto font6 = make_shared<YFont>(ftHelper, getAssetPath("fonts/DroidSansThai.ttf"), FONT_SIZE);
+    // ---
 
-    sansSerifFont[""].push_back(font0);
+    sansSerifFont[""].push_back(fontManager.getCachedFont("assets://fonts/DroidSansFallback.ttf", FONT_SIZE));
     
-    sansSerifFont["ar"].push_back(font3);
-    sansSerifFont["ar"].push_back(font0);
+    sansSerifFont["ar"].push_back(fontManager.getCachedFont("assets://fonts/DroidNaskh-Regular.ttf", FONT_SIZE));
+    sansSerifFont["ar"].push_back(fontManager.getCachedFont("assets://fonts/DroidSansFallback.ttf", FONT_SIZE));
 
-    sansSerifFont["el"].push_back(font1);
-    sansSerifFont["el"].push_back(font0);
+    sansSerifFont["el"].push_back(fontManager.getCachedFont("assets://fonts/DroidSans.ttf", FONT_SIZE));
+    sansSerifFont["el"].push_back(fontManager.getCachedFont("assets://fonts/DroidSansFallback.ttf", FONT_SIZE));
 
-    sansSerifFont["he"].push_back(font2);
-    sansSerifFont["he"].push_back(font0);
+    sansSerifFont["he"].push_back(fontManager.getCachedFont("assets://fonts/DroidSansHebrew-Regular.ttf", FONT_SIZE));
+    sansSerifFont["he"].push_back(fontManager.getCachedFont("assets://fonts/DroidSansFallback.ttf", FONT_SIZE));
     
-    sansSerifFont["ja"].push_back(font4);
-    sansSerifFont["ja"].push_back(font0);
+    sansSerifFont["ja"].push_back(fontManager.getCachedFont("assets://fonts/MTLmr3m.ttf", FONT_SIZE));
+    sansSerifFont["ja"].push_back(fontManager.getCachedFont("assets://fonts/DroidSansFallback.ttf", FONT_SIZE));
     
-    sansSerifFont["ko"].push_back(font5);
-    sansSerifFont["ko"].push_back(font0);
+    sansSerifFont["ko"].push_back(fontManager.getCachedFont("file:///Users/arielm/Downloads/fonts/NanumGothic/NanumGothic-Regular.ttf", FONT_SIZE));
+    sansSerifFont["ko"].push_back(fontManager.getCachedFont("assets://fonts/DroidSansFallback.ttf", FONT_SIZE));
     
-    sansSerifFont["th"].push_back(font6);
-    sansSerifFont["th"].push_back(font0);
+    sansSerifFont["th"].push_back(fontManager.getCachedFont("assets://fonts/DroidSansThai.ttf", FONT_SIZE));
+    sansSerifFont["th"].push_back(fontManager.getCachedFont("assets://fonts/DroidSansFallback.ttf", FONT_SIZE));
 
     // ---
 
