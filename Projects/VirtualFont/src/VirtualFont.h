@@ -2,6 +2,7 @@
 
 #include "YFont.h"
 
+#include <set>
 #include <map>
 #include <string>
 

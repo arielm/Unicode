@@ -15,7 +15,6 @@
 #include "hb.h"
 
 #include <map>
-#include <set>
 
 struct YGlyph
 {
