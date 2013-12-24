@@ -49,6 +49,7 @@
 		A857CAF51863674000250AEC /* TextLayout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A857CAF41863674000250AEC /* TextLayout.cpp */; };
 		A8CC34F6186871EB008B598E /* SansSerif.xml in Resources */ = {isa = PBXBuildFile; fileRef = A8CC34F5186871EB008B598E /* SansSerif.xml */; };
 		A8CC34F9186996A7008B598E /* FontManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A8CC34F7186996A7008B598E /* FontManager.cpp */; };
+		A8CC34FC186A021B008B598E /* VirtualFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A8CC34FA186A021B008B598E /* VirtualFont.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -64,7 +65,7 @@
 		530D8ED2F6EB414F805B7B9E /* Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = "\"\""; path = Prefix.pch; sourceTree = "<group>"; };
 		5323E6B10EAFCA74003A9687 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = /System/Library/Frameworks/CoreVideo.framework; sourceTree = "<absolute>"; };
 		5323E6B50EAFCA7E003A9687 /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = /System/Library/Frameworks/QTKit.framework; sourceTree = "<absolute>"; };
-		8D1107320486CEB800E47090 /* FontTree.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FontTree.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8D1107320486CEB800E47090 /* VirtualFont.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VirtualFont.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A809523A16F360660011FAA3 /* icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = icon.icns; sourceTree = "<group>"; };
 		A809530316F361E20011FAA3 /* Application.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Application.cpp; path = ../src/Application.cpp; sourceTree = "<group>"; };
 		A857CA7C186350B400250AEC /* hb-blob.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "hb-blob.cc"; path = "../../../hb/hb-blob.cc"; sourceTree = "<group>"; };
@@ -163,6 +164,8 @@
 		A8CC34F5186871EB008B598E /* SansSerif.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = SansSerif.xml; path = ../resources/SansSerif.xml; sourceTree = "<group>"; };
 		A8CC34F7186996A7008B598E /* FontManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FontManager.cpp; path = ../src/FontManager.cpp; sourceTree = "<group>"; };
 		A8CC34F8186996A7008B598E /* FontManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FontManager.h; path = ../src/FontManager.h; sourceTree = "<group>"; };
+		A8CC34FA186A021B008B598E /* VirtualFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VirtualFont.cpp; path = ../src/VirtualFont.cpp; sourceTree = "<group>"; };
+		A8CC34FB186A021B008B598E /* VirtualFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VirtualFont.h; path = ../src/VirtualFont.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -198,6 +201,8 @@
 				A8CC34F418684D48008B598E /* LanguageHelper.h */,
 				A8CC34F8186996A7008B598E /* FontManager.h */,
 				A8CC34F7186996A7008B598E /* FontManager.cpp */,
+				A8CC34FB186A021B008B598E /* VirtualFont.h */,
+				A8CC34FA186A021B008B598E /* VirtualFont.cpp */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -229,12 +234,12 @@
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8D1107320486CEB800E47090 /* FontTree.app */,
+				8D1107320486CEB800E47090 /* VirtualFont.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		29B97314FDCFA39411CA2CEA /* FontTree */ = {
+		29B97314FDCFA39411CA2CEA /* VirtualFont */ = {
 			isa = PBXGroup;
 			children = (
 				A857CA7B1863509300250AEC /* hb */,
@@ -244,7 +249,7 @@
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
 			);
-			name = FontTree;
+			name = VirtualFont;
 			sourceTree = "<group>";
 		};
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
@@ -377,9 +382,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		8D1107260486CEB800E47090 /* FontTree */ = {
+		8D1107260486CEB800E47090 /* VirtualFont */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "FontTree" */;
+			buildConfigurationList = C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "VirtualFont" */;
 			buildPhases = (
 				8D1107290486CEB800E47090 /* Resources */,
 				8D11072C0486CEB800E47090 /* Sources */,
@@ -389,10 +394,10 @@
 			);
 			dependencies = (
 			);
-			name = FontTree;
+			name = VirtualFont;
 			productInstallPath = "$(HOME)/Applications";
-			productName = FontTree;
-			productReference = 8D1107320486CEB800E47090 /* FontTree.app */;
+			productName = VirtualFont;
+			productReference = 8D1107320486CEB800E47090 /* VirtualFont.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -402,7 +407,7 @@
 			isa = PBXProject;
 			attributes = {
 			};
-			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "FontTree" */;
+			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "VirtualFont" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 1;
@@ -412,11 +417,11 @@
 				French,
 				German,
 			);
-			mainGroup = 29B97314FDCFA39411CA2CEA /* FontTree */;
+			mainGroup = 29B97314FDCFA39411CA2CEA /* VirtualFont */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				8D1107260486CEB800E47090 /* FontTree */,
+				8D1107260486CEB800E47090 /* VirtualFont */,
 			);
 		};
 /* End PBXProject section */
@@ -447,6 +452,7 @@
 				A857CADF186350B400250AEC /* hb-ot-shape-complex-sea.cc in Sources */,
 				A857CAE7186350B400250AEC /* hb-shape.cc in Sources */,
 				A857CAF218635ABE00250AEC /* FreetypeHelper.cpp in Sources */,
+				A8CC34FC186A021B008B598E /* VirtualFont.cpp in Sources */,
 				A857CAE0186350B400250AEC /* hb-ot-shape-complex-thai.cc in Sources */,
 				A857CAD5186350B400250AEC /* hb-fallback-shape.cc in Sources */,
 				A857CAEA186350B400250AEC /* hb-unicode.cc in Sources */,
@@ -499,7 +505,7 @@
 					"\"$(CINDER_PATH)/lib/libcinder_d.a\"",
 					"\"$(CINDER_PATH)/blocks/Freetype/lib/osx/libfreetype.a\"",
 				);
-				PRODUCT_NAME = FontTree;
+				PRODUCT_NAME = VirtualFont;
 				SYMROOT = ./build;
 				WRAPPER_EXTENSION = app;
 			};
@@ -525,7 +531,7 @@
 					"\"$(CINDER_PATH)/lib/libcinder.a\"",
 					"\"$(CINDER_PATH)/blocks/Freetype/lib/osx/libfreetype.a\"",
 				);
-				PRODUCT_NAME = FontTree;
+				PRODUCT_NAME = VirtualFont;
 				STRIP_INSTALLED_PRODUCT = YES;
 				SYMROOT = ./build;
 				WRAPPER_EXTENSION = app;
@@ -577,7 +583,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "FontTree" */ = {
+		C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "VirtualFont" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C01FCF4B08A954540054247B /* Debug */,
@@ -586,7 +592,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "FontTree" */ = {
+		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "VirtualFont" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C01FCF4F08A954540054247B /* Debug */,

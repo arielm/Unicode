@@ -17,8 +17,6 @@
 #include <map>
 #include <set>
 
-typedef std::set<class YFont*> FontSet;
-
 struct YGlyph
 {
     ci::gl::TextureRef texture;

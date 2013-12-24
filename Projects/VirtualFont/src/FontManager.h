@@ -1,6 +1,6 @@
 #pragma once
 
-#include "YFont.h"
+#include "VirtualFont.h"
 
 #include "cinder/DataSource.h"
 
@@ -28,16 +28,6 @@ struct FontKey
     }
 };
 
-class FontTree
-{
-public:
-    bool add(const std::string &lang, YFont *font);
-    FontSet getFontSet(const std::string &lang);
-    
-protected:
-    std::map<std::string, FontSet> fontSetMap;
-};
-
 class FontManager
 {
 public:
@@ -46,7 +36,7 @@ public:
     FontManager();
     
     YFont* getCachedFont(const std::string &ref, float fontSize);
-    FontTree loadFontTree(ci::DataSourceRef source, float fontSize);
+    VirtualFont loadVirtualFont(ci::DataSourceRef source, float fontSize);
     
 protected:
     std::map<FontKey, std::shared_ptr<YFont>> fontMap;

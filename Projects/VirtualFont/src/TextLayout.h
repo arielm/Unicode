@@ -1,7 +1,7 @@
 #pragma once
 
 #include "TextSpan.h"
-#include "YFont.h"
+#include "VirtualFont.h"
 
 struct Shape
 {

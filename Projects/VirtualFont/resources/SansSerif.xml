@@ -1,8 +1,8 @@
-<FontTree>
+<VirtualFont>
     <!-- Undefined -->
-    <Font>
+    <Set>
         <Ref>assets://fonts/DroidSansFallback.ttf</Ref>
-    </Font>
+    </Set>
     <!-- Arabic -->
     <Font lang="ar">
         <Group>
@@ -11,35 +11,35 @@
             <Ref>assets://fonts/DroidSansArabic.ttf</Ref>
         </Group>
         <Ref>assets://fonts/DroidSansFallback.ttf</Ref>
-    </Font>
+    </Set>
     <!-- Bulgarian, Russian, Ukrainian -->
     <Font lang="bg:ru:uk">
         <Ref>assets://fonts/DroidSans.ttf</Ref>
         <Ref>assets://fonts/DroidSansFallback.ttf</Ref>
-    </Font>
+    </Set>
     <!-- Greek -->
     <Font lang="el">
         <Ref>assets://fonts/DroidSans.ttf</Ref>
         <Ref>assets://fonts/DroidSansFallback.ttf</Ref>
-    </Font>
+    </Set>
     <!-- Hebrew -->
     <Font lang="he">
         <Ref>assets://fonts/DroidSansHebrew-Regular.ttf</Ref>
         <Ref>assets://fonts/DroidSansFallback.ttf</Ref>
-    </Font>
+    </Set>
     <!-- Japanese -->
     <Font lang="ja">
         <Ref>assets://fonts/MTLmr3m.ttf</Ref>
         <Ref>assets://fonts/DroidSansFallback.ttf</Ref>
-    </Font>
+    </Set>
     <!-- Korean -->
     <Font lang="ko">
         <Ref>assets://fonts/NanumGothic.ttf</Ref>
         <Ref>assets://fonts/DroidSansFallback.ttf</Ref>
-    </Font>
+    </Set>
     <!-- Thai -->
     <Font lang="th">
         <Ref>assets://fonts/DroidSansThai.ttf</Ref>
         <Ref>assets://fonts/DroidSansFallback.ttf</Ref>
-    </Font>
-</FontTree>
+    </Set>
+</VirtualFont>

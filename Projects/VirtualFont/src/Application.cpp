@@ -49,7 +49,7 @@ public:
     void drawLineLayout(TextLayout &layout, float y, float left, float right);
     void drawHLine(float y);
     
-    TextLayout createLayout(FontTree &fontTree, const string &text, const string &lang) const;
+    TextLayout createLayout(VirtualFont &font, const string &text, const string &lang) const;
     TextSpan createRun(const string &text, const string &lang) const;
 };
 
@@ -60,7 +60,7 @@ void Application::prepareSettings(Settings *settings)
 
 void Application::setup()
 {
-    auto sansSerifFont = fontManager.loadFontTree(loadResource("SansSerif.xml"), FONT_SIZE);
+    auto sansSerifFont = fontManager.loadVirtualFont(loadResource("SansSerif.xml"), FONT_SIZE);
 
     lineLayouts.emplace_back(createLayout(sansSerifFont, "Натисни «Грати», коли будеш готовий!", "uk"));
     lineLayouts.emplace_back(createLayout(sansSerifFont, "ضغطوا على \"تشغيل\" عند الاستعداد!", "ar"));
@@ -123,9 +123,9 @@ TextSpan Application::createRun(const string &text, const string &lang) const
     return TextSpan(text, script, lang, direction);
 }
 
-TextLayout Application::createLayout(FontTree &fontTree, const string &text, const string &lang) const
+TextLayout Application::createLayout(VirtualFont &font, const string &text, const string &lang) const
 {
-    return TextLayout(fontTree.getFontSet(lang), createRun(text, lang));
+    return TextLayout(font.getFontSet(lang), createRun(text, lang));
 }
 
 CINDER_APP_NATIVE(Application, RendererGl(RendererGl::AA_NONE))
