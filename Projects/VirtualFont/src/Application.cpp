@@ -9,33 +9,35 @@
 /*
  * FEATURES:
  *
- * 1) DISPLAYING TEXT IN ANY LANGUAGE, AS LONG AS THE RIGHT LIST OF FONTS (INCL. FALLBACK)
- *    IS PROVIDED FOR THE LANGUAGE IN QUESTION (VIA THE XML VIRTUAL-FONT SYSTEM)
+ * 1) DISPLAYING TEXT IN ANY LANGUAGE, AS LONG AS THE PROPER LIST OF FONTS
+ *    IS DEFINED FOR THE LANGUAGE IN QUESTION IN THE VIRTUAL-FONT XML
  *
- * 2) TEXT IS FROM pango-language-sample-table.h
+ * 2) USING TEXT FROM pango-language-sample-table.h
  *
  *
  * TODO:
  *
- * 1) PROVIDE "METRICS" PER FONT-SET:
- *    - ASCENT, DESCENT, HEIGHT AND STRIKETHROUGH OFFSET:
- *      - BASED ON FIRST FONT IN SET
- *
- * 2) READ TEXT FROM XML FILE
- *
- * 3) CREATE VIRTUAL-FONT FOR OSX AND iOS
+ * 1) CREATE VIRTUAL-FONT FOR OSX AND iOS
  *    AND CREATE iOS AND ANDROID PROJECTS
  *
- * 4) START TO MEASURE PERFORMANCE ON iOS AND ANDROID:
+ * 2) START TO MEASURE PERFORMANCE ON iOS AND ANDROID:
  *    - SHAPING
  *    - RENDERING
+ *
+ * 3) PROVIDE "METRICS" PER FONT-SET:
+ *    - ASCENT, DESCENT, HEIGHT AND STRIKETHROUGH OFFSET:
+ *      BASED ON FIRST FONT IN SET
  */
 
 #include "cinder/app/AppNative.h"
+#include "cinder/Xml.h"
+#include "cinder/Utilities.h"
 
 #include "TextLayout.h"
 #include "FontManager.h"
 #include "LanguageHelper.h"
+
+#include <boost/algorithm/string.hpp>
 
 using namespace std;
 using namespace ci;
@@ -62,6 +64,7 @@ public:
     
     TextLayout createLayout(VirtualFont &font, const string &text, const string &lang) const;
     TextSpan createRun(const string &text, const string &lang) const;
+    string trimText(const string &text) const;
 };
 
 void Application::prepareSettings(Settings *settings)
@@ -72,18 +75,18 @@ void Application::prepareSettings(Settings *settings)
 void Application::setup()
 {
     auto sansSerifFont = fontManager.loadVirtualFont(loadResource("SansSerif.xml"), FONT_SIZE);
-
-    lineLayouts.emplace_back(createLayout(sansSerifFont, "Чуєш їх, доцю, га? Кумедна ж ти, прощайся без ґольфів!", "uk"));
-    lineLayouts.emplace_back(createLayout(sansSerifFont, "Θέλει αρετή και τόλμη η ελευθερία. (Ανδρέας Κάλβος)", "el"));
-    lineLayouts.emplace_back(createLayout(sansSerifFont, "نص حكيم له سر قاطع وذو شأن عظيم مكتوب على ثوب أخضر ومغلف بجلد أزرق.", "ar"));
-    lineLayouts.emplace_back(createLayout(sansSerifFont, "איך קען עסן גלאָז און עס טוט מיר נישט װײ.", "yi"));
-    lineLayouts.emplace_back(createLayout(sansSerifFont, "いろはにほへと ちりぬるを 色は匂へど 散りぬるを", "ja"));
-    lineLayouts.emplace_back(createLayout(sansSerifFont, "다람쥐 헌 쳇바퀴에 타고파", "ko"));
-    lineLayouts.emplace_back(createLayout(sansSerifFont, "เป็นมนุษย์สุดประเสริฐเลิศคุณค่า - กว่าบรรดาฝูงสัตว์เดรัจฉาน ...", "th"));
-    lineLayouts.emplace_back(createLayout(sansSerifFont, "नहीं नजर किसी की बुरी नहीं किसी का मुँह काला जो करे सो उपर वाला", "hi"));
-    lineLayouts.emplace_back(createLayout(sansSerifFont, "我能吞下玻璃而不伤身体。", "zh-cn"));
-    lineLayouts.emplace_back(createLayout(sansSerifFont, "Příliš žluťoučký kůň úpěl ďábelské ódy.", "cz"));
     
+    XmlTree doc(loadResource("Text.xml"));
+    auto rootElement = doc.getChild("Text");
+    
+    for (auto &lineElement : rootElement.getChildren())
+    {
+        auto lang =lineElement->getAttributeValue<string>("lang");
+        auto text = trimText(lineElement->getValue());
+        
+        lineLayouts.emplace_back(createLayout(sansSerifFont, text, lang));
+    }
+
     // ---
     
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -140,6 +143,23 @@ TextSpan Application::createRun(const string &text, const string &lang) const
 TextLayout Application::createLayout(VirtualFont &font, const string &text, const string &lang) const
 {
     return TextLayout(font.getFontSet(lang), createRun(text, lang));
+}
+
+string Application::trimText(const string &text) const
+{
+    auto rawLines = split(text, '\n');
+    
+    for (auto line : rawLines)
+    {
+        auto trimmed = boost::algorithm::trim_copy(line);
+        
+        if (!trimmed.empty())
+        {
+            return trimmed;
+        }
+    }
+    
+    return "";
 }
 
 CINDER_APP_NATIVE(Application, RendererGl(RendererGl::AA_NONE))

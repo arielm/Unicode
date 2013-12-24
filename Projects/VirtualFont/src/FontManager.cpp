@@ -2,6 +2,7 @@
 
 #include "cinder/app/App.h"
 #include "cinder/Xml.h"
+#include "cinder/Utilities.h"
 
 #include <boost/algorithm/string.hpp>
 
@@ -105,7 +106,5 @@ fs::path FontManager::getFilePath(const std::string &ref)
 
 vector<string> FontManager::getLanguageList(const string &languages)
 {
-	vector<string> result;
-	boost::algorithm::split(result, languages, boost::is_any_of(":"));
-	return result;
+	return split(languages, ":");
 }

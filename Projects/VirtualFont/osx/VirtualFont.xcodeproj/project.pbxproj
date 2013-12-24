@@ -47,6 +47,7 @@
 		A857CAF218635ABE00250AEC /* FreetypeHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A857CAEC18635ABE00250AEC /* FreetypeHelper.cpp */; };
 		A857CAF318635ABE00250AEC /* YFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A857CAED18635ABE00250AEC /* YFont.cpp */; };
 		A857CAF51863674000250AEC /* TextLayout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A857CAF41863674000250AEC /* TextLayout.cpp */; };
+		A8C2412C186A3EB2000FBE77 /* Text.xml in Resources */ = {isa = PBXBuildFile; fileRef = A8C2412B186A3EB2000FBE77 /* Text.xml */; };
 		A8CC34F6186871EB008B598E /* SansSerif.xml in Resources */ = {isa = PBXBuildFile; fileRef = A8CC34F5186871EB008B598E /* SansSerif.xml */; };
 		A8CC34F9186996A7008B598E /* FontManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A8CC34F7186996A7008B598E /* FontManager.cpp */; };
 		A8CC34FC186A021B008B598E /* VirtualFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A8CC34FA186A021B008B598E /* VirtualFont.cpp */; };
@@ -160,6 +161,7 @@
 		A857CAF018635ABE00250AEC /* TextSpan.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextSpan.h; path = ../src/TextSpan.h; sourceTree = "<group>"; };
 		A857CAF118635ABE00250AEC /* YFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YFont.h; path = ../src/YFont.h; sourceTree = "<group>"; };
 		A857CAF41863674000250AEC /* TextLayout.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TextLayout.cpp; path = ../src/TextLayout.cpp; sourceTree = "<group>"; };
+		A8C2412B186A3EB2000FBE77 /* Text.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = Text.xml; path = ../resources/Text.xml; sourceTree = "<group>"; };
 		A8CC34F418684D48008B598E /* LanguageHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LanguageHelper.h; path = ../src/LanguageHelper.h; sourceTree = "<group>"; };
 		A8CC34F5186871EB008B598E /* SansSerif.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = SansSerif.xml; path = ../resources/SansSerif.xml; sourceTree = "<group>"; };
 		A8CC34F7186996A7008B598E /* FontManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FontManager.cpp; path = ../src/FontManager.cpp; sourceTree = "<group>"; };
@@ -256,6 +258,7 @@
 			isa = PBXGroup;
 			children = (
 				A8CC34F5186871EB008B598E /* SansSerif.xml */,
+				A8C2412B186A3EB2000FBE77 /* Text.xml */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -432,6 +435,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A8CC34F6186871EB008B598E /* SansSerif.xml in Resources */,
+				A8C2412C186A3EB2000FBE77 /* Text.xml in Resources */,
 				A809523B16F360660011FAA3 /* icon.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
