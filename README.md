@@ -31,6 +31,7 @@ So far, [Harfbuzz](https://github.com/behdad/harfbuzz) have been tested as a sol
 5. [LanguageFeatures](Projects/LanguageFeatures)
 6. [ShapingFallback](Projects/ShapingFallback)
 7. [SimpleBIDI](Projects/SimpleBIDI)
+8. [VirtualFont](Projects/VirtualFont)
 
 More work remains, notably testing how Harfbuzz performs on low-end mobile devices with limited processing-power and memory.
 
