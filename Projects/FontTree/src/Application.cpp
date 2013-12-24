@@ -7,20 +7,24 @@
  */
 
 /*
+ * FEATURES:
+ *
+ * 1) DISPLAYING TEXT IN ANY LANGUAGE, AS LONG AS THE RIGHT LIST OF FONTS (INCL. FALLBACK)
+ *    IS PROVIDED FOR THE LANGUAGE IN QUESTION (VIA THE XML FONT-TREE SYSTEM)
+ *
+ *
  * TODO:
  *
- * 1) HANDLE SCRIPT/LANGUAGE MAP PROPERLY
- *
- * 2) PROVIDE "METRICS" PER FontList:
+ * 1) PROVIDE "METRICS" PER FONT-LIST:
  *    - ASCENT, DESCENT: BASED ON FIRST FONT IN LIST
- *    - STRIKETHROUGH: BASED ON FIRST FONT IN LIST WITH "-", OR EQUAL TO 0.5
+ *    - STRIKETHROUGH: BASED ON FIRST FONT IN LIST WITH "-" CHARACTER, OTHERWISE: EQUAL TO 0.5
  */
 
 #include "cinder/app/AppNative.h"
 
 #include "TextLayout.h"
 #include "FontManager.h"
-#include "Language.h"
+#include "LanguageHelper.h"
 
 using namespace std;
 using namespace ci;
@@ -32,10 +36,10 @@ const float LINE_SPACING = 90;
 
 class Application : public AppNative
 {
+    LanguageHelper languageHelper;
     FontManager fontManager;
     
     vector<TextLayout> lineLayouts;
-    map<string, hb_script_t> scriptMap;
     
 public:
     void prepareSettings(Settings *settings);
@@ -56,15 +60,6 @@ void Application::prepareSettings(Settings *settings)
 
 void Application::setup()
 {
-    size_t count = sizeof(HB_SCRIPT_for_lang) / sizeof(HBScriptForLang);
-
-    for (int i = 0; i < count; i++)
-    {
-        scriptMap[HB_SCRIPT_for_lang[i].lang] = HB_SCRIPT_for_lang[i].scripts[0];
-    }
-    
-    // ---
-    
     auto sansSerifFont = fontManager.loadFontTree(loadResource("SansSerif.xml"), FONT_SIZE);
 
     lineLayouts.emplace_back(createLayout(sansSerifFont, "Натисни «Грати», коли будеш готовий!", "uk"));
@@ -122,19 +117,10 @@ void Application::drawHLine(float y)
 
 TextSpan Application::createRun(const string &text, const string &lang) const
 {
-    hb_script_t script;
-    auto it = scriptMap.find(lang);
+    auto script = languageHelper.getScript(lang);
+    auto direction = hb_script_get_horizontal_direction(script);
     
-    if (it == scriptMap.end())
-    {
-        script = HB_SCRIPT_INVALID;
-    }
-    else
-    {
-        script = it->second;
-    }
-    
-    return TextSpan(text, script, lang, hb_script_get_horizontal_direction(script));
+    return TextSpan(text, script, lang, direction);
 }
 
 TextLayout Application::createLayout(FontTree &fontTree, const string &text, const string &lang) const

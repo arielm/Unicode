@@ -159,7 +159,7 @@
 		A857CAF018635ABE00250AEC /* TextSpan.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextSpan.h; path = ../src/TextSpan.h; sourceTree = "<group>"; };
 		A857CAF118635ABE00250AEC /* YFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YFont.h; path = ../src/YFont.h; sourceTree = "<group>"; };
 		A857CAF41863674000250AEC /* TextLayout.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TextLayout.cpp; path = ../src/TextLayout.cpp; sourceTree = "<group>"; };
-		A8CC34F418684D48008B598E /* Language.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Language.h; path = ../src/Language.h; sourceTree = "<group>"; };
+		A8CC34F418684D48008B598E /* LanguageHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LanguageHelper.h; path = ../src/LanguageHelper.h; sourceTree = "<group>"; };
 		A8CC34F5186871EB008B598E /* SansSerif.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = SansSerif.xml; path = ../resources/SansSerif.xml; sourceTree = "<group>"; };
 		A8CC34F7186996A7008B598E /* FontManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FontManager.cpp; path = ../src/FontManager.cpp; sourceTree = "<group>"; };
 		A8CC34F8186996A7008B598E /* FontManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FontManager.h; path = ../src/FontManager.h; sourceTree = "<group>"; };
@@ -195,7 +195,7 @@
 				A857CAF018635ABE00250AEC /* TextSpan.h */,
 				A857CAEE18635ABE00250AEC /* TextLayout.h */,
 				A857CAF41863674000250AEC /* TextLayout.cpp */,
-				A8CC34F418684D48008B598E /* Language.h */,
+				A8CC34F418684D48008B598E /* LanguageHelper.h */,
 				A8CC34F8186996A7008B598E /* FontManager.h */,
 				A8CC34F7186996A7008B598E /* FontManager.cpp */,
 			);

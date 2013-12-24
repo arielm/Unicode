@@ -2,12 +2,17 @@
 
 #include "hb.h"
 
-typedef struct _HBScriptForLang {
+#include <map>
+#include <string>
+
+struct HBScriptForLang
+{
     const char lang[7];
     hb_script_t scripts[3];
-} HBScriptForLang;
+};
 
-static const HBScriptForLang HB_SCRIPT_for_lang[] = {
+static const HBScriptForLang HB_SCRIPT_for_lang[] =
+{
     { "aa",     { HB_SCRIPT_LATIN/*62*/ } },
     { "ab",     { HB_SCRIPT_CYRILLIC/*90*/ } },
     { "af",     { HB_SCRIPT_LATIN/*69*/ } },
@@ -245,4 +250,36 @@ static const HBScriptForLang HB_SCRIPT_for_lang[] = {
     { "zh-sg",  { HB_SCRIPT_HAN/*6763*/ } },
     { "zh-tw",  { HB_SCRIPT_HAN/*13063*/ } },
     { "zu",     { HB_SCRIPT_LATIN/*52*/ } }
+};
+
+
+class LanguageHelper
+{
+public:
+    LanguageHelper()
+    {
+        size_t count = sizeof(HB_SCRIPT_for_lang) / sizeof(HBScriptForLang);
+        
+        for (int i = 0; i < count; i++)
+        {
+            scriptMap[HB_SCRIPT_for_lang[i].lang] = HB_SCRIPT_for_lang[i].scripts[0];
+        }
+    }
+    
+    hb_script_t getScript(const std::string &lang) const
+    {
+        auto it = scriptMap.find(lang);
+        
+        if (it == scriptMap.end())
+        {
+            return HB_SCRIPT_INVALID;
+        }
+        else
+        {
+            return it->second;
+        }
+    }
+    
+protected:
+    std::map<std::string, hb_script_t> scriptMap;
 };
