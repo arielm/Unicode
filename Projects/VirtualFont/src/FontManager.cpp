@@ -1,3 +1,11 @@
+/*
+ * THE UNICODE TEST SUITE FOR CINDER: https://github.com/arielm/Unicode
+ * COPYRIGHT (C) 2013, ARIEL MALKA ALL RIGHTS RESERVED.
+ *
+ * THE FOLLOWING SOURCE-CODE IS DISTRIBUTED UNDER THE MODIFIED BSD LICENSE:
+ * https://github.com/arielm/Unicode/blob/master/LICENSE.md
+ */
+
 #include "FontManager.h"
 
 #include "cinder/app/App.h"
@@ -89,7 +97,7 @@ fs::path FontManager::getFilePath(const std::string &ref)
     {
         filePath = getAssetPath(ref.substr(REF_ASSETS.size()));
     }
-    if (boost::starts_with(ref, REF_FILE))
+    else if (boost::starts_with(ref, REF_FILE))
     {
         filePath = ref.substr(REF_FILE.size());
     }
