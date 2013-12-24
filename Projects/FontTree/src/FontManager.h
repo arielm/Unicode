@@ -31,8 +31,8 @@ struct FontKey
 class FontTree
 {
 public:
-    void add(const std::string &lang, YFont *font);
-    FontList get(const std::string &lang);
+    bool add(const std::string &lang, YFont *font);
+    FontList getFontList(const std::string &lang);
     
 protected:
     std::map<std::string, FontList> fontListMap;
@@ -46,10 +46,11 @@ public:
     FontManager();
     
     YFont* getCachedFont(const std::string &ref, float fontSize);
-    FontTree getFontTree(ci::DataSourceRef source, float fontSize);
+    FontTree loadFontTree(ci::DataSourceRef source, float fontSize);
     
 protected:
     std::map<FontKey, std::shared_ptr<YFont>> fontMap;
     
     static ci::fs::path getFilePath(const std::string &ref);
+    static std::vector<std::string> getLanguageList(const std::string &languages);
 };

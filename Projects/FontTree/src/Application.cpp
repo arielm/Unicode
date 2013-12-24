@@ -9,7 +9,11 @@
 /*
  * TODO:
  *
- * 1) USE FontTree.xml INSTEAD OF CREATING sansSerifFont BY CODE
+ * 1) HANDLE SCRIPT/LANGUAGE MAP PROPERLY
+ *
+ * 2) PROVIDE "METRICS" PER FontList:
+ *    - ASCENT, DESCENT: BASED ON FIRST FONT IN LIST
+ *    - STRIKETHROUGH: BASED ON FIRST FONT IN LIST WITH "-", OR EQUAL TO 0.5
  */
 
 #include "cinder/app/AppNative.h"
@@ -61,31 +65,9 @@ void Application::setup()
     
     // ---
     
-    auto sansSerifFont = fontManager.getFontTree(loadResource("SansSerif.xml"), FONT_SIZE);
+    auto sansSerifFont = fontManager.loadFontTree(loadResource("SansSerif.xml"), FONT_SIZE);
 
-    sansSerifFont.add("", fontManager.getCachedFont("assets://fonts/DroidSansFallback.ttf", FONT_SIZE));
-    
-    sansSerifFont.add("ar", fontManager.getCachedFont("assets://fonts/DroidNaskh-Regular.ttf", FONT_SIZE));
-    sansSerifFont.add("ar", fontManager.getCachedFont("assets://fonts/DroidSansFallback.ttf", FONT_SIZE));
-
-    sansSerifFont.add("el", fontManager.getCachedFont("assets://fonts/DroidSans.ttf", FONT_SIZE));
-    sansSerifFont.add("el", fontManager.getCachedFont("assets://fonts/DroidSansFallback.ttf", FONT_SIZE));
-
-    sansSerifFont.add("he", fontManager.getCachedFont("assets://fonts/DroidSansHebrew-Regular.ttf", FONT_SIZE));
-    sansSerifFont.add("he", fontManager.getCachedFont("assets://fonts/DroidSansFallback.ttf", FONT_SIZE));
-    
-    sansSerifFont.add("ja", fontManager.getCachedFont("assets://fonts/MTLmr3m.ttf", FONT_SIZE));
-    sansSerifFont.add("ja", fontManager.getCachedFont("assets://fonts/DroidSansFallback.ttf", FONT_SIZE));
-    
-    sansSerifFont.add("ko", fontManager.getCachedFont("file:///Users/arielm/Downloads/fonts/NanumGothic/NanumGothic-Regular.ttf", FONT_SIZE));
-    sansSerifFont.add("ko", fontManager.getCachedFont("assets://fonts/DroidSansFallback.ttf", FONT_SIZE));
-    
-    sansSerifFont.add("th", fontManager.getCachedFont("assets://fonts/DroidSansThai.ttf", FONT_SIZE));
-    sansSerifFont.add("th", fontManager.getCachedFont("assets://fonts/DroidSansFallback.ttf", FONT_SIZE));
-
-    // ---
-
-    lineLayouts.emplace_back(createLayout(sansSerifFont, "Press 'play' when ready!", "en"));
+    lineLayouts.emplace_back(createLayout(sansSerifFont, "Натисни «Грати», коли будеш готовий!", "uk"));
     lineLayouts.emplace_back(createLayout(sansSerifFont, "ضغطوا على \"تشغيل\" عند الاستعداد!", "ar"));
     lineLayouts.emplace_back(createLayout(sansSerifFont, "Πάτα \u2018παιχνίδι\u2019 όταν είσαι έτοιμος!", "el"));
     lineLayouts.emplace_back(createLayout(sansSerifFont, "לַחֲצוּ עַל הַּכַפְּתוֹר כְּשֶּתִהְיוּ מוּכָנִים לִמְנוֹת סוּרִיקָטוֹת!", "he"));
@@ -157,7 +139,7 @@ TextSpan Application::createRun(const string &text, const string &lang) const
 
 TextLayout Application::createLayout(FontTree &fontTree, const string &text, const string &lang) const
 {
-    return TextLayout(fontTree.get(lang), createRun(text, lang));
+    return TextLayout(fontTree.getFontList(lang), createRun(text, lang));
 }
 
 CINDER_APP_NATIVE(Application, RendererGl(RendererGl::AA_NONE))
