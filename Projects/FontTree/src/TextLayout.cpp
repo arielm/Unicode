@@ -17,12 +17,12 @@ void Cluster::addShape(hb_codepoint_t codepoint, const Vec2f &offset, float adva
     combinedAdvance += advance;
 }
 
-TextLayout::TextLayout(const FontList &fontList, const TextSpan &run)
+TextLayout::TextLayout(const FontSet &fontSet, const TextSpan &run)
 :
 direction(run.direction),
 advance(0)
 {
-    process(fontList, run);
+    process(fontSet, run);
 }
 
 void TextLayout::draw(const Vec2f &position)
@@ -50,12 +50,12 @@ void TextLayout::addCluster(const Cluster &cluster)
     advance += cluster.combinedAdvance;
 }
 
-void TextLayout::process(const FontList &fontList, const TextSpan &run)
+void TextLayout::process(const FontSet &fontSet, const TextSpan &run)
 {
     auto buffer = hb_buffer_create();
     map<uint32_t, Cluster> clusterMap;
     
-    for (auto font : fontList)
+    for (auto font : fontSet)
     {
         hb_buffer_clear_contents(buffer);
         

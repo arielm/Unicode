@@ -252,7 +252,6 @@ static const HBScriptForLang HB_SCRIPT_for_lang[] =
     { "zu",     { HB_SCRIPT_LATIN/*52*/ } }
 };
 
-
 class LanguageHelper
 {
 public:

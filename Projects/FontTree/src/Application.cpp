@@ -16,8 +16,8 @@
  * TODO:
  *
  * 1) PROVIDE "METRICS" PER FONT-LIST:
- *    - ASCENT, DESCENT: BASED ON FIRST FONT IN LIST
- *    - STRIKETHROUGH: BASED ON FIRST FONT IN LIST WITH "-" CHARACTER, OTHERWISE: EQUAL TO 0.5
+ *    - ASCENT, DESCENT, HEIGHT: BASED ON FIRST FONT IN LIST
+ *    - STRIKETHROUGH OFFSET: BASED ON FIRST FONT IN LIST WITH "-" CHARACTER, OTHERWISE: EQUAL TO 0.5
  */
 
 #include "cinder/app/AppNative.h"
@@ -125,7 +125,7 @@ TextSpan Application::createRun(const string &text, const string &lang) const
 
 TextLayout Application::createLayout(FontTree &fontTree, const string &text, const string &lang) const
 {
-    return TextLayout(fontTree.getFontList(lang), createRun(text, lang));
+    return TextLayout(fontTree.getFontSet(lang), createRun(text, lang));
 }
 
 CINDER_APP_NATIVE(Application, RendererGl(RendererGl::AA_NONE))

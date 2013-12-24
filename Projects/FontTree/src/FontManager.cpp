@@ -16,24 +16,24 @@ bool FontTree::add(const string &lang, YFont *font)
 {
     if (font)
     {
-        fontListMap[lang].push_back(font);
+        fontSetMap[lang].insert(font);
         return true;
     }
 
     return false;
 }
 
-FontList FontTree::getFontList(const string &lang)
+FontSet FontTree::getFontSet(const string &lang)
 {
-    auto it = fontListMap.find(lang);
+    auto it = fontSetMap.find(lang);
     
-    if (it == fontListMap.end())
+    if (it == fontSetMap.end())
     {
-        it = fontListMap.find("");
+        it = fontSetMap.find("");
         
-        if (it == fontListMap.end())
+        if (it == fontSetMap.end())
         {
-            return FontList();
+            return FontSet();
         }
     }
     

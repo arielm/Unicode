@@ -32,10 +32,10 @@ class FontTree
 {
 public:
     bool add(const std::string &lang, YFont *font);
-    FontList getFontList(const std::string &lang);
+    FontSet getFontSet(const std::string &lang);
     
 protected:
-    std::map<std::string, FontList> fontListMap;
+    std::map<std::string, FontSet> fontSetMap;
 };
 
 class FontManager

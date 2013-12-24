@@ -15,8 +15,9 @@
 #include "hb.h"
 
 #include <map>
+#include <set>
 
-typedef std::vector<class YFont*> FontList;
+typedef std::set<class YFont*> FontSet;
 
 struct YGlyph
 {
