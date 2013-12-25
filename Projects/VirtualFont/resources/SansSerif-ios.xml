@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ References:
+ http://support.apple.com/kb/ht4980
+ http://iosfonts.com/
+ -->
+<VirtualFont>
+    <!-- Undefined -->
+    <Set>
+        <Ref>file:///System/Library/Fonts/Cache/Arial.ttf</Ref>
+    </Set>
+    <!-- Arabic, Persian -->
+    <Set lang="ar:fa">
+        <Group>
+            <Ref>file:///System/Library/Fonts/Cache/GeezaPro.ttf</Ref>
+        </Group>
+    </Set>
+    <!-- Hebrew -->
+    <Set lang="he">
+        <Group>
+            <Ref>file:///System/Library/Fonts/Cache/ArialHB.ttf</Ref>
+        </Group>
+    </Set>
+    <!-- Japanese -->
+    <Set lang="ja">
+        <Group>
+            <Ref>file:///System/Library/Fonts/Cache/HiraginoKakuGothicProNW3.otf</Ref>
+        </Group>
+    </Set>
+    <!-- Korean -->
+    <Set lang="ko">
+        <Group>
+            <Ref>file:///System/Library/Fonts/Cache/AppleGothic.ttf</Ref>
+        </Group>
+    </Set>
+    <!-- Thai -->
+    <Set lang="th">
+        <Ref>file:///System/Library/Fonts/Cache/Thonburi.ttf</Ref>
+    </Set>
+    <!-- Hindi -->
+    <Set lang="hi">
+        <Ref>file:///System/Library/Fonts/Cache/DevanagariSangamMN.ttc</Ref>
+    </Set>
+    <!-- Chinese (Simplified) -->
+    <Set lang="zh-cn:zh-hk:zh-sg">
+        <Ref>file:///System/Library/Fonts/Cache/STHeiti-Medium.ttc</Ref>
+    </Set>
+    <!-- Chinese (Traditional) -->
+    <Set lang="zh-mo:zh-tw">
+        <Ref>file:///System/Library/Fonts/Cache/STHeiti-Medium.ttc</Ref>
+    </Set>
+</VirtualFont>

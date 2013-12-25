@@ -9,20 +9,28 @@
 /*
  * FEATURES:
  *
- * 1) DISPLAYING TEXT IN ANY LANGUAGE, AS LONG AS THE PROPER LIST OF FONTS
- *    IS DEFINED FOR THE LANGUAGE IN QUESTION IN THE VIRTUAL-FONT XML
+ * 1) DISPLAYING TEXT IN ANY LANGUAGE, AS LONG AS THE PROPER SET OF FONTS
+ *    IS DEFINED FOR THE LANGUAGE IN QUESTION IN THE "VIRTUAL-FONT" XML FILE
  *
- * 2) USING TEXT FROM pango-language-sample-table.h
+ * 2) VIRTUAL-FONT XML FILES FOR:
+ *    - OSX, iOS, ANDROID
+ *
+ * 3) IT RUNS FINE ON OSX, iOS AND ANDROID
+ *    - THERE'S A RISK OF APPSTORE REJECTION ON iOS WHERE IT
+ *      MIGHT BE "ILLEGAL" TO ACCESS /System/Library/Fonts/Cache
+ *
+ * 4) USING TEXT FROM pango-language-sample-table.h
  *
  *
  * TODO:
  *
- * 1) CREATE VIRTUAL-FONT FOR OSX AND iOS
- *    AND CREATE iOS AND ANDROID PROJECTS
- *
- * 2) START TO MEASURE PERFORMANCE ON iOS AND ANDROID:
+ * 1) START TO MEASURE PERFORMANCE ON iOS AND ANDROID:
  *    - SHAPING
  *    - RENDERING
+ *
+ * 2) ADD "SCALE" ATTRIBUTE FOR EACH "SUB FONT" IN THE VIRTUAL-FONT XML FILE
+ *    - THE DEFAULT VALUE WOULD BE 1 (I.E. NO-OP)
+ *    - IT WOULD ALLOW TO FIND A BALANCE BETWEEN "TOO SMALL" OR "TOO BIG" FONTS...
  *
  * 3) PROVIDE "METRICS" PER FONT-SET:
  *    - ASCENT, DESCENT, HEIGHT AND STRIKETHROUGH OFFSET:
@@ -65,6 +73,11 @@ public:
     TextLayout createLayout(VirtualFont &font, const string &text, const string &lang) const;
     TextSpan createRun(const string &text, const string &lang) const;
     string trimText(const string &text) const;
+    
+#if defined(CINDER_ANDROID)
+    inline Vec2i toPixels(Vec2i s) { return s; }
+    inline float toPixels(float s) { return s; }
+#endif
 };
 
 void Application::prepareSettings(Settings *settings)
@@ -74,7 +87,19 @@ void Application::prepareSettings(Settings *settings)
 
 void Application::setup()
 {
-    auto sansSerifFont = fontManager.loadVirtualFont(loadResource("SansSerif.xml"), FONT_SIZE);
+#if defined(CINDER_ANDROID)
+    auto fileName = "SansSerif-android.xml";
+#elif defined(CINDER_COCOA_TOUCH)
+    auto fileName = "SansSerif-ios.xml";
+#elif defined(CINDER_MAC) && 1
+    auto fileName = "SansSerif-osx.xml";
+#else
+    auto fileName = "SansSerif.xml"; // FOR QUICK TESTS ON THE DESKTOP
+#endif
+
+    auto virtualFont = fontManager.loadVirtualFont(loadResource(fileName), FONT_SIZE);
+    
+    // ---
     
     XmlTree doc(loadResource("Text.xml"));
     auto rootElement = doc.getChild("Text");
@@ -84,7 +109,7 @@ void Application::setup()
         auto lang =lineElement->getAttributeValue<string>("lang");
         auto text = trimText(lineElement->getValue());
         
-        lineLayouts.emplace_back(createLayout(sansSerifFont, text, lang));
+        lineLayouts.emplace_back(createLayout(virtualFont, text, lang));
     }
 
     // ---
@@ -94,6 +119,10 @@ void Application::setup()
     
     glDisable(GL_DEPTH_TEST);
     glDepthMask(GL_FALSE);
+    
+#if defined(CINDER_COCOA_TOUCH)
+    getSignalSupportedOrientations().connect([] { return InterfaceOrientation::LandscapeRight; });
+#endif
 }
 
 void Application::draw()

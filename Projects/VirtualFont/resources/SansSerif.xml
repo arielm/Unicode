@@ -1,11 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ Testing Android fonts on the desktop
+ -->
 <VirtualFont>
     <!-- Undefined -->
     <Set>
         <Ref>assets://fonts/DroidSans.ttf</Ref>
         <Ref>assets://fonts/DroidSansFallback.ttf</Ref>
     </Set>
-    <!-- Arabic -->
-    <Set lang="ar">
+    <!-- Arabic, Persian -->
+    <Set lang="ar:fa">
         <Group>
             <Ref>assets://fonts/DroidNaskh-Regular.ttf</Ref>
             <Ref>assets://fonts/DroidKufi-Regular.ttf</Ref>
@@ -48,8 +52,8 @@
         <Ref>assets://fonts/DroidSansDevanagari-Regular.ttf</Ref>
         <Ref>assets://fonts/DroidSansFallback.ttf</Ref>
     </Set>
-    <!-- Chinese -->
-    <Set lang="zh-cn:zh-mo:zh-sg:zh-tw">
+    <!-- Chinese (Simplified, Traditional) -->
+    <Set lang="zh-cn:zh-hk:zh-sg:zh-mo:zh-tw">
         <Ref>assets://fonts/DroidSansFallback.ttf</Ref>
     </Set>
 </VirtualFont>

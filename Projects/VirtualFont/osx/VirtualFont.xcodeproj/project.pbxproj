@@ -51,6 +51,7 @@
 		A8CC34F6186871EB008B598E /* SansSerif.xml in Resources */ = {isa = PBXBuildFile; fileRef = A8CC34F5186871EB008B598E /* SansSerif.xml */; };
 		A8CC34F9186996A7008B598E /* FontManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A8CC34F7186996A7008B598E /* FontManager.cpp */; };
 		A8CC34FC186A021B008B598E /* VirtualFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A8CC34FA186A021B008B598E /* VirtualFont.cpp */; };
+		A8F9B9F4186AD9AA00724EED /* SansSerif-osx.xml in Resources */ = {isa = PBXBuildFile; fileRef = A8F9B9F3186AD9AA00724EED /* SansSerif-osx.xml */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -168,6 +169,7 @@
 		A8CC34F8186996A7008B598E /* FontManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FontManager.h; path = ../src/FontManager.h; sourceTree = "<group>"; };
 		A8CC34FA186A021B008B598E /* VirtualFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VirtualFont.cpp; path = ../src/VirtualFont.cpp; sourceTree = "<group>"; };
 		A8CC34FB186A021B008B598E /* VirtualFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VirtualFont.h; path = ../src/VirtualFont.h; sourceTree = "<group>"; };
+		A8F9B9F3186AD9AA00724EED /* SansSerif-osx.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = "SansSerif-osx.xml"; path = "../resources/SansSerif-osx.xml"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -258,6 +260,7 @@
 			isa = PBXGroup;
 			children = (
 				A8CC34F5186871EB008B598E /* SansSerif.xml */,
+				A8F9B9F3186AD9AA00724EED /* SansSerif-osx.xml */,
 				A8C2412B186A3EB2000FBE77 /* Text.xml */,
 			);
 			name = Resources;
@@ -435,6 +438,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A8CC34F6186871EB008B598E /* SansSerif.xml in Resources */,
+				A8F9B9F4186AD9AA00724EED /* SansSerif-osx.xml in Resources */,
 				A8C2412C186A3EB2000FBE77 /* Text.xml in Resources */,
 				A809523B16F360660011FAA3 /* icon.icns in Resources */,
 			);
