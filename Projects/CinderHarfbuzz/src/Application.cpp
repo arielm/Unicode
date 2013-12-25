@@ -7,6 +7,7 @@
  */
 
 #include "cinder/app/AppNative.h"
+#include "cinder/Utilities.h"
 
 #include "YFont.h"
 
@@ -55,12 +56,16 @@ void Application::setup()
     font1 = make_shared<YFont>(ftHelper, FontDescriptor(loadFile("/System/Library/Fonts/Helvetica.dfont"), 4), FONT_SIZE); // FACE-INDEX 4 CORRESPONDS TO "Helvetica Regular"
     font2 = make_shared<YFont>(ftHelper, FontDescriptor(loadFile("/Library/Fonts/AdobeHebrew-Regular.otf")), FONT_SIZE);
     font3 = make_shared<YFont>(ftHelper, FontDescriptor(loadFile("/Library/Fonts/AdobeArabic-Regular.otf")), FONT_SIZE);
+#elif defined(CINDER_COCOA_TOUCH) && 1 // USE "1" FOR SYSTEM FONTS ON iOS (TESTED ON 5.0.1)
+    font1 = make_shared<YFont>(ftHelper, FontDescriptor(loadFile("/System/Library/Fonts/Cache/Arial.ttf")), FONT_SIZE);
+    font2 = make_shared<YFont>(ftHelper, FontDescriptor(loadFile("/System/Library/Fonts/Cache/ArialHB.ttf")), FONT_SIZE);
+    font3 = make_shared<YFont>(ftHelper, FontDescriptor(loadFile("/System/Library/Fonts/Cache/GeezaPro.ttf")), FONT_SIZE);
 #else // CUSTOM FONTS LOADED FROM THE RESOURCE-BUNDLE ON OSX AND iOS OR FROM THE ASSETS ON ANDROID
     font1 = make_shared<YFont>(ftHelper, FontDescriptor(loadResource("DroidSans.ttf")), FONT_SIZE);
     font2 = make_shared<YFont>(ftHelper, FontDescriptor(loadResource("DroidSansHebrew-Regular.ttf")), FONT_SIZE);
     font3 = make_shared<YFont>(ftHelper, FontDescriptor(loadResource("DroidSansArabic.ttf")), FONT_SIZE);
 #endif
-    
+
     // ---
     
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
