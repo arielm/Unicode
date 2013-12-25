@@ -11,29 +11,19 @@
     </Set>
     <!-- Arabic, Persian -->
     <Set lang="ar:fa">
-        <Group>
-            <Ref>file:///System/Library/Fonts/Geeza Pro.ttf</Ref>
-        </Group>
+        <Ref>file:///System/Library/Fonts/Geeza Pro.ttf</Ref>
     </Set>
-    <!-- Hebrew -->
-    <Set lang="he">
-        <Group>
-            <Ref>file:///System/Library/Fonts/ArialHB.ttf</Ref>
-        </Group>
+    <!-- Hebrew, Yiddish -->
+    <Set lang="he:yi">
+        <Ref>file:///System/Library/Fonts/ArialHB.ttf</Ref>
     </Set>
     <!-- Japanese -->
     <Set lang="ja">
-        <Group>
-            <Ref>file:///Library/Fonts/Hiragino Sans GB W3.otf</Ref>
-            <Ref>file:///Library/Fonts/AppleSDGothicNeo-Regular.otf</Ref>
-        </Group>
+        <Ref>file:///Library/Fonts/Hiragino Sans GB W3.otf</Ref>
     </Set>
     <!-- Korean -->
     <Set lang="ko">
-        <Group>
-            <Ref>file:///Library/Fonts/AppleSDGothicNeo-Regular.otf</Ref>
-            <Ref>file:///Library/Fonts/NanumGothic.ttc</Ref>
-        </Group>
+        <Ref>file:///Library/Fonts/AppleSDGothicNeo-Regular.otf</Ref>
     </Set>
     <!-- Thai -->
     <Set lang="th">
