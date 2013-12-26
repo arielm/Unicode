@@ -26,9 +26,10 @@ FontManager::FontManager()
     ftHelper = make_shared<FreetypeHelper>();
 }
 
-YFont* FontManager::getCachedFont(const string &ref, float fontSize)
+ActualFont* FontManager::getCachedFont(const string &ref, float fontSize)
 {
-    auto it = fontMap.find(FontKey(ref, fontSize));
+    FontKey key(ref, fontSize);
+    auto it = fontMap.find(key);
     
     if (it != fontMap.end())
     {
@@ -40,8 +41,8 @@ YFont* FontManager::getCachedFont(const string &ref, float fontSize)
         
         if (!filePath.empty())
         {
-            YFont *font = new YFont(ftHelper, filePath, fontSize);
-            fontMap[FontKey(ref, fontSize)] = shared_ptr<YFont>(font);
+            ActualFont *font = new ActualFont(ftHelper, filePath, fontSize);
+            fontMap[key] = shared_ptr<ActualFont>(font);
             
             return font;
         }

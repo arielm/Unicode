@@ -11,7 +11,7 @@
 using namespace std;
 using namespace ci;
 
-Cluster::Cluster(YFont *font, hb_codepoint_t codepoint, const Vec2f &offset, float advance)
+Cluster::Cluster(ActualFont *font, hb_codepoint_t codepoint, const Vec2f &offset, float advance)
 :
 font(font),
 combinedAdvance(advance)

@@ -25,11 +25,11 @@ struct Shape
 
 struct Cluster
 {
-    YFont *font;
+    ActualFont *font;
     float combinedAdvance;
     std::vector<Shape> shapes;
     
-    Cluster(YFont *font, hb_codepoint_t codepoint, const ci::Vec2f &offset, float advance);
+    Cluster(ActualFont *font, hb_codepoint_t codepoint, const ci::Vec2f &offset, float advance);
     void addShape(hb_codepoint_t codepoint, const ci::Vec2f &offset, float advance);
 };
 

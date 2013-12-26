@@ -8,18 +8,18 @@
 
 #pragma once
 
-#include "YFont.h"
+#include "ActualFont.h"
 
 #include <set>
 #include <map>
 #include <string>
 
-typedef std::set<YFont*> FontSet;
+typedef std::set<ActualFont*> FontSet;
 
 class VirtualFont
 {
 public:
-    bool add(const std::string &lang, YFont *font);
+    bool add(const std::string &lang, ActualFont *font);
     FontSet getFontSet(const std::string &lang);
     
 protected:

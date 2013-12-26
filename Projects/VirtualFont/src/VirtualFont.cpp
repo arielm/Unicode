@@ -10,7 +10,7 @@
 
 using namespace std;
 
-bool VirtualFont::add(const string &lang, YFont *font)
+bool VirtualFont::add(const string &lang, ActualFont *font)
 {
     if (font)
     {

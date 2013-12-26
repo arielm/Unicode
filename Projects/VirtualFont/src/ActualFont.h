@@ -24,7 +24,7 @@ struct YGlyph
     YGlyph(unsigned char *data, int width, int height);
 };
 
-class YFont
+class ActualFont
 {
 public:
     ci::Vec2f scale;
@@ -34,8 +34,8 @@ public:
     float ascent;
     float descent;
     
-    YFont(std::shared_ptr<FreetypeHelper> ftHelper, const ci::fs::path &filePath, float size);
-    ~YFont();
+    ActualFont(std::shared_ptr<FreetypeHelper> ftHelper, const ci::fs::path &filePath, float size);
+    ~ActualFont();
     
     YGlyph* getGlyph(uint32_t codepoint);
     void clearCache();

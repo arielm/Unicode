@@ -6,7 +6,7 @@
  * https://github.com/arielm/Unicode/blob/master/LICENSE.md
  */
 
-#include "YFont.h"
+#include "ActualFont.h"
 
 #include "hb-ft.h"
 
@@ -75,7 +75,7 @@ YGlyph::YGlyph(unsigned char *data, int width, int height)
     }
 }
 
-YFont::YFont(shared_ptr<FreetypeHelper> ftHelper, const fs::path &filePath, float size)
+ActualFont::ActualFont(shared_ptr<FreetypeHelper> ftHelper, const fs::path &filePath, float size)
 :
 ftHelper(ftHelper)
 {
@@ -125,7 +125,7 @@ ftHelper(ftHelper)
     hbFont = hb_ft_font_create(ftFace, NULL);
 }
 
-YFont::~YFont()
+ActualFont::~ActualFont()
 {
     clearCache();
     
@@ -133,7 +133,7 @@ YFont::~YFont()
     FT_Done_Face(ftFace);
 }
 
-YGlyph* YFont::getGlyph(uint32_t codepoint)
+YGlyph* ActualFont::getGlyph(uint32_t codepoint)
 {
     auto entry = cache.find(codepoint);
     
@@ -154,7 +154,7 @@ YGlyph* YFont::getGlyph(uint32_t codepoint)
     }
 }
 
-void YFont::clearCache()
+void ActualFont::clearCache()
 {
     for (auto entry : cache)
     {
@@ -164,7 +164,7 @@ void YFont::clearCache()
     cache.clear();
 }
 
-YGlyph* YFont::createGlyph(uint32_t codepoint) const
+YGlyph* ActualFont::createGlyph(uint32_t codepoint) const
 {
     if (codepoint > 0)
     {

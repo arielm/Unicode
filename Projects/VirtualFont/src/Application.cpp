@@ -12,6 +12,10 @@
  *
  * TODO:
  *
+ * 0) FURTHER INVESTIGATE iOS "APPSTORE REJECTION RISK":
+ *    - http://stackoverflow.com/questions/3692812/on-ios-can-i-access-the-system-provided-fonts-ttf-file
+ *    - https://github.com/WebKit/webkit/blob/master/Source/WebCore/platform/graphics/harfbuzz/HarfBuzzFaceCoreText.cpp
+ *
  * 1) START TO MEASURE PERFORMANCE ON iOS AND ANDROID (PREPARING THE TERRAIN FOR LAYOUT-CACHE):
  *    - SHAPING
  *    - RENDERING
