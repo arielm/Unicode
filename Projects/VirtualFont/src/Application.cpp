@@ -10,29 +10,19 @@
  * REFERENCE: https://github.com/arielm/Unicode/tree/master/Projects/VirtualFont
  *
  *
- * TESTING SHAPING PERFORMANCE (CODE COMPILED WITH "O3")
- *
- * CREATING 1000 TextLayout OBJECTS (OUR 10 LINES MULTIPLIED BY 100) TAKES:
- * - Mac Mini: ~0.07s
- * - iPad 1: ~0.63s
- * - Nexus-7: ~0.30s
- *
- * THE CONCLUSION IS THAT SHAPING IS VERY SLOW:
- * ON THE iPAD 1, IT CORRESPONDS TO ~26 TextLayout OBJECTS
- * PER FRAME (AT 60 FPS), BEFORE EVEN RENDERING ANYTHING
- *
- *
  * TODO:
  *
  * 0) FURTHER INVESTIGATE iOS "APPSTORE REJECTION RISK":
  *    - http://stackoverflow.com/questions/3692812/on-ios-can-i-access-the-system-provided-fonts-ttf-file
  *    - https://github.com/WebKit/webkit/blob/master/Source/WebCore/platform/graphics/harfbuzz/HarfBuzzFaceCoreText.cpp
  *
- * 1) ADD "SCALE" ATTRIBUTE FOR EACH "ACTUAL-FONT" IN THE VIRTUAL-FONT XML FILE
+ * 1) START WITH TEXT-LAYOUT CACHING...
+ *
+ * 2) ADD "SCALE" ATTRIBUTE FOR EACH "ACTUAL-FONT" IN THE VIRTUAL-FONT XML FILE
  *    - THE DEFAULT VALUE WOULD BE 1 (I.E. NO-OP)
  *    - IT WOULD ALLOW TO BALANCE BETWEEN UNDER/OVER-SIZED FONTS
  *
- * 2) PROVIDE "METRICS" PER FONT-SET, BASED ON "MAIN" ACTUAL-FONT IN SET:
+ * 3) PROVIDE "METRICS" PER FONT-SET, BASED ON "MAIN" ACTUAL-FONT IN SET:
  *    ASCENT, DESCENT, HEIGHT AND STRIKETHROUGH OFFSET
  */
 
