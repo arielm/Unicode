@@ -45,12 +45,12 @@
 		A84CE73718567D59002EA4D3 /* hb-ot-tag.cc in Sources */ = {isa = PBXBuildFile; fileRef = A84CE71818567D59002EA4D3 /* hb-ot-tag.cc */; };
 		A8994D441726E33900C8851E /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8994D431726E33900C8851E /* GLKit.framework */; };
 		A8C73CC818549F2E0081E110 /* FreetypeHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A8C73CC718549F2E0081E110 /* FreetypeHelper.cpp */; };
-		A8C73CCE1854B0450081E110 /* YFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A8C73CCD1854B0450081E110 /* YFont.cpp */; };
 		A8F9B9F9186B31C100724EED /* SansSerif-ios.xml in Resources */ = {isa = PBXBuildFile; fileRef = A8F9B9F7186B31C100724EED /* SansSerif-ios.xml */; };
 		A8F9B9FA186B31C100724EED /* Text.xml in Resources */ = {isa = PBXBuildFile; fileRef = A8F9B9F8186B31C100724EED /* Text.xml */; };
 		A8F9BA03186B31EF00724EED /* FontManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A8F9B9FB186B31EF00724EED /* FontManager.cpp */; };
 		A8F9BA04186B31EF00724EED /* TextLayout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A8F9B9FC186B31EF00724EED /* TextLayout.cpp */; };
 		A8F9BA05186B31EF00724EED /* VirtualFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A8F9B9FD186B31EF00724EED /* VirtualFont.cpp */; };
+		A8F9BBDC186C982B006E9350 /* ActualFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A8F9BBD8186C982B006E9350 /* ActualFont.cpp */; };
 		C725DFFE121DAC7F00FA186B /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C727C02B121B400300192073 /* CoreMedia.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		C725E001121DAC8F00FA186B /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C725E000121DAC8F00FA186B /* AVFoundation.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		C725E001121DAC8FFFFA18FF /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00CFDF6A1138442D0091FFFF /* ImageIO.framework */; };
@@ -160,8 +160,6 @@
 		A8994D431726E33900C8851E /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		A8C73CC618549F2E0081E110 /* FreetypeHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FreetypeHelper.h; path = ../src/FreetypeHelper.h; sourceTree = "<group>"; };
 		A8C73CC718549F2E0081E110 /* FreetypeHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FreetypeHelper.cpp; path = ../src/FreetypeHelper.cpp; sourceTree = "<group>"; };
-		A8C73CCC1854B0450081E110 /* YFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YFont.h; path = ../src/YFont.h; sourceTree = "<group>"; };
-		A8C73CCD1854B0450081E110 /* YFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = YFont.cpp; path = ../src/YFont.cpp; sourceTree = "<group>"; };
 		A8F9B9F7186B31C100724EED /* SansSerif-ios.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = "SansSerif-ios.xml"; path = "../resources/SansSerif-ios.xml"; sourceTree = "<group>"; };
 		A8F9B9F8186B31C100724EED /* Text.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = Text.xml; path = ../resources/Text.xml; sourceTree = "<group>"; };
 		A8F9B9FB186B31EF00724EED /* FontManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FontManager.cpp; path = ../src/FontManager.cpp; sourceTree = "<group>"; };
@@ -172,6 +170,10 @@
 		A8F9BA00186B31EF00724EED /* TextLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextLayout.h; path = ../src/TextLayout.h; sourceTree = "<group>"; };
 		A8F9BA01186B31EF00724EED /* TextSpan.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextSpan.h; path = ../src/TextSpan.h; sourceTree = "<group>"; };
 		A8F9BA02186B31EF00724EED /* VirtualFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VirtualFont.h; path = ../src/VirtualFont.h; sourceTree = "<group>"; };
+		A8F9BBD8186C982B006E9350 /* ActualFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ActualFont.cpp; path = ../src/ActualFont.cpp; sourceTree = "<group>"; };
+		A8F9BBD9186C982B006E9350 /* ActualFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ActualFont.h; path = ../src/ActualFont.h; sourceTree = "<group>"; };
+		A8F9BBDA186C982B006E9350 /* Test.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Test.h; path = ../src/Test.h; sourceTree = "<group>"; };
+		A8F9BBDB186C982B006E9350 /* Timing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Timing.h; path = ../src/Timing.h; sourceTree = "<group>"; };
 		C725E000121DAC8F00FA186B /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		C727C02B121B400300192073 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		C727C02D121B400300192073 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
@@ -247,19 +249,21 @@
 		00692BD914FF149000D0A05E /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				A8F9B9FF186B31EF00724EED /* LanguageHelper.h */,
 				A802E799184F471000D32E9E /* Application.cpp */,
 				A8C73CC618549F2E0081E110 /* FreetypeHelper.h */,
 				A8C73CC718549F2E0081E110 /* FreetypeHelper.cpp */,
-				A8C73CCC1854B0450081E110 /* YFont.h */,
-				A8C73CCD1854B0450081E110 /* YFont.cpp */,
 				A8F9BA01186B31EF00724EED /* TextSpan.h */,
 				A8F9BA00186B31EF00724EED /* TextLayout.h */,
 				A8F9B9FC186B31EF00724EED /* TextLayout.cpp */,
+				A8F9B9FF186B31EF00724EED /* LanguageHelper.h */,
 				A8F9B9FE186B31EF00724EED /* FontManager.h */,
 				A8F9B9FB186B31EF00724EED /* FontManager.cpp */,
+				A8F9BBD9186C982B006E9350 /* ActualFont.h */,
+				A8F9BBD8186C982B006E9350 /* ActualFont.cpp */,
 				A8F9BA02186B31EF00724EED /* VirtualFont.h */,
 				A8F9B9FD186B31EF00724EED /* VirtualFont.cpp */,
+				A8F9BBDA186C982B006E9350 /* Test.h */,
+				A8F9BBDB186C982B006E9350 /* Timing.h */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -463,13 +467,13 @@
 				A84CE71E18567D59002EA4D3 /* hb-shape-plan.cc in Sources */,
 				A8F9BA03186B31EF00724EED /* FontManager.cpp in Sources */,
 				A84CE73418567D59002EA4D3 /* hb-ot-shape-fallback.cc in Sources */,
+				A8F9BBDC186C982B006E9350 /* ActualFont.cpp in Sources */,
 				A84CE73618567D59002EA4D3 /* hb-ot-shape.cc in Sources */,
 				A84CE72218567D59002EA4D3 /* hb-unicode.cc in Sources */,
 				A84CE72518567D59002EA4D3 /* hb-buffer.cc in Sources */,
 				A84CE72618567D59002EA4D3 /* hb-common.cc in Sources */,
 				A84CE72E18567D59002EA4D3 /* hb-ot-shape-complex-default.cc in Sources */,
 				A84CE72318567D59002EA4D3 /* ucdn.c in Sources */,
-				A8C73CCE1854B0450081E110 /* YFont.cpp in Sources */,
 				A802E79A184F471000D32E9E /* Application.cpp in Sources */,
 				A84CE72418567D59002EA4D3 /* hb-blob.cc in Sources */,
 				A84CE72918567D59002EA4D3 /* hb-font.cc in Sources */,

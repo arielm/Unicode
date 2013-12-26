@@ -10,21 +10,29 @@
  * REFERENCE: https://github.com/arielm/Unicode/tree/master/Projects/VirtualFont
  *
  *
+ * TESTING SHAPING PERFORMANCE (CODE COMPILED WITH "O3")
+ *
+ * CREATING 1000 TextLayout OBJECTS (OUR 10 LINES MULTIPLIED BY 100) TAKES:
+ * - Mac Mini: ~0.07s
+ * - iPad 1: ~0.63s
+ * - Nexus-7: ~0.30s
+ *
+ * THE CONCLUSION IS THAT SHAPING IS VERY SLOW:
+ * ON THE iPAD 1, IT CORRESPONDS TO ~26 TextLayout OBJECTS
+ * PER FRAME (AT 60 FPS), BEFORE EVEN RENDERING ANYTHING
+ *
+ *
  * TODO:
  *
  * 0) FURTHER INVESTIGATE iOS "APPSTORE REJECTION RISK":
  *    - http://stackoverflow.com/questions/3692812/on-ios-can-i-access-the-system-provided-fonts-ttf-file
  *    - https://github.com/WebKit/webkit/blob/master/Source/WebCore/platform/graphics/harfbuzz/HarfBuzzFaceCoreText.cpp
  *
- * 1) START TO MEASURE PERFORMANCE ON iOS AND ANDROID (PREPARING THE TERRAIN FOR LAYOUT-CACHE):
- *    - SHAPING
- *    - RENDERING
- *
- * 2) ADD "SCALE" ATTRIBUTE FOR EACH "ACTUAL-FONT" IN THE VIRTUAL-FONT XML FILE
+ * 1) ADD "SCALE" ATTRIBUTE FOR EACH "ACTUAL-FONT" IN THE VIRTUAL-FONT XML FILE
  *    - THE DEFAULT VALUE WOULD BE 1 (I.E. NO-OP)
  *    - IT WOULD ALLOW TO BALANCE BETWEEN UNDER/OVER-SIZED FONTS
  *
- * 3) PROVIDE "METRICS" PER FONT-SET, BASED ON "MAIN" ACTUAL-FONT IN SET:
+ * 2) PROVIDE "METRICS" PER FONT-SET, BASED ON "MAIN" ACTUAL-FONT IN SET:
  *    ASCENT, DESCENT, HEIGHT AND STRIKETHROUGH OFFSET
  */
 
@@ -35,6 +43,7 @@
 #include "TextLayout.h"
 #include "FontManager.h"
 #include "LanguageHelper.h"
+#include "Test.h"
 
 #include <boost/algorithm/string.hpp>
 
@@ -88,8 +97,7 @@ void Application::setup()
 #endif
 
     auto virtualFont = fontManager.loadVirtualFont(loadResource(fileName), FONT_SIZE);
-    
-    // ---
+    vector<TextSpan> runs;
     
     XmlTree doc(loadResource("Text.xml"));
     auto rootElement = doc.getChild("Text");
@@ -98,9 +106,17 @@ void Application::setup()
     {
         auto lang = lineElement->getAttributeValue<string>("lang");
         auto text = trimText(lineElement->getValue());
-        
-        lineLayouts.emplace_back(virtualFont, createRun(text, lang));
+        runs.emplace_back(createRun(text, lang));
     }
+    
+    for (auto run : runs)
+    {
+        lineLayouts.emplace_back(virtualFont, run);
+    }
+
+#if 1
+    Test::measureShaping(console(), virtualFont, runs);
+#endif
     
     // ---
     
