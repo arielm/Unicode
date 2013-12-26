@@ -31,6 +31,7 @@ public:
         {}
     };
 
+    bool useMipmap;
     ci::Vec2f scale;
     hb_font_t *hbFont;
     
@@ -38,7 +39,7 @@ public:
     float ascent;
     float descent;
     
-    ActualFont(std::shared_ptr<FreetypeHelper> ftHelper, const ci::fs::path &filePath, float size);
+    ActualFont(std::shared_ptr<FreetypeHelper> ftHelper, const ci::fs::path &filePath, float size, bool useMipmap);
     ~ActualFont();
     
     Glyph* getGlyph(uint32_t codepoint);

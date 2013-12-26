@@ -51,9 +51,10 @@ static int nextPowerOfTwo(int x)
     return result;
 }
 
-ActualFont::ActualFont(shared_ptr<FreetypeHelper> ftHelper, const fs::path &filePath, float size)
+ActualFont::ActualFont(shared_ptr<FreetypeHelper> ftHelper, const fs::path &filePath, float size, bool useMipmap)
 :
-ftHelper(ftHelper)
+ftHelper(ftHelper),
+useMipmap(useMipmap)
 {
     FT_Error error = FT_New_Face(ftHelper->getLib(), filePath.c_str(), 0, &ftFace);
     
@@ -190,6 +191,12 @@ gl::Texture* ActualFont::createTexture(unsigned char *data, int width, int heigh
         
         gl::Texture::Format format;
         format.setInternalFormat(GL_ALPHA);
+        
+        if (useMipmap)
+        {
+            format.enableMipmapping(true);
+            format.setMinFilter(GL_LINEAR_MIPMAP_LINEAR);
+        }
         
         return new gl::Texture(textureData.get(), GL_ALPHA, textureWidth, textureHeight, format);
     }

@@ -26,9 +26,9 @@ FontManager::FontManager()
     ftHelper = make_shared<FreetypeHelper>();
 }
 
-ActualFont* FontManager::getCachedFont(const string &ref, float fontSize)
+ActualFont* FontManager::getCachedFont(const string &ref, float fontSize, bool useMipmap)
 {
-    FontKey key(ref, fontSize);
+    FontKey key(ref, fontSize, useMipmap);
     auto it = fontMap.find(key);
     
     if (it != fontMap.end())
@@ -41,7 +41,7 @@ ActualFont* FontManager::getCachedFont(const string &ref, float fontSize)
         
         if (!filePath.empty())
         {
-            ActualFont *font = new ActualFont(ftHelper, filePath, fontSize);
+            ActualFont *font = new ActualFont(ftHelper, filePath, fontSize, useMipmap);
             fontMap[key] = shared_ptr<ActualFont>(font);
             
             return font;
@@ -51,7 +51,7 @@ ActualFont* FontManager::getCachedFont(const string &ref, float fontSize)
     return NULL;
 }
 
-VirtualFont FontManager::loadVirtualFont(DataSourceRef source, float fontSize)
+VirtualFont FontManager::loadVirtualFont(DataSourceRef source, float fontSize, bool useMipmap)
 {
     VirtualFont tree;
     
@@ -72,7 +72,7 @@ VirtualFont FontManager::loadVirtualFont(DataSourceRef source, float fontSize)
                     {
                         string ref = refElement->getValue();
                         
-                        if (tree.add(lang, getCachedFont(ref, fontSize)))
+                        if (tree.add(lang, getCachedFont(ref, fontSize, useMipmap)))
                         {
                             break;
                         }
@@ -81,7 +81,7 @@ VirtualFont FontManager::loadVirtualFont(DataSourceRef source, float fontSize)
                 else
                 {
                     string ref = variantElement->getValue();
-                    tree.add(lang, getCachedFont(ref, fontSize));
+                    tree.add(lang, getCachedFont(ref, fontSize, useMipmap));
                 }
             }
         }

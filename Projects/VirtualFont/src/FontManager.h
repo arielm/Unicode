@@ -16,23 +16,18 @@ struct FontKey
 {
     std::string ref;
     float fontSize;
+    bool useMipmap;
     
-    FontKey(const std::string &ref, float fontSize)
+    FontKey(const std::string &ref, float fontSize, bool useMipmap)
     :
     ref(ref),
-    fontSize(fontSize)
+    fontSize(fontSize),
+    useMipmap(useMipmap)
     {}
     
     bool operator<(const FontKey &rhs) const
     {
-        if (fontSize == rhs.fontSize)
-        {
-            return (ref < rhs.ref);
-        }
-        else
-        {
-            return (fontSize < rhs.fontSize);
-        }
+        return tie(useMipmap, fontSize, ref) < tie(rhs.useMipmap, rhs.fontSize, rhs.ref);
     }
 };
 
@@ -40,11 +35,11 @@ class FontManager
 {
 public:
     std::shared_ptr<FreetypeHelper> ftHelper; // THE UNDERLYING FT_Library WILL BE DESTROYED AFTER ALL THE ActualFont INSTANCES
-
+    
     FontManager();
     
-    ActualFont* getCachedFont(const std::string &ref, float fontSize);
-    VirtualFont loadVirtualFont(ci::DataSourceRef source, float fontSize);
+    ActualFont* getCachedFont(const std::string &ref, float fontSize, bool useMipmap = false);
+    VirtualFont loadVirtualFont(ci::DataSourceRef source, float fontSize, bool useMipmap = false);
     
 protected:
     std::map<FontKey, std::shared_ptr<ActualFont>> fontMap;
