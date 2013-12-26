@@ -40,7 +40,7 @@ public:
     void drawLineLayout(TextLayout &layout, float y, float left, float right);
     void drawHLine(float y);
     
-    TextSpan createRun(const string &text, const string &lang) const;
+    TextSpan createRun(const string &text, const string &lang, hb_direction_t direction = HB_DIRECTION_INVALID) const;
     string trimText(const string &text) const;
     
 #if defined(CINDER_ANDROID)
@@ -60,7 +60,7 @@ void Application::setup()
     auto fileName = "SansSerif-android.xml";
 #elif defined(CINDER_COCOA_TOUCH)
     auto fileName = "SansSerif-ios.xml";
-#elif defined(CINDER_MAC) && 0
+#elif defined(CINDER_MAC) && 1
     auto fileName = "SansSerif-osx.xml";
 #else
     auto fileName = "SansSerif.xml"; // FOR QUICK TESTS ON THE DESKTOP
@@ -84,7 +84,7 @@ void Application::setup()
         lineLayouts.emplace_back(virtualFont, run);
     }
 
-#if 1
+#if 0
     Test::measureShaping(console(), virtualFont, runs);
 #endif
     
@@ -137,10 +137,14 @@ void Application::drawHLine(float y)
     gl::drawLine(Vec2f(-9999, y), Vec2f(+9999, y));
 }
 
-TextSpan Application::createRun(const string &text, const string &lang) const
+TextSpan Application::createRun(const string &text, const string &lang, hb_direction_t direction) const
 {
     auto script = languageHelper.getScript(lang);
-    auto direction = hb_script_get_horizontal_direction(script);
+    
+    if (direction == HB_DIRECTION_INVALID)
+    {
+        direction = hb_script_get_horizontal_direction(script);
+    }
     
     return TextSpan(text, script, lang, direction);
 }
