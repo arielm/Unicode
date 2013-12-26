@@ -51,30 +51,6 @@ static int nextPowerOfTwo(int x)
     return result;
 }
 
-YGlyph::YGlyph(unsigned char *data, int width, int height)
-{
-    if (width * height > 0)
-    {
-        int textureWidth = nextPowerOfTwo(width);
-        int textureHeight = nextPowerOfTwo(height);
-        auto textureData = (unsigned char*)calloc(textureWidth * textureHeight, 1); // WE NEED A ZERO-FILLED AREA
-        
-        for (int iy = 0; iy < height; iy++)
-        {
-            for (int ix = 0; ix < width; ix++)
-            {
-                textureData[iy * textureWidth + ix] = data[iy * width + ix];
-            }
-        }
-        
-        gl::Texture::Format format;
-        format.setInternalFormat(GL_ALPHA);
-        
-        texture = gl::Texture::create(textureData, GL_ALPHA, textureWidth, textureHeight, format);
-        free(textureData);
-    }
-}
-
 ActualFont::ActualFont(shared_ptr<FreetypeHelper> ftHelper, const fs::path &filePath, float size)
 :
 ftHelper(ftHelper)
@@ -133,13 +109,13 @@ ActualFont::~ActualFont()
     FT_Done_Face(ftFace);
 }
 
-YGlyph* ActualFont::getGlyph(uint32_t codepoint)
+ActualFont::Glyph* ActualFont::getGlyph(uint32_t codepoint)
 {
     auto entry = cache.find(codepoint);
     
     if (entry == cache.end())
     {
-        YGlyph *glyph = createGlyph(codepoint);
+        Glyph *glyph = createGlyph(codepoint);
         
         if (glyph)
         {
@@ -164,7 +140,7 @@ void ActualFont::clearCache()
     cache.clear();
 }
 
-YGlyph* ActualFont::createGlyph(uint32_t codepoint) const
+ActualFont::Glyph* ActualFont::createGlyph(uint32_t codepoint) const
 {
     if (codepoint > 0)
     {
@@ -181,8 +157,9 @@ YGlyph* ActualFont::createGlyph(uint32_t codepoint) const
             {
                 FT_Render_Glyph(slot, FT_RENDER_MODE_NORMAL);
                 
-                YGlyph *g = new YGlyph(slot->bitmap.buffer, slot->bitmap.width, slot->bitmap.rows);
-                g->offset = Vec2f(slot->bitmap_left, -slot->bitmap_top);
+                auto texture = createTexture(slot->bitmap.buffer, slot->bitmap.width, slot->bitmap.rows);
+                Vec2f offset(slot->bitmap_left, -slot->bitmap_top);
+                ActualFont::Glyph *g = new Glyph(texture, offset);
                 
                 FT_Done_Glyph(glyph);
                 return g;
@@ -191,4 +168,32 @@ YGlyph* ActualFont::createGlyph(uint32_t codepoint) const
     }
     
     return NULL;
+}
+
+gl::TextureRef ActualFont::createTexture(unsigned char *data, int width, int height) const
+{
+    gl::TextureRef texture;
+    
+    if (width * height > 0)
+    {
+        int textureWidth = nextPowerOfTwo(width);
+        int textureHeight = nextPowerOfTwo(height);
+        auto textureData = (unsigned char*)calloc(textureWidth * textureHeight, 1); // WE NEED A ZERO-FILLED AREA
+        
+        for (int iy = 0; iy < height; iy++)
+        {
+            for (int ix = 0; ix < width; ix++)
+            {
+                textureData[iy * textureWidth + ix] = data[iy * width + ix];
+            }
+        }
+        
+        gl::Texture::Format format;
+        format.setInternalFormat(GL_ALPHA);
+        
+        texture = gl::Texture::create(textureData, GL_ALPHA, textureWidth, textureHeight, format);
+        free(textureData);
+    }
+    
+    return texture;
 }
