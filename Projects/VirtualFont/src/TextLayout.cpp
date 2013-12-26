@@ -46,7 +46,7 @@ void TextLayout::draw(const Vec2f &position)
             
             if (glyph && glyph->texture)
             {
-                gl::draw(glyph->texture, clusterPosition + shape.position + glyph->offset);
+                gl::draw(*glyph->texture, clusterPosition + shape.position + glyph->offset);
             }
         }
     }

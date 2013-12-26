@@ -103,7 +103,7 @@ ftHelper(ftHelper)
 
 ActualFont::~ActualFont()
 {
-    clearCache();
+    clearGlyphCache();
     
     hb_font_destroy(hbFont);
     FT_Done_Face(ftFace);
@@ -111,15 +111,15 @@ ActualFont::~ActualFont()
 
 ActualFont::Glyph* ActualFont::getGlyph(uint32_t codepoint)
 {
-    auto entry = cache.find(codepoint);
+    auto entry = glyphCache.find(codepoint);
     
-    if (entry == cache.end())
+    if (entry == glyphCache.end())
     {
         Glyph *glyph = createGlyph(codepoint);
         
         if (glyph)
         {
-            cache[codepoint] = glyph;
+            glyphCache[codepoint] = glyph;
         }
         
         return glyph;
@@ -130,17 +130,17 @@ ActualFont::Glyph* ActualFont::getGlyph(uint32_t codepoint)
     }
 }
 
-void ActualFont::clearCache()
+void ActualFont::clearGlyphCache()
 {
-    for (auto entry : cache)
+    for (auto entry : glyphCache)
     {
         delete entry.second;
     }
     
-    cache.clear();
+    glyphCache.clear();
 }
 
-ActualFont::Glyph* ActualFont::createGlyph(uint32_t codepoint) const
+ActualFont::Glyph* ActualFont::createGlyph(uint32_t codepoint)
 {
     if (codepoint > 0)
     {
@@ -158,6 +158,8 @@ ActualFont::Glyph* ActualFont::createGlyph(uint32_t codepoint) const
                 FT_Render_Glyph(slot, FT_RENDER_MODE_NORMAL);
                 
                 auto texture = createTexture(slot->bitmap.buffer, slot->bitmap.width, slot->bitmap.rows);
+                textureList.push_back(shared_ptr<gl::Texture>(texture));
+                
                 Vec2f offset(slot->bitmap_left, -slot->bitmap_top);
                 ActualFont::Glyph *g = new Glyph(texture, offset);
                 
@@ -170,15 +172,13 @@ ActualFont::Glyph* ActualFont::createGlyph(uint32_t codepoint) const
     return NULL;
 }
 
-gl::TextureRef ActualFont::createTexture(unsigned char *data, int width, int height) const
+gl::Texture* ActualFont::createTexture(unsigned char *data, int width, int height)
 {
-    gl::TextureRef texture;
-    
     if (width * height > 0)
     {
         int textureWidth = nextPowerOfTwo(width);
         int textureHeight = nextPowerOfTwo(height);
-        auto textureData = (unsigned char*)calloc(textureWidth * textureHeight, 1); // WE NEED A ZERO-FILLED AREA
+        unique_ptr<unsigned char[]> textureData(new unsigned char[textureWidth * textureHeight]()); // ZERO-FILLED + AUTOMATICALLY FREED
         
         for (int iy = 0; iy < height; iy++)
         {
@@ -191,9 +191,8 @@ gl::TextureRef ActualFont::createTexture(unsigned char *data, int width, int hei
         gl::Texture::Format format;
         format.setInternalFormat(GL_ALPHA);
         
-        texture = gl::Texture::create(textureData, GL_ALPHA, textureWidth, textureHeight, format);
-        free(textureData);
+        return new gl::Texture(textureData.get(), GL_ALPHA, textureWidth, textureHeight, format);
     }
     
-    return texture;
+    return NULL;
 }
