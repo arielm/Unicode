@@ -23,7 +23,7 @@
     </Set>
     <!-- Korean -->
     <Set lang="ko">
-        <Ref>file:///Library/Fonts/AppleSDGothicNeo-Regular.otf</Ref>
+        <Ref>file:///System/Library/Fonts/AppleSDGothicNeo-Regular.otf</Ref>
     </Set>
     <!-- Thai -->
     <Set lang="th">
