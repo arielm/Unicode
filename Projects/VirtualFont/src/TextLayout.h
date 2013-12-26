@@ -40,7 +40,7 @@ public:
     float advance;
     std::vector<std::pair<Cluster, float>> clusters;
     
-    TextLayout(const FontSet &fontSet, const TextSpan &span);
+    TextLayout(const VirtualFont &virtualFont, const TextSpan &span);
     void draw(const ci::Vec2f &position);
     
 protected:

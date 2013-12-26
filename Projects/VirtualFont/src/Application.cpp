@@ -20,12 +20,12 @@
  *    - SHAPING
  *    - RENDERING
  *
- * 2) ADD "SCALE" ATTRIBUTE FOR EACH "SUB FONT" IN THE VIRTUAL-FONT XML FILE
+ * 2) ADD "SCALE" ATTRIBUTE FOR EACH "ACTUAL-FONT" IN THE VIRTUAL-FONT XML FILE
  *    - THE DEFAULT VALUE WOULD BE 1 (I.E. NO-OP)
  *    - IT WOULD ALLOW TO BALANCE BETWEEN UNDER/OVER-SIZED FONTS
  *
- * 3) PROVIDE "METRICS" PER FONT-SET, BASED ON "MAIN FONT" IN SET:
- *    ASCENT, DESCENT, HEIGHT AND STRIKETHROUGH OFFSET:
+ * 3) PROVIDE "METRICS" PER FONT-SET, BASED ON "MAIN" ACTUAL-FONT IN SET:
+ *    ASCENT, DESCENT, HEIGHT AND STRIKETHROUGH OFFSET
  */
 
 #include "cinder/app/AppNative.h"
@@ -61,7 +61,6 @@ public:
     void drawLineLayout(TextLayout &layout, float y, float left, float right);
     void drawHLine(float y);
     
-    TextLayout createLayout(VirtualFont &font, const string &text, const string &lang) const;
     TextSpan createRun(const string &text, const string &lang) const;
     string trimText(const string &text) const;
     
@@ -97,12 +96,12 @@ void Application::setup()
     
     for (auto &lineElement : rootElement.getChildren())
     {
-        auto lang =lineElement->getAttributeValue<string>("lang");
+        auto lang = lineElement->getAttributeValue<string>("lang");
         auto text = trimText(lineElement->getValue());
         
-        lineLayouts.emplace_back(createLayout(virtualFont, text, lang));
+        lineLayouts.emplace_back(virtualFont, createRun(text, lang));
     }
-
+    
     // ---
     
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -158,11 +157,6 @@ TextSpan Application::createRun(const string &text, const string &lang) const
     auto direction = hb_script_get_horizontal_direction(script);
     
     return TextSpan(text, script, lang, direction);
-}
-
-TextLayout Application::createLayout(VirtualFont &font, const string &text, const string &lang) const
-{
-    return TextLayout(font.getFontSet(lang), createRun(text, lang));
 }
 
 string Application::trimText(const string &text) const
