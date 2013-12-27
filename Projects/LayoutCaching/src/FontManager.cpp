@@ -20,18 +20,19 @@ using namespace app;
 
 const string REF_FILE = "file://";
 const string REF_ASSETS = "assets://";
+const string REF_RES = "res://";
 
 FontManager::FontManager()
 {
     ftHelper = make_shared<FreetypeHelper>();
 }
 
-ActualFont* FontManager::getCachedFont(const string &ref, float fontSize, bool useMipmap)
+ActualFont* FontManager::getActualFont(const string &ref, float fontSize, bool useMipmap)
 {
     FontKey key(ref, fontSize, useMipmap);
-    auto it = fontMap.find(key);
+    auto it = actualFonts.find(key);
     
-    if (it != fontMap.end())
+    if (it != actualFonts.end())
     {
         return it->second.get();
     }
@@ -41,67 +42,91 @@ ActualFont* FontManager::getCachedFont(const string &ref, float fontSize, bool u
         
         if (!filePath.empty())
         {
-            ActualFont *font = new ActualFont(ftHelper, filePath, fontSize, useMipmap);
-            fontMap[key] = shared_ptr<ActualFont>(font);
+            auto font = new ActualFont(ftHelper, filePath, fontSize, useMipmap);
+            actualFonts[key] = shared_ptr<ActualFont>(font);
             
             return font;
         }
+        else
+        {
+            return NULL;
+        }
     }
-    
-    return NULL;
 }
 
-VirtualFont FontManager::loadVirtualFont(DataSourceRef source, float fontSize, bool useMipmap)
+VirtualFont* FontManager::getVirtualFont(const string &ref, float fontSize, bool useMipmap)
 {
-    VirtualFont tree;
+    FontKey key(ref, fontSize, useMipmap);
+    auto it = virtualFonts.find(key);
     
-    XmlTree doc(source);
-    auto rootElement = doc.getChild("VirtualFont");
-    
-    for (auto &fontElement : rootElement.getChildren())
+    if (it != virtualFonts.end())
     {
-        auto langList = getLanguageList(fontElement->getAttributeValue<string>("lang", ""));
+        return it->second.get();
+    }
+    else
+    {
+        auto font = new VirtualFont();
+        virtualFonts[key] = shared_ptr<VirtualFont>(font);
         
-        for (auto lang : langList)
+        XmlTree doc(getDataSource(ref));
+        auto rootElement = doc.getChild("VirtualFont");
+        
+        for (auto &fontElement : rootElement.getChildren())
         {
-            for (auto &variantElement : fontElement->getChildren())
+            auto langList = getLanguageList(fontElement->getAttributeValue<string>("lang", ""));
+            
+            for (auto lang : langList)
             {
-                if (variantElement->getTag() == "Group")
+                for (auto &variantElement : fontElement->getChildren())
                 {
-                    for (auto &refElement : variantElement->getChildren())
+                    if (variantElement->getTag() == "Group")
                     {
-                        string ref = refElement->getValue();
-                        
-                        if (tree.add(lang, getCachedFont(ref, fontSize, useMipmap)))
+                        for (auto &refElement : variantElement->getChildren())
                         {
-                            break;
+                            string ref = refElement->getValue();
+                            
+                            if (font->add(lang, getActualFont(ref, fontSize, useMipmap)))
+                            {
+                                break;
+                            }
                         }
                     }
-                }
-                else
-                {
-                    string ref = variantElement->getValue();
-                    tree.add(lang, getCachedFont(ref, fontSize, useMipmap));
+                    else
+                    {
+                        string ref = variantElement->getValue();
+                        font->add(lang, getActualFont(ref, fontSize, useMipmap));
+                    }
                 }
             }
         }
+        
+        return font;
     }
-    
-    return tree;
+}
+
+vector<string> FontManager::getLanguageList(const string &languages)
+{
+	return split(languages, ":");
 }
 
 fs::path FontManager::getFilePath(const std::string &ref)
 {
     fs::path filePath;
     
-    if (boost::starts_with(ref, REF_ASSETS))
-    {
-        filePath = getAssetPath(ref.substr(REF_ASSETS.size()));
-    }
-    else if (boost::starts_with(ref, REF_FILE))
+    if (boost::starts_with(ref, REF_FILE))
     {
         filePath = ref.substr(REF_FILE.size());
     }
+    else if (boost::starts_with(ref, REF_ASSETS))
+    {
+        filePath = getAssetPath(ref.substr(REF_ASSETS.size()));
+    }
+#if defined(CINDER_COCOA)
+    else if (boost::starts_with(ref, REF_RES))
+    {
+        filePath = App::getResourcePath(ref.substr(REF_RES.size()));
+    }
+#endif
     
     if (fs::exists(filePath))
     {
@@ -113,7 +138,20 @@ fs::path FontManager::getFilePath(const std::string &ref)
     }
 }
 
-vector<string> FontManager::getLanguageList(const string &languages)
+DataSourceRef FontManager::getDataSource(const string &ref)
 {
-	return split(languages, ":");
+    if (boost::starts_with(ref, REF_FILE))
+    {
+        return DataSourcePath::create(ref.substr(REF_FILE.size()));
+    }
+    else if (boost::starts_with(ref, REF_ASSETS))
+    {
+        return DataSourcePath::create(getAssetPath(ref.substr(REF_FILE.size()))); // TODO: SPECIAL VERSION REQUIRED FOR ANDROID
+    }
+    else if (boost::starts_with(ref, REF_RES))
+    {
+        return loadResource(ref.substr(REF_RES.size())); // TODO: SPECIAL VERSION REQUIRED FOR WINDOWS
+    }
+    
+    return DataSourceRef();
 }

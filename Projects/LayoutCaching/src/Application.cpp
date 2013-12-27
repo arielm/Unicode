@@ -13,7 +13,6 @@
 #include "TextLayout.h"
 #include "FontManager.h"
 #include "LanguageHelper.h"
-#include "Test.h"
 
 #include <boost/algorithm/string.hpp>
 
@@ -57,17 +56,16 @@ void Application::prepareSettings(Settings *settings)
 void Application::setup()
 {
 #if defined(CINDER_ANDROID)
-    auto fileName = "SansSerif-android.xml";
+    auto ref = "res://SansSerif-android.xml";
 #elif defined(CINDER_COCOA_TOUCH)
-    auto fileName = "SansSerif-ios.xml";
+    auto ref = "res://SansSerif-ios.xml";
 #elif defined(CINDER_MAC) && 1
-    auto fileName = "SansSerif-osx.xml";
+    auto ref = "res://SansSerif-osx.xml";
 #else
-    auto fileName = "SansSerif.xml"; // FOR QUICK TESTS ON THE DESKTOP
+    auto ref = "res://SansSerif.xml"; // FOR QUICK TESTS ON THE DESKTOP
 #endif
 
-    auto virtualFont = fontManager.loadVirtualFont(loadResource(fileName), FONT_SIZE);
-    vector<TextSpan> runs;
+    auto font = fontManager.getVirtualFont(ref, FONT_SIZE);
     
     XmlTree doc(loadResource("Text.xml"));
     auto rootElement = doc.getChild("Text");
@@ -76,17 +74,9 @@ void Application::setup()
     {
         auto lang = lineElement->getAttributeValue<string>("lang");
         auto text = trimText(lineElement->getValue());
-        runs.emplace_back(createRun(text, lang));
+        
+        lineLayouts.emplace_back(font, createRun(text, lang));
     }
-    
-    for (auto run : runs)
-    {
-        lineLayouts.emplace_back(virtualFont, run);
-    }
-
-#if 0
-    Test::measureShaping(console(), virtualFont, runs);
-#endif
     
     // ---
     
@@ -123,7 +113,7 @@ void Application::draw()
 
 void Application::drawLineLayout(TextLayout &layout, float y, float left, float right)
 {
-    float x = (layout.direction == HB_DIRECTION_LTR) ? left : (right - layout.advance);
+    float x = (layout.run.direction == HB_DIRECTION_LTR) ? left : (right - layout.advance);
     
     glColor4f(1, 1, 1, 1);
     layout.draw(Vec2f(x, y));

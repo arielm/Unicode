@@ -38,12 +38,14 @@ public:
     
     FontManager();
     
-    ActualFont* getCachedFont(const std::string &ref, float fontSize, bool useMipmap = false);
-    VirtualFont loadVirtualFont(ci::DataSourceRef source, float fontSize, bool useMipmap = false);
+    ActualFont* getActualFont(const std::string &ref, float fontSize, bool useMipmap = false);
+    VirtualFont* getVirtualFont(const std::string &ref, float fontSize, bool useMipmap = false);
     
 protected:
-    std::map<FontKey, std::shared_ptr<ActualFont>> fontMap;
-    
-    static ci::fs::path getFilePath(const std::string &ref);
+    std::map<FontKey, std::shared_ptr<ActualFont>> actualFonts;
+    std::map<FontKey, std::shared_ptr<VirtualFont>> virtualFonts;
+
     static std::vector<std::string> getLanguageList(const std::string &languages);
+    static ci::fs::path getFilePath(const std::string &ref);
+    static ci::DataSourceRef getDataSource(const std::string &ref);
 };

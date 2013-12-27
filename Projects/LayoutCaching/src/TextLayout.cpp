@@ -25,45 +25,16 @@ void Cluster::addShape(hb_codepoint_t codepoint, const Vec2f &offset, float adva
     combinedAdvance += advance;
 }
 
-TextLayout::TextLayout(const VirtualFont &virtualFont, const TextSpan &run)
+TextLayout::TextLayout(VirtualFont *virtualFont, const TextSpan &run)
 :
-direction(run.direction),
+virtualFont(virtualFont),
+run(run),
 advance(0)
-{
-    process(virtualFont.getFontSet(run.lang), run);
-}
-
-void TextLayout::draw(const Vec2f &position)
-{
-    for (auto entry : clusters)
-    {
-        auto cluster = entry.first;
-        auto clusterPosition = Vec2f(entry.second, 0) + position;
-        
-        for (auto shape : entry.first.shapes)
-        {
-            auto glyph = cluster.font->getGlyph(shape.codepoint);
-            
-            if (glyph && glyph->texture)
-            {
-                gl::draw(*glyph->texture, clusterPosition + shape.position + glyph->offset);
-            }
-        }
-    }
-}
-
-void TextLayout::addCluster(const Cluster &cluster)
-{
-    clusters.emplace_back(cluster, advance);
-    advance += cluster.combinedAdvance;
-}
-
-void TextLayout::process(const FontSet &fontSet, const TextSpan &run)
 {
     auto buffer = hb_buffer_create();
     map<uint32_t, Cluster> clusterMap;
     
-    for (auto font : fontSet)
+    for (auto font : virtualFont->getFontSet(run.lang))
     {
         hb_buffer_clear_contents(buffer);
         
@@ -133,5 +104,29 @@ void TextLayout::process(const FontSet &fontSet, const TextSpan &run)
     }
     
     hb_buffer_destroy(buffer);
+}
 
+void TextLayout::draw(const Vec2f &position)
+{
+    for (auto entry : clusters)
+    {
+        auto cluster = entry.first;
+        auto clusterPosition = Vec2f(entry.second, 0) + position;
+        
+        for (auto shape : entry.first.shapes)
+        {
+            auto glyph = cluster.font->getGlyph(shape.codepoint);
+            
+            if (glyph && glyph->texture)
+            {
+                gl::draw(*glyph->texture, clusterPosition + shape.position + glyph->offset);
+            }
+        }
+    }
+}
+
+void TextLayout::addCluster(const Cluster &cluster)
+{
+    clusters.emplace_back(cluster, advance);
+    advance += cluster.combinedAdvance;
 }
