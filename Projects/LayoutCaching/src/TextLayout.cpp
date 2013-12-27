@@ -27,12 +27,11 @@ void Cluster::addShape(hb_codepoint_t codepoint, const Vec2f &offset, float adva
 
 TextLayout::TextLayout(VirtualFont *virtualFont, const TextSpan &run)
 :
-virtualFont(virtualFont),
-run(run),
-advance(0)
+direction(run.direction)
 {
     auto buffer = hb_buffer_create();
     map<uint32_t, Cluster> clusterMap;
+    advance = 0;
     
     for (auto font : virtualFont->getFontSet(run.lang))
     {

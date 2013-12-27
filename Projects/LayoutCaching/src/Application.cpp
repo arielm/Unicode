@@ -6,11 +6,15 @@
  * https://github.com/arielm/Unicode/blob/master/LICENSE.md
  */
 
+/*
+ * BASIC TextLayout CACHE IN PLACE!
+ */
+
 #include "cinder/app/AppNative.h"
 #include "cinder/Xml.h"
 #include "cinder/Utilities.h"
 
-#include "TextLayout.h"
+#include "TextLayoutCache.h"
 #include "FontManager.h"
 #include "LanguageHelper.h"
 
@@ -29,7 +33,9 @@ class Application : public AppNative
     LanguageHelper languageHelper;
     FontManager fontManager;
     
-    vector<TextLayout> lineLayouts;
+    VirtualFont *font;
+    vector<TextSpan> runs;
+    TextLayoutCache layoutCache;
     
 public:
     void prepareSettings(Settings *settings);
@@ -65,7 +71,7 @@ void Application::setup()
     auto ref = "res://SansSerif.xml"; // FOR QUICK TESTS ON THE DESKTOP
 #endif
 
-    auto font = fontManager.getVirtualFont(ref, FONT_SIZE);
+    font = fontManager.getVirtualFont(ref, FONT_SIZE);
     
     XmlTree doc(loadResource("Text.xml"));
     auto rootElement = doc.getChild("Text");
@@ -74,8 +80,7 @@ void Application::setup()
     {
         auto lang = lineElement->getAttributeValue<string>("lang");
         auto text = trimText(lineElement->getValue());
-        
-        lineLayouts.emplace_back(font, createRun(text, lang));
+        runs.emplace_back(createRun(text, lang));
     }
     
     // ---
@@ -104,16 +109,16 @@ void Application::draw()
     float left = 24;
     float right = windowSize.x - 24;
     
-    for (auto layout : lineLayouts)
+    for (auto run : runs)
     {
-        drawLineLayout(layout, y, left, right);
+        drawLineLayout(*layoutCache.get(font, run), y, left, right);
         y += LINE_SPACING;
     }
 }
 
 void Application::drawLineLayout(TextLayout &layout, float y, float left, float right)
 {
-    float x = (layout.run.direction == HB_DIRECTION_LTR) ? left : (right - layout.advance);
+    float x = (layout.direction == HB_DIRECTION_LTR) ? left : (right - layout.advance);
     
     glColor4f(1, 1, 1, 1);
     layout.draw(Vec2f(x, y));

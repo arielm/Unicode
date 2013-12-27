@@ -28,6 +28,11 @@ public:
     direction(direction)
     {}
     
+    bool operator<(const TextSpan &rhs) const
+    {
+        return tie(script, direction, lang, text) < tie(rhs.script, rhs.direction, rhs.lang, rhs.text);
+    }
+    
     void apply(hb_buffer_t *buffer) const
     {
         hb_buffer_set_script(buffer, script);
