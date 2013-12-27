@@ -25,7 +25,7 @@ void Cluster::addShape(hb_codepoint_t codepoint, const Vec2f &offset, float adva
     combinedAdvance += advance;
 }
 
-TextLayout::TextLayout(VirtualFont *virtualFont, const TextSpan &run)
+TextLayout::TextLayout(VirtualFont *virtualFont, const TextRun &run)
 :
 direction(run.direction)
 {

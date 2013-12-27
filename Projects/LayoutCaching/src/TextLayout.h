@@ -8,7 +8,7 @@
 
 #pragma once
 
-#include "TextSpan.h"
+#include "TextRun.h"
 #include "VirtualFont.h"
 
 struct Shape
@@ -40,7 +40,7 @@ public:
     float advance;
     std::vector<std::pair<Cluster, float>> clusters;
     
-    TextLayout(VirtualFont *virtualFont, const TextSpan &run);
+    TextLayout(VirtualFont *virtualFont, const TextRun &run);
     void draw(const ci::Vec2f &position);
     
 protected:

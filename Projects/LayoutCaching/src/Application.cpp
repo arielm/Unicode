@@ -10,6 +10,17 @@
  * BASIC TextLayout CACHE IN PLACE!
  */
 
+/*
+ * TODO:
+ *
+ * 1) TextLayoutCache:
+ *    - LRU STRATEGY?
+ *    - PURGING CAPABILITIES
+ *
+ * 2) FontManager:
+ *    - PURGING CAPABILITIES
+ */
+
 #include "cinder/app/AppNative.h"
 #include "cinder/Xml.h"
 #include "cinder/Utilities.h"
@@ -34,7 +45,7 @@ class Application : public AppNative
     FontManager fontManager;
     
     VirtualFont *font;
-    vector<TextSpan> runs;
+    vector<TextRun> runs;
     TextLayoutCache layoutCache;
     
 public:
@@ -45,7 +56,7 @@ public:
     void drawLineLayout(TextLayout &layout, float y, float left, float right);
     void drawHLine(float y);
     
-    TextSpan createRun(const string &text, const string &lang, hb_direction_t direction = HB_DIRECTION_INVALID) const;
+    TextRun createRun(const string &text, const string &lang, hb_direction_t direction = HB_DIRECTION_INVALID) const;
     string trimText(const string &text) const;
     
 #if defined(CINDER_ANDROID)
@@ -78,8 +89,9 @@ void Application::setup()
     
     for (auto &lineElement : rootElement.getChildren())
     {
-        auto lang = lineElement->getAttributeValue<string>("lang");
         auto text = trimText(lineElement->getValue());
+        auto lang = lineElement->getAttributeValue<string>("lang");
+        
         runs.emplace_back(createRun(text, lang));
     }
     
@@ -132,7 +144,7 @@ void Application::drawHLine(float y)
     gl::drawLine(Vec2f(-9999, y), Vec2f(+9999, y));
 }
 
-TextSpan Application::createRun(const string &text, const string &lang, hb_direction_t direction) const
+TextRun Application::createRun(const string &text, const string &lang, hb_direction_t direction) const
 {
     auto script = languageHelper.getScript(lang);
     
@@ -141,7 +153,7 @@ TextSpan Application::createRun(const string &text, const string &lang, hb_direc
         direction = hb_script_get_horizontal_direction(script);
     }
     
-    return TextSpan(text, script, lang, direction);
+    return TextRun(text, script, lang, direction);
 }
 
 string Application::trimText(const string &text) const

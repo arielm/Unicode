@@ -2,7 +2,7 @@
 
 using namespace std;
 
-TextLayout* TextLayoutCache::get(VirtualFont *virtualFont, const TextSpan &run)
+TextLayout* TextLayoutCache::get(VirtualFont *virtualFont, const TextRun &run)
 {
     const TextLayoutKey key(virtualFont, run);
     auto it = cache.find(key);

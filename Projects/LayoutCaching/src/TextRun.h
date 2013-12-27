@@ -12,7 +12,7 @@
 
 #include <string>
 
-class TextSpan
+class TextRun
 {
 public:
     std::string text;
@@ -20,7 +20,7 @@ public:
     std::string lang;
     hb_direction_t direction;
     
-    TextSpan(const std::string &text, hb_script_t script, const std::string &lang, hb_direction_t direction)
+    TextRun(const std::string &text, hb_script_t script, const std::string &lang, hb_direction_t direction)
     :
     text(text),
     script(script),
@@ -28,7 +28,7 @@ public:
     direction(direction)
     {}
     
-    bool operator<(const TextSpan &rhs) const
+    bool operator<(const TextRun &rhs) const
     {
         return tie(script, direction, lang, text) < tie(rhs.script, rhs.direction, rhs.lang, rhs.text);
     }

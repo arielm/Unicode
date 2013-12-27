@@ -160,7 +160,7 @@
 		A857CAED18635ABE00250AEC /* ActualFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ActualFont.cpp; path = ../src/ActualFont.cpp; sourceTree = "<group>"; };
 		A857CAEE18635ABE00250AEC /* TextLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextLayout.h; path = ../src/TextLayout.h; sourceTree = "<group>"; };
 		A857CAEF18635ABE00250AEC /* FreetypeHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FreetypeHelper.h; path = ../src/FreetypeHelper.h; sourceTree = "<group>"; };
-		A857CAF018635ABE00250AEC /* TextSpan.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextSpan.h; path = ../src/TextSpan.h; sourceTree = "<group>"; };
+		A857CAF018635ABE00250AEC /* TextRun.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextRun.h; path = ../src/TextRun.h; sourceTree = "<group>"; };
 		A857CAF118635ABE00250AEC /* ActualFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ActualFont.h; path = ../src/ActualFont.h; sourceTree = "<group>"; };
 		A857CAF41863674000250AEC /* TextLayout.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TextLayout.cpp; path = ../src/TextLayout.cpp; sourceTree = "<group>"; };
 		A865B8B0186CE9DC0089E565 /* TextLayoutCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TextLayoutCache.cpp; path = ../src/TextLayoutCache.cpp; sourceTree = "<group>"; };
@@ -200,7 +200,7 @@
 				A809530316F361E20011FAA3 /* Application.cpp */,
 				A857CAEF18635ABE00250AEC /* FreetypeHelper.h */,
 				A857CAEC18635ABE00250AEC /* FreetypeHelper.cpp */,
-				A857CAF018635ABE00250AEC /* TextSpan.h */,
+				A857CAF018635ABE00250AEC /* TextRun.h */,
 				A857CAEE18635ABE00250AEC /* TextLayout.h */,
 				A857CAF41863674000250AEC /* TextLayout.cpp */,
 				A865B8B1186CE9DC0089E565 /* TextLayoutCache.h */,

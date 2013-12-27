@@ -6,9 +6,9 @@ class TextLayoutKey
 {
 public:
     VirtualFont *virtualFont;
-    TextSpan run;
+    TextRun run;
     
-    TextLayoutKey(VirtualFont *virtualFont, const TextSpan &run)
+    TextLayoutKey(VirtualFont *virtualFont, const TextRun &run)
     :
     virtualFont(virtualFont),
     run(run)
@@ -30,7 +30,7 @@ public:
 class TextLayoutCache
 {
 public:
-    TextLayout* get(VirtualFont *virtualFont, const TextSpan &run);
+    TextLayout* get(VirtualFont *virtualFont, const TextRun &run);
     
 protected:
     std::map<TextLayoutKey, std::shared_ptr<TextLayout>> cache;
