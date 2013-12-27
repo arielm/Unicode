@@ -10,8 +10,6 @@
 
 #include "VirtualFont.h"
 
-#include "cinder/DataSource.h"
-
 struct FontKey
 {
     std::string ref;
@@ -46,6 +44,4 @@ protected:
     std::map<FontKey, std::shared_ptr<VirtualFont>> virtualFonts;
 
     static std::vector<std::string> getLanguageList(const std::string &languages);
-    static ci::fs::path getFilePath(const std::string &ref);
-    static ci::DataSourceRef getDataSource(const std::string &ref);
 };

@@ -48,6 +48,7 @@
 		A857CAF318635ABE00250AEC /* ActualFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A857CAED18635ABE00250AEC /* ActualFont.cpp */; };
 		A857CAF51863674000250AEC /* TextLayout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A857CAF41863674000250AEC /* TextLayout.cpp */; };
 		A865B8B2186CE9DC0089E565 /* TextLayoutCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A865B8B0186CE9DC0089E565 /* TextLayoutCache.cpp */; };
+		A865B8B5186DA4270089E565 /* InputSource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A865B8B3186DA4270089E565 /* InputSource.cpp */; };
 		A8C2412C186A3EB2000FBE77 /* Text.xml in Resources */ = {isa = PBXBuildFile; fileRef = A8C2412B186A3EB2000FBE77 /* Text.xml */; };
 		A8CC34F6186871EB008B598E /* SansSerif.xml in Resources */ = {isa = PBXBuildFile; fileRef = A8CC34F5186871EB008B598E /* SansSerif.xml */; };
 		A8CC34F9186996A7008B598E /* FontManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A8CC34F7186996A7008B598E /* FontManager.cpp */; };
@@ -165,6 +166,8 @@
 		A857CAF41863674000250AEC /* TextLayout.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TextLayout.cpp; path = ../src/TextLayout.cpp; sourceTree = "<group>"; };
 		A865B8B0186CE9DC0089E565 /* TextLayoutCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TextLayoutCache.cpp; path = ../src/TextLayoutCache.cpp; sourceTree = "<group>"; };
 		A865B8B1186CE9DC0089E565 /* TextLayoutCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextLayoutCache.h; path = ../src/TextLayoutCache.h; sourceTree = "<group>"; };
+		A865B8B3186DA4270089E565 /* InputSource.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = InputSource.cpp; path = ../src/InputSource.cpp; sourceTree = "<group>"; };
+		A865B8B4186DA4270089E565 /* InputSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InputSource.h; path = ../src/InputSource.h; sourceTree = "<group>"; };
 		A8C2412B186A3EB2000FBE77 /* Text.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = Text.xml; path = ../resources/Text.xml; sourceTree = "<group>"; };
 		A8CC34F418684D48008B598E /* LanguageHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LanguageHelper.h; path = ../src/LanguageHelper.h; sourceTree = "<group>"; };
 		A8CC34F5186871EB008B598E /* SansSerif.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = SansSerif.xml; path = ../resources/SansSerif.xml; sourceTree = "<group>"; };
@@ -212,6 +215,8 @@
 				A857CAED18635ABE00250AEC /* ActualFont.cpp */,
 				A8CC34FB186A021B008B598E /* VirtualFont.h */,
 				A8CC34FA186A021B008B598E /* VirtualFont.cpp */,
+				A865B8B4186DA4270089E565 /* InputSource.h */,
+				A865B8B3186DA4270089E565 /* InputSource.cpp */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -459,6 +464,7 @@
 				A857CADB186350B400250AEC /* hb-ot-shape-complex-default.cc in Sources */,
 				A857CAD3186350B400250AEC /* hb-common.cc in Sources */,
 				A857CAE8186350B400250AEC /* hb-shaper.cc in Sources */,
+				A865B8B5186DA4270089E565 /* InputSource.cpp in Sources */,
 				A857CAE1186350B400250AEC /* hb-ot-shape-fallback.cc in Sources */,
 				A857CAF318635ABE00250AEC /* ActualFont.cpp in Sources */,
 				A857CAD4186350B400250AEC /* hb-face.cc in Sources */,
