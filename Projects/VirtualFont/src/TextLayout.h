@@ -38,7 +38,7 @@ class TextLayout
 public:
     hb_direction_t direction;
     float advance;
-    std::vector<std::pair<Cluster, float>> clusters;
+    std::vector<Cluster> clusters;
     
     TextLayout(const VirtualFont &virtualFont, const TextSpan &span);
     void draw(const ci::Vec2f &position);
