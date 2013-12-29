@@ -39,6 +39,7 @@ class TextLayoutCache
 {
 public:
     TextLayout* get(VirtualFont *virtualFont, const TextRun &run);
+    void purge();
     
 protected:
     std::map<TextLayoutKey, std::shared_ptr<TextLayout>> cache;

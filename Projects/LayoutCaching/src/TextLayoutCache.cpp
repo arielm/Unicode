@@ -26,3 +26,8 @@ TextLayout* TextLayoutCache::get(VirtualFont *virtualFont, const TextRun &run)
         return value;
     }
 }
+
+void TextLayoutCache::purge()
+{
+    cache.clear();
+}

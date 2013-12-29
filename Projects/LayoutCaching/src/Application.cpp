@@ -7,7 +7,8 @@
  */
 
 /*
- * BASIC TextLayout CACHE IN PLACE!
+ * BASIC TextLayout CACHE IN PLACE, INSPIRED BY ANDROID-PLATFORM:
+ * http://goo.gl/3YdgKi
  */
 
 /*
@@ -15,10 +16,12 @@
  *
  * 1) TextLayoutCache:
  *    - LRU STRATEGY?
- *    - PURGING CAPABILITIES
  *
  * 2) FontManager:
- *    - PURGING CAPABILITIES
+ *    - PROPER ERROR HANDLING UPON CREATION
+ *    - POSSIBILITY TO REMOVE A PARTICULAR VirtualFont
+ *    - POSSIBILITY TO UNLOAD / RELOAD ALL THE DATA:
+ *      - NECESSARY FOR HANDLING OPEN-GL CONTEXT-LOSS ON ANDROID
  */
 
 #include "cinder/app/AppNative.h"
