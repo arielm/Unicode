@@ -11,6 +11,11 @@
  *
  * 1) FONT METRICS:
  *    TextLayout::getMetrics() WILL RETURN THE ActualFont::Metrics() CORRESPONDING TO THE TextLayout's LANGUAGE
+ *
+ * 2) TEXTURE-PADDING:
+ *    NECESSARY WHEN DRAWING A SMALLER SIZES WITH MIPMAPING
+ *
+ * 3) STARTING WITH FONT-DRAWING AT ARBITRARY SIZE...
  */
 
 /*
@@ -40,7 +45,7 @@ using namespace std;
 using namespace ci;
 using namespace app;
 
-const float FONT_SIZE = 32;
+const float FONT_SIZE = 48;
 const float LINE_TOP = 66;
 const float LINE_SPACING = 66;
 
@@ -135,11 +140,10 @@ void Application::draw()
 
 void Application::drawLineLayout(TextLayout &layout, float y, float left, float right)
 {
-    float x = (layout.direction == HB_DIRECTION_LTR) ? left : (right - layout.advance);
-    auto metrics = layout.getMetrics();
+    float x = (layout.direction == HB_DIRECTION_LTR) ? left : (right - layout.advance * 0.333f); // FIXME: USE SOMETHING LIKE VirtualFont::getAdvance() - IMPLIES VirtualFont::setSize()
     
     glColor4f(1, 1, 1, 1);
-    layout.draw(Vec2f(x, y + metrics.strikethroughOffset));
+    layout.draw(16, Vec2f(x, y));
     
     glColor4f(1, 0.75f, 0, 0.5f);
     drawHLine(y);

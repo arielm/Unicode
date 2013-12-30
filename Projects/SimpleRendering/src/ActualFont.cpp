@@ -51,11 +51,12 @@ static int nextPowerOfTwo(int x)
     return result;
 }
 
-ActualFont::ActualFont(shared_ptr<FreetypeHelper> ftHelper, const fs::path &filePath, float baseSize, bool useMipmap)
+ActualFont::ActualFont(shared_ptr<FreetypeHelper> ftHelper, const fs::path &filePath, float baseSize, bool useMipmap, int padding)
 :
 ftHelper(ftHelper),
 baseSize(baseSize),
-useMipmap(useMipmap)
+useMipmap(useMipmap),
+padding(padding)
 {
     FT_Error error = FT_New_Face(ftHelper->getLib(), filePath.c_str(), 0, &ftFace);
     
@@ -186,8 +187,8 @@ ActualFont::Glyph* ActualFont::createGlyph(uint32_t codepoint)
                     auto texture = createTexture(slot->bitmap.buffer, width, height);
                     textureList.push_back(shared_ptr<gl::Texture>(texture));
                     
-                    Vec2f offset(slot->bitmap_left, -slot->bitmap_top);
-                    Vec2f size(width, height);
+                    auto offset = Vec2f(slot->bitmap_left, -slot->bitmap_top) - Vec2f(padding, padding);
+                    auto size = Vec2f(width, height) + Vec2f(padding, padding) * 2;
                     g = new Glyph(texture, offset, size);
                 }
                 
@@ -204,15 +205,15 @@ gl::Texture* ActualFont::createTexture(unsigned char *data, int width, int heigh
 {
     if (width * height > 0)
     {
-        int textureWidth = nextPowerOfTwo(width);
-        int textureHeight = nextPowerOfTwo(height);
+        int textureWidth = nextPowerOfTwo(width + padding * 2);
+        int textureHeight = nextPowerOfTwo(height + padding * 2);
         unique_ptr<unsigned char[]> textureData(new unsigned char[textureWidth * textureHeight]()); // ZERO-FILLED + AUTOMATICALLY FREED
         
         for (int iy = 0; iy < height; iy++)
         {
             for (int ix = 0; ix < width; ix++)
             {
-                textureData[iy * textureWidth + ix] = data[iy * width + ix];
+                textureData[(iy + padding) * textureWidth + (ix + padding)] = data[iy * width + ix];
             }
         }
         

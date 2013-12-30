@@ -10,6 +10,11 @@
 
 using namespace std;
 
+VirtualFont::VirtualFont(float baseSize)
+:
+baseSize(baseSize)
+{}
+
 bool VirtualFont::add(const string &lang, ActualFont *font)
 {
     if (font)

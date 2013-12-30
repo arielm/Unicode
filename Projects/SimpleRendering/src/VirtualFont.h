@@ -19,6 +19,10 @@ typedef std::set<ActualFont*> FontSet;
 class VirtualFont
 {
 public:
+    float baseSize;
+    
+    VirtualFont(float baseSize);
+    
     bool add(const std::string &lang, ActualFont *font);
     FontSet getFontSet(const std::string &lang) const;
     ActualFont* getDefaultFont(const std::string &lang) const;

@@ -107,9 +107,10 @@ direction(run.direction)
     hb_buffer_destroy(buffer);
 }
 
-void TextLayout::draw(const Vec2f &position)
+void TextLayout::draw(float size, const Vec2f &position)
 {
     auto clusterPosition = position;
+    float sizeRatio = size / virtualFont->baseSize;
     
     for (auto cluster : clusters)
     {
@@ -119,11 +120,12 @@ void TextLayout::draw(const Vec2f &position)
             
             if (glyph && glyph->texture)
             {
-                gl::draw(*glyph->texture, clusterPosition + shape.position + glyph->offset);
+                auto corner = clusterPosition + (shape.position + glyph->offset) * sizeRatio;
+                gl::draw(*glyph->texture, Area(0, 0, glyph->size.x, glyph->size.y), Rectf(corner, corner + glyph->size * sizeRatio));
             }
         }
         
-        clusterPosition += Vec2f(cluster.combinedAdvance, 0);
+        clusterPosition += Vec2f(cluster.combinedAdvance * sizeRatio, 0);
     }
 }
 

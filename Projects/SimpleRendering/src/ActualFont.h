@@ -24,13 +24,22 @@ public:
         ci::gl::Texture* texture;
         ci::Vec2f offset;
         ci::Vec2f size;
+        float tx1;
+        float ty1;
+        float tx2;
+        float ty2;
         
         Glyph(ci::gl::Texture *texture, ci::Vec2f offset, ci::Vec2f size)
         :
         texture(texture),
         offset(offset),
         size(size)
-        {}
+        {
+            tx1 = 0;
+            ty1 = 0;
+            tx2 = size.x / texture->getWidth();
+            ty2 = size.y / texture->getHeight();
+        }
     };
     
     struct Metrics
@@ -45,11 +54,13 @@ public:
 
     float baseSize;
     bool useMipmap;
+    int padding;
+    
     ci::Vec2f scale;
     Metrics metrics;
     hb_font_t *hbFont;
     
-    ActualFont(std::shared_ptr<FreetypeHelper> ftHelper, const ci::fs::path &filePath, float baseSize, bool useMipmap);
+    ActualFont(std::shared_ptr<FreetypeHelper> ftHelper, const ci::fs::path &filePath, float baseSize, bool useMipmap, int padding);
     ~ActualFont();
     
     Glyph* getGlyph(uint32_t codepoint);

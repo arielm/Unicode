@@ -36,8 +36,8 @@ public:
     
     FontManager();
     
-    ActualFont* getActualFont(const std::string &ref, float baseSize, bool useMipmap = true);
-    VirtualFont* getVirtualFont(const std::string &ref, float baseSize, bool useMipmap = true);
+    ActualFont* getActualFont(const std::string &ref, float baseSize, bool useMipmap = true, int padding = 2);
+    VirtualFont* getVirtualFont(const std::string &ref, float baseSize, bool useMipmap = true, int padding = 2);
     
 protected:
     std::map<FontKey, std::shared_ptr<ActualFont>> actualFonts;

@@ -45,7 +45,7 @@ public:
     
     TextLayout(VirtualFont *font, const TextRun &run);
     
-    void draw(const ci::Vec2f &position);
+    void draw(float size, const ci::Vec2f &position);
     ActualFont::Metrics getMetrics() const;
     
 protected:
