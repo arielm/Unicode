@@ -16,13 +16,11 @@
  *    - http://stackoverflow.com/questions/3692812/on-ios-can-i-access-the-system-provided-fonts-ttf-file
  *    - https://github.com/WebKit/webkit/blob/master/Source/WebCore/platform/graphics/harfbuzz/HarfBuzzFaceCoreText.cpp
  *
- * 1) START WITH TEXT-LAYOUT CACHING...
- *
- * 2) ADD "SCALE" ATTRIBUTE FOR EACH "ACTUAL-FONT" IN THE VIRTUAL-FONT XML FILE
+ * 1) ADD "SCALE" ATTRIBUTE FOR EACH "ACTUAL-FONT" IN THE VIRTUAL-FONT XML FILE
  *    - THE DEFAULT VALUE WOULD BE 1 (I.E. NO-OP)
  *    - IT WOULD ALLOW TO BALANCE BETWEEN UNDER/OVER-SIZED FONTS
  *
- * 3) PROVIDE "METRICS" PER FONT-SET, BASED ON "MAIN" ACTUAL-FONT IN SET:
+ * 2) PROVIDE "METRICS" PER FONT-SET, BASED ON "MAIN" ACTUAL-FONT IN SET:
  *    ASCENT, DESCENT, HEIGHT AND STRIKETHROUGH OFFSET
  */
 

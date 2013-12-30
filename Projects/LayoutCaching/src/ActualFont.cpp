@@ -145,24 +145,31 @@ ActualFont::Glyph* ActualFont::createGlyph(uint32_t codepoint)
 {
     if (codepoint > 0)
     {
-        FT_Error error = FT_Load_Glyph(ftFace, codepoint, FT_LOAD_DEFAULT | FT_LOAD_FORCE_AUTOHINT);
+        auto error = FT_Load_Glyph(ftFace, codepoint, FT_LOAD_DEFAULT | FT_LOAD_FORCE_AUTOHINT);
         
         if (!error)
         {
-            FT_GlyphSlot slot = ftFace->glyph;
+            auto slot = ftFace->glyph;
             
             FT_Glyph glyph;
             error = FT_Get_Glyph(slot, &glyph);
             
             if (!error)
             {
+                ActualFont::Glyph *g = NULL;
                 FT_Render_Glyph(slot, FT_RENDER_MODE_NORMAL);
                 
-                auto texture = createTexture(slot->bitmap.buffer, slot->bitmap.width, slot->bitmap.rows);
-                textureList.push_back(shared_ptr<gl::Texture>(texture));
+                auto width = slot->bitmap.width;
+                auto height = slot->bitmap.rows;
                 
-                Vec2f offset(slot->bitmap_left, -slot->bitmap_top);
-                ActualFont::Glyph *g = new Glyph(texture, offset);
+                if (width * height > 0)
+                {
+                    auto texture = createTexture(slot->bitmap.buffer, width, height);
+                    textureList.push_back(shared_ptr<gl::Texture>(texture));
+                    
+                    Vec2f offset(slot->bitmap_left, -slot->bitmap_top);
+                    g = new Glyph(texture, offset);
+                }
                 
                 FT_Done_Glyph(glyph);
                 return g;
