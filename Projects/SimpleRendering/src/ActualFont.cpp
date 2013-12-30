@@ -93,9 +93,27 @@ useMipmap(useMipmap)
     
     FT_Set_Transform(ftFace, &matrix, NULL);
     
-    leading = ftFace->size->metrics.height * scale.y;
-    ascent = ftFace->size->metrics.ascender * scale.y;
-    descent = -ftFace->size->metrics.descender * scale.y;
+    // ---
+    
+    metrics.height = ftFace->size->metrics.height * scale.y;
+    metrics.ascent = ftFace->size->metrics.ascender * scale.y;
+    metrics.descent = -ftFace->size->metrics.descender * scale.y;
+
+    metrics.lineThickness = ftFace->underline_thickness / 64.0f;
+    metrics.underlineOffset = -ftFace->underline_position / 64.0f;
+    
+    //
+    
+    auto os2 = (TT_OS2*)FT_Get_Sfnt_Table(ftFace, ft_sfnt_os2);
+    
+    if (os2 && (os2->version != 0xFFFF))
+    {
+        metrics.strikethroughOffset = FT_MulFix(os2->yStrikeoutPosition, ftFace->size->metrics.y_scale) * scale.y;
+    }
+    else
+    {
+        metrics.strikethroughOffset = 0.5f * (metrics.ascent - metrics.descent);
+    }
     
     // ---
     

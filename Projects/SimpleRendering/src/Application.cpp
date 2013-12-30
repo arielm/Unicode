@@ -7,7 +7,10 @@
  */
 
 /*
- * ...
+ * FEATURES:
+ *
+ * 1) FONT METRICS:
+ *    TextLayout::getMetrics() WILL RETURN THE ActualFont::Metrics() CORRESPONDING TO THE TextLayout's LANGUAGE
  */
 
 /*
@@ -133,9 +136,10 @@ void Application::draw()
 void Application::drawLineLayout(TextLayout &layout, float y, float left, float right)
 {
     float x = (layout.direction == HB_DIRECTION_LTR) ? left : (right - layout.advance);
+    auto metrics = layout.getMetrics();
     
     glColor4f(1, 1, 1, 1);
-    layout.draw(Vec2f(x, y));
+    layout.draw(Vec2f(x, y + metrics.strikethroughOffset));
     
     glColor4f(1, 0.75f, 0, 0.5f);
     drawHLine(y);

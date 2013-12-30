@@ -37,3 +37,17 @@ FontSet VirtualFont::getFontSet(const string &lang) const
     
     return it->second;
 }
+
+ActualFont* VirtualFont::getDefaultFont(const string &lang) const
+{
+    auto fontSet = getFontSet(lang);
+    
+    if (fontSet.empty())
+    {
+        return NULL;
+    }
+    else
+    {
+        return *fontSet.begin();
+    }
+}

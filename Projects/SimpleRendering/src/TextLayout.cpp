@@ -27,6 +27,8 @@ void Cluster::addShape(hb_codepoint_t codepoint, const Vec2f &offset, float adva
 
 TextLayout::TextLayout(VirtualFont *virtualFont, const TextRun &run)
 :
+virtualFont(virtualFont),
+lang(run.lang),
 direction(run.direction)
 {
     auto buffer = hb_buffer_create();
@@ -122,6 +124,20 @@ void TextLayout::draw(const Vec2f &position)
         }
         
         clusterPosition += Vec2f(cluster.combinedAdvance, 0);
+    }
+}
+
+ActualFont::Metrics TextLayout::getMetrics() const
+{
+    ActualFont *defaultFont = virtualFont->getDefaultFont(lang);
+    
+    if (defaultFont)
+    {
+        return defaultFont->metrics;
+    }
+    else
+    {
+        return ActualFont::Metrics();
     }
 }
 

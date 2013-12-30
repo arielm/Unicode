@@ -30,14 +30,21 @@ public:
         offset(offset)
         {}
     };
+    
+    struct Metrics
+    {
+        float height;
+        float ascent;
+        float descent;
+        float strikethroughOffset;
+        float underlineOffset;
+        float lineThickness;
+    };
 
     bool useMipmap;
     ci::Vec2f scale;
     hb_font_t *hbFont;
-    
-    float leading;
-    float ascent;
-    float descent;
+    Metrics metrics;
     
     ActualFont(std::shared_ptr<FreetypeHelper> ftHelper, const ci::fs::path &filePath, float size, bool useMipmap);
     ~ActualFont();
