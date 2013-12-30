@@ -36,7 +36,6 @@ struct Cluster
 class TextLayout
 {
 public:
-    VirtualFont *virtualFont;
     std::string lang;
     hb_direction_t direction;
     
@@ -44,9 +43,7 @@ public:
     std::vector<Cluster> clusters;
     
     TextLayout(VirtualFont *font, const TextRun &run);
-    
     void draw(float size, const ci::Vec2f &position);
-    ActualFont::Metrics getMetrics() const;
     
 protected:
     void addCluster(const Cluster &cluster);

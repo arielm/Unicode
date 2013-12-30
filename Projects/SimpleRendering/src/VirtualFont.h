@@ -24,8 +24,8 @@ public:
     VirtualFont(float baseSize);
     
     bool add(const std::string &lang, ActualFont *font);
-    FontSet getFontSet(const std::string &lang) const;
-    ActualFont* getDefaultFont(const std::string &lang) const;
+    FontSet getFontSet(const std::string &lang) const; // FIXME: DO NOT RETURN A COPY
+    ActualFont::Metrics getMetrics(const std::string &lang) const; // FIXME: DO NOT RETURN A COPY
     
 protected:
     std::map<std::string, FontSet> fontSetMap;

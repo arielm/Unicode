@@ -140,12 +140,12 @@ void Application::draw()
 
 void Application::drawLineLayout(TextLayout &layout, float y, float left, float right)
 {
-    float x = (layout.direction == HB_DIRECTION_LTR) ? left : (right - layout.advance * 0.333f); // FIXME: USE SOMETHING LIKE VirtualFont::getAdvance() - IMPLIES VirtualFont::setSize()
+    float x = (layout.direction == HB_DIRECTION_LTR) ? left : (right - layout.advance * 0.333f); // FIXME: USE SOMETHING LIKE VirtualFont::getAdvance(TextLayout) - IMPLIES VirtualFont::setSize(float)
     
     glColor4f(1, 1, 1, 1);
     layout.draw(16, Vec2f(x, y));
     
-    glColor4f(1, 0.75f, 0, 0.5f);
+    glColor4f(1, 0.75f, 0, 0.25f);
     drawHLine(y);
 }
 

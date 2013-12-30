@@ -43,16 +43,19 @@ FontSet VirtualFont::getFontSet(const string &lang) const
     return it->second;
 }
 
-ActualFont* VirtualFont::getDefaultFont(const string &lang) const
+ActualFont::Metrics VirtualFont::getMetrics(const string &lang) const
 {
-    auto fontSet = getFontSet(lang);
+    auto it = fontSetMap.find(lang);
     
-    if (fontSet.empty())
+    if (it == fontSetMap.end())
     {
-        return NULL;
+        it = fontSetMap.find("");
+        
+        if (it == fontSetMap.end())
+        {
+            return ActualFont::Metrics();
+        }
     }
-    else
-    {
-        return *fontSet.begin();
-    }
+    
+    return (*it->second.begin())->metrics;
 }

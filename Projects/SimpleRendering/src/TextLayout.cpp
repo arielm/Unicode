@@ -27,7 +27,6 @@ void Cluster::addShape(hb_codepoint_t codepoint, const Vec2f &offset, float adva
 
 TextLayout::TextLayout(VirtualFont *virtualFont, const TextRun &run)
 :
-virtualFont(virtualFont),
 lang(run.lang),
 direction(run.direction)
 {
@@ -110,10 +109,11 @@ direction(run.direction)
 void TextLayout::draw(float size, const Vec2f &position)
 {
     auto clusterPosition = position;
-    float sizeRatio = size / virtualFont->baseSize;
     
     for (auto cluster : clusters)
     {
+        float sizeRatio = size / cluster.font->baseSize;
+
         for (auto shape : cluster.shapes)
         {
             auto glyph = cluster.font->getGlyph(shape.codepoint);
@@ -126,20 +126,6 @@ void TextLayout::draw(float size, const Vec2f &position)
         }
         
         clusterPosition += Vec2f(cluster.combinedAdvance * sizeRatio, 0);
-    }
-}
-
-ActualFont::Metrics TextLayout::getMetrics() const
-{
-    ActualFont *defaultFont = virtualFont->getDefaultFont(lang);
-    
-    if (defaultFont)
-    {
-        return defaultFont->metrics;
-    }
-    else
-    {
-        return ActualFont::Metrics();
     }
 }
 
