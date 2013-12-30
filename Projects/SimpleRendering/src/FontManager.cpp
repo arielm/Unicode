@@ -20,9 +20,9 @@ FontManager::FontManager()
     ftHelper = make_shared<FreetypeHelper>();
 }
 
-ActualFont* FontManager::getActualFont(const string &ref, float fontSize, bool useMipmap)
+ActualFont* FontManager::getActualFont(const string &ref, float baseSize, bool useMipmap)
 {
-    FontKey key(ref, fontSize, useMipmap);
+    FontKey key(ref, baseSize, useMipmap);
     auto it = actualFonts.find(key);
     
     if (it != actualFonts.end())
@@ -35,7 +35,7 @@ ActualFont* FontManager::getActualFont(const string &ref, float fontSize, bool u
         
         if (!filePath.empty())
         {
-            auto font = new ActualFont(ftHelper, filePath, fontSize, useMipmap);
+            auto font = new ActualFont(ftHelper, filePath, baseSize, useMipmap);
             actualFonts[key] = shared_ptr<ActualFont>(font);
             
             return font;
@@ -47,9 +47,9 @@ ActualFont* FontManager::getActualFont(const string &ref, float fontSize, bool u
     }
 }
 
-VirtualFont* FontManager::getVirtualFont(const string &ref, float fontSize, bool useMipmap)
+VirtualFont* FontManager::getVirtualFont(const string &ref, float baseSize, bool useMipmap)
 {
-    FontKey key(ref, fontSize, useMipmap);
+    FontKey key(ref, baseSize, useMipmap);
     auto it = virtualFonts.find(key);
     
     if (it != virtualFonts.end())
@@ -78,7 +78,7 @@ VirtualFont* FontManager::getVirtualFont(const string &ref, float fontSize, bool
                         {
                             string ref = refElement->getValue();
                             
-                            if (font->add(lang, getActualFont(ref, fontSize, useMipmap)))
+                            if (font->add(lang, getActualFont(ref, baseSize, useMipmap)))
                             {
                                 break;
                             }
@@ -87,7 +87,7 @@ VirtualFont* FontManager::getVirtualFont(const string &ref, float fontSize, bool
                     else
                     {
                         string ref = variantElement->getValue();
-                        font->add(lang, getActualFont(ref, fontSize, useMipmap));
+                        font->add(lang, getActualFont(ref, baseSize, useMipmap));
                     }
                 }
             }

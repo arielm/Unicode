@@ -51,9 +51,10 @@ static int nextPowerOfTwo(int x)
     return result;
 }
 
-ActualFont::ActualFont(shared_ptr<FreetypeHelper> ftHelper, const fs::path &filePath, float size, bool useMipmap)
+ActualFont::ActualFont(shared_ptr<FreetypeHelper> ftHelper, const fs::path &filePath, float baseSize, bool useMipmap)
 :
 ftHelper(ftHelper),
+baseSize(baseSize),
 useMipmap(useMipmap)
 {
     FT_Error error = FT_New_Face(ftHelper->getLib(), filePath.c_str(), 0, &ftFace);
@@ -81,7 +82,7 @@ useMipmap(useMipmap)
     int dpi = 72;
     
     scale = Vec2f::one() / Vec2f(res, res) / 64;
-    FT_Set_Char_Size(ftFace, size * 64, 0, dpi * res, dpi * res);
+    FT_Set_Char_Size(ftFace, baseSize * 64, 0, dpi * res, dpi * res);
     
     FT_Matrix matrix =
     {
@@ -186,7 +187,8 @@ ActualFont::Glyph* ActualFont::createGlyph(uint32_t codepoint)
                     textureList.push_back(shared_ptr<gl::Texture>(texture));
                     
                     Vec2f offset(slot->bitmap_left, -slot->bitmap_top);
-                    g = new Glyph(texture, offset);
+                    Vec2f size(width, height);
+                    g = new Glyph(texture, offset, size);
                 }
                 
                 FT_Done_Glyph(glyph);

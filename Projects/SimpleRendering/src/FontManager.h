@@ -13,19 +13,19 @@
 struct FontKey
 {
     std::string ref;
-    float fontSize;
+    float baseSize;
     bool useMipmap;
     
-    FontKey(const std::string &ref, float fontSize, bool useMipmap)
+    FontKey(const std::string &ref, float baseSize, bool useMipmap)
     :
     ref(ref),
-    fontSize(fontSize),
+    baseSize(baseSize),
     useMipmap(useMipmap)
     {}
     
     bool operator<(const FontKey &rhs) const
     {
-        return tie(useMipmap, fontSize, ref) < tie(rhs.useMipmap, rhs.fontSize, rhs.ref);
+        return tie(useMipmap, baseSize, ref) < tie(rhs.useMipmap, rhs.baseSize, rhs.ref);
     }
 };
 
@@ -36,8 +36,8 @@ public:
     
     FontManager();
     
-    ActualFont* getActualFont(const std::string &ref, float fontSize, bool useMipmap = false);
-    VirtualFont* getVirtualFont(const std::string &ref, float fontSize, bool useMipmap = false);
+    ActualFont* getActualFont(const std::string &ref, float baseSize, bool useMipmap = true);
+    VirtualFont* getVirtualFont(const std::string &ref, float baseSize, bool useMipmap = true);
     
 protected:
     std::map<FontKey, std::shared_ptr<ActualFont>> actualFonts;
