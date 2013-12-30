@@ -7,13 +7,17 @@
  */
 
 #include "VirtualFont.h"
+#include "TextLayout.h"
 
 using namespace std;
+using namespace ci;
 
 VirtualFont::VirtualFont(float baseSize)
 :
 baseSize(baseSize)
-{}
+{
+    setSize(1);
+}
 
 bool VirtualFont::add(const string &lang, ActualFont *font)
 {
@@ -58,4 +62,36 @@ ActualFont::Metrics VirtualFont::getMetrics(const string &lang) const
     }
     
     return (*it->second.begin())->metrics;
+}
+
+void VirtualFont::setSize(float newSize)
+{
+    size = newSize;
+    sizeRatio = newSize / baseSize;
+}
+
+float VirtualFont::getAdvance(const Cluster &cluster) const
+{
+    return cluster.combinedAdvance * sizeRatio;
+}
+
+float VirtualFont::getAdvance(const TextLayout &layout) const
+{
+    return layout.advance * sizeRatio;
+}
+
+void VirtualFont::drawCluster(const Cluster &cluster, const Vec2f &position)
+{
+    float sizeRatio = size / cluster.font->baseSize;
+    
+    for (auto shape : cluster.shapes)
+    {
+        auto glyph = cluster.font->getGlyph(shape.codepoint);
+        
+        if (glyph && glyph->texture)
+        {
+            auto corner = position + (shape.position + glyph->offset) * sizeRatio;
+            gl::draw(*glyph->texture, Area(0, 0, glyph->size.x, glyph->size.y), Rectf(corner, corner + glyph->size * sizeRatio));
+        }
+    }
 }

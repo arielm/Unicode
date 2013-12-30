@@ -9,17 +9,22 @@
 /*
  * FEATURES:
  *
- * 1) FONT METRICS:
- *    TextLayout::getMetrics() WILL RETURN THE ActualFont::Metrics() CORRESPONDING TO THE TextLayout's LANGUAGE
+ * 1) FONT METRICS
  *
  * 2) TEXTURE-PADDING:
  *    NECESSARY WHEN DRAWING A SMALLER SIZES WITH MIPMAPING
  *
- * 3) STARTING WITH FONT-DRAWING AT ARBITRARY SIZE...
+ * 3) BASIC FONT-DRAWING AT ARBITRARY SIZE:
+ *    STARTING TO DO-IT RIGHT (I.E. VIA VirtualFont...)
  */
 
 /*
  * TODO:
+ *
+ * 0) DRAW DIRECTLY, I.E.
+ *    - NOT USING gl::Texture
+ *    - WITH BEGIN / END
+ *    - ETC.
  *
  * 1) TextLayoutCache:
  *    - LRU STRATEGY?
@@ -130,7 +135,9 @@ void Application::draw()
     float y = LINE_TOP;
     float left = 24;
     float right = windowSize.x - 24;
-    
+
+    font->setSize(16);
+
     for (auto run : runs)
     {
         drawLineLayout(*layoutCache.get(font, run), y, left, right);
@@ -140,10 +147,18 @@ void Application::draw()
 
 void Application::drawLineLayout(TextLayout &layout, float y, float left, float right)
 {
-    float x = (layout.direction == HB_DIRECTION_LTR) ? left : (right - layout.advance * 0.333f); // FIXME: USE SOMETHING LIKE VirtualFont::getAdvance(TextLayout) - IMPLIES VirtualFont::setSize(float)
-    
+    float x = (layout.direction == HB_DIRECTION_LTR) ? left : (right - font->getAdvance(layout));
+    Vec2f position(x, y);
+ 
     glColor4f(1, 1, 1, 1);
-    layout.draw(16, Vec2f(x, y));
+
+    for (auto cluster : layout.clusters)
+    {
+        font->drawCluster(cluster, position);
+        position.x += font->getAdvance(cluster);
+    }
+    
+    // ---
     
     glColor4f(1, 0.75f, 0, 0.25f);
     drawHLine(y);

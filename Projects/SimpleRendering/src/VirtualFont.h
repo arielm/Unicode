@@ -14,6 +14,9 @@
 #include <map>
 #include <string>
 
+class Cluster;
+class TextLayout;
+
 typedef std::set<ActualFont*> FontSet;
 
 class VirtualFont
@@ -27,6 +30,14 @@ public:
     FontSet getFontSet(const std::string &lang) const; // FIXME: DO NOT RETURN A COPY
     ActualFont::Metrics getMetrics(const std::string &lang) const; // FIXME: DO NOT RETURN A COPY
     
+    void setSize(float newSize);
+    float getAdvance(const Cluster &cluster) const;
+    float getAdvance(const TextLayout &layout) const;
+    void drawCluster(const Cluster &cluster, const ci::Vec2f &position);
+    
 protected:
+    float size;
+    float sizeRatio;
+
     std::map<std::string, FontSet> fontSetMap;
 };

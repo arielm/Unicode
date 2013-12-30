@@ -49,7 +49,7 @@ void TextLayout::draw(const Vec2f &position)
             }
         }
         
-        clusterPosition += Vec2f(cluster.combinedAdvance, 0);
+        clusterPosition.x += cluster.combinedAdvance;
     }
 }
 

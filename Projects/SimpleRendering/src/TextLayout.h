@@ -26,6 +26,7 @@ struct Shape
 struct Cluster
 {
     ActualFont *font;
+    
     float combinedAdvance;
     std::vector<Shape> shapes;
     
@@ -33,9 +34,8 @@ struct Cluster
     void addShape(hb_codepoint_t codepoint, const ci::Vec2f &offset, float advance);
 };
 
-class TextLayout
+struct TextLayout
 {
-public:
     std::string lang;
     hb_direction_t direction;
     
@@ -43,8 +43,5 @@ public:
     std::vector<Cluster> clusters;
     
     TextLayout(VirtualFont *font, const TextRun &run);
-    void draw(float size, const ci::Vec2f &position);
-    
-protected:
     void addCluster(const Cluster &cluster);
 };

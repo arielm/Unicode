@@ -20,7 +20,7 @@ class VirtualFont
 {
 public:
     bool add(const std::string &lang, ActualFont *font);
-    FontSet getFontSet(const std::string &lang) const;
+    FontSet getFontSet(const std::string &lang) const; // FIXME: DO NOT RETURN A COPY
     
 protected:
     std::map<std::string, FontSet> fontSetMap;
