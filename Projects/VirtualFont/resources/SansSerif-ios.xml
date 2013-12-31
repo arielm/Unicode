@@ -11,7 +11,7 @@
     </Set>
     <!-- Arabic, Persian -->
     <Set lang="ar:fa">
-        <Ref>file:///System/Library/Fonts/Cache/GeezaPro.ttf</Ref>
+        <Ref>file:///System/Library/Fonts/Cache/GeezaPro.ttf</Ref><!-- FIXME: LOOKS LIKE "JOINING" IS BROKEN WITH THAT FONT (NOT ON OSX) -->
     </Set>
     <!-- Hebrew -->
     <Set lang="he">
