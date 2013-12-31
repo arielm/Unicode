@@ -23,8 +23,30 @@ static int nextPowerOfTwo(int x)
     return result;
 }
 
-ReloadableTexture::ReloadableTexture(unsigned char *data, int width, int height, bool useMipmap, int padding)
+ReloadableTexture::ReloadableTexture(const GlyphData &glyphData)
+:
+tmp(NULL)
 {
+    load(glyphData);
+}
+
+ReloadableTexture::~ReloadableTexture()
+{
+    delete tmp;
+}
+
+void ReloadableTexture::load(const GlyphData &glyphData)
+{
+    if (tmp)
+    {
+        delete tmp;
+    }
+    
+    int width = glyphData.width;
+    int height = glyphData.height;
+    int padding = glyphData.padding;
+    auto data = glyphData.getData();
+    
     int textureWidth = nextPowerOfTwo(width + padding * 2);
     int textureHeight = nextPowerOfTwo(height + padding * 2);
     auto textureData = new unsigned char[textureWidth * textureHeight](); // ZERO-FILLED
@@ -40,7 +62,7 @@ ReloadableTexture::ReloadableTexture(unsigned char *data, int width, int height,
     gl::Texture::Format format;
     format.setInternalFormat(GL_ALPHA);
     
-    if (useMipmap)
+    if (glyphData.useMipmap)
     {
         format.enableMipmapping(true);
         format.setMinFilter(GL_LINEAR_MIPMAP_LINEAR);
@@ -48,11 +70,6 @@ ReloadableTexture::ReloadableTexture(unsigned char *data, int width, int height,
     
     tmp = new gl::Texture(textureData, GL_ALPHA, textureWidth, textureHeight, format);
     delete[] textureData;
-}
-
-ReloadableTexture::~ReloadableTexture()
-{
-    delete tmp;
 }
 
 void ReloadableTexture::bind()

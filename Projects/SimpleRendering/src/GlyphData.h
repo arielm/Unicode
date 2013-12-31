@@ -6,6 +6,12 @@
  * https://github.com/arielm/Unicode/blob/master/LICENSE.md
  */
 
+/*
+ * WARNING:
+ * IF THE GlyphData IS NOT FOR "IMMEDIATE CONSUPTION", INVOKE copyDataAndReleaseSlot()
+ * OTHERWISE, THE DATA WILL BE CORRUPTED UPON THE NEXT FT_Get_Glyph() OPERATION
+ */
+
 #pragma once
 
 #include "FreetypeHelper.h"
@@ -23,24 +29,24 @@ public:
     ci::Vec2f offset;
     ci::Vec2f size;
     
-    GlyphData(FT_GlyphSlot slot, bool useMipmap, int padding)
+    GlyphData(FT_GlyphSlot ftSlot, bool useMipmap, int padding)
     :
-    slot(slot),
+    ftSlot(ftSlot),
     useMipmap(useMipmap),
     padding(padding),
     ftGlyph(NULL),
     data(NULL)
     {
-        if (!FT_Get_Glyph(slot, &ftGlyph))
+        if (!FT_Get_Glyph(ftSlot, &ftGlyph))
         {
-            FT_Render_Glyph(slot, FT_RENDER_MODE_NORMAL);
+            FT_Render_Glyph(ftSlot, FT_RENDER_MODE_NORMAL);
             
-            width = slot->bitmap.width;
-            height = slot->bitmap.rows;
+            width = ftSlot->bitmap.width;
+            height = ftSlot->bitmap.rows;
             
             if (width * height > 0)
             {
-                offset = ci::Vec2f(slot->bitmap_left, -slot->bitmap_top) - ci::Vec2f(padding, padding);
+                offset = ci::Vec2f(ftSlot->bitmap_left, -ftSlot->bitmap_top) - ci::Vec2f(padding, padding);
                 size = ci::Vec2f(width, height) + ci::Vec2f(padding, padding) * 2;
             }
         }
@@ -60,16 +66,16 @@ public:
         }
     }
     
-    bool isValid()
+    bool isValid() const
     {
         return (ftGlyph || data);
     }
     
-    unsigned char* getData()
+    unsigned char* getData() const
     {
         if (ftGlyph)
         {
-            return slot->bitmap.buffer;
+            return ftSlot->bitmap.buffer;
         }
         else if (data)
         {
@@ -87,7 +93,7 @@ public:
         {
             int dataSize = width * height;
             data = (unsigned char*)malloc(dataSize);
-            memcpy(data, slot->bitmap.buffer, dataSize);
+            memcpy(data, ftSlot->bitmap.buffer, dataSize);
             
             FT_Done_Glyph(ftGlyph);
             ftGlyph = NULL;
@@ -95,7 +101,7 @@ public:
     }
     
 protected:
-    FT_GlyphSlot slot;
+    FT_GlyphSlot ftSlot;
     FT_Glyph ftGlyph;
     unsigned char *data;
 };

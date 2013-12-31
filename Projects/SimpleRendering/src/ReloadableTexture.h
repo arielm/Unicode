@@ -8,18 +8,22 @@
 
 #pragma once
 
+#include "GlyphData.h"
+
 #include "cinder/gl/Texture.h"
 
 class ReloadableTexture
 {
-    ci::gl::Texture *tmp;
-    
 public:
-    ReloadableTexture(unsigned char *data, int width, int height, bool useMipmap, int padding);
+    ReloadableTexture(const GlyphData &glyphData);
     ~ReloadableTexture();
     
+    void load(const GlyphData &glyphData);
     void bind();
     
     GLint getWidth() const;
     GLint getHeight() const;
+    
+protected:
+    ci::gl::Texture *tmp;
 };
