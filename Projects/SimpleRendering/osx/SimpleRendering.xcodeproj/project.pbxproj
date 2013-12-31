@@ -169,6 +169,7 @@
 		A865B8B4186DA4270089E565 /* InputSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InputSource.h; path = ../src/InputSource.h; sourceTree = "<group>"; };
 		A870AAB41872E67300D14AE8 /* ReloadableTexture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ReloadableTexture.cpp; path = ../src/ReloadableTexture.cpp; sourceTree = "<group>"; };
 		A870AAB51872E67300D14AE8 /* ReloadableTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ReloadableTexture.h; path = ../src/ReloadableTexture.h; sourceTree = "<group>"; };
+		A870AAB71873021700D14AE8 /* GlyphData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GlyphData.h; path = ../src/GlyphData.h; sourceTree = "<group>"; };
 		A8C2412B186A3EB2000FBE77 /* Text.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = Text.xml; path = ../resources/Text.xml; sourceTree = "<group>"; };
 		A8CC34F418684D48008B598E /* LanguageHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LanguageHelper.h; path = ../src/LanguageHelper.h; sourceTree = "<group>"; };
 		A8CC34F5186871EB008B598E /* SansSerif.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = SansSerif.xml; path = ../resources/SansSerif.xml; sourceTree = "<group>"; };
@@ -219,6 +220,7 @@
 				A865B8B3186DA4270089E565 /* InputSource.cpp */,
 				A870AAB51872E67300D14AE8 /* ReloadableTexture.h */,
 				A870AAB41872E67300D14AE8 /* ReloadableTexture.cpp */,
+				A870AAB71873021700D14AE8 /* GlyphData.h */,
 			);
 			name = Source;
 			sourceTree = "<group>";

@@ -19,15 +19,19 @@
  *
  * 4) TextLayout CREATED VIA VirtualFont
  *
- * 5) STARTING TO USE ReloadableTexture INSTEAD OF gl::Texture...
+ * 5) HANDLING OPEN-GL CONTEXT-LOSS ON ADNROID:
+ *    - STARTING TO USE ReloadableTexture INSTEAD OF gl::Texture
+ *    - STARTING WITH GlyphData
  */
 
 /*
  * TODO:
  *
- * 1) HANDLE OPEN-GL CONTEXT-LOSS ON ANDROID
+ * 1) COMPLETE HANDLING OF OPEN-GL CONTEXT-LOSS ON ANDROID
  *
- * 2) GLYPH RENDERING:
+ * 2) CHANGING TEXT-SIZE BASED ON SINUS FUNCTION
+ *
+ * 3) GLYPH RENDERING:
  *    - BATCHING:
  *      - INCLUDING COLOR
  *      - MAYBE ALSO: INTERLEAVED VERTICES AND COORDS...
@@ -37,10 +41,10 @@
  *      - "TEXTURE BUCKET"
  *      - "SEQUENCE"...
  *
- * 3) TextLayoutCache:
+ * 4) TextLayoutCache:
  *    - LRU STRATEGY?
  *
- * 4) FontManager:
+ * 5) FontManager:
  *    - PROPER ERROR HANDLING UPON CREATION
  *    - POSSIBILITY TO REMOVE A PARTICULAR VirtualFont
  *    - POSSIBILITY TO UNLOAD / RELOAD ALL THE DATA:

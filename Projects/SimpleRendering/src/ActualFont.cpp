@@ -153,35 +153,16 @@ ActualFont::Glyph* ActualFont::createGlyph(uint32_t codepoint)
 {
     if (codepoint > 0)
     {
-        auto error = FT_Load_Glyph(ftFace, codepoint, FT_LOAD_DEFAULT | FT_LOAD_FORCE_AUTOHINT);
-        
-        if (!error)
+        if (!FT_Load_Glyph(ftFace, codepoint, FT_LOAD_DEFAULT | FT_LOAD_FORCE_AUTOHINT))
         {
-            auto slot = ftFace->glyph;
+            GlyphData glyphData(ftFace->glyph, useMipmap, padding);
             
-            FT_Glyph glyph;
-            error = FT_Get_Glyph(slot, &glyph);
-            
-            if (!error)
+            if (glyphData.isValid())
             {
-                ActualFont::Glyph *g = NULL;
-                FT_Render_Glyph(slot, FT_RENDER_MODE_NORMAL);
+                auto texture = new ReloadableTexture(glyphData.getData(), glyphData.width, glyphData.height, useMipmap, padding);
+                standaloneTextures.push_back(unique_ptr<ReloadableTexture>(texture));
                 
-                auto width = slot->bitmap.width;
-                auto height = slot->bitmap.rows;
-                
-                if (width * height > 0)
-                {
-                    auto texture = new ReloadableTexture(slot->bitmap.buffer, width, height, useMipmap, padding);
-                    standaloneTextures.push_back(unique_ptr<ReloadableTexture>(texture));
-                    
-                    auto offset = Vec2f(slot->bitmap_left, -slot->bitmap_top) - Vec2f(padding, padding);
-                    auto size = Vec2f(width, height) + Vec2f(padding, padding) * 2;
-                    g = new Glyph(texture, offset, size);
-                }
-                
-                FT_Done_Glyph(glyph);
-                return g;
+                return new Glyph(texture, glyphData.offset, glyphData.size);
             }
         }
     }

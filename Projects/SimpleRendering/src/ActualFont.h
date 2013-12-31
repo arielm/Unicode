@@ -8,7 +8,7 @@
 
 #pragma once
 
-#include "FreetypeHelper.h"
+#include "GlyphData.h"
 #include "ReloadableTexture.h"
 
 #include "hb.h"
