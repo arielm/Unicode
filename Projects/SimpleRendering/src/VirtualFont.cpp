@@ -80,18 +80,48 @@ float VirtualFont::getAdvance(const TextLayout &layout) const
     return layout.advance * sizeRatio;
 }
 
+void VirtualFont::begin()
+{
+    glEnable(GL_TEXTURE_2D);
+    glEnableClientState(GL_VERTEX_ARRAY);
+    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+}
+
+void VirtualFont::end()
+{
+    glDisable(GL_TEXTURE_2D);
+    glDisableClientState(GL_VERTEX_ARRAY);
+    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+}
+
 void VirtualFont::drawCluster(const Cluster &cluster, const Vec2f &position)
 {
-    float sizeRatio = size / cluster.font->baseSize;
-    
     for (auto shape : cluster.shapes)
     {
         auto glyph = cluster.font->getGlyph(shape.codepoint);
         
         if (glyph && glyph->texture)
         {
-            auto corner = position + (shape.position + glyph->offset) * sizeRatio;
-            gl::draw(*glyph->texture, Area(0, 0, glyph->size.x, glyph->size.y), Rectf(corner, corner + glyph->size * sizeRatio));
+            auto ul = position + (shape.position + glyph->offset) * sizeRatio;
+            auto lr = ul + glyph->size * sizeRatio;
+            
+            vector<Vec2f> vertices;
+            vertices.emplace_back(ul);
+            vertices.emplace_back(lr.x, ul.y);
+            vertices.emplace_back(lr);
+            vertices.emplace_back(ul.x, lr.y);
+            
+            vector<Vec2f> coords;
+            coords.emplace_back(glyph->tx1, glyph->ty1);
+            coords.emplace_back(glyph->tx2, glyph->ty1);
+            coords.emplace_back(glyph->tx2, glyph->ty2);
+            coords.emplace_back(glyph->tx1, glyph->ty2);
+            
+            glyph->texture->bind();
+            
+            glVertexPointer(2, GL_FLOAT, 0, vertices.data());
+            glTexCoordPointer(2, GL_FLOAT, 0, coords.data());
+            glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
         }
     }
 }

@@ -33,6 +33,9 @@ public:
     void setSize(float newSize);
     float getAdvance(const Cluster &cluster) const;
     float getAdvance(const TextLayout &layout) const;
+    
+    void begin();
+    void end();
     void drawCluster(const Cluster &cluster, const ci::Vec2f &position);
 
 protected:

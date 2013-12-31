@@ -15,7 +15,7 @@
  *    NECESSARY WHEN DRAWING A SMALLER SIZES WITH MIPMAPING
  *
  * 3) BASIC FONT-DRAWING AT ARBITRARY SIZE:
- *    STARTING TO DO-IT RIGHT (I.E. VIA VirtualFont...)
+ *    NOT USING gl::Texture::draw ANYMORE
  */
 
 /*
@@ -23,15 +23,23 @@
  *
  * 1) "PROCESS LAYOUT" IN VirtualFont?
  *
- * 2) DRAW DIRECTLY, I.E.
- *    - NOT USING gl::Texture
- *    - WITH BEGIN / END
- *    - ETC.
+ * 2) REMOVE gl::Texture COMPLETELY:
+ *    - NECESSARY FOR HANDLING OPEN-GL CONTEXT-LOSS ON ANDROID
  *
- * 3) TextLayoutCache:
+ * 3) GLYPH RENDERING:
+ *    - BATCHING:
+ *      - INCLUDING COLOR
+ *      - MAYBE ALSO: INTERLEAVED VERTICES AND COORDS...
+ *    - TRANSFORMING VERTICES VIA FontMatrix
+ *    - "BEGIN / END" MODES:
+ *      - "DIRECT"
+ *      - "TEXTURE BUCKET"
+ *      - "SEQUENCE"...
+ *
+ * 4) TextLayoutCache:
  *    - LRU STRATEGY?
  *
- * 4) FontManager:
+ * 5) FontManager:
  *    - PROPER ERROR HANDLING UPON CREATION
  *    - POSSIBILITY TO REMOVE A PARTICULAR VirtualFont
  *    - POSSIBILITY TO UNLOAD / RELOAD ALL THE DATA:
@@ -153,12 +161,15 @@ void Application::drawLineLayout(TextLayout &layout, float y, float left, float 
     Vec2f position(x, y);
  
     glColor4f(1, 1, 1, 1);
+    font->begin();
 
     for (auto cluster : layout.clusters)
     {
         font->drawCluster(cluster, position);
         position.x += font->getAdvance(cluster);
     }
+    
+    font->end();
     
     // ---
     
