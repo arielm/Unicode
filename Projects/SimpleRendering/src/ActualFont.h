@@ -24,6 +24,7 @@ public:
         ci::gl::Texture* texture;
         ci::Vec2f offset;
         ci::Vec2f size;
+        
         float tx1;
         float ty1;
         float tx2;

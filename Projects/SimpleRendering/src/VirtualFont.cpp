@@ -64,6 +64,86 @@ const ActualFont::Metrics& VirtualFont::getMetrics(const string &lang) const
     return (*it->second.begin())->metrics;
 }
 
+TextLayout* VirtualFont::createTextLayout(const TextRun &run)
+{
+    auto layout = new TextLayout(this, run.lang, run.direction);
+    
+    map<uint32_t, Cluster> clusterMap;
+    auto buffer = hb_buffer_create();
+    
+    for (auto font : getFontSet(run.lang))
+    {
+        hb_buffer_clear_contents(buffer);
+        
+        run.apply(buffer);
+        hb_shape(font->hbFont, buffer, NULL, 0);
+        
+        auto glyphCount = hb_buffer_get_length(buffer);
+        auto glyphInfos = hb_buffer_get_glyph_infos(buffer, NULL);
+        auto glyphPositions = hb_buffer_get_glyph_positions(buffer, NULL);
+        
+        bool hasMissingGlyphs = false;
+        
+        for (int i = 0; i < glyphCount; i++)
+        {
+            auto codepoint = glyphInfos[i].codepoint;
+            auto cluster = glyphInfos[i].cluster;
+            
+            auto it = clusterMap.find(cluster);
+            bool clusterFound = (it != clusterMap.end());
+            
+            if (codepoint)
+            {
+                if (clusterFound && (it->second.font != font))
+                {
+                    continue; // CLUSTER FOUND, WITH ANOTHER FONT (E.G. SPACE)
+                }
+                else
+                {
+                    auto offset = Vec2f(glyphPositions[i].x_offset, -glyphPositions[i].y_offset) * font->scale;
+                    float advance = glyphPositions[i].x_advance * font->scale.x;
+                    
+                    if (clusterFound)
+                    {
+                        it->second.addShape(codepoint, offset, advance);
+                    }
+                    else
+                    {
+                        clusterMap.insert(make_pair(cluster, Cluster(font, codepoint, offset, advance)));
+                    }
+                }
+            }
+            else if (!clusterFound)
+            {
+                hasMissingGlyphs = true;
+            }
+        }
+        
+        if (!hasMissingGlyphs)
+        {
+            break; // NO NEED TO PROCEED TO THE NEXT FONT IN THE LIST
+        }
+    }
+    
+    if (run.direction == HB_DIRECTION_RTL)
+    {
+        for (auto it = clusterMap.rbegin(); it != clusterMap.rend(); ++it)
+        {
+            layout->addCluster(it->second);
+        }
+    }
+    else
+    {
+        for (auto it = clusterMap.begin(); it != clusterMap.end(); ++it)
+        {
+            layout->addCluster(it->second);
+        }
+    }
+    
+    hb_buffer_destroy(buffer);
+    return layout;
+}
+
 void VirtualFont::setSize(float newSize)
 {
     size = newSize;

@@ -9,13 +9,11 @@
 #pragma once
 
 #include "ActualFont.h"
+#include "TextLayout.h"
+#include "TextRun.h"
 
 #include <set>
 #include <map>
-#include <string>
-
-class Cluster;
-class TextLayout;
 
 typedef std::set<ActualFont*> FontSet;
 
@@ -29,6 +27,8 @@ public:
     bool add(const std::string &lang, ActualFont *font);
     const FontSet& getFontSet(const std::string &lang) const;
     const ActualFont::Metrics& getMetrics(const std::string &lang) const;
+    
+    TextLayout* createTextLayout(const TextRun &run);
     
     void setSize(float newSize);
     float getAdvance(const Cluster &cluster) const;

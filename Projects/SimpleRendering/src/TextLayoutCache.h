@@ -9,6 +9,7 @@
 #pragma once
 
 #include "TextLayout.h"
+#include "VirtualFont.h"
 
 class TextLayoutKey
 {

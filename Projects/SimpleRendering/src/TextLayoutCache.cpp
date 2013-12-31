@@ -21,7 +21,7 @@ TextLayout* TextLayoutCache::get(VirtualFont *virtualFont, const TextRun &run)
     }
     else
     {
-        auto value = new TextLayout(virtualFont, run);
+        auto value = virtualFont->createTextLayout(run);
         cache[key] = shared_ptr<TextLayout>(value);
         return value;
     }

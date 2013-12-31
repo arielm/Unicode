@@ -7,7 +7,7 @@
  */
 
 /*
- * FEATURES:
+ * DONE:
  *
  * 1) FONT METRICS
  *
@@ -16,17 +16,17 @@
  *
  * 3) BASIC FONT-DRAWING AT ARBITRARY SIZE:
  *    NOT USING gl::Texture::draw ANYMORE
+ *
+ * 4) TextLayout CREATED VIA VirtualFont
  */
 
 /*
  * TODO:
  *
- * 1) "PROCESS LAYOUT" IN VirtualFont?
- *
- * 2) REMOVE gl::Texture COMPLETELY:
+ * 1) REMOVE gl::Texture COMPLETELY:
  *    - NECESSARY FOR HANDLING OPEN-GL CONTEXT-LOSS ON ANDROID
  *
- * 3) GLYPH RENDERING:
+ * 2) GLYPH RENDERING:
  *    - BATCHING:
  *      - INCLUDING COLOR
  *      - MAYBE ALSO: INTERLEAVED VERTICES AND COORDS...
@@ -36,10 +36,10 @@
  *      - "TEXTURE BUCKET"
  *      - "SEQUENCE"...
  *
- * 4) TextLayoutCache:
+ * 3) TextLayoutCache:
  *    - LRU STRATEGY?
  *
- * 5) FontManager:
+ * 4) FontManager:
  *    - PROPER ERROR HANDLING UPON CREATION
  *    - POSSIBILITY TO REMOVE A PARTICULAR VirtualFont
  *    - POSSIBILITY TO UNLOAD / RELOAD ALL THE DATA:
