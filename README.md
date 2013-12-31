@@ -33,6 +33,7 @@ So far, [Harfbuzz](https://github.com/behdad/harfbuzz) have been tested as a sol
 7. [SimpleBIDI](Projects/SimpleBIDI)
 8. [VirtualFont](Projects/VirtualFont)
 9. [LayoutCaching](Projects/LayoutCaching)
+10. [SimpleRendering](Projects/SimpleRendering)
 
 More work remains, notably testing how Harfbuzz performs on low-end mobile devices with limited processing-power and memory.
 
