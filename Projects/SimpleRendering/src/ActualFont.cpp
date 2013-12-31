@@ -112,8 +112,6 @@ padding(padding)
 
 ActualFont::~ActualFont()
 {
-    clearGlyphCache();
-    
     hb_font_destroy(hbFont);
     FT_Done_Face(ftFace);
 }
@@ -128,24 +126,19 @@ ActualFont::Glyph* ActualFont::getGlyph(uint32_t codepoint)
         
         if (glyph)
         {
-            glyphCache[codepoint] = glyph;
+            glyphCache[codepoint] = unique_ptr<Glyph>(glyph);
         }
         
         return glyph;
     }
     else
     {
-        return entry->second;
+        return entry->second.get();
     }
 }
 
 void ActualFont::clearGlyphCache()
 {
-    for (auto entry : glyphCache)
-    {
-        delete entry.second;
-    }
-    
     glyphCache.clear();
 }
 

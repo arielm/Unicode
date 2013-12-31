@@ -70,7 +70,7 @@ protected:
     std::shared_ptr<FreetypeHelper> ftHelper;
     FT_Face ftFace;
     
-    std::map<uint32_t, Glyph*> glyphCache;
+    std::map<uint32_t, std::unique_ptr<Glyph>> glyphCache;
     std::vector<std::unique_ptr<ReloadableTexture>> standaloneTextures;
     
     Glyph* createGlyph(uint32_t codepoint);
