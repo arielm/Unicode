@@ -7,28 +7,56 @@
  */
 
 /*
- * REFERENCE: https://github.com/arielm/Unicode/tree/master/Projects/VirtualFont
+ * DONE:
  *
+ * 1) FONT METRICS
  *
+ * 2) TEXTURE-PADDING:
+ *    NECESSARY WHEN DRAWING A SMALLER SIZES WITH MIPMAPING
+ *
+ * 3) BASIC FONT-DRAWING AT ARBITRARY SIZE:
+ *    NOT USING gl::Texture::draw ANYMORE
+ *
+ * 4) TextLayout CREATED VIA VirtualFont
+ *
+ * 5) HANDLING OPEN-GL CONTEXT-LOSS (NECESSARY FOR ANDROID):
+ *    - PRESS "ENTER" TO UNLOAD ALL THE TEXTURES
+ *    - GLYPH RASTERIZATION WILL THEN HAPPEN ON THE FLY...
+ *
+ * 6) TEXT-SIZE VARIATION...
+ */
+
+/*
  * TODO:
  *
- * 0) FURTHER INVESTIGATE iOS "APPSTORE REJECTION RISK":
- *    - http://stackoverflow.com/questions/3692812/on-ios-can-i-access-the-system-provided-fonts-ttf-file
- *    - https://github.com/WebKit/webkit/blob/master/Source/WebCore/platform/graphics/harfbuzz/HarfBuzzFaceCoreText.cpp
+ * 1) TEST OPEN-GL CONTEXT-LOSS ON ANDROID
  *
- * 1) ADD "SCALE" ATTRIBUTE FOR EACH "ACTUAL-FONT" IN THE VIRTUAL-FONT XML FILE
- *    - THE DEFAULT VALUE WOULD BE 1 (I.E. NO-OP)
- *    - IT WOULD ALLOW TO BALANCE BETWEEN UNDER/OVER-SIZED FONTS
+ * 2) GLYPH RENDERING:
+ *    - BATCHING:
+ *      - INCLUDING COLOR
+ *      - MAYBE ALSO: INTERLEAVED VERTICES AND COORDS...
+ *    - TRANSFORMING VERTICES VIA FontMatrix
+ *    - "BEGIN / END" MODES:
+ *      - "DIRECT"
+ *      - "TEXTURE BUCKET"
+ *      - "SEQUENCE"...
+ *
+ * 3) TextLayoutCache:
+ *    - LRU STRATEGY?
+ *
+ * 4) FontManager:
+ *    - PROPER ERROR HANDLING UPON CREATION
+ *    - POSSIBILITY TO REMOVE A PARTICULAR VirtualFont
+ *    - WE NEED A KIND OF "GLOBAL TEXTURE STORE" FOR STANDALONE-TEXTURES AND ATLASES
  */
 
 #include "cinder/app/AppNative.h"
 #include "cinder/Xml.h"
 #include "cinder/Utilities.h"
 
-#include "TextLayout.h"
+#include "TextLayoutCache.h"
 #include "FontManager.h"
 #include "LanguageHelper.h"
-#include "Test.h"
 
 #include <boost/algorithm/string.hpp>
 
@@ -36,7 +64,7 @@ using namespace std;
 using namespace ci;
 using namespace app;
 
-const float FONT_SIZE = 32;
+const float FONT_SIZE = 48;
 const float LINE_TOP = 66;
 const float LINE_SPACING = 66;
 
@@ -45,7 +73,9 @@ class Application : public AppNative
     LanguageHelper languageHelper;
     FontManager fontManager;
     
-    vector<TextLayout> lineLayouts;
+    VirtualFont *font;
+    vector<TextRun> runs;
+    TextLayoutCache layoutCache;
     
 public:
     void prepareSettings(Settings *settings);
@@ -55,7 +85,9 @@ public:
     void drawLineLayout(TextLayout &layout, float y, float left, float right);
     void drawHLine(float y);
     
-    TextSpan createRun(const string &text, const string &lang) const;
+    void keyDown(KeyEvent event);
+    
+    TextRun createRun(const string &text, const string &lang, hb_direction_t direction = HB_DIRECTION_INVALID) const;
     string trimText(const string &text) const;
     
 #if defined(CINDER_ANDROID)
@@ -74,36 +106,27 @@ void Application::prepareSettings(Settings *settings)
 void Application::setup()
 {
 #if defined(CINDER_ANDROID)
-    auto fileName = "SansSerif-android.xml";
+    auto ref = "res://SansSerif-android.xml";
 #elif defined(CINDER_COCOA_TOUCH)
-    auto fileName = "SansSerif-ios.xml";
+    auto ref = "res://SansSerif-ios.xml";
 #elif defined(CINDER_MAC) && 1
-    auto fileName = "SansSerif-osx.xml";
+    auto ref = "res://SansSerif-osx.xml";
 #else
-    auto fileName = "SansSerif.xml"; // FOR QUICK TESTS ON THE DESKTOP
+    auto ref = "res://SansSerif.xml"; // FOR QUICK TESTS ON THE DESKTOP
 #endif
 
-    auto virtualFont = fontManager.loadVirtualFont(loadResource(fileName), FONT_SIZE);
-    vector<TextSpan> runs;
+    font = fontManager.getVirtualFont(ref, FONT_SIZE);
     
     XmlTree doc(loadResource("Text.xml"));
     auto rootElement = doc.getChild("Text");
     
     for (auto &lineElement : rootElement.getChildren())
     {
-        auto lang = lineElement->getAttributeValue<string>("lang");
         auto text = trimText(lineElement->getValue());
+        auto lang = lineElement->getAttributeValue<string>("lang");
+        
         runs.emplace_back(createRun(text, lang));
     }
-    
-    for (auto run : runs)
-    {
-        lineLayouts.emplace_back(virtualFont, run);
-    }
-
-#if 1
-    Test::measureShaping(console(), virtualFont, runs);
-#endif
     
     // ---
     
@@ -130,22 +153,36 @@ void Application::draw()
     float y = LINE_TOP;
     float left = 24;
     float right = windowSize.x - 24;
-    
-    for (auto layout : lineLayouts)
+
+    float size = 30 + 18 * math<float>::sin(getElapsedSeconds()); // OSCILLATING BETWEN 12 AND 48
+    font->setSize(size);
+
+    for (auto run : runs)
     {
-        drawLineLayout(layout, y, left, right);
+        drawLineLayout(*layoutCache.get(font, run), y, left, right);
         y += LINE_SPACING;
     }
 }
 
 void Application::drawLineLayout(TextLayout &layout, float y, float left, float right)
 {
-    float x = (layout.direction == HB_DIRECTION_LTR) ? left : (right - layout.advance);
-    
+    float x = (layout.direction == HB_DIRECTION_LTR) ? left : (right - font->getAdvance(layout));
+    Vec2f position(x, y);
+ 
     glColor4f(1, 1, 1, 1);
-    layout.draw(Vec2f(x, y));
+    font->begin();
+
+    for (auto cluster : layout.clusters)
+    {
+        font->drawCluster(cluster, position);
+        position.x += font->getAdvance(cluster);
+    }
     
-    glColor4f(1, 0.75f, 0, 0.5f);
+    font->end();
+    
+    // ---
+    
+    glColor4f(1, 0.75f, 0, 0.25f);
     drawHLine(y);
 }
 
@@ -154,12 +191,24 @@ void Application::drawHLine(float y)
     gl::drawLine(Vec2f(-9999, y), Vec2f(+9999, y));
 }
 
-TextSpan Application::createRun(const string &text, const string &lang) const
+void Application::keyDown(KeyEvent event)
+{
+    if (event.getCode() == KeyEvent::KEY_RETURN)
+    {
+        fontManager.unloadTextures();
+    }
+}
+
+TextRun Application::createRun(const string &text, const string &lang, hb_direction_t direction) const
 {
     auto script = languageHelper.getScript(lang);
-    auto direction = hb_script_get_horizontal_direction(script);
     
-    return TextSpan(text, script, lang, direction);
+    if (direction == HB_DIRECTION_INVALID)
+    {
+        direction = hb_script_get_horizontal_direction(script);
+    }
+    
+    return TextRun(text, script, lang, direction);
 }
 
 string Application::trimText(const string &text) const

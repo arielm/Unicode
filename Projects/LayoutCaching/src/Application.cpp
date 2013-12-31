@@ -71,6 +71,8 @@ public:
 void Application::prepareSettings(Settings *settings)
 {
     settings->setWindowSize(1280, 736);
+    settings->enableHighDensityDisplay();
+    settings->disableFrameRate();
 }
 
 void Application::setup()

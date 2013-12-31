@@ -39,22 +39,12 @@ static FT_Error force_ucs2_charmap(FT_Face face)
     return -1;
 }
 
-static int nextPowerOfTwo(int x)
-{
-    int result = 1;
-    
-    while (result < x)
-    {
-        result <<= 1;
-    }
-    
-    return result;
-}
-
-ActualFont::ActualFont(shared_ptr<FreetypeHelper> ftHelper, const fs::path &filePath, float size, bool useMipmap)
+ActualFont::ActualFont(shared_ptr<FreetypeHelper> ftHelper, const fs::path &filePath, float baseSize, bool useMipmap, int padding)
 :
 ftHelper(ftHelper),
-useMipmap(useMipmap)
+baseSize(baseSize),
+useMipmap(useMipmap),
+padding(padding)
 {
     FT_Error error = FT_New_Face(ftHelper->getLib(), filePath.c_str(), 0, &ftFace);
     
@@ -81,7 +71,7 @@ useMipmap(useMipmap)
     int dpi = 72;
     
     scale = Vec2f::one() / Vec2f(res, res) / 64;
-    FT_Set_Char_Size(ftFace, size * 64, 0, dpi * res, dpi * res);
+    FT_Set_Char_Size(ftFace, baseSize * 64, 0, dpi * res, dpi * res);
     
     FT_Matrix matrix =
     {
@@ -93,9 +83,27 @@ useMipmap(useMipmap)
     
     FT_Set_Transform(ftFace, &matrix, NULL);
     
-    leading = ftFace->size->metrics.height * scale.y;
-    ascent = ftFace->size->metrics.ascender * scale.y;
-    descent = -ftFace->size->metrics.descender * scale.y;
+    // ---
+    
+    metrics.height = ftFace->size->metrics.height * scale.y;
+    metrics.ascent = ftFace->size->metrics.ascender * scale.y;
+    metrics.descent = -ftFace->size->metrics.descender * scale.y;
+
+    metrics.lineThickness = ftFace->underline_thickness / 64.0f;
+    metrics.underlineOffset = -ftFace->underline_position / 64.0f;
+    
+    //
+    
+    auto os2 = (TT_OS2*)FT_Get_Sfnt_Table(ftFace, ft_sfnt_os2);
+    
+    if (os2 && (os2->version != 0xFFFF))
+    {
+        metrics.strikethroughOffset = FT_MulFix(os2->yStrikeoutPosition, ftFace->size->metrics.y_scale) * scale.y;
+    }
+    else
+    {
+        metrics.strikethroughOffset = 0.5f * (metrics.ascent - metrics.descent);
+    }
     
     // ---
     
@@ -104,100 +112,72 @@ useMipmap(useMipmap)
 
 ActualFont::~ActualFont()
 {
-    clearGlyphCache();
-    
     hb_font_destroy(hbFont);
     FT_Done_Face(ftFace);
 }
 
 ActualFont::Glyph* ActualFont::getGlyph(uint32_t codepoint)
 {
+    Glyph *glyph = NULL;
     auto entry = glyphCache.find(codepoint);
     
     if (entry == glyphCache.end())
     {
-        Glyph *glyph = createGlyph(codepoint);
+        glyph = createGlyph(codepoint);
         
         if (glyph)
         {
-            glyphCache[codepoint] = glyph;
+            glyphCache[codepoint] = unique_ptr<Glyph>(glyph);
         }
-        
-        return glyph;
     }
     else
     {
-        return entry->second;
-    }
-}
-
-void ActualFont::clearGlyphCache()
-{
-    for (auto entry : glyphCache)
-    {
-        delete entry.second;
-    }
-    
-    glyphCache.clear();
-}
-
-ActualFont::Glyph* ActualFont::createGlyph(uint32_t codepoint)
-{
-    if (codepoint > 0)
-    {
-        if (!FT_Load_Glyph(ftFace, codepoint, FT_LOAD_DEFAULT | FT_LOAD_FORCE_AUTOHINT))
+       glyph = entry->second.get();
+        
+        if (!glyph->texture->isLoaded())
         {
-            auto slot = ftFace->glyph;
-            FT_Glyph glyph;
+            GlyphData glyphData(ftFace, codepoint, useMipmap, padding);
             
-            if (!FT_Get_Glyph(slot, &glyph))
+            if (glyphData.isValid())
             {
-                ActualFont::Glyph *g = NULL;
-                FT_Render_Glyph(slot, FT_RENDER_MODE_NORMAL);
-                
-                auto width = slot->bitmap.width;
-                auto height = slot->bitmap.rows;
-                
-                if (width * height > 0)
-                {
-                    auto texture = createTexture(slot->bitmap.buffer, width, height);
-                    textureList.push_back(shared_ptr<gl::Texture>(texture));
-                    
-                    Vec2f offset(slot->bitmap_left, -slot->bitmap_top);
-                    g = new Glyph(texture, offset);
-                }
-                
-                FT_Done_Glyph(glyph);
-                return g;
+                glyph->texture->load(glyphData);
+            }
+            else
+            {
+                return NULL; // XXX: SHOULD NEVER OCCUR
             }
         }
     }
     
-    return NULL;
+    return glyph;
 }
 
-gl::Texture* ActualFont::createTexture(unsigned char *data, int width, int height)
+void ActualFont::clearGlyphCache()
 {
-    int textureWidth = nextPowerOfTwo(width);
-    int textureHeight = nextPowerOfTwo(height);
-    unique_ptr<unsigned char[]> textureData(new unsigned char[textureWidth * textureHeight]()); // ZERO-FILLED + AUTOMATICALLY FREED
-    
-    for (int iy = 0; iy < height; iy++)
+    glyphCache.clear();
+}
+
+void ActualFont::unloadTextures()
+{
+    for (auto &texture : standaloneTextures)
     {
-        for (int ix = 0; ix < width; ix++)
-        {
-            textureData[iy * textureWidth + ix] = data[iy * width + ix];
-        }
+        texture->unload();
     }
+}
+
+ActualFont::Glyph* ActualFont::createGlyph(uint32_t codepoint)
+{
+    GlyphData glyphData(ftFace, codepoint, useMipmap, padding);
     
-    gl::Texture::Format format;
-    format.setInternalFormat(GL_ALPHA);
-    
-    if (useMipmap)
+    if (glyphData.isValid())
     {
-        format.enableMipmapping(true);
-        format.setMinFilter(GL_LINEAR_MIPMAP_LINEAR);
+        auto texture = new ReloadableTexture(glyphData);
+        standaloneTextures.push_back(unique_ptr<ReloadableTexture>(texture));
+        
+        return new Glyph(texture, glyphData.offset, glyphData.size);
     }
-    
-    return new gl::Texture(textureData.get(), GL_ALPHA, textureWidth, textureHeight, format);
+    else
+    {
+        return NULL;
+    }
 }

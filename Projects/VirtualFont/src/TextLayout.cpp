@@ -35,12 +35,11 @@ advance(0)
 
 void TextLayout::draw(const Vec2f &position)
 {
-    for (auto entry : clusters)
+    auto clusterPosition = position;
+
+    for (auto cluster : clusters)
     {
-        auto cluster = entry.first;
-        auto clusterPosition = Vec2f(entry.second, 0) + position;
-        
-        for (auto shape : entry.first.shapes)
+        for (auto shape : cluster.shapes)
         {
             auto glyph = cluster.font->getGlyph(shape.codepoint);
             
@@ -49,12 +48,14 @@ void TextLayout::draw(const Vec2f &position)
                 gl::draw(*glyph->texture, clusterPosition + shape.position + glyph->offset);
             }
         }
+        
+        clusterPosition.x += cluster.combinedAdvance;
     }
 }
 
 void TextLayout::addCluster(const Cluster &cluster)
 {
-    clusters.emplace_back(cluster, advance);
+    clusters.emplace_back(cluster);
     advance += cluster.combinedAdvance;
 }
 

@@ -9,19 +9,38 @@
 #pragma once
 
 #include "ActualFont.h"
+#include "TextLayout.h"
+#include "TextRun.h"
 
 #include <set>
 #include <map>
-#include <string>
 
 typedef std::set<ActualFont*> FontSet;
 
 class VirtualFont
 {
 public:
+    float baseSize;
+    
+    VirtualFont(float baseSize);
+    
     bool add(const std::string &lang, ActualFont *font);
     const FontSet& getFontSet(const std::string &lang) const;
+    const ActualFont::Metrics& getMetrics(const std::string &lang) const;
     
+    TextLayout* createTextLayout(const TextRun &run);
+    
+    void setSize(float newSize);
+    float getAdvance(const Cluster &cluster) const;
+    float getAdvance(const TextLayout &layout) const;
+    
+    void begin();
+    void end();
+    void drawCluster(const Cluster &cluster, const ci::Vec2f &position);
+
 protected:
+    float size;
+    float sizeRatio;
+    
     std::map<std::string, FontSet> fontSetMap;
 };

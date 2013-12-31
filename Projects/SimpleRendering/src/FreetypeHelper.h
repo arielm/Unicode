@@ -8,20 +8,17 @@
 
 #pragma once
 
-#include "ActualFont.h"
+#include <ft2build.h>
+#include FT_GLYPH_H
+#include FT_TRUETYPE_TABLES_H
 
-#include <set>
-#include <map>
-#include <string>
-
-typedef std::set<ActualFont*> FontSet;
-
-class VirtualFont
+class FreetypeHelper
 {
-public:
-    bool add(const std::string &lang, ActualFont *font);
-    const FontSet& getFontSet(const std::string &lang) const;
+    FT_Library library;
     
-protected:
-    std::map<std::string, FontSet> fontSetMap;
+public:
+    FreetypeHelper();
+    ~FreetypeHelper();
+    
+    FT_Library getLib() const;
 };

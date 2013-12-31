@@ -145,24 +145,27 @@ ActualFont::Glyph* ActualFont::createGlyph(uint32_t codepoint)
 {
     if (codepoint > 0)
     {
-        FT_Error error = FT_Load_Glyph(ftFace, codepoint, FT_LOAD_DEFAULT | FT_LOAD_FORCE_AUTOHINT);
-        
-        if (!error)
+        if (!FT_Load_Glyph(ftFace, codepoint, FT_LOAD_DEFAULT | FT_LOAD_FORCE_AUTOHINT))
         {
-            FT_GlyphSlot slot = ftFace->glyph;
-            
+            auto slot = ftFace->glyph;
             FT_Glyph glyph;
-            error = FT_Get_Glyph(slot, &glyph);
             
-            if (!error)
+            if (!FT_Get_Glyph(slot, &glyph))
             {
+                ActualFont::Glyph *g = NULL;
                 FT_Render_Glyph(slot, FT_RENDER_MODE_NORMAL);
                 
-                auto texture = createTexture(slot->bitmap.buffer, slot->bitmap.width, slot->bitmap.rows);
-                textureList.push_back(shared_ptr<gl::Texture>(texture));
+                auto width = slot->bitmap.width;
+                auto height = slot->bitmap.rows;
                 
-                Vec2f offset(slot->bitmap_left, -slot->bitmap_top);
-                ActualFont::Glyph *g = new Glyph(texture, offset);
+                if (width * height > 0)
+                {
+                    auto texture = createTexture(slot->bitmap.buffer, width, height);
+                    textureList.push_back(shared_ptr<gl::Texture>(texture));
+                    
+                    Vec2f offset(slot->bitmap_left, -slot->bitmap_top);
+                    g = new Glyph(texture, offset);
+                }
                 
                 FT_Done_Glyph(glyph);
                 return g;
@@ -175,31 +178,26 @@ ActualFont::Glyph* ActualFont::createGlyph(uint32_t codepoint)
 
 gl::Texture* ActualFont::createTexture(unsigned char *data, int width, int height)
 {
-    if (width * height > 0)
+    int textureWidth = nextPowerOfTwo(width);
+    int textureHeight = nextPowerOfTwo(height);
+    unique_ptr<unsigned char[]> textureData(new unsigned char[textureWidth * textureHeight]()); // ZERO-FILLED + AUTOMATICALLY FREED
+    
+    for (int iy = 0; iy < height; iy++)
     {
-        int textureWidth = nextPowerOfTwo(width);
-        int textureHeight = nextPowerOfTwo(height);
-        unique_ptr<unsigned char[]> textureData(new unsigned char[textureWidth * textureHeight]()); // ZERO-FILLED + AUTOMATICALLY FREED
-        
-        for (int iy = 0; iy < height; iy++)
+        for (int ix = 0; ix < width; ix++)
         {
-            for (int ix = 0; ix < width; ix++)
-            {
-                textureData[iy * textureWidth + ix] = data[iy * width + ix];
-            }
+            textureData[iy * textureWidth + ix] = data[iy * width + ix];
         }
-        
-        gl::Texture::Format format;
-        format.setInternalFormat(GL_ALPHA);
-        
-        if (useMipmap)
-        {
-            format.enableMipmapping(true);
-            format.setMinFilter(GL_LINEAR_MIPMAP_LINEAR);
-        }
-        
-        return new gl::Texture(textureData.get(), GL_ALPHA, textureWidth, textureHeight, format);
     }
     
-    return NULL;
+    gl::Texture::Format format;
+    format.setInternalFormat(GL_ALPHA);
+    
+    if (useMipmap)
+    {
+        format.enableMipmapping(true);
+        format.setMinFilter(GL_LINEAR_MIPMAP_LINEAR);
+    }
+    
+    return new gl::Texture(textureData.get(), GL_ALPHA, textureWidth, textureHeight, format);
 }

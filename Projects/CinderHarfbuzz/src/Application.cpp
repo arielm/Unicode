@@ -42,6 +42,8 @@ public:
 void Application::prepareSettings(Settings *settings)
 {
     settings->setWindowSize(1024, 512);
+    settings->enableHighDensityDisplay();
+    settings->disableFrameRate();
 }
 
 void Application::setup()
@@ -59,7 +61,7 @@ void Application::setup()
 #elif defined(CINDER_COCOA_TOUCH) && 1 // USE "1" FOR SYSTEM FONTS ON iOS (TESTED ON 5.0.1)
     font1 = make_shared<YFont>(ftHelper, FontDescriptor(loadFile("/System/Library/Fonts/Cache/Arial.ttf")), FONT_SIZE);
     font2 = make_shared<YFont>(ftHelper, FontDescriptor(loadFile("/System/Library/Fonts/Cache/ArialHB.ttf")), FONT_SIZE);
-    font3 = make_shared<YFont>(ftHelper, FontDescriptor(loadFile("/System/Library/Fonts/Cache/GeezaPro.ttf")), FONT_SIZE);
+    font3 = make_shared<YFont>(ftHelper, FontDescriptor(loadFile("/System/Library/Fonts/Cache/GeezaPro.ttf")), FONT_SIZE); // FIXME: LOOKS LIKE "JOINING" IS BROKEN WITH THAT FONT (NOT ON OSX)
 #else // CUSTOM FONTS LOADED FROM THE RESOURCE-BUNDLE ON OSX AND iOS OR FROM THE ASSETS ON ANDROID
     font1 = make_shared<YFont>(ftHelper, FontDescriptor(loadResource("DroidSans.ttf")), FONT_SIZE);
     font2 = make_shared<YFont>(ftHelper, FontDescriptor(loadResource("DroidSansHebrew-Regular.ttf")), FONT_SIZE);
