@@ -22,6 +22,8 @@
  * 5) HANDLING OPEN-GL CONTEXT-LOSS (NECESSARY FOR ANDROID):
  *    - PRESS "ENTER" TO UNLOAD ALL THE TEXTURES
  *    - GLYPH RASTERIZATION WILL THEN HAPPEN ON THE FLY...
+ *
+ * 6) TEXT-SIZE VARIATION...
  */
 
 /*
@@ -29,9 +31,7 @@
  *
  * 1) TEST OPEN-GL CONTEXT-LOSS ON ANDROID
  *
- * 2) CHANGING TEXT-SIZE BASED ON SINUS FUNCTION
- *
- * 3) GLYPH RENDERING:
+ * 2) GLYPH RENDERING:
  *    - BATCHING:
  *      - INCLUDING COLOR
  *      - MAYBE ALSO: INTERLEAVED VERTICES AND COORDS...
@@ -41,10 +41,10 @@
  *      - "TEXTURE BUCKET"
  *      - "SEQUENCE"...
  *
- * 4) TextLayoutCache:
+ * 3) TextLayoutCache:
  *    - LRU STRATEGY?
  *
- * 5) FontManager:
+ * 4) FontManager:
  *    - PROPER ERROR HANDLING UPON CREATION
  *    - POSSIBILITY TO REMOVE A PARTICULAR VirtualFont
  *    - WE NEED A KIND OF "GLOBAL TEXTURE STORE" FOR STANDALONE-TEXTURES AND ATLASES
@@ -99,6 +99,8 @@ public:
 void Application::prepareSettings(Settings *settings)
 {
     settings->setWindowSize(1280, 736);
+    settings->enableHighDensityDisplay();
+    settings->disableFrameRate();
 }
 
 void Application::setup()
@@ -152,7 +154,8 @@ void Application::draw()
     float left = 24;
     float right = windowSize.x - 24;
 
-    font->setSize(16);
+    float size = 30 + 18 * math<float>::sin(getElapsedSeconds()); // OSCILLATING BETWEN 12 AND 48
+    font->setSize(size);
 
     for (auto run : runs)
     {
