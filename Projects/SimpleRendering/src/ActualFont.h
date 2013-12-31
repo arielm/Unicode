@@ -9,8 +9,7 @@
 #pragma once
 
 #include "FreetypeHelper.h"
-
-#include "cinder/gl/Texture.h"
+#include "ReloadableTexture.h"
 
 #include "hb.h"
 
@@ -21,7 +20,7 @@ class ActualFont
 public:
     struct Glyph
     {
-        ci::gl::Texture* texture;
+        ReloadableTexture *texture;
         ci::Vec2f offset;
         ci::Vec2f size;
         
@@ -30,7 +29,7 @@ public:
         float tx2;
         float ty2;
         
-        Glyph(ci::gl::Texture *texture, ci::Vec2f offset, ci::Vec2f size)
+        Glyph(ReloadableTexture *texture, ci::Vec2f offset, ci::Vec2f size)
         :
         texture(texture),
         offset(offset),
@@ -72,8 +71,7 @@ protected:
     FT_Face ftFace;
     
     std::map<uint32_t, Glyph*> glyphCache;
-    std::vector<ci::gl::TextureRef> textureList;
+    std::vector<std::shared_ptr<ReloadableTexture>> textureList;
     
     Glyph* createGlyph(uint32_t codepoint);
-    ci::gl::Texture* createTexture(unsigned char *data, int width, int height);
 };

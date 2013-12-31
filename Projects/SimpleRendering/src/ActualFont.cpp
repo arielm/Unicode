@@ -39,18 +39,6 @@ static FT_Error force_ucs2_charmap(FT_Face face)
     return -1;
 }
 
-static int nextPowerOfTwo(int x)
-{
-    int result = 1;
-    
-    while (result < x)
-    {
-        result <<= 1;
-    }
-    
-    return result;
-}
-
 ActualFont::ActualFont(shared_ptr<FreetypeHelper> ftHelper, const fs::path &filePath, float baseSize, bool useMipmap, int padding)
 :
 ftHelper(ftHelper),
@@ -184,8 +172,8 @@ ActualFont::Glyph* ActualFont::createGlyph(uint32_t codepoint)
                 
                 if (width * height > 0)
                 {
-                    auto texture = createTexture(slot->bitmap.buffer, width, height);
-                    textureList.push_back(shared_ptr<gl::Texture>(texture));
+                    auto texture = new ReloadableTexture(slot->bitmap.buffer, width, height, useMipmap, padding);
+                    textureList.push_back(shared_ptr<ReloadableTexture>(texture));
                     
                     auto offset = Vec2f(slot->bitmap_left, -slot->bitmap_top) - Vec2f(padding, padding);
                     auto size = Vec2f(width, height) + Vec2f(padding, padding) * 2;
@@ -196,37 +184,6 @@ ActualFont::Glyph* ActualFont::createGlyph(uint32_t codepoint)
                 return g;
             }
         }
-    }
-    
-    return NULL;
-}
-
-gl::Texture* ActualFont::createTexture(unsigned char *data, int width, int height)
-{
-    if (width * height > 0)
-    {
-        int textureWidth = nextPowerOfTwo(width + padding * 2);
-        int textureHeight = nextPowerOfTwo(height + padding * 2);
-        unique_ptr<unsigned char[]> textureData(new unsigned char[textureWidth * textureHeight]()); // ZERO-FILLED + AUTOMATICALLY FREED
-        
-        for (int iy = 0; iy < height; iy++)
-        {
-            for (int ix = 0; ix < width; ix++)
-            {
-                textureData[(iy + padding) * textureWidth + (ix + padding)] = data[iy * width + ix];
-            }
-        }
-        
-        gl::Texture::Format format;
-        format.setInternalFormat(GL_ALPHA);
-        
-        if (useMipmap)
-        {
-            format.enableMipmapping(true);
-            format.setMinFilter(GL_LINEAR_MIPMAP_LINEAR);
-        }
-        
-        return new gl::Texture(textureData.get(), GL_ALPHA, textureWidth, textureHeight, format);
     }
     
     return NULL;

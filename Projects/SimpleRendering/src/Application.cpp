@@ -18,13 +18,14 @@
  *    NOT USING gl::Texture::draw ANYMORE
  *
  * 4) TextLayout CREATED VIA VirtualFont
+ *
+ * 5) STARTING TO USE ReloadableTexture INSTEAD OF gl::Texture...
  */
 
 /*
  * TODO:
  *
- * 1) REMOVE gl::Texture COMPLETELY:
- *    - NECESSARY FOR HANDLING OPEN-GL CONTEXT-LOSS ON ANDROID
+ * 1) HANDLE OPEN-GL CONTEXT-LOSS ON ANDROID:
  *
  * 2) GLYPH RENDERING:
  *    - BATCHING:
