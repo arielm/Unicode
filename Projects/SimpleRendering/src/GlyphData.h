@@ -29,25 +29,32 @@ public:
     ci::Vec2f offset;
     ci::Vec2f size;
     
-    GlyphData(FT_GlyphSlot ftSlot, bool useMipmap, int padding)
+    GlyphData(FT_Face ftFace, uint32_t codepoint, bool useMipmap, int padding)
     :
-    ftSlot(ftSlot),
     useMipmap(useMipmap),
     padding(padding),
     ftGlyph(NULL),
     data(NULL)
     {
-        if (!FT_Get_Glyph(ftSlot, &ftGlyph))
+        if (codepoint > 0)
         {
-            FT_Render_Glyph(ftSlot, FT_RENDER_MODE_NORMAL);
-            
-            width = ftSlot->bitmap.width;
-            height = ftSlot->bitmap.rows;
-            
-            if (width * height > 0)
+            if (!FT_Load_Glyph(ftFace, codepoint, FT_LOAD_DEFAULT | FT_LOAD_FORCE_AUTOHINT))
             {
-                offset = ci::Vec2f(ftSlot->bitmap_left, -ftSlot->bitmap_top) - ci::Vec2f(padding, padding);
-                size = ci::Vec2f(width, height) + ci::Vec2f(padding, padding) * 2;
+                ftSlot = ftFace->glyph;
+                
+                if (!FT_Get_Glyph(ftSlot, &ftGlyph))
+                {
+                    FT_Render_Glyph(ftSlot, FT_RENDER_MODE_NORMAL);
+                    
+                    width = ftSlot->bitmap.width;
+                    height = ftSlot->bitmap.rows;
+                    
+                    if (width * height > 0)
+                    {
+                        offset = ci::Vec2f(ftSlot->bitmap_left, -ftSlot->bitmap_top) - ci::Vec2f(padding, padding);
+                        size = ci::Vec2f(width, height) + ci::Vec2f(padding, padding) * 2;
+                    }
+                }
             }
         }
     }
@@ -56,12 +63,12 @@ public:
     {
         if (ftGlyph)
         {
-            std::cout << "GlyhData - RELEASE SLOT" << std::endl;
+            std::cout << "GlyphData - RELEASE SLOT" << std::endl;
             FT_Done_Glyph(ftGlyph);
         }
         else if (data)
         {
-            std::cout << "GlyhData - RELEASE DATA" << std::endl;
+            std::cout << "GlyphData - RELEASE DATA" << std::endl;
             free(data);
         }
     }
@@ -71,7 +78,7 @@ public:
         return (ftGlyph || data);
     }
     
-    unsigned char* getData() const
+    unsigned char* getBuffer() const
     {
         if (ftGlyph)
         {

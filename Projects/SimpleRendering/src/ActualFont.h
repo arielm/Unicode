@@ -74,5 +74,4 @@ protected:
     std::vector<std::unique_ptr<ReloadableTexture>> standaloneTextures;
     
     Glyph* createGlyph(uint32_t codepoint);
-    std::unique_ptr<GlyphData> createGlyphData(uint32_t codepoint);
 };

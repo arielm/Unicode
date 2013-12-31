@@ -151,39 +151,17 @@ void ActualFont::clearGlyphCache()
 
 ActualFont::Glyph* ActualFont::createGlyph(uint32_t codepoint)
 {
-    auto glyphData = createGlyphData(codepoint);
+    GlyphData glyphData(ftFace, codepoint, useMipmap, padding);
     
-    if (glyphData)
+    if (glyphData.isValid())
     {
-        auto texture = new ReloadableTexture(*glyphData);
+        auto texture = new ReloadableTexture(glyphData);
         standaloneTextures.push_back(unique_ptr<ReloadableTexture>(texture));
         
-        return new Glyph(texture, glyphData->offset, glyphData->size);
+        return new Glyph(texture, glyphData.offset, glyphData.size);
     }
     else
     {
         return NULL;
     }
-}
-
-unique_ptr<GlyphData> ActualFont::createGlyphData(uint32_t codepoint)
-{
-    if (codepoint > 0)
-    {
-        if (!FT_Load_Glyph(ftFace, codepoint, FT_LOAD_DEFAULT | FT_LOAD_FORCE_AUTOHINT))
-        {
-            auto glyphData = new GlyphData(ftFace->glyph, useMipmap, padding);
-            
-            if (glyphData->isValid())
-            {
-                return unique_ptr<GlyphData>(glyphData);
-            }
-            else
-            {
-                delete glyphData;
-            }
-        }
-    }
-    
-    return unique_ptr<GlyphData>();
 }

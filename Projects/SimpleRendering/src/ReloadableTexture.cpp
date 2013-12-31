@@ -45,7 +45,7 @@ void ReloadableTexture::load(const GlyphData &glyphData)
     int width = glyphData.width;
     int height = glyphData.height;
     int padding = glyphData.padding;
-    auto data = glyphData.getData();
+    auto buffer = glyphData.getBuffer();
     
     int textureWidth = nextPowerOfTwo(width + padding * 2);
     int textureHeight = nextPowerOfTwo(height + padding * 2);
@@ -55,7 +55,7 @@ void ReloadableTexture::load(const GlyphData &glyphData)
     {
         for (int ix = 0; ix < width; ix++)
         {
-            textureData[(iy + padding) * textureWidth + (ix + padding)] = data[iy * width + ix];
+            textureData[(iy + padding) * textureWidth + (ix + padding)] = buffer[iy * width + ix];
         }
     }
     
