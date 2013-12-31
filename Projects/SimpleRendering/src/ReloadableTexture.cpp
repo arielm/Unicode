@@ -32,15 +32,26 @@ tmp(NULL)
 
 ReloadableTexture::~ReloadableTexture()
 {
-    delete tmp;
+    unload();
 }
 
-void ReloadableTexture::load(const GlyphData &glyphData)
+bool ReloadableTexture::isLoaded()
+{
+    return bool(tmp);
+}
+
+void ReloadableTexture::unload()
 {
     if (tmp)
     {
         delete tmp;
+        tmp = NULL;
     }
+}
+
+void ReloadableTexture::load(const GlyphData &glyphData)
+{
+    unload();
     
     int width = glyphData.width;
     int height = glyphData.height;

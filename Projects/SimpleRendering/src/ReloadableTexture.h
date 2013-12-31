@@ -18,9 +18,11 @@ public:
     ReloadableTexture(const GlyphData &glyphData);
     ~ReloadableTexture();
     
+    bool isLoaded();
+    void unload();
     void load(const GlyphData &glyphData);
-    void bind();
     
+    void bind();
     GLint getWidth() const;
     GLint getHeight() const;
     

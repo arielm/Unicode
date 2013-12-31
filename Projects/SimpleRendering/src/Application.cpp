@@ -19,15 +19,15 @@
  *
  * 4) TextLayout CREATED VIA VirtualFont
  *
- * 5) HANDLING OPEN-GL CONTEXT-LOSS ON ADNROID:
- *    - STARTING TO USE ReloadableTexture INSTEAD OF gl::Texture
- *    - STARTING WITH GlyphData
+ * 5) HANDLING OPEN-GL CONTEXT-LOSS (NECESSARY FOR ANDROID):
+ *    - PRESS "ENTER" TO UNLOAD ALL THE TEXTURES
+ *    - GLYPH RASTERIZATION WILL THEN HAPPEN ON THE FLY...
  */
 
 /*
  * TODO:
  *
- * 1) COMPLETE HANDLING OF OPEN-GL CONTEXT-LOSS ON ANDROID
+ * 1) TEST OPEN-GL CONTEXT-LOSS ON ANDROID
  *
  * 2) CHANGING TEXT-SIZE BASED ON SINUS FUNCTION
  *
@@ -47,9 +47,7 @@
  * 5) FontManager:
  *    - PROPER ERROR HANDLING UPON CREATION
  *    - POSSIBILITY TO REMOVE A PARTICULAR VirtualFont
- *    - POSSIBILITY TO UNLOAD / RELOAD ALL THE DATA:
- *      - NECESSARY FOR HANDLING OPEN-GL CONTEXT-LOSS ON ANDROID
- *      - WE NEED A KIND OF "GLOBAL TEXTURE STORE" FOR STANDALONE-TEXTURES AND ATLASES
+ *    - WE NEED A KIND OF "GLOBAL TEXTURE STORE" FOR STANDALONE-TEXTURES AND ATLASES
  */
 
 #include "cinder/app/AppNative.h"
@@ -86,6 +84,8 @@ public:
     void draw();
     void drawLineLayout(TextLayout &layout, float y, float left, float right);
     void drawHLine(float y);
+    
+    void keyDown(KeyEvent event);
     
     TextRun createRun(const string &text, const string &lang, hb_direction_t direction = HB_DIRECTION_INVALID) const;
     string trimText(const string &text) const;
@@ -186,6 +186,14 @@ void Application::drawLineLayout(TextLayout &layout, float y, float left, float 
 void Application::drawHLine(float y)
 {
     gl::drawLine(Vec2f(-9999, y), Vec2f(+9999, y));
+}
+
+void Application::keyDown(KeyEvent event)
+{
+    if (event.getCode() == KeyEvent::KEY_RETURN)
+    {
+        fontManager.unloadTextures();
+    }
 }
 
 TextRun Application::createRun(const string &text, const string &lang, hb_direction_t direction) const

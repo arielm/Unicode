@@ -9,7 +9,7 @@
 /*
  * WARNING:
  * IF THE GlyphData IS NOT FOR "IMMEDIATE CONSUPTION", INVOKE copyDataAndReleaseSlot()
- * OTHERWISE, THE DATA WILL BE CORRUPTED UPON THE NEXT FT_Get_Glyph() OPERATION
+ * OTHERWISE, THE DATA WILL BECOME CORRUPTED UPON THE NEXT FT_Get_Glyph() OPERATION
  */
 
 #pragma once
@@ -63,12 +63,10 @@ public:
     {
         if (ftGlyph)
         {
-            std::cout << "GlyphData - RELEASE SLOT" << std::endl;
             FT_Done_Glyph(ftGlyph);
         }
         else if (data)
         {
-            std::cout << "GlyphData - RELEASE DATA" << std::endl;
             free(data);
         }
     }

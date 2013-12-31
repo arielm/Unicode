@@ -39,6 +39,8 @@ public:
     ActualFont* getActualFont(const std::string &ref, float baseSize, bool useMipmap = true, int padding = 2);
     VirtualFont* getVirtualFont(const std::string &ref, float baseSize, bool useMipmap = true, int padding = 2);
     
+    void unloadTextures();
+    
 protected:
     std::map<FontKey, std::unique_ptr<ActualFont>> actualFonts;
     std::map<FontKey, std::unique_ptr<VirtualFont>> virtualFonts;

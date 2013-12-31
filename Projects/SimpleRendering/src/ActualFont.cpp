@@ -118,28 +118,51 @@ ActualFont::~ActualFont()
 
 ActualFont::Glyph* ActualFont::getGlyph(uint32_t codepoint)
 {
+    Glyph *glyph = NULL;
     auto entry = glyphCache.find(codepoint);
     
     if (entry == glyphCache.end())
     {
-        Glyph *glyph = createGlyph(codepoint);
+        glyph = createGlyph(codepoint);
         
         if (glyph)
         {
             glyphCache[codepoint] = unique_ptr<Glyph>(glyph);
         }
-        
-        return glyph;
     }
     else
     {
-        return entry->second.get();
+       glyph = entry->second.get();
+        
+        if (!glyph->texture->isLoaded())
+        {
+            GlyphData glyphData(ftFace, codepoint, useMipmap, padding);
+            
+            if (glyphData.isValid())
+            {
+                glyph->texture->load(glyphData);
+            }
+            else
+            {
+                return NULL; // XXX: SHOULD NEVER OCCUR
+            }
+        }
     }
+    
+    return glyph;
 }
 
 void ActualFont::clearGlyphCache()
 {
     glyphCache.clear();
+}
+
+void ActualFont::unloadTextures()
+{
+    for (auto &texture : standaloneTextures)
+    {
+        texture->unload();
+    }
 }
 
 ActualFont::Glyph* ActualFont::createGlyph(uint32_t codepoint)

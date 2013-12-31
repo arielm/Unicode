@@ -97,6 +97,14 @@ VirtualFont* FontManager::getVirtualFont(const string &ref, float baseSize, bool
     }
 }
 
+void FontManager::unloadTextures()
+{
+    for (auto &it : actualFonts)
+    {
+        it.second->unloadTextures();
+    }
+}
+
 vector<string> FontManager::getLanguageList(const string &languages)
 {
 	return split(languages, ":");

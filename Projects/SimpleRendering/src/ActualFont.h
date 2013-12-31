@@ -65,6 +65,7 @@ public:
     
     Glyph* getGlyph(uint32_t codepoint);
     void clearGlyphCache();
+    void unloadTextures();
     
 protected:
     std::shared_ptr<FreetypeHelper> ftHelper;

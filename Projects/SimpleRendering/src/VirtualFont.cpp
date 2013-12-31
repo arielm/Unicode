@@ -180,7 +180,7 @@ void VirtualFont::drawCluster(const Cluster &cluster, const Vec2f &position)
     {
         auto glyph = cluster.font->getGlyph(shape.codepoint);
         
-        if (glyph && glyph->texture)
+        if (glyph)
         {
             auto ul = position + (shape.position + glyph->offset) * sizeRatio;
             auto lr = ul + glyph->size * sizeRatio;
