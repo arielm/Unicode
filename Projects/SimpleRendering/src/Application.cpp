@@ -23,13 +23,16 @@
  *    - PRESS "ENTER" TO UNLOAD ALL THE TEXTURES
  *    - GLYPH RASTERIZATION WILL THEN HAPPEN ON THE FLY...
  *
- * 6) TEXT-SIZE VARIATION...
+ * 6) TEXT-SIZE VARIATION
+ *
+ * 7) ADAPTING TO iOS AND ANDROID
  */
 
 /*
  * TODO:
  *
- * 1) TEST OPEN-GL CONTEXT-LOSS ON ANDROID
+ * 1) ANDROID:
+ *    - FIND OUT WHY OPEN-GL CONTEXT-LOSS IS NOT HANDLED AS INTENDED
  *
  * 2) GLYPH RENDERING:
  *    - BATCHING:
@@ -85,11 +88,15 @@ public:
     void drawLineLayout(TextLayout &layout, float y, float left, float right);
     void drawHLine(float y);
     
-    void keyDown(KeyEvent event);
-    
     TextRun createRun(const string &text, const string &lang, hb_direction_t direction = HB_DIRECTION_INVALID) const;
     string trimText(const string &text) const;
-    
+
+#if defined(CINDER_ANDROID)
+    void resume(bool renewContext);
+#elif !defined(CINDER_COCOA_TOUCH)
+    void keyDown(KeyEvent event);
+#endif
+
 #if defined(CINDER_ANDROID)
     inline Vec2i toPixels(Vec2i s) { return s; }
     inline float toPixels(float s) { return s; }
@@ -191,14 +198,6 @@ void Application::drawHLine(float y)
     gl::drawLine(Vec2f(-9999, y), Vec2f(+9999, y));
 }
 
-void Application::keyDown(KeyEvent event)
-{
-    if (event.getCode() == KeyEvent::KEY_RETURN)
-    {
-        fontManager.unloadTextures();
-    }
-}
-
 TextRun Application::createRun(const string &text, const string &lang, hb_direction_t direction) const
 {
     auto script = languageHelper.getScript(lang);
@@ -227,5 +226,23 @@ string Application::trimText(const string &text) const
     
     return "";
 }
+
+#if defined(CINDER_ANDROID)
+void Application::resume(bool renewContext)
+{
+    if (renewContext)
+    {
+        fontManager.unloadTextures();
+    }
+}
+#elif !defined(CINDER_COCOA_TOUCH)
+void Application::keyDown(KeyEvent event)
+{
+    if (event.getCode() == KeyEvent::KEY_RETURN)
+    {
+        fontManager.unloadTextures();
+    }
+}
+#endif
 
 CINDER_APP_NATIVE(Application, RendererGl(RendererGl::AA_NONE))
