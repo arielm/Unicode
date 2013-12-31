@@ -22,7 +22,7 @@ TextLayout* TextLayoutCache::get(VirtualFont *virtualFont, const TextRun &run)
     else
     {
         auto value = virtualFont->createTextLayout(run);
-        cache[key] = shared_ptr<TextLayout>(value);
+        cache[key] = unique_ptr<TextLayout>(value);
         return value;
     }
 }

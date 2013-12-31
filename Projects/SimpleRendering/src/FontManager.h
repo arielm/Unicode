@@ -40,8 +40,8 @@ public:
     VirtualFont* getVirtualFont(const std::string &ref, float baseSize, bool useMipmap = true, int padding = 2);
     
 protected:
-    std::map<FontKey, std::shared_ptr<ActualFont>> actualFonts;
-    std::map<FontKey, std::shared_ptr<VirtualFont>> virtualFonts;
+    std::map<FontKey, std::unique_ptr<ActualFont>> actualFonts;
+    std::map<FontKey, std::unique_ptr<VirtualFont>> virtualFonts;
 
     static std::vector<std::string> getLanguageList(const std::string &languages);
 };

@@ -43,5 +43,5 @@ public:
     void purge();
     
 protected:
-    std::map<TextLayoutKey, std::shared_ptr<TextLayout>> cache;
+    std::map<TextLayoutKey, std::unique_ptr<TextLayout>> cache;
 };

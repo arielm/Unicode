@@ -36,7 +36,7 @@ ActualFont* FontManager::getActualFont(const string &ref, float baseSize, bool u
         if (!filePath.empty())
         {
             auto font = new ActualFont(ftHelper, filePath, baseSize, useMipmap, padding);
-            actualFonts[key] = shared_ptr<ActualFont>(font);
+            actualFonts[key] = unique_ptr<ActualFont>(font);
             
             return font;
         }
@@ -59,7 +59,7 @@ VirtualFont* FontManager::getVirtualFont(const string &ref, float baseSize, bool
     else
     {
         auto font = new VirtualFont(baseSize);
-        virtualFonts[key] = shared_ptr<VirtualFont>(font);
+        virtualFonts[key] = unique_ptr<VirtualFont>(font);
         
         XmlTree doc(InputSource::getDataSource(ref));
         auto rootElement = doc.getChild("VirtualFont");

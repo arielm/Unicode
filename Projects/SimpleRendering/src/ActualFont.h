@@ -71,7 +71,7 @@ protected:
     FT_Face ftFace;
     
     std::map<uint32_t, Glyph*> glyphCache;
-    std::vector<std::shared_ptr<ReloadableTexture>> textureList;
+    std::vector<std::unique_ptr<ReloadableTexture>> standaloneTextures;
     
     Glyph* createGlyph(uint32_t codepoint);
 };

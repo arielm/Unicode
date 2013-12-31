@@ -173,7 +173,7 @@ ActualFont::Glyph* ActualFont::createGlyph(uint32_t codepoint)
                 if (width * height > 0)
                 {
                     auto texture = new ReloadableTexture(slot->bitmap.buffer, width, height, useMipmap, padding);
-                    textureList.push_back(shared_ptr<ReloadableTexture>(texture));
+                    standaloneTextures.push_back(unique_ptr<ReloadableTexture>(texture));
                     
                     auto offset = Vec2f(slot->bitmap_left, -slot->bitmap_top) - Vec2f(padding, padding);
                     auto size = Vec2f(width, height) + Vec2f(padding, padding) * 2;
