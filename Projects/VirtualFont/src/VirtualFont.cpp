@@ -21,7 +21,7 @@ bool VirtualFont::add(const string &lang, ActualFont *font)
     return false;
 }
 
-FontSet VirtualFont::getFontSet(const string &lang) const
+const FontSet& VirtualFont::getFontSet(const string &lang) const
 {
     auto it = fontSetMap.find(lang);
     
@@ -31,7 +31,7 @@ FontSet VirtualFont::getFontSet(const string &lang) const
         
         if (it == fontSetMap.end())
         {
-            return FontSet();
+            throw;
         }
     }
     

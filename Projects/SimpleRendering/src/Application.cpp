@@ -21,15 +21,17 @@
 /*
  * TODO:
  *
- * 0) DRAW DIRECTLY, I.E.
+ * 1) "PROCESS LAYOUT" IN VirtualFont?
+ *
+ * 2) DRAW DIRECTLY, I.E.
  *    - NOT USING gl::Texture
  *    - WITH BEGIN / END
  *    - ETC.
  *
- * 1) TextLayoutCache:
+ * 3) TextLayoutCache:
  *    - LRU STRATEGY?
  *
- * 2) FontManager:
+ * 4) FontManager:
  *    - PROPER ERROR HANDLING UPON CREATION
  *    - POSSIBILITY TO REMOVE A PARTICULAR VirtualFont
  *    - POSSIBILITY TO UNLOAD / RELOAD ALL THE DATA:
