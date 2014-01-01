@@ -34,6 +34,7 @@ public:
     void drawHLine(float y);
     
 #if defined(CINDER_ANDROID)
+    void resume(bool renewContext) {}
     inline Vec2i toPixels(Vec2i s) { return s; }
     inline float toPixels(float s) { return s; }
 #endif
@@ -52,8 +53,8 @@ void Application::setup()
     
 #if defined(CINDER_ANDROID) && 0 // USE "1" FOR SYSTEM FONTS ON ANDROID (TESTED ON NEXUS-7)
     font1 = make_shared<YFont>(ftHelper, FontDescriptor(loadFile("/system/fonts/DroidSans.ttf")), FONT_SIZE); // SYM-LINKED TO Roboto-Regular.ttf ON ANDROID 4+
-    font2 = make_shared<YFont>(ftHelper, FontDescriptor(loadFile("/system/fonts/DroidSansHebrew-Regular.ttf")), FONT_SIZE);
-    font3 = make_shared<YFont>(ftHelper, FontDescriptor(loadFile("/system/fonts/DroidNaskh-Regular.ttf")), FONT_SIZE);
+    font2 = make_shared<YFont>(ftHelper, FontDescriptor(loadFile("/system/fonts/DroidSansHebrew-Regular.ttf")), FONT_SIZE); // NOT INSTALLED ON XOOM 1 (ANDROID 3)
+    font3 = make_shared<YFont>(ftHelper, FontDescriptor(loadFile("/system/fonts/DroidNaskh-Regular.ttf")), FONT_SIZE); // NOT INSTALLED ON XOOM 1 (ANDROID 3)
 #elif defined(CINDER_MAC) && 0 // USE "1" FOR SYSTEM FONTS ON OSX (TESTED ON 10.8.5)
     font1 = make_shared<YFont>(ftHelper, FontDescriptor(loadFile("/System/Library/Fonts/Helvetica.dfont"), 4), FONT_SIZE); // FACE-INDEX 4 CORRESPONDS TO "Helvetica Regular"
     font2 = make_shared<YFont>(ftHelper, FontDescriptor(loadFile("/Library/Fonts/AdobeHebrew-Regular.otf")), FONT_SIZE);
@@ -70,12 +71,6 @@ void Application::setup()
 
     // ---
     
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    glEnable(GL_BLEND);
-    
-    glDisable(GL_DEPTH_TEST);
-    glDepthMask(GL_FALSE);
-    
 #if defined(CINDER_COCOA_TOUCH)
     getSignalSupportedOrientations().connect([] { return InterfaceOrientation::LandscapeRight; });
 #endif
@@ -83,6 +78,14 @@ void Application::setup()
 
 void Application::draw()
 {
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glEnable(GL_BLEND);
+    
+    glDisable(GL_DEPTH_TEST);
+    glDepthMask(GL_FALSE);
+    
+    // ---
+    
     gl::clear(Color::gray(0.5f), false);
     gl::setMatricesWindow(toPixels(getWindowSize()), true);
     

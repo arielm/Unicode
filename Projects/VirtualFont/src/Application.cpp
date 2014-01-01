@@ -59,6 +59,7 @@ public:
     string trimText(const string &text) const;
     
 #if defined(CINDER_ANDROID)
+    void resume(bool renewContext) {}
     inline Vec2i toPixels(Vec2i s) { return s; }
     inline float toPixels(float s) { return s; }
 #endif
@@ -107,12 +108,6 @@ void Application::setup()
     
     // ---
     
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    glEnable(GL_BLEND);
-    
-    glDisable(GL_DEPTH_TEST);
-    glDepthMask(GL_FALSE);
-    
 #if defined(CINDER_COCOA_TOUCH)
     getSignalSupportedOrientations().connect([] { return InterfaceOrientation::LandscapeRight; });
 #endif
@@ -120,6 +115,14 @@ void Application::setup()
 
 void Application::draw()
 {
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glEnable(GL_BLEND);
+    
+    glDisable(GL_DEPTH_TEST);
+    glDepthMask(GL_FALSE);
+    
+    // ---
+    
     gl::clear(Color::gray(0.5f), false);
     
     Vec2i windowSize = toPixels(getWindowSize());

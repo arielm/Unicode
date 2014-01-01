@@ -25,16 +25,17 @@
  *
  * 6) TEXT-SIZE VARIATION
  *
- * 7) ADAPTING TO iOS AND ANDROID
+ * 7) ADAPTING TO iOS AND ANDROID:
+ *    - WORKS AS INTENDED ON NEXUS-7
+ *    - CRASH WHEN RETURNING TO APP ON XOOM 1 (ANDROID 3):
+ *      - LOOKS LIKE A GENERIC BUG IN SAFETY-DANK'S VERSION:
+ *        - SHOULD NOT BE AN ISSUE WITH NEW-CHRONOTEXT-TOOLKIT
  */
 
 /*
  * TODO:
  *
- * 1) ANDROID:
- *    - FIND OUT WHY OPEN-GL CONTEXT-LOSS IS NOT HANDLED AS INTENDED
- *
- * 2) GLYPH RENDERING:
+ * 1) GLYPH RENDERING:
  *    - BATCHING:
  *      - INCLUDING COLOR
  *      - MAYBE ALSO: INTERLEAVED VERTICES AND COORDS...
@@ -44,10 +45,10 @@
  *      - "TEXTURE BUCKET"
  *      - "SEQUENCE"...
  *
- * 3) TextLayoutCache:
+ * 2) TextLayoutCache:
  *    - LRU STRATEGY?
  *
- * 4) FontManager:
+ * 3) FontManager:
  *    - PROPER ERROR HANDLING UPON CREATION
  *    - POSSIBILITY TO REMOVE A PARTICULAR VirtualFont
  *    - WE NEED A KIND OF "GLOBAL TEXTURE STORE" FOR STANDALONE-TEXTURES AND ATLASES
@@ -137,12 +138,6 @@ void Application::setup()
     
     // ---
     
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    glEnable(GL_BLEND);
-    
-    glDisable(GL_DEPTH_TEST);
-    glDepthMask(GL_FALSE);
-    
 #if defined(CINDER_COCOA_TOUCH)
     getSignalSupportedOrientations().connect([] { return InterfaceOrientation::LandscapeRight; });
 #endif
@@ -150,6 +145,14 @@ void Application::setup()
 
 void Application::draw()
 {
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glEnable(GL_BLEND);
+    
+    glDisable(GL_DEPTH_TEST);
+    glDepthMask(GL_FALSE);
+    
+    // ---
+    
     gl::clear(Color::gray(0.5f), false);
     
     Vec2i windowSize = toPixels(getWindowSize());
