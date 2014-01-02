@@ -23,9 +23,12 @@ public:
     void load(const GlyphData &glyphData);
     
     void bind();
-    GLint getWidth() const;
-    GLint getHeight() const;
+    GLuint getId();
+    int getWidth() const;
+    int getHeight() const;
     
 protected:
-    ci::gl::Texture *tmp;
+    GLuint textureId;
+    int textureWidth;
+    int textureHeight;
 };
