@@ -23,7 +23,6 @@ public:
     float baseSize;
     
     VirtualFont(float baseSize);
-    ~VirtualFont();
     
     bool add(const std::string &lang, ActualFont *font);
     const FontSet& getFontSet(const std::string &lang) const;
@@ -40,8 +39,6 @@ public:
     void drawCluster(const Cluster &cluster, const ci::Vec2f &position);
 
 protected:
-    hb_buffer_t *hbBuffer;
-    
     float size;
     float sizeRatio;
     

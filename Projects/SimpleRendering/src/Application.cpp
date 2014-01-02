@@ -61,7 +61,6 @@
 #include "TextLayoutCache.h"
 #include "FontManager.h"
 #include "LanguageHelper.h"
-#include "Test.h"
 
 #include <boost/algorithm/string.hpp>
 
@@ -136,10 +135,6 @@ void Application::setup()
         
         runs.emplace_back(createRun(text, lang));
     }
-    
-#if 1
-    Test::measureShaping(console(), font, runs);
-#endif
     
     // ---
     
