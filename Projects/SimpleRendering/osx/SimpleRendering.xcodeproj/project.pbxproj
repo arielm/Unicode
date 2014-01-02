@@ -178,6 +178,8 @@
 		A8CC34FA186A021B008B598E /* VirtualFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VirtualFont.cpp; path = ../src/VirtualFont.cpp; sourceTree = "<group>"; };
 		A8CC34FB186A021B008B598E /* VirtualFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VirtualFont.h; path = ../src/VirtualFont.h; sourceTree = "<group>"; };
 		A8F9B9F3186AD9AA00724EED /* SansSerif-osx.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = "SansSerif-osx.xml"; path = "../resources/SansSerif-osx.xml"; sourceTree = "<group>"; };
+		A8F9D3871875936F002125F0 /* Test.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Test.h; path = ../src/Test.h; sourceTree = "<group>"; };
+		A8F9D3881875936F002125F0 /* Timing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Timing.h; path = ../src/Timing.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -221,6 +223,8 @@
 				A870AAB51872E67300D14AE8 /* ReloadableTexture.h */,
 				A870AAB41872E67300D14AE8 /* ReloadableTexture.cpp */,
 				A870AAB71873021700D14AE8 /* GlyphData.h */,
+				A8F9D3871875936F002125F0 /* Test.h */,
+				A8F9D3881875936F002125F0 /* Timing.h */,
 			);
 			name = Source;
 			sourceTree = "<group>";

@@ -16,7 +16,13 @@ VirtualFont::VirtualFont(float baseSize)
 :
 baseSize(baseSize)
 {
+    hbBuffer = hb_buffer_create();
     setSize(1);
+}
+
+VirtualFont::~VirtualFont()
+{
+    hb_buffer_destroy(hbBuffer);
 }
 
 bool VirtualFont::add(const string &lang, ActualFont *font)
@@ -67,20 +73,18 @@ const ActualFont::Metrics& VirtualFont::getMetrics(const string &lang) const
 TextLayout* VirtualFont::createTextLayout(const TextRun &run)
 {
     auto layout = new TextLayout(this, run.lang, run.direction);
-    
     map<uint32_t, Cluster> clusterMap;
-    auto buffer = hb_buffer_create();
     
     for (auto font : getFontSet(run.lang))
     {
-        hb_buffer_clear_contents(buffer);
+        hb_buffer_clear_contents(hbBuffer);
         
-        run.apply(buffer);
-        hb_shape(font->hbFont, buffer, NULL, 0);
+        run.apply(hbBuffer);
+        hb_shape(font->hbFont, hbBuffer, NULL, 0);
         
-        auto glyphCount = hb_buffer_get_length(buffer);
-        auto glyphInfos = hb_buffer_get_glyph_infos(buffer, NULL);
-        auto glyphPositions = hb_buffer_get_glyph_positions(buffer, NULL);
+        auto glyphCount = hb_buffer_get_length(hbBuffer);
+        auto glyphInfos = hb_buffer_get_glyph_infos(hbBuffer, NULL);
+        auto glyphPositions = hb_buffer_get_glyph_positions(hbBuffer, NULL);
         
         bool hasMissingGlyphs = false;
         
@@ -140,7 +144,7 @@ TextLayout* VirtualFont::createTextLayout(const TextRun &run)
         }
     }
     
-    hb_buffer_destroy(buffer);
+    hb_buffer_reset(hbBuffer);
     return layout;
 }
 
