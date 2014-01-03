@@ -176,6 +176,14 @@ void VirtualFont::end()
 
 void VirtualFont::drawCluster(const Cluster &cluster, const Vec2f &position)
 {
+    vector<Vec2f> vertices;
+    vertices.reserve(4);
+    glVertexPointer(2, GL_FLOAT, 0, vertices.data());
+    
+    vector<Vec2f> coords;
+    coords.reserve(4);
+    glTexCoordPointer(2, GL_FLOAT, 0, coords.data());
+    
     for (auto shape : cluster.shapes)
     {
         auto glyph = cluster.font->getGlyph(shape.codepoint);
@@ -185,22 +193,19 @@ void VirtualFont::drawCluster(const Cluster &cluster, const Vec2f &position)
             auto ul = position + (shape.position + glyph->offset) * sizeRatio;
             auto lr = ul + glyph->size * sizeRatio;
             
-            vector<Vec2f> vertices;
+            vertices.clear();
             vertices.emplace_back(ul);
             vertices.emplace_back(lr.x, ul.y);
             vertices.emplace_back(lr);
             vertices.emplace_back(ul.x, lr.y);
             
-            vector<Vec2f> coords;
+            coords.clear();
             coords.emplace_back(glyph->tx1, glyph->ty1);
             coords.emplace_back(glyph->tx2, glyph->ty1);
             coords.emplace_back(glyph->tx2, glyph->ty2);
             coords.emplace_back(glyph->tx1, glyph->ty2);
             
             glyph->texture->bind();
-            
-            glVertexPointer(2, GL_FLOAT, 0, vertices.data());
-            glTexCoordPointer(2, GL_FLOAT, 0, coords.data());
             glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
         }
     }
