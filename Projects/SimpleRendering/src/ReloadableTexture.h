@@ -18,12 +18,12 @@ public:
     ReloadableTexture(const GlyphData &glyphData);
     ~ReloadableTexture();
     
-    bool isLoaded();
+    bool isLoaded() const;
     void unload();
     void load(const GlyphData &glyphData);
     
     void bind();
-    GLuint getId();
+    GLuint getId() const;
     int getWidth() const;
     int getHeight() const;
     

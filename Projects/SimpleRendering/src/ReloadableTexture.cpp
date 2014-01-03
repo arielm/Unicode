@@ -35,7 +35,7 @@ ReloadableTexture::~ReloadableTexture()
     unload();
 }
 
-bool ReloadableTexture::isLoaded()
+bool ReloadableTexture::isLoaded() const
 {
     return (textureId != 0);
 }
@@ -110,7 +110,7 @@ void ReloadableTexture::bind()
     glBindTexture(GL_TEXTURE_2D, textureId);
 }
 
-GLuint ReloadableTexture::getId()
+GLuint ReloadableTexture::getId() const
 {
     return textureId;
 }
