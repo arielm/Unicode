@@ -20,9 +20,9 @@ FontManager::FontManager()
     ftHelper = make_shared<FreetypeHelper>();
 }
 
-ActualFont* FontManager::getActualFont(const string &ref, float baseSize, bool useMipmap, int padding)
+ActualFont* FontManager::getActualFont(const string &uri, float baseSize, bool useMipmap, int padding)
 {
-    FontKey key(ref, baseSize, useMipmap);
+    FontKey key(uri, baseSize, useMipmap);
     auto it = actualFonts.find(key);
     
     if (it != actualFonts.end())
@@ -31,7 +31,7 @@ ActualFont* FontManager::getActualFont(const string &ref, float baseSize, bool u
     }
     else
     {
-        auto filePath = InputSource::getFilePath(ref);
+        auto filePath = InputSource::getFilePath(uri);
         
         if (!filePath.empty())
         {
@@ -47,9 +47,9 @@ ActualFont* FontManager::getActualFont(const string &ref, float baseSize, bool u
     }
 }
 
-VirtualFont* FontManager::getVirtualFont(const string &ref, float baseSize, bool useMipmap, int padding)
+VirtualFont* FontManager::getVirtualFont(const string &uri, float baseSize, bool useMipmap, int padding)
 {
-    FontKey key(ref, baseSize, useMipmap);
+    FontKey key(uri, baseSize, useMipmap);
     auto it = virtualFonts.find(key);
     
     if (it != virtualFonts.end())
@@ -61,7 +61,7 @@ VirtualFont* FontManager::getVirtualFont(const string &ref, float baseSize, bool
         auto font = new VirtualFont(baseSize);
         virtualFonts[key] = unique_ptr<VirtualFont>(font);
         
-        XmlTree doc(InputSource::getDataSource(ref));
+        XmlTree doc(InputSource::getDataSource(uri));
         auto rootElement = doc.getChild("VirtualFont");
         
         for (auto &fontElement : rootElement.getChildren())
@@ -76,9 +76,9 @@ VirtualFont* FontManager::getVirtualFont(const string &ref, float baseSize, bool
                     {
                         for (auto &refElement : variantElement->getChildren())
                         {
-                            string ref = refElement->getValue();
+                            string uri = refElement->getValue();
                             
-                            if (font->add(lang, getActualFont(ref, baseSize, useMipmap, padding)))
+                            if (font->add(lang, getActualFont(uri, baseSize, useMipmap, padding)))
                             {
                                 break;
                             }
@@ -86,8 +86,8 @@ VirtualFont* FontManager::getVirtualFont(const string &ref, float baseSize, bool
                     }
                     else
                     {
-                        string ref = variantElement->getValue();
-                        font->add(lang, getActualFont(ref, baseSize, useMipmap, padding));
+                        string uri = variantElement->getValue();
+                        font->add(lang, getActualFont(uri, baseSize, useMipmap, padding));
                     }
                 }
             }

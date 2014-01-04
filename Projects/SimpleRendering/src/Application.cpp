@@ -39,19 +39,24 @@
  *
  * 1) ADVANCED GLYPH RENDERING:
  *    - BATCHING ("TEXTURE BUCKET"):
- *      - USING A MAP, WITH AN ENTRY FOR EACH GLYPH (I.E. TEXTURE)
+ *      - USING A MAP, WITH AN ENTRY FOR EACH TEXTURE:
  *        - EACH ENTRY CONTAINING A VECTOR OF FLOATS FILLED-WITH:
  *          - INTERLEAVED POSITIONS, TEXTURE-COORDS AND COLORS
  *    - TRANSFORMING VERTICES VIA FontMatrix
  *    - "BEGIN / END" MODES:
  *      - "DIRECT"
  *      - "TEXTURE BUCKET"
- *      - "SEQUENCE"
  *
- * 2) TextLayoutCache:
+ * 2) TEXTURE-ATLASES:
+ *    - SIMILAR TO THE SYSTEM USED IN XFont, BUT WITH N TEXTURES
+ *    - WE NEED A SYSTEM FOR USERS TO DEFINE WHICH GLYPHS ARE CACHED
+ *      - BECAUSE OF MIPMAPPING, WE CAN'T ADD GLYPHS ON-THE-FLY
+ *      - THERE SHOULD BE A WAY TO ADD/REMOVE GROUPS OF GLYPHS, E.G. PER LANGUAGE
+ *
+ * 3) TextLayoutCache:
  *    - LRU STRATEGY?
  *
- * 3) FontManager:
+ * 4) FontManager:
  *    - PROPER ERROR HANDLING UPON CREATION
  *    - POSSIBILITY TO REMOVE A PARTICULAR VirtualFont
  *    - WE NEED A KIND OF "GLOBAL TEXTURE STORE" FOR STANDALONE-TEXTURES AND ATLASES
@@ -117,16 +122,16 @@ void Application::prepareSettings(Settings *settings)
 void Application::setup()
 {
 #if defined(CINDER_ANDROID)
-    auto ref = "res://SansSerif-android.xml";
+    auto uri = "res://SansSerif-android.xml";
 #elif defined(CINDER_COCOA_TOUCH)
-    auto ref = "res://SansSerif-ios.xml";
+    auto uri = "res://SansSerif-ios.xml";
 #elif defined(CINDER_MAC) && 1
-    auto ref = "res://SansSerif-osx.xml";
+    auto uri = "res://SansSerif-osx.xml";
 #else
-    auto ref = "res://SansSerif.xml"; // FOR QUICK TESTS ON THE DESKTOP
+    auto uri = "res://SansSerif.xml"; // FOR QUICK TESTS ON THE DESKTOP
 #endif
 
-    font = fontManager.getVirtualFont(ref, FONT_SIZE);
+    font = fontManager.getVirtualFont(uri, FONT_SIZE);
     
     XmlTree doc(loadResource("Text.xml"));
     auto rootElement = doc.getChild("Text");

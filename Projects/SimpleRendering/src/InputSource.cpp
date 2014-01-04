@@ -17,26 +17,26 @@ using namespace std;
 using namespace ci;
 using namespace app;
 
-const string REF_FILE = "file://";
-const string REF_ASSETS = "assets://";
-const string REF_RES = "res://";
+const string URI_FILE = "file://";
+const string URI_ASSETS = "assets://";
+const string URI_RES = "res://";
 
-fs::path InputSource::getFilePath(const std::string &ref)
+fs::path InputSource::getFilePath(const std::string &uri)
 {
     fs::path filePath;
     
-    if (boost::starts_with(ref, REF_FILE))
+    if (boost::starts_with(uri, URI_FILE))
     {
-        filePath = ref.substr(REF_FILE.size());
+        filePath = uri.substr(URI_FILE.size());
     }
-    else if (boost::starts_with(ref, REF_ASSETS))
+    else if (boost::starts_with(uri, URI_ASSETS))
     {
-        filePath = getAssetPath(ref.substr(REF_ASSETS.size()));
+        filePath = getAssetPath(uri.substr(URI_ASSETS.size()));
     }
 #if defined(CINDER_COCOA)
-    else if (boost::starts_with(ref, REF_RES))
+    else if (boost::starts_with(uri, URI_RES))
     {
-        filePath = App::getResourcePath(ref.substr(REF_RES.size()));
+        filePath = App::getResourcePath(uri.substr(URI_RES.size()));
     }
 #endif
     
@@ -50,19 +50,19 @@ fs::path InputSource::getFilePath(const std::string &ref)
     }
 }
 
-DataSourceRef InputSource::getDataSource(const string &ref)
+DataSourceRef InputSource::getDataSource(const string &uri)
 {
-    if (boost::starts_with(ref, REF_FILE))
+    if (boost::starts_with(uri, URI_FILE))
     {
-        return DataSourcePath::create(ref.substr(REF_FILE.size()));
+        return DataSourcePath::create(uri.substr(URI_FILE.size()));
     }
-    else if (boost::starts_with(ref, REF_ASSETS))
+    else if (boost::starts_with(uri, URI_ASSETS))
     {
-        return DataSourcePath::create(getAssetPath(ref.substr(REF_FILE.size()))); // TODO: SPECIAL VERSION REQUIRED FOR ANDROID
+        return DataSourcePath::create(getAssetPath(uri.substr(URI_FILE.size()))); // TODO: SPECIAL VERSION REQUIRED FOR ANDROID
     }
-    else if (boost::starts_with(ref, REF_RES))
+    else if (boost::starts_with(uri, URI_RES))
     {
-        return loadResource(ref.substr(REF_RES.size())); // TODO: SPECIAL VERSION REQUIRED FOR WINDOWS
+        return loadResource(uri.substr(URI_RES.size())); // TODO: SPECIAL VERSION REQUIRED FOR WINDOWS
     }
     
     return DataSourceRef();

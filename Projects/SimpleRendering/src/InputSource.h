@@ -13,6 +13,6 @@
 class InputSource
 {
 public:
-    static ci::fs::path getFilePath(const std::string &ref);
-    static ci::DataSourceRef getDataSource(const std::string &ref);
+    static ci::fs::path getFilePath(const std::string &uri);
+    static ci::DataSourceRef getDataSource(const std::string &uri);
 };

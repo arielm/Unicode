@@ -12,20 +12,20 @@
 
 struct FontKey
 {
-    std::string ref;
+    std::string uri;
     float baseSize;
     bool useMipmap;
     
-    FontKey(const std::string &ref, float baseSize, bool useMipmap)
+    FontKey(const std::string &uri, float baseSize, bool useMipmap)
     :
-    ref(ref),
+    uri(uri),
     baseSize(baseSize),
     useMipmap(useMipmap)
     {}
     
     bool operator<(const FontKey &rhs) const
     {
-        return tie(useMipmap, baseSize, ref) < tie(rhs.useMipmap, rhs.baseSize, rhs.ref);
+        return tie(useMipmap, baseSize, uri) < tie(rhs.useMipmap, rhs.baseSize, rhs.uri);
     }
 };
 
@@ -36,8 +36,8 @@ public:
     
     FontManager();
     
-    ActualFont* getActualFont(const std::string &ref, float baseSize, bool useMipmap = true, int padding = 2);
-    VirtualFont* getVirtualFont(const std::string &ref, float baseSize, bool useMipmap = true, int padding = 2);
+    ActualFont* getActualFont(const std::string &uri, float baseSize, bool useMipmap = true, int padding = 2);
+    VirtualFont* getVirtualFont(const std::string &uri, float baseSize, bool useMipmap = true, int padding = 2);
     
     void unloadTextures();
     
