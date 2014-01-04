@@ -30,7 +30,9 @@ public:
     
     TextLayout* createTextLayout(const TextRun &run);
     
-    void setSize(float newSize);
+    void setSize(float size);
+    void setColor(const ci::ColorA &color);
+    
     float getAdvance(const Cluster &cluster) const;
     float getAdvance(const TextLayout &layout) const;
     
@@ -42,5 +44,6 @@ protected:
     float size;
     float sizeRatio;
     
+    std::vector<ci::ColorA> colors;
     std::map<std::string, FontSet> fontSetMap;
 };

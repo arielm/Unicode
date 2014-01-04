@@ -16,7 +16,8 @@ VirtualFont::VirtualFont(float baseSize)
 :
 baseSize(baseSize)
 {
-    setSize(1);
+    setSize(12);
+    setColor(ColorA(1, 1, 1, 1));
 }
 
 bool VirtualFont::add(const string &lang, ActualFont *font)
@@ -150,6 +151,15 @@ void VirtualFont::setSize(float newSize)
     sizeRatio = newSize / baseSize;
 }
 
+void VirtualFont::setColor(const ColorA &color)
+{
+    colors.clear();
+    colors.emplace_back(color);
+    colors.emplace_back(color);
+    colors.emplace_back(color);
+    colors.emplace_back(color);
+}
+
 float VirtualFont::getAdvance(const Cluster &cluster) const
 {
     return cluster.combinedAdvance * sizeRatio;
@@ -165,6 +175,7 @@ void VirtualFont::begin()
     glEnable(GL_TEXTURE_2D);
     glEnableClientState(GL_VERTEX_ARRAY);
     glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+    glEnableClientState(GL_COLOR_ARRAY);
 }
 
 void VirtualFont::end()
@@ -172,17 +183,20 @@ void VirtualFont::end()
     glDisable(GL_TEXTURE_2D);
     glDisableClientState(GL_VERTEX_ARRAY);
     glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+    glDisableClientState(GL_COLOR_ARRAY);
 }
 
 void VirtualFont::drawCluster(const Cluster &cluster, const Vec2f &position)
 {
-    vector<Vec2f> vertices;
-    vertices.reserve(4);
-    glVertexPointer(2, GL_FLOAT, 0, vertices.data());
+    vector<Vec2f> positions;
+    positions.reserve(4);
+    glVertexPointer(2, GL_FLOAT, 0, positions.data());
     
     vector<Vec2f> coords;
     coords.reserve(4);
     glTexCoordPointer(2, GL_FLOAT, 0, coords.data());
+
+    glColorPointer(4, GL_FLOAT, 0, colors.data());
     
     for (auto shape : cluster.shapes)
     {
@@ -193,11 +207,11 @@ void VirtualFont::drawCluster(const Cluster &cluster, const Vec2f &position)
             auto ul = position + (shape.position + glyph->offset) * sizeRatio;
             auto lr = ul + glyph->size * sizeRatio;
             
-            vertices.clear();
-            vertices.emplace_back(ul);
-            vertices.emplace_back(lr.x, ul.y);
-            vertices.emplace_back(lr);
-            vertices.emplace_back(ul.x, lr.y);
+            positions.clear();
+            positions.emplace_back(ul);
+            positions.emplace_back(lr.x, ul.y);
+            positions.emplace_back(lr);
+            positions.emplace_back(ul.x, lr.y);
             
             coords.clear();
             coords.emplace_back(glyph->tx1, glyph->ty1);

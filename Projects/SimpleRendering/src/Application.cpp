@@ -15,7 +15,7 @@
  *    NECESSARY WHEN DRAWING A SMALLER SIZES WITH MIPMAPING
  *
  * 3) BASIC FONT-DRAWING AT ARBITRARY SIZE:
- *    NOT USING gl::Texture::draw ANYMORE
+ *    NOT USING gl::Texture ANYMORE
  *
  * 4) TextLayout CREATED VIA VirtualFont
  *
@@ -30,6 +30,8 @@
  *    - CRASH WHEN RETURNING TO APP ON XOOM 1 (ANDROID 3):
  *      - LOOKS LIKE A GENERIC BUG IN SAFETY-DANK'S VERSION:
  *        - SHOULD NOT BE AN ISSUE WITH NEW-CHRONOTEXT-TOOLKIT
+ *
+ * 8) GLYPH-RENDERING NOW WORKS WITH glColorPointer
  */
 
 /*
@@ -166,6 +168,8 @@ void Application::draw()
 
     float size = 30 + 18 * math<float>::sin(getElapsedSeconds()); // OSCILLATING BETWEN 12 AND 48
     font->setSize(size);
+    
+    font->setColor(ColorA(1, 1, 1, 0.75f));
 
     for (auto run : runs)
     {
@@ -179,7 +183,6 @@ void Application::drawLineLayout(TextLayout &layout, float y, float left, float 
     float x = (layout.direction == HB_DIRECTION_LTR) ? left : (right - font->getAdvance(layout));
     Vec2f position(x, y);
  
-    glColor4f(1, 1, 1, 1);
     font->begin();
 
     for (auto cluster : layout.clusters)
