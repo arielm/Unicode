@@ -153,11 +153,7 @@ void VirtualFont::setSize(float newSize)
 
 void VirtualFont::setColor(const ColorA &color)
 {
-    colors.clear();
-    colors.emplace_back(color);
-    colors.emplace_back(color);
-    colors.emplace_back(color);
-    colors.emplace_back(color);
+    quad.colors[0] = quad.colors[1] = quad.colors[2] = quad.colors[3] = color;
 }
 
 float VirtualFont::getAdvance(const Cluster &cluster) const
@@ -188,15 +184,9 @@ void VirtualFont::end()
 
 void VirtualFont::drawCluster(const Cluster &cluster, const Vec2f &position)
 {
-    vector<Vec2f> positions;
-    positions.reserve(4);
-    glVertexPointer(2, GL_FLOAT, 0, positions.data());
-    
-    vector<Vec2f> coords;
-    coords.reserve(4);
-    glTexCoordPointer(2, GL_FLOAT, 0, coords.data());
-
-    glColorPointer(4, GL_FLOAT, 0, colors.data());
+    glVertexPointer(2, GL_FLOAT, 0, quad.vertices);
+    glTexCoordPointer(2, GL_FLOAT, 0, quad.coords);
+    glColorPointer(4, GL_FLOAT, 0, quad.colors);
     
     for (auto shape : cluster.shapes)
     {
@@ -207,17 +197,15 @@ void VirtualFont::drawCluster(const Cluster &cluster, const Vec2f &position)
             auto ul = position + (shape.position + glyph->offset) * sizeRatio;
             auto lr = ul + glyph->size * sizeRatio;
             
-            positions.clear();
-            positions.emplace_back(ul);
-            positions.emplace_back(lr.x, ul.y);
-            positions.emplace_back(lr);
-            positions.emplace_back(ul.x, lr.y);
+            quad.vertices[0][0] = ul.x; quad.vertices[0][1] = ul.y;
+            quad.vertices[1][0] = lr.x; quad.vertices[1][1] = ul.y;
+            quad.vertices[2][0] = lr.x; quad.vertices[2][1] = lr.y;
+            quad.vertices[3][0] = ul.x; quad.vertices[3][1] = lr.y;
             
-            coords.clear();
-            coords.emplace_back(glyph->tx1, glyph->ty1);
-            coords.emplace_back(glyph->tx2, glyph->ty1);
-            coords.emplace_back(glyph->tx2, glyph->ty2);
-            coords.emplace_back(glyph->tx1, glyph->ty2);
+            quad.coords[0][0] = glyph->tx1; quad.coords[0][1] = glyph->ty1;
+            quad.coords[1][0] = glyph->tx2; quad.coords[1][1] = glyph->ty1;
+            quad.coords[2][0] = glyph->tx2; quad.coords[2][1] = glyph->ty2;
+            quad.coords[3][0] = glyph->tx1; quad.coords[3][1] = glyph->ty2;
             
             glyph->texture->bind();
             glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
