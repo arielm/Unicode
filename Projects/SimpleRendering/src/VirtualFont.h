@@ -20,13 +20,6 @@ typedef std::set<ActualFont*> FontSet;
 class VirtualFont
 {
 public:
-    struct Quad
-    {
-        float vertices[4][2];
-        float coords[4][2];
-        ci::ColorA colors[4];
-    };
-
     float baseSize;
     
     VirtualFont(float baseSize);
@@ -50,8 +43,7 @@ public:
 protected:
     float size;
     float sizeRatio;
-
-    Quad quad;
     
+    std::vector<ci::ColorA> colors;
     std::map<std::string, FontSet> fontSetMap;
 };
