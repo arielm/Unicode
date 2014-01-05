@@ -11,34 +11,29 @@
 #include "cinder/app/App.h"
 #include "cinder/Utilities.h"
 
-#include <boost/algorithm/string.hpp>
-
 using namespace std;
 using namespace ci;
 using namespace app;
 
-const string URI_FILE = "file://";
-const string URI_ASSETS = "assets://";
-const string URI_RES = "res://";
-
-fs::path InputSource::getFilePath(const std::string &uri)
+fs::path InputSource::getFilePath(const std::string &input)
 {
+    auto uri = decodeURI(input);
     fs::path filePath;
     
-    if (boost::starts_with(uri, URI_FILE))
+    if (uri.scheme == "file")
     {
-        filePath = uri.substr(URI_FILE.size());
+        filePath = uri.path;
     }
-    else if (boost::starts_with(uri, URI_ASSETS))
+    else if (uri.scheme == "assets")
     {
-        filePath = getAssetPath(uri.substr(URI_ASSETS.size()));
+        filePath = getAssetPath(uri.path);
     }
+    else if (uri.scheme == "res")
+    {
 #if defined(CINDER_COCOA)
-    else if (boost::starts_with(uri, URI_RES))
-    {
-        filePath = App::getResourcePath(uri.substr(URI_RES.size()));
-    }
+        filePath = App::getResourcePath(uri.path);
 #endif
+    }
     
     if (fs::exists(filePath))
     {
@@ -50,20 +45,36 @@ fs::path InputSource::getFilePath(const std::string &uri)
     }
 }
 
-DataSourceRef InputSource::getDataSource(const string &uri)
+DataSourceRef InputSource::getDataSource(const string &input)
 {
-    if (boost::starts_with(uri, URI_FILE))
+    auto uri = decodeURI(input);
+    
+    if (uri.scheme == "file")
     {
-        return DataSourcePath::create(uri.substr(URI_FILE.size()));
+        return DataSourcePath::create(uri.path);
     }
-    else if (boost::starts_with(uri, URI_ASSETS))
+    else if (uri.scheme == "assets")
     {
-        return DataSourcePath::create(getAssetPath(uri.substr(URI_FILE.size()))); // TODO: SPECIAL VERSION REQUIRED FOR ANDROID
+        return DataSourcePath::create(getAssetPath(uri.path)); // WE'RE TALKING ABOUT "CINDER ASSETS", NOT "ANDROID ASSETS"
     }
-    else if (boost::starts_with(uri, URI_RES))
+    else if (uri.scheme == "res")
     {
-        return loadResource(uri.substr(URI_RES.size())); // TODO: SPECIAL VERSION REQUIRED FOR WINDOWS
+        return loadResource(uri.path); // TODO: SPECIAL VERSIONS REQUIRED FOR WINDOWS (EMBEDDED RESOURCES) AND ANDROID (ASSETS)
     }
     
     return DataSourceRef();
+}
+
+InputSource::URI InputSource::decodeURI(const std::string &input)
+{
+    InputSource::URI output;
+    auto found = input.find("://");
+    
+    if (found != string::npos)
+    {
+        output.scheme = input.substr(0, found);
+        output.path = input.substr(found + 3);
+    }
+    
+    return output;
 }
