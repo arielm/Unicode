@@ -7,14 +7,16 @@
  */
 
 /*
- * IMPLEMENTING icu/source/extra/scrptrun/srtest.cpp
+ * SCRIPT DETECTION IMPLEMENTED USING:
+ * http://source.icu-project.org/repos/icu/icu/trunk/source/extra/scrptrun
+ *
+ * THE NEXT STEP WOULD BE TO ASSOCIATE A LANGUAGE TO EACH OF THE SCRIPTS, AS DESCRIBED IN:
+ * http://www.mail-archive.com/harfbuzz@lists.freedesktop.org/msg03220.html
  */
 
 #include "cinder/app/AppNative.h"
 
-#include "unicode/unistr.h"
-
-#include "scrptrun.h"
+#include "Test.h"
 
 using namespace std;
 using namespace ci;
@@ -29,23 +31,7 @@ public:
 
 void Application::setup()
 {
-    const string input = " ॆहिन्दी العربية Русский English 漢孵とひらがなとカタカナ𐐀𐐁𐐂𐐃";
-    
-    UnicodeString text = UnicodeString::fromUTF8(input);
-    ScriptRun scriptRun(text.getBuffer(), text.length());
-    
-    while (scriptRun.next())
-    {
-        auto start = scriptRun.getScriptStart();
-        auto end = scriptRun.getScriptEnd();
-        auto code = scriptRun.getScriptCode();
-        
-        string tmp;
-        text.tempSubString(start, end - start).toUTF8String(tmp);
-        
-        cout << "SCRIPT '" << uscript_getName(code) << "' FROM " << start << " TO " << end - 1 << endl;
-        cout << tmp << endl << endl;
-    }
+    Test::run();
 }
 
 void Application::draw()
