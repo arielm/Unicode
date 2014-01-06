@@ -15,9 +15,29 @@ using namespace std;
 using namespace ci;
 using namespace app;
 
+struct URI
+{
+    string scheme;
+    string path;
+    
+    static URI decode(const std::string &input)
+    {
+        URI output;
+        auto found = input.find("://");
+        
+        if (found != string::npos)
+        {
+            output.scheme = input.substr(0, found);
+            output.path = input.substr(found + 3);
+        }
+        
+        return output;
+    }
+};
+
 fs::path InputSource::getFilePath(const std::string &input)
 {
-    auto uri = decodeURI(input);
+    auto uri = URI::decode(input);
     fs::path filePath;
     
     if (uri.scheme == "file")
@@ -47,7 +67,7 @@ fs::path InputSource::getFilePath(const std::string &input)
 
 DataSourceRef InputSource::getDataSource(const string &input)
 {
-    auto uri = decodeURI(input);
+    auto uri = URI::decode(input);
     
     if (uri.scheme == "file")
     {
@@ -63,18 +83,4 @@ DataSourceRef InputSource::getDataSource(const string &input)
     }
     
     return DataSourceRef();
-}
-
-InputSource::URI InputSource::decodeURI(const std::string &input)
-{
-    InputSource::URI output;
-    auto found = input.find("://");
-    
-    if (found != string::npos)
-    {
-        output.scheme = input.substr(0, found);
-        output.path = input.substr(found + 3);
-    }
-    
-    return output;
 }

@@ -15,13 +15,4 @@ class InputSource
 public:
     static ci::fs::path getFilePath(const std::string &uri);
     static ci::DataSourceRef getDataSource(const std::string &uri);
-
-protected:
-    struct URI
-    {
-        std::string scheme;
-        std::string path;
-    };
-
-    static URI decodeURI(const std::string &uri);
 };
