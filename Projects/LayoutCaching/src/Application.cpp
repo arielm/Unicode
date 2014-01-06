@@ -7,14 +7,7 @@
  */
 
 /*
- * BASIC TextLayout CACHE IN PLACE, INSPIRED BY ANDROID-PLATFORM:
- * http://goo.gl/3YdgKi
- */
-
-/*
- * TODO:
- *
- * 1) TextLayoutCache: LRU STRATEGY
+ * REFERENCE: https://github.com/arielm/Unicode/tree/master/Projects/LayoutCaching
  */
 
 #include "cinder/app/AppNative.h"
