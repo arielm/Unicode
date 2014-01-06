@@ -23,7 +23,7 @@ Take in count, however, that not all the features available in OS solutions like
 
 **Progress**
 
-So far, [Harfbuzz](https://github.com/behdad/harfbuzz) have been tested as a solution for shaping via the following projects:
+So far, [Harfbuzz](https://github.com/behdad/harfbuzz) and [ICU](http://site.icu-project.org) have been tested successfully via the following projects:
 
 1. [CinderHarfbuzz](Projects/CinderHarfbuzz)
 2. [ShapingTester](Projects/ShapingTester)
