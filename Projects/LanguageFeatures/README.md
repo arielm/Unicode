@@ -1,4 +1,4 @@
-LanguageFeatures
+5. LanguageFeatures
 ----------------
 
 I was not sure about the necessity to specify a *language* when peforming shaping with Harfbuzz so I asked [this question](http://www.mail-archive.com/harfbuzz@lists.freedesktop.org/msg03194.html) in the mailing list. The answer is that it can make a difference, as demonstrated in this project:  

@@ -1,4 +1,4 @@
-ShapingMetrics
+3. ShapingMetrics
 --------------
 
 **Features**

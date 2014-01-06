@@ -1,4 +1,4 @@
-CinderHarfbuzz
+1. CinderHarfbuzz
 --------------
 
 A minimal [Cinder](https://github.com/cinder/Cinder) project for shaping text in 3 different scripts with [Harfbuzz](https://github.com/behdad/harfbuzz).  

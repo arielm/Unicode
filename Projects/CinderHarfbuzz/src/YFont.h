@@ -20,7 +20,7 @@ struct TextSpan
     
     hb_script_t script;
     hb_direction_t direction;
-    std::string lang; // XXX: NOT CLEAR IF REALLY NECESSARY
+    std::string lang;
     
     TextSpan(const std::string &text, hb_script_t script, hb_direction_t direction, const std::string &lang)
     :
@@ -74,7 +74,7 @@ public:
 
 protected:
     std::shared_ptr<FreetypeHelper> ftHelper;
-    ci::Buffer memoryBuffer; // ONLY USED WHEN LOADING FROM MEMORY (I.E. ANDROID-ASSET OR WINDOWS-EMBEDDED-RESOURCE)
+    ci::Buffer memoryBuffer; // ONLY USED WHEN LOADING FROM MEMORY (ANDROID-ASSET OR WINDOWS-EMBEDDED-RESOURCE)
     FT_Face face;
     
     hb_font_t *hbFont;

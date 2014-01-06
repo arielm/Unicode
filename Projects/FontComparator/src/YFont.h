@@ -85,7 +85,7 @@ protected:
     hb_font_t *hbFont;
     hb_buffer_t *hbBuffer;
     
-    std::map<uint32_t, YGlyph*> cache;
+    std::map<uint32_t, std::unique_ptr<YGlyph>> cache;
 
     YGlyph* getGlyph(uint32_t codepoint);
     YGlyph* createGlyph(uint32_t codepoint) const;

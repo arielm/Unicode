@@ -16,7 +16,7 @@ const hb_script_t DEFAULT_SCRIPT = HB_SCRIPT_LATIN;
 const hb_direction_t DEFAULT_DIRECTION = HB_DIRECTION_LTR;
 
 const std::string DEFAULT_SCRIPT_TAG = "Latn";
-const std::string DEFAULT_FONT_PATH = "/Library/Fonts/Arial Unicode.ttf"; // OSX
+const std::string DEFAULT_FONT_PATH = "/Library/Fonts/Arial Unicode.ttf"; // WARNING: OSX ONLY, WITH "BAD DIACRITICS" FOR LANGUAGES LIKE HEBREW
 
 class Directive
 {

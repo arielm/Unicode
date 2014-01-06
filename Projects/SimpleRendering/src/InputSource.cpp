@@ -9,7 +9,6 @@
 #include "InputSource.h"
 
 #include "cinder/app/App.h"
-#include "cinder/Utilities.h"
 
 using namespace std;
 using namespace ci;
@@ -79,7 +78,7 @@ DataSourceRef InputSource::getDataSource(const string &input)
     }
     else if (uri.scheme == "res")
     {
-        return loadResource(uri.path); // TODO: SPECIAL VERSIONS REQUIRED FOR WINDOWS (EMBEDDED RESOURCES) AND ANDROID (ASSETS)
+        return loadResource(uri.path); // TODO: SPECIAL VERSION REQUIRED FOR WINDOWS (EMBEDDED RESOURCES)
     }
     
     return DataSourceRef();

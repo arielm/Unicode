@@ -59,7 +59,7 @@ YGlyph::YGlyph(unsigned char *data, int width, int height)
     {
         int textureWidth = nextPowerOfTwo(width);
         int textureHeight = nextPowerOfTwo(height);
-        auto textureData = (unsigned char*)calloc(textureWidth * textureHeight, 1); // WE NEED A ZERO-FILLED AREA
+        auto textureData = new unsigned char[textureWidth * textureHeight](); // ZERO-FILLED
         
         for (int iy = 0; iy < height; iy++)
         {
@@ -73,7 +73,7 @@ YGlyph::YGlyph(unsigned char *data, int width, int height)
         format.setInternalFormat(GL_ALPHA);
         
         texture = gl::Texture::create(textureData, GL_ALPHA, textureWidth, textureHeight, format);
-        free(textureData);
+        delete[] textureData;
     }
 }
 
@@ -130,6 +130,8 @@ ftHelper(ftHelper)
     
     FT_Set_Transform(face, &matrix, NULL);
     
+    // ---
+    
     leading = face->size->metrics.height * scale.y;
     ascent = face->size->metrics.ascender * scale.y;
     descent = -face->size->metrics.descender * scale.y;
@@ -154,7 +156,7 @@ void YFont::drawSpan(const TextSpan &span, float x, float y) const
     
     hb_buffer_set_direction(hbBuffer, span.direction);
     hb_buffer_set_script(hbBuffer, span.script);
-    hb_buffer_set_language(hbBuffer, hb_language_from_string(span.lang.data(), -1)); // XXX: SEEMS LIKE A NO-OP?
+    hb_buffer_set_language(hbBuffer, hb_language_from_string(span.lang.data(), -1));
     
     size_t textSize = span.text.size();
     hb_buffer_add_utf8(hbBuffer, span.text.data(), textSize, 0, textSize);

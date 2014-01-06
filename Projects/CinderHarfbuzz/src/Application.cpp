@@ -89,7 +89,7 @@ void Application::draw()
     gl::clear(Color::gray(0.5f), false);
     gl::setMatricesWindow(toPixels(getWindowSize()), true);
     
-    drawSpan(*font1, TextSpan("Exquis, exquis! Vive la mère Ubu.", HB_SCRIPT_LATIN, HB_DIRECTION_LTR, "fr") , 128); // http://goo.gl/TG3BPN
+    drawSpan(*font1, TextSpan("Влади́мир Ильи́ч Улья́нов", HB_SCRIPT_CYRILLIC, HB_DIRECTION_LTR, "ru") , 128); // Vladimir Ilitch Oulianov
     drawSpan(*font2, TextSpan("לְהַגִּיד בַּבֹּקֶר חַסְדֶּךָ וֶאֱמוּנָתְךָ בַּלֵּילוֹת", HB_SCRIPT_HEBREW, HB_DIRECTION_RTL, "he") , 256); // http://goo.gl/9UBdl8
     drawSpan(*font3, TextSpan("ما هي الشفرة الموحدة يونيكود؟", HB_SCRIPT_ARABIC, HB_DIRECTION_RTL, "ar") , 384); // http://goo.gl/1xErNU
 }
@@ -97,7 +97,7 @@ void Application::draw()
 void Application::drawSpan(const YFont &font, const TextSpan &span, float y)
 {
     glColor4f(1, 1, 1, 1);
-    font.drawSpan(span, 32, y);
+    font.drawSpan(span, 24, y);
     
     glColor4f(1, 0.75f, 0, 0.5f);
     drawHLine(y);

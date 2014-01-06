@@ -58,7 +58,7 @@ protected:
     std::shared_ptr<FreetypeHelper> ftHelper;
     FT_Face ftFace;
     
-    std::map<uint32_t, YGlyph*> cache;
+    std::map<uint32_t, std::unique_ptr<YGlyph>> cache;
     
     YGlyph* createGlyph(uint32_t codepoint) const;
 };

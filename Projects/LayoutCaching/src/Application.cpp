@@ -14,14 +14,7 @@
 /*
  * TODO:
  *
- * 1) TextLayoutCache:
- *    - LRU STRATEGY?
- *
- * 2) FontManager:
- *    - PROPER ERROR HANDLING UPON CREATION
- *    - POSSIBILITY TO REMOVE A PARTICULAR VirtualFont
- *    - POSSIBILITY TO UNLOAD / RELOAD ALL THE DATA:
- *      - NECESSARY FOR HANDLING OPEN-GL CONTEXT-LOSS ON ANDROID
+ * 1) TextLayoutCache: LRU STRATEGY
  */
 
 #include "cinder/app/AppNative.h"

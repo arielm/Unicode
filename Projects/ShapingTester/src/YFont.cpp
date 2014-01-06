@@ -57,7 +57,7 @@ YGlyph::YGlyph(unsigned char *data, int width, int height)
     {
         int textureWidth = nextPowerOfTwo(width);
         int textureHeight = nextPowerOfTwo(height);
-        auto textureData = (unsigned char*)calloc(textureWidth * textureHeight, 1); // WE NEED A ZERO-FILLED AREA
+        auto textureData = new unsigned char[textureWidth * textureHeight](); // ZERO-FILLED
         
         for (int iy = 0; iy < height; iy++)
         {
@@ -71,7 +71,7 @@ YGlyph::YGlyph(unsigned char *data, int width, int height)
         format.setInternalFormat(GL_ALPHA);
         
         texture = gl::Texture::create(textureData, GL_ALPHA, textureWidth, textureHeight, format);
-        free(textureData);
+        delete[] textureData;
     }
 }
 
@@ -116,6 +116,8 @@ ftHelper(ftHelper)
     
     FT_Set_Transform(face, &matrix, NULL);
     
+    // ---
+    
     leading = face->size->metrics.height * scale.y;
     ascent = face->size->metrics.ascender * scale.y;
     descent = -face->size->metrics.descender * scale.y;
@@ -128,8 +130,6 @@ ftHelper(ftHelper)
 
 YFont::~YFont()
 {
-    clearCache();
-    
     hb_buffer_destroy(hbBuffer);
     hb_font_destroy(hbFont);
     
@@ -190,7 +190,7 @@ void YFont::drawLayout(const ShapeLayout &layout, Vec2f origin)
         }
         else
         {
-            gl::drawStrokedRect(Rectf(shape.position, shape.position + Vec2f(shape.advance, -shape.advance)));
+            gl::drawStrokedRect(Rectf(shape.position, shape.position + Vec2f(shape.advance, -shape.advance))); // TOFU (I.E. MISSING GLYPH)
         }
     }
     
@@ -212,14 +212,14 @@ YGlyph* YFont::getGlyph(uint32_t codepoint)
         
         if (glyph)
         {
-            cache[codepoint] = glyph;
+            cache[codepoint] = unique_ptr<YGlyph>(glyph);
         }
         
         return glyph;
     }
     else
     {
-        return entry->second;
+        return entry->second.get();
     }
 }
 
@@ -254,10 +254,5 @@ YGlyph* YFont::createGlyph(uint32_t codepoint) const
 
 void YFont::clearCache()
 {
-    for (auto entry : cache)
-    {
-        delete entry.second;
-    }
-    
     cache.clear();
 }

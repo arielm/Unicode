@@ -57,7 +57,7 @@ YGlyph::YGlyph(unsigned char *data, int width, int height)
     {
         int textureWidth = nextPowerOfTwo(width);
         int textureHeight = nextPowerOfTwo(height);
-        auto textureData = (unsigned char*)calloc(textureWidth * textureHeight, 1); // WE NEED A ZERO-FILLED AREA
+        auto textureData = new unsigned char[textureWidth * textureHeight](); // ZERO-FILLED
         
         for (int iy = 0; iy < height; iy++)
         {
@@ -71,7 +71,7 @@ YGlyph::YGlyph(unsigned char *data, int width, int height)
         format.setInternalFormat(GL_ALPHA);
         
         texture = gl::Texture::create(textureData, GL_ALPHA, textureWidth, textureHeight, format);
-        free(textureData);
+        delete[] textureData;
     }
 }
 
@@ -117,6 +117,8 @@ color(color)
     
     FT_Set_Transform(ftFace, &matrix, NULL);
     
+    // ---
+    
     leading = ftFace->size->metrics.height * scale.y;
     ascent = ftFace->size->metrics.ascender * scale.y;
     descent = -ftFace->size->metrics.descender * scale.y;
@@ -128,8 +130,6 @@ color(color)
 
 YFont::~YFont()
 {
-    clearCache();
-    
     hb_font_destroy(hbFont);
     FT_Done_Face(ftFace);
 }
@@ -144,24 +144,19 @@ YGlyph* YFont::getGlyph(uint32_t codepoint)
         
         if (glyph)
         {
-            cache[codepoint] = glyph;
+            cache[codepoint] = unique_ptr<YGlyph>(glyph);
         }
         
         return glyph;
     }
     else
     {
-        return entry->second;
+        return entry->second.get();
     }
 }
 
 void YFont::clearCache()
 {
-    for (auto entry : cache)
-    {
-        delete entry.second;
-    }
-    
     cache.clear();
 }
 

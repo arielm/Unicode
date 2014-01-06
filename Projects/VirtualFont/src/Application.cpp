@@ -8,8 +8,9 @@
 
 /*
  * REFERENCE: https://github.com/arielm/Unicode/tree/master/Projects/VirtualFont
- *
- *
+ */
+
+/*
  * TODO:
  *
  * 0) FURTHER INVESTIGATE iOS "APPSTORE REJECTION RISK":
@@ -102,7 +103,7 @@ void Application::setup()
         lineLayouts.emplace_back(virtualFont, run);
     }
 
-#if 1
+#if 0
     Test::measureShaping(console(), virtualFont, runs);
 #endif
     
