@@ -5,12 +5,13 @@ The goal is to provide building blocks for handling Unicode text rendering from 
 
 **Topics of interest**
 
-1. Shaping
-2. BIDI reordering
-3. Line-breaking
-4. Font-substitution
-5. Layout caching
-6. OpenGL rendering
+1. Glyph shaping
+2. Font fallback
+3. Layout caching
+4. Script itemization
+5. BIDI reordering
+6. Line breaking
+7. OpenGL rendering
 
 [Freetype](http://www.freetype.org) should be used behind the scenes. In addition, existing quality open-source fonts should be evaluated, starting with [those bundled with the Android platform](fonts).
 
@@ -18,7 +19,7 @@ The goal is to provide building blocks for handling Unicode text rendering from 
 
 The goal is to provide support for internationalization in interactive applications and games created with [Cinder](http://libcinder.org). Currently, there is no appropriate cross-platform solution due the lack of public C++ API for text-rendering on Android. 
 
-Take in count, however, that only a subset of the features available in OS solutions like *CoreText* (or even in modern browsers) are going to be implemented.
+Take in count, however, that not all the features available in OS solutions like *CoreText* (or even in modern browsers) are going to be implemented.
 
 **Progress**
 
@@ -35,7 +36,7 @@ So far, [Harfbuzz](https://github.com/behdad/harfbuzz) have been tested as a sol
 9. [LayoutCaching](Projects/LayoutCaching)
 10. [SimpleRendering](Projects/SimpleRendering)
 
-More work remains, notably testing how Harfbuzz performs on low-end mobile devices with limited processing-power and memory.
+More work remains, notably with Script-itemization, Line-breaking and OpenGL rendering...
 
 Installation
 ------------
