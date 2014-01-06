@@ -27,4 +27,5 @@ Executable available for OSX: [v1.0.0](https://github.com/arielm/Unicode/release
 **Remarks**
 
 1. Rendering is not optimized.
-2. Straightforward scaling and mipmaps are used (instead of rasterizing for each point-size...)
+2. It became clear [later on](https://github.com/arielm/Unicode/tree/master/Projects/LanguageFeatures) that it is necessary to specify **both a script and a language**.
+3. Straightforward scaling and mipmaps are used (instead of rasterizing for each point-size...)
