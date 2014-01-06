@@ -20,6 +20,8 @@ Executable available for OSX: [v1.0.0](https://github.com/arielm/Unicode/release
 
 **Remarks**
 
-1. Rendering is not optimized.
-2. It became clear [later on](https://github.com/arielm/Unicode/tree/master/Projects/LanguageFeatures) that it is necessary to specify **both a script and a language**.
-3. Clarification with Japanese: either *HB_SCRIPT_HAN*, *HB_SCRIPT_KATAKANA* or *HB_SCRIPT_HIRAGANA* can be used, as long as "ja" is defined as language, and a font like *MTLmr3m.ttf* is used (with a font like *DroidSansFallback.ttf*, some of the Kanji glyph are shaped in a Chinese fashion...)
+1. Rendering is not optimized.  
+
+2. It became clear [later on](https://github.com/arielm/Unicode/tree/master/Projects/LanguageFeatures) that it is necessary to specify **both a script and a language**.  
+
+3. Clarification with Japanese: either *HB_SCRIPT_HAN*, *HB_SCRIPT_KATAKANA* or *HB_SCRIPT_HIRAGANA* can be used, as long as "ja" is defined as language, and a font like *MTLmr3m.ttf* is used (with a font like *DroidSansFallback.ttf*, some of the Kanji glyphs are shaped in a Chinese fashion...)
