@@ -11,7 +11,9 @@
 
 **Remarks**
 
-1. There seems to be a [risk of rejection](http://stackoverflow.com/questions/3692812/on-ios-can-i-access-the-system-provided-fonts-ttf-file) during AppStore submission for candidate apps accessing the fonts pre-installed on iOS. It sounds odds since we're currently able to access any of the files in */System/Library/Fonts/Cache* (to be further checked...)
+1. There seems to be a [risk of rejection](http://stackoverflow.com/questions/3692812/on-ios-can-i-access-the-system-provided-fonts-ttf-file) during AppStore submission for candidate apps accessing the fonts pre-installed on iOS. It sounds odds since we're currently able to access any of the files in */System/Library/Fonts/Cache* (*to be further checked*.)  
+
+2. This system is not complete because it lacks *itemization* (BIDI, script and style), which is demonstrated in the [Mapnik project](https://github.com/mapnik/mapnik/blob/master/include/mapnik/text/itemizer.hpp).
 
 **Performance tests**
 
