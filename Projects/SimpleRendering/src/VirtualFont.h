@@ -43,7 +43,10 @@ public:
 protected:
     float size;
     float sizeRatio;
-    
+
+    std::vector<ci::Vec2f> positions;
+    std::vector<ci::Vec2f> coords;
     std::vector<ci::ColorA> colors;
+    
     std::map<std::string, FontSet> fontSetMap;
 };
