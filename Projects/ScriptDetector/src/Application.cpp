@@ -26,10 +26,7 @@
 
 #include "cinder/app/AppNative.h"
 
-#include "LanguageHelper.h"
-
-#include "unicode/unistr.h"
-#include "scrptrun.h"
+#include "Test.h"
 
 using namespace std;
 using namespace ci;
@@ -37,49 +34,19 @@ using namespace app;
 
 class Application : public AppNative
 {
-    LanguageHelper languageHelper;
-    
 public:
     void setup();
     void draw();
-    
-    void detect(const string &input, const string &langHint = "");
 };
 
 void Application::setup()
 {
-    detect(" ॆहिन्दी العربية Русский English 漢孵とひらがなとカタカナ𐐀𐐁𐐂𐐃");
-    detect("The title says \"W3C פעילות הבינאום,\u200f\" in Hebrew.");
-    detect("The title is \"مفتاح معايير الويب!\u200f\" in Arabic.");
-    detect("ユニコードは、すべての文字に固有の番号を付与します", "ja"); // IF "ja" WERE UNDEFINED, THE HAN CHARACTERS WOULD HAVE BEEN DETECTED AS "zh-cn"
+    Test().run();
 }
 
 void Application::draw()
 {
     gl::clear(Color::gray(0.5f), false);
-}
-
-void Application::detect(const string &input, const string &langHint)
-{
-    UnicodeString text = UnicodeString::fromUTF8(input);
-    ScriptRun scriptRun(text.getBuffer(), text.length());
-    
-    while (scriptRun.next())
-    {
-        auto start = scriptRun.getScriptStart();
-        auto end = scriptRun.getScriptEnd();
-        auto code = scriptRun.getScriptCode();
-        
-        auto language = languageHelper.detectLanguage(code, langHint);
-
-        string tmp;
-        text.tempSubString(start, end - start).toUTF8String(tmp);
-
-        cout << "{'" << uscript_getName(code) << "','" << language << "'} FROM " << start << " TO " << end - 1 << std::endl;
-        cout << tmp << std::endl << endl;
-    }
-    
-    cout << endl;
 }
 
 CINDER_APP_NATIVE(Application, RendererGl(RendererGl::AA_NONE))

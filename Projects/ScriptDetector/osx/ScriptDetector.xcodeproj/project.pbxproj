@@ -243,6 +243,7 @@
 		A871F5251862091A001D0F98 /* ubidiln.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ubidiln.c; path = ../../../icu/common/ubidiln.c; sourceTree = "<group>"; };
 		A887CB17187C688D000B2DDB /* LanguageHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LanguageHelper.h; path = ../src/LanguageHelper.h; sourceTree = "<group>"; };
 		A887CB18187C688D000B2DDB /* LanguageHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LanguageHelper.cpp; path = ../src/LanguageHelper.cpp; sourceTree = "<group>"; };
+		A8BCDEBE187C902400A7FCB8 /* Test.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Test.h; path = ../src/Test.h; sourceTree = "<group>"; };
 		A8FD194C187BFB42000BE555 /* hb-ft.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "hb-ft.cc"; path = "../../../hb/hb-ft.cc"; sourceTree = "<group>"; };
 		A8FD194D187BFB42000BE555 /* hb-set.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "hb-set.cc"; path = "../../../hb/hb-set.cc"; sourceTree = "<group>"; };
 		A8FD194E187BFB42000BE555 /* hb-set.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "hb-set.h"; path = "../../../hb/hb-set.h"; sourceTree = "<group>"; };
@@ -357,6 +358,7 @@
 				A871F16E186116D9001D0F98 /* scrptrun.cpp */,
 				A887CB17187C688D000B2DDB /* LanguageHelper.h */,
 				A887CB18187C688D000B2DDB /* LanguageHelper.cpp */,
+				A8BCDEBE187C902400A7FCB8 /* Test.h */,
 			);
 			name = Source;
 			sourceTree = "<group>";
