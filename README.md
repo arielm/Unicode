@@ -35,8 +35,9 @@ So far, [Harfbuzz](https://github.com/behdad/harfbuzz) and [ICU](http://site.icu
 8. [VirtualFont](Projects/VirtualFont)
 9. [LayoutCaching](Projects/LayoutCaching)
 10. [SimpleRendering](Projects/SimpleRendering)
+11. [ScriptDetector](Projects/ScriptDetector)
 
-More work remains, notably with Script-itemization, Line-breaking and OpenGL rendering...
+More work remains, notably with script-itemization, line-breaking and OpenGL rendering...
 
 Installation
 ------------
