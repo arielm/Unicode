@@ -12,10 +12,15 @@
  *
  * THE NEXT STEP WOULD BE TO ASSOCIATE A LANGUAGE TO EACH OF THE SCRIPTS, AS DESCRIBED IN:
  * http://www.mail-archive.com/harfbuzz@lists.freedesktop.org/msg03220.html
+ *
+ * THEN, BIDI ITEMIZATION SHOULD TAKE PLACE AND THE "ITEMS SHOULD BE MIXED",
+ * AS DESCRIBED IN http://www.mail-archive.com/harfbuzz@lists.freedesktop.org/msg03190.html
+ * AND AS IMPLEMENTED IN THE MAPNIK PROJECT
  */
 
 #include "cinder/app/AppNative.h"
 
+#include "LanguageHelper.h"
 #include "Test.h"
 
 using namespace std;
@@ -31,7 +36,11 @@ public:
 
 void Application::setup()
 {
-    Test::run();
+//    Test::run(" ॆहिन्दी العربية Русский English 漢孵とひらがなとカタカナ𐐀𐐁𐐂𐐃");
+//    Test::run("W3C‏ (World Wide Web Consortium) מעביר את שירותי הארחה באירופה ל - ERCIM.");
+//    Test::run("The title says \"W3C פעילות הבינאום,\u200f\" in Hebrew.");
+//    Test::run("The title is \"مفتاح معايير الويب!\u200f\" in Arabic.");
+    Test::run("ユニコードは、すべての文字に固有の番号を付与します");
 }
 
 void Application::draw()

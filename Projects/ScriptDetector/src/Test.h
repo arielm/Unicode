@@ -20,10 +20,8 @@
 class Test
 {
 public:
-    static void run()
+    static void run(const std::string &input)
     {
-        const std::string input = " ॆहिन्दी العربية Русский English 漢孵とひらがなとカタカナ𐐀𐐁𐐂𐐃";
-        
         UnicodeString text = UnicodeString::fromUTF8(input);
         ScriptRun scriptRun(text.getBuffer(), text.length());
         
@@ -39,5 +37,7 @@ public:
             std::cout << "SCRIPT '" << uscript_getName(code) << "' FROM " << start << " TO " << end - 1 << std::endl;
             std::cout << tmp << std::endl << std::endl;
         }
+        
+        std::cout << std::endl;
     }
 };
