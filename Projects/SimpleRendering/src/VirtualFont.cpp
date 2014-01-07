@@ -72,7 +72,7 @@ TextLayout* VirtualFont::createTextLayout(const TextRun &run)
     map<uint32_t, Cluster> clusterMap;
     auto buffer = hb_buffer_create();
     
-    for (auto font : getFontSet(run.lang))
+    for (auto &font : getFontSet(run.lang))
     {
         hb_buffer_clear_contents(buffer);
         

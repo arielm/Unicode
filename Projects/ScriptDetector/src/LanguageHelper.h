@@ -10,7 +10,10 @@
 
 #include "hb.h"
 
+#include "cinder/Utilities.h"
+
 #include <map>
+#include <set>
 #include <string>
 
 /*
@@ -269,28 +272,113 @@ class LanguageHelper
 public:
     LanguageHelper()
     {
-        size_t count = sizeof(HB_SCRIPT_for_lang) / sizeof(HBScriptForLang);
-        
-        for (int i = 0; i < count; i++)
-        {
-            scriptMap[HB_SCRIPT_for_lang[i].lang] = HB_SCRIPT_for_lang[i].scripts[0];
-        }
+        initScriptMap();
+        setDefaultLanguages("en:ja");
     }
     
-    hb_script_t getScript(const std::string &lang) const
+    void setDefaultLanguages(const std::string &languages)
+    {
+        defaultLanguageSet.clear();
+        
+        for (auto &lang : ci::split(languages, ":"))
+        {
+            defaultLanguageSet.insert(lang);
+        }
+    }
+
+    /*
+     * DETERMINES THE SCRIPTS USED TO WRITE @lang
+     */
+    const std::vector<hb_script_t>& scriptsForLang(const std::string &lang) const
     {
         auto it = scriptMap.find(lang);
         
         if (it == scriptMap.end())
         {
-            return HB_SCRIPT_INVALID;
+            it = scriptMap.find("");
+            
+            if (it == scriptMap.end())
+            {
+                throw;
+            }
         }
-        else
+        
+        return it->second;
+    }
+    
+    /*
+     * DETERMINES IF @script IS ONE OF THE SCRIPTS USED TO WRITE @lang
+     */
+    bool includesScript(const std::string &lang, hb_script_t script) const
+    {
+        for (auto &value : scriptsForLang(lang))
         {
-            return it->second;
+            if (value == script)
+            {
+                return true;
+            }
         }
+        
+        return false;
+    }
+    
+    /*
+     * RETURNS THE RESOLVED LANGUAGE IF @script MAY BE USED TO WRITE ONE OF THE "DEFAULT LANGUAGES"
+     */
+    std::string getDefaultLanguage(hb_script_t script) const
+    {
+        for (auto &lang : defaultLanguageSet)
+        {
+            for (auto &value : scriptsForLang(lang))
+            {
+                if (value == script)
+                {
+                    return lang;
+                }
+            }
+        }
+        
+        return "";
     }
     
 protected:
-    std::map<std::string, hb_script_t> scriptMap;
+    std::map<std::string, std::vector<hb_script_t>> scriptMap;
+    std::set<std::string> defaultLanguageSet;
+    
+    void initScriptMap()
+    {
+        size_t entryCount = sizeof(HB_SCRIPT_for_lang) / sizeof(HBScriptForLang);
+        
+        for (int i = 0; i < entryCount; i++)
+        {
+            auto entry = HB_SCRIPT_for_lang[i];
+            
+            size_t scriptCount = sizeof(entry.scripts) / sizeof(hb_script_t);
+            std::vector<hb_script_t> scripts;
+            
+            for (int j = 0; j < scriptCount; j++)
+            {
+                if (entry.scripts[j])
+                {
+                    scripts.push_back(entry.scripts[j]);
+                }
+                else
+                {
+                    break;
+                    
+                }
+            }
+            
+            assert(scripts.size() > 0);
+            scriptMap[entry.lang] = scripts;
+        }
+        
+        /*
+         * A DEFAULT-VALUE ALLOWS TO RETURN
+         * A CONST VALUE IN scriptsForLang()
+         */
+        std::vector<hb_script_t> invalid;
+        invalid.push_back(HB_SCRIPT_INVALID);
+        scriptMap[""] = invalid;
+    }
 };

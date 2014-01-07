@@ -36,11 +36,16 @@ public:
 
 void Application::setup()
 {
+    LanguageHelper languageHelper;
+    
+    std::cout << languageHelper.includesScript("ja", HB_SCRIPT_HAN) << endl; // STEP 1: A LANGUAGE HAS BEEN DEFINED, SO WE CHECK IF THE DETECTED SCRIPT ALLOWS TO WRITE IT
+    std::cout << languageHelper.getDefaultLanguage(HB_SCRIPT_HAN) << endl; // STEP 2: CHECK IF THE SCRIPT CAN BE RESOLVED INTO A LANGUAGE FROM THE "DEFAULT LIST"
+    
 //    Test::run(" ॆहिन्दी العربية Русский English 漢孵とひらがなとカタカナ𐐀𐐁𐐂𐐃");
 //    Test::run("W3C‏ (World Wide Web Consortium) מעביר את שירותי הארחה באירופה ל - ERCIM.");
 //    Test::run("The title says \"W3C פעילות הבינאום,\u200f\" in Hebrew.");
 //    Test::run("The title is \"مفتاح معايير الويب!\u200f\" in Arabic.");
-    Test::run("ユニコードは、すべての文字に固有の番号を付与します");
+//    Test::run("ユニコードは、すべての文字に固有の番号を付与します");
 }
 
 void Application::draw()

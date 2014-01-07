@@ -68,7 +68,7 @@ VirtualFont* FontManager::getVirtualFont(const string &uri, float baseSize, bool
         {
             auto langList = getLanguageList(fontElement->getAttributeValue<string>("lang", ""));
             
-            for (auto lang : langList)
+            for (auto &lang : langList)
             {
                 for (auto &variantElement : fontElement->getChildren())
                 {
