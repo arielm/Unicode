@@ -6,13 +6,11 @@
  * https://github.com/arielm/Unicode/blob/master/LICENSE.md
  */
 
-#pragma once
+#include "LanguageHelper.h"
 
-#include "hb.h"
+#include "cinder/Utilities.h"
 
-#include <map>
-#include <set>
-#include <string>
+using namespace std;
 
 struct HBScriptForLang
 {
@@ -264,95 +262,188 @@ static const HBScriptForLang HB_SCRIPT_FOR_LANG[] =
     { "zu",     { HB_SCRIPT_LATIN/*52*/ } }
 };
 
-class Languages
+static void initScriptMap(std::map<std::string, std::vector<hb_script_t>> &scriptMap)
 {
-public:
-    static void initScriptMap(std::map<std::string, std::vector<hb_script_t>> &scriptMap)
+    size_t entryCount = sizeof(HB_SCRIPT_FOR_LANG) / sizeof(HBScriptForLang);
+    
+    for (int i = 0; i < entryCount; i++)
     {
-        size_t entryCount = sizeof(HB_SCRIPT_FOR_LANG) / sizeof(HBScriptForLang);
+        auto entry = HB_SCRIPT_FOR_LANG[i];
         
-        for (int i = 0; i < entryCount; i++)
+        size_t scriptCount = sizeof(entry.scripts) / sizeof(hb_script_t);
+        std::vector<hb_script_t> scripts;
+        
+        for (int j = 0; j < scriptCount; j++)
         {
-            auto entry = HB_SCRIPT_FOR_LANG[i];
-            
-            size_t scriptCount = sizeof(entry.scripts) / sizeof(hb_script_t);
-            std::vector<hb_script_t> scripts;
-            
-            for (int j = 0; j < scriptCount; j++)
+            if (entry.scripts[j])
             {
-                if (entry.scripts[j])
-                {
-                    scripts.push_back(entry.scripts[j]);
-                }
-                else
-                {
-                    break;
-                    
-                }
+                scripts.push_back(entry.scripts[j]);
             }
-            
-            assert(scripts.size() > 0);
-            scriptMap[entry.lang] = scripts;
+            else
+            {
+                break;
+                
+            }
         }
         
-        /*
-         * DEFAULT-VALUE
-         */
-        std::vector<hb_script_t> invalid;
-        invalid.push_back(HB_SCRIPT_INVALID);
-        scriptMap[""] = invalid;
+        assert(scripts.size() > 0);
+        scriptMap[entry.lang] = scripts;
     }
     
     /*
-     * DATA FROM pango-language.c
+     * DEFAULT-VALUE
      */
-    static void initSampleLanguageMap(std::map<hb_script_t, std::string> &sampleLanguageMap)
-    {
-        sampleLanguageMap[HB_SCRIPT_ARABIC] = "ar";
-        sampleLanguageMap[HB_SCRIPT_ARMENIAN] = "hy";
-        sampleLanguageMap[HB_SCRIPT_BENGALI] = "bn";
-        sampleLanguageMap[HB_SCRIPT_CHEROKEE] = "chr";
-        sampleLanguageMap[HB_SCRIPT_COPTIC] = "cop";
-        sampleLanguageMap[HB_SCRIPT_CYRILLIC] = "ru";
-        sampleLanguageMap[HB_SCRIPT_DEVANAGARI] = "hi";
-        sampleLanguageMap[HB_SCRIPT_ETHIOPIC] = "am";
-        sampleLanguageMap[HB_SCRIPT_GEORGIAN] = "ka";
-        sampleLanguageMap[HB_SCRIPT_GREEK] = "el";
-        sampleLanguageMap[HB_SCRIPT_GUJARATI] = "gu";
-        sampleLanguageMap[HB_SCRIPT_GURMUKHI] = "pa";
-        sampleLanguageMap[HB_SCRIPT_HANGUL] = "ko";
-        sampleLanguageMap[HB_SCRIPT_HEBREW] = "he";
-        sampleLanguageMap[HB_SCRIPT_HIRAGANA] = "ja";
-        sampleLanguageMap[HB_SCRIPT_KANNADA] = "kn";
-        sampleLanguageMap[HB_SCRIPT_KATAKANA] = "ja";
-        sampleLanguageMap[HB_SCRIPT_KHMER] = "km";
-        sampleLanguageMap[HB_SCRIPT_LAO] = "lo";
-        sampleLanguageMap[HB_SCRIPT_LATIN] = "en";
-        sampleLanguageMap[HB_SCRIPT_MALAYALAM] = "ml";
-        sampleLanguageMap[HB_SCRIPT_MONGOLIAN] = "mn";
-        sampleLanguageMap[HB_SCRIPT_MYANMAR] = "my";
-        sampleLanguageMap[HB_SCRIPT_ORIYA] = "or";
-        sampleLanguageMap[HB_SCRIPT_SINHALA] = "si";
-        sampleLanguageMap[HB_SCRIPT_SYRIAC] = "syr";
-        sampleLanguageMap[HB_SCRIPT_TAMIL] = "ta";
-        sampleLanguageMap[HB_SCRIPT_TELUGU] = "te";
-        sampleLanguageMap[HB_SCRIPT_THAANA] = "dv";
-        sampleLanguageMap[HB_SCRIPT_THAI] = "th";
-        sampleLanguageMap[HB_SCRIPT_TIBETAN] = "bo";
-        sampleLanguageMap[HB_SCRIPT_CANADIAN_ABORIGINAL] = "iu";
-        sampleLanguageMap[HB_SCRIPT_TAGALOG] = "tl";
-        sampleLanguageMap[HB_SCRIPT_HANUNOO] = "hnn";
-        sampleLanguageMap[HB_SCRIPT_BUHID] = "bku";
-        sampleLanguageMap[HB_SCRIPT_TAGBANWA] = "tbw";
-        sampleLanguageMap[HB_SCRIPT_UGARITIC] = "uga";
-        sampleLanguageMap[HB_SCRIPT_BUGINESE] = "bug";
-        sampleLanguageMap[HB_SCRIPT_SYLOTI_NAGRI] = "syl";
-        sampleLanguageMap[HB_SCRIPT_OLD_PERSIAN] = "peo";
-        sampleLanguageMap[HB_SCRIPT_NKO] = "nqo";
-        
-        /*
-         * DEFAULT-VALUE
-         */
-        sampleLanguageMap[HB_SCRIPT_INVALID] = "";
-    };
+    std::vector<hb_script_t> invalid;
+    invalid.push_back(HB_SCRIPT_INVALID);
+    scriptMap[""] = invalid;
+}
+
+/*
+ * DATA FROM pango-language.c
+ */
+static void initSampleLanguageMap(std::map<hb_script_t, std::string> &sampleLanguageMap)
+{
+    sampleLanguageMap[HB_SCRIPT_ARABIC] = "ar";
+    sampleLanguageMap[HB_SCRIPT_ARMENIAN] = "hy";
+    sampleLanguageMap[HB_SCRIPT_BENGALI] = "bn";
+    sampleLanguageMap[HB_SCRIPT_CHEROKEE] = "chr";
+    sampleLanguageMap[HB_SCRIPT_COPTIC] = "cop";
+    sampleLanguageMap[HB_SCRIPT_CYRILLIC] = "ru";
+    sampleLanguageMap[HB_SCRIPT_DEVANAGARI] = "hi";
+    sampleLanguageMap[HB_SCRIPT_ETHIOPIC] = "am";
+    sampleLanguageMap[HB_SCRIPT_GEORGIAN] = "ka";
+    sampleLanguageMap[HB_SCRIPT_GREEK] = "el";
+    sampleLanguageMap[HB_SCRIPT_GUJARATI] = "gu";
+    sampleLanguageMap[HB_SCRIPT_GURMUKHI] = "pa";
+    sampleLanguageMap[HB_SCRIPT_HANGUL] = "ko";
+    sampleLanguageMap[HB_SCRIPT_HEBREW] = "he";
+    sampleLanguageMap[HB_SCRIPT_HIRAGANA] = "ja";
+    sampleLanguageMap[HB_SCRIPT_KANNADA] = "kn";
+    sampleLanguageMap[HB_SCRIPT_KATAKANA] = "ja";
+    sampleLanguageMap[HB_SCRIPT_KHMER] = "km";
+    sampleLanguageMap[HB_SCRIPT_LAO] = "lo";
+    sampleLanguageMap[HB_SCRIPT_LATIN] = "en";
+    sampleLanguageMap[HB_SCRIPT_MALAYALAM] = "ml";
+    sampleLanguageMap[HB_SCRIPT_MONGOLIAN] = "mn";
+    sampleLanguageMap[HB_SCRIPT_MYANMAR] = "my";
+    sampleLanguageMap[HB_SCRIPT_ORIYA] = "or";
+    sampleLanguageMap[HB_SCRIPT_SINHALA] = "si";
+    sampleLanguageMap[HB_SCRIPT_SYRIAC] = "syr";
+    sampleLanguageMap[HB_SCRIPT_TAMIL] = "ta";
+    sampleLanguageMap[HB_SCRIPT_TELUGU] = "te";
+    sampleLanguageMap[HB_SCRIPT_THAANA] = "dv";
+    sampleLanguageMap[HB_SCRIPT_THAI] = "th";
+    sampleLanguageMap[HB_SCRIPT_TIBETAN] = "bo";
+    sampleLanguageMap[HB_SCRIPT_CANADIAN_ABORIGINAL] = "iu";
+    sampleLanguageMap[HB_SCRIPT_TAGALOG] = "tl";
+    sampleLanguageMap[HB_SCRIPT_HANUNOO] = "hnn";
+    sampleLanguageMap[HB_SCRIPT_BUHID] = "bku";
+    sampleLanguageMap[HB_SCRIPT_TAGBANWA] = "tbw";
+    sampleLanguageMap[HB_SCRIPT_UGARITIC] = "uga";
+    sampleLanguageMap[HB_SCRIPT_BUGINESE] = "bug";
+    sampleLanguageMap[HB_SCRIPT_SYLOTI_NAGRI] = "syl";
+    sampleLanguageMap[HB_SCRIPT_OLD_PERSIAN] = "peo";
+    sampleLanguageMap[HB_SCRIPT_NKO] = "nqo";
+    
+    /*
+     * DEFAULT-VALUE
+     */
+    sampleLanguageMap[HB_SCRIPT_INVALID] = "";
 };
+
+LanguageHelper::LanguageHelper()
+{
+    initScriptMap(scriptMap);
+    initSampleLanguageMap(sampleLanguageMap);
+    setDefaultLanguages(DEFAULT_LANGUAGES);
+}
+
+void LanguageHelper::setDefaultLanguages(const std::string &languages)
+{
+    defaultLanguageSet.clear();
+    
+    for (auto &lang : ci::split(languages, ":"))
+    {
+        defaultLanguageSet.insert(lang);
+    }
+}
+
+const std::vector<hb_script_t>& LanguageHelper::getScriptsForLang(const std::string &lang) const
+{
+    auto it = scriptMap.find(lang);
+    
+    if (it == scriptMap.end())
+    {
+        it = scriptMap.find("");
+    }
+    
+    return it->second;
+}
+
+bool LanguageHelper::includesScript(const std::string &lang, hb_script_t script) const
+{
+    for (auto &value : getScriptsForLang(lang))
+    {
+        if (value == script)
+        {
+            return true;
+        }
+    }
+    
+    return false;
+}
+
+std::string LanguageHelper::getDefaultLanguage(hb_script_t script) const
+{
+    for (auto &lang : defaultLanguageSet)
+    {
+        for (auto &value : getScriptsForLang(lang))
+        {
+            if (value == script)
+            {
+                return lang;
+            }
+        }
+    }
+    
+    return "";
+}
+
+std::string LanguageHelper::getSampleLanguage(hb_script_t script) const
+{
+    auto it = sampleLanguageMap.find(script);
+    
+    if (it == sampleLanguageMap.end())
+    {
+        it = sampleLanguageMap.find(HB_SCRIPT_INVALID);
+    }
+    
+    return it->second;
+}
+
+std::string LanguageHelper::detectLanguage(hb_script_t script, const std::string &langHint) const
+{
+    /*
+     * 1. CAN @script BE USED TO WRITE @langHint?
+     */
+    if (!langHint.empty() && includesScript(langHint, script))
+    {
+        return langHint;
+    }
+    
+    /*
+     * 2. CAN @script BE USED TO WRITE ONE OF THE "DEFAULT LANGUAGES"?
+     */
+    
+    auto defaultLanguage = getDefaultLanguage(script);
+    
+    if (!defaultLanguage.empty())
+    {
+        return defaultLanguage;
+    }
+    
+    /*
+     * 3. IS THERE A PREDOMINANT LANGUAGE THAT IS LIKELY FOR @script?
+     */
+    return getSampleLanguage(script);
+}

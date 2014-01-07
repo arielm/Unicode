@@ -61,6 +61,7 @@
 		A871F4721861E644001D0F98 /* uvector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A871F4481861E644001D0F98 /* uvector.cpp */; };
 		A871F5261862091A001D0F98 /* ubidiwrt.c in Sources */ = {isa = PBXBuildFile; fileRef = A871F5241862091A001D0F98 /* ubidiwrt.c */; };
 		A871F5271862091A001D0F98 /* ubidiln.c in Sources */ = {isa = PBXBuildFile; fileRef = A871F5251862091A001D0F98 /* ubidiln.c */; };
+		A887CB19187C688D000B2DDB /* LanguageHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A887CB18187C688D000B2DDB /* LanguageHelper.cpp */; };
 		A8FD19A1187BFB43000BE555 /* hb-ft.cc in Sources */ = {isa = PBXBuildFile; fileRef = A8FD194C187BFB42000BE555 /* hb-ft.cc */; };
 		A8FD19A2187BFB43000BE555 /* hb-set.cc in Sources */ = {isa = PBXBuildFile; fileRef = A8FD194D187BFB42000BE555 /* hb-set.cc */; };
 		A8FD19A3187BFB43000BE555 /* hb-shape-plan.cc in Sources */ = {isa = PBXBuildFile; fileRef = A8FD1950187BFB42000BE555 /* hb-shape-plan.cc */; };
@@ -240,7 +241,8 @@
 		A871F4491861E644001D0F98 /* uvector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = uvector.h; path = ../../../icu/common/uvector.h; sourceTree = "<group>"; };
 		A871F5241862091A001D0F98 /* ubidiwrt.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ubidiwrt.c; path = ../../../icu/common/ubidiwrt.c; sourceTree = "<group>"; };
 		A871F5251862091A001D0F98 /* ubidiln.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ubidiln.c; path = ../../../icu/common/ubidiln.c; sourceTree = "<group>"; };
-		A8FD194A187BFACA000BE555 /* LanguageHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LanguageHelper.h; path = ../src/LanguageHelper.h; sourceTree = "<group>"; };
+		A887CB17187C688D000B2DDB /* LanguageHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LanguageHelper.h; path = ../src/LanguageHelper.h; sourceTree = "<group>"; };
+		A887CB18187C688D000B2DDB /* LanguageHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LanguageHelper.cpp; path = ../src/LanguageHelper.cpp; sourceTree = "<group>"; };
 		A8FD194C187BFB42000BE555 /* hb-ft.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "hb-ft.cc"; path = "../../../hb/hb-ft.cc"; sourceTree = "<group>"; };
 		A8FD194D187BFB42000BE555 /* hb-set.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "hb-set.cc"; path = "../../../hb/hb-set.cc"; sourceTree = "<group>"; };
 		A8FD194E187BFB42000BE555 /* hb-set.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "hb-set.h"; path = "../../../hb/hb-set.h"; sourceTree = "<group>"; };
@@ -326,7 +328,6 @@
 		A8FD199E187BFB43000BE555 /* hb-ot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "hb-ot.h"; path = "../../../hb/hb-ot.h"; sourceTree = "<group>"; };
 		A8FD199F187BFB43000BE555 /* hb-private.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = "hb-private.hh"; path = "../../../hb/hb-private.hh"; sourceTree = "<group>"; };
 		A8FD19A0187BFB43000BE555 /* hb-set-private.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = "hb-set-private.hh"; path = "../../../hb/hb-set-private.hh"; sourceTree = "<group>"; };
-		A8FD19BC187C3944000BE555 /* Languages.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Languages.h; path = ../src/Languages.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -354,8 +355,8 @@
 				A809530316F361E20011FAA3 /* Application.cpp */,
 				A871F16F186116D9001D0F98 /* scrptrun.h */,
 				A871F16E186116D9001D0F98 /* scrptrun.cpp */,
-				A8FD194A187BFACA000BE555 /* LanguageHelper.h */,
-				A8FD19BC187C3944000BE555 /* Languages.h */,
+				A887CB17187C688D000B2DDB /* LanguageHelper.h */,
+				A887CB18187C688D000B2DDB /* LanguageHelper.cpp */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -815,6 +816,7 @@
 				A8FD19B2187BFB43000BE555 /* hb-ot-shape-complex-default.cc in Sources */,
 				A871F45B1861E644001D0F98 /* ucmndata.c in Sources */,
 				A871F4541861E644001D0F98 /* stringpiece.cpp in Sources */,
+				A887CB19187C688D000B2DDB /* LanguageHelper.cpp in Sources */,
 				A871F46F1861E644001D0F98 /* ustrtrns.cpp in Sources */,
 				A871F4621861E644001D0F98 /* uiter.cpp in Sources */,
 				A8FD19B9187BFB43000BE555 /* hb-ot-shape-normalize.cc in Sources */,

@@ -43,7 +43,7 @@ public:
     void setup();
     void draw();
     
-    void detect(const string &itemText, const string &itemLanguage = "");
+    void detect(const string &input, const string &langHint = "");
 };
 
 void Application::setup()
@@ -59,9 +59,9 @@ void Application::draw()
     gl::clear(Color::gray(0.5f), false);
 }
 
-void Application::detect(const string &itemText, const string &itemLanguage)
+void Application::detect(const string &input, const string &langHint)
 {
-    UnicodeString text = UnicodeString::fromUTF8(itemText);
+    UnicodeString text = UnicodeString::fromUTF8(input);
     ScriptRun scriptRun(text.getBuffer(), text.length());
     
     while (scriptRun.next())
@@ -70,12 +70,12 @@ void Application::detect(const string &itemText, const string &itemLanguage)
         auto end = scriptRun.getScriptEnd();
         auto code = scriptRun.getScriptCode();
         
+        auto language = languageHelper.detectLanguage(code, langHint);
+
         string tmp;
         text.tempSubString(start, end - start).toUTF8String(tmp);
-        
-        auto language = languageHelper.detectLanguage(code, itemLanguage);
-        
-        cout << "SCRIPT '" << uscript_getName(code) << "' | LANG: '" << language << "' | FROM " << start << " TO " << end - 1 << std::endl;
+
+        cout << "{'" << uscript_getName(code) << "','" << language << "'} FROM " << start << " TO " << end - 1 << std::endl;
         cout << tmp << std::endl << endl;
     }
     
