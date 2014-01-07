@@ -6,6 +6,11 @@
  * https://github.com/arielm/Unicode/blob/master/LICENSE.md
  */
 
+/*
+ * INCLUDES DATA FROM PANGO:
+ * https://developer.gnome.org/pango/stable/pango-Scripts-and-Languages.html
+ */
+
 #include "LanguageHelper.h"
 
 #include "cinder/Utilities.h"
@@ -282,7 +287,6 @@ static void initScriptMap(std::map<std::string, std::vector<hb_script_t>> &scrip
             else
             {
                 break;
-                
             }
         }
         

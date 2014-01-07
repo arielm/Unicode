@@ -6,6 +6,11 @@
  * https://github.com/arielm/Unicode/blob/master/LICENSE.md
  */
 
+/*
+ * INCLUDES DATA FROM PANGO:
+ * https://developer.gnome.org/pango/stable/pango-Scripts-and-Languages.html
+ */
+
 #pragma once
 
 #include "hb.h"
