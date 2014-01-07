@@ -29,7 +29,7 @@ public:
         /*
          * UNLESS WE CHANGE THE "DEFAULT LANGUAGES"...
          */
-        languageHelper.setDefaultLanguages("en::ja");
+        languageHelper.setDefaultLanguages("en:ja");
         detectScriptsAndLanguages("ユニコードは、すべての文字に固有の番号を付与します"); // NO NEED FOR A HINT ANYMORE!
         
         /*
@@ -37,7 +37,7 @@ public:
          * PROVIDING A HINT, WE COULD, IN THE FOLLOWING, TURN:
          * - ARABIC INTO PERSIAN
          * - RUSSIAN INTO UKRANIAN
-         * - PART OF THE JAPANESE INTO CHINESE
+         * - PART OF THE JAPANESE INTO CHINESE (OR WAS IT MEANT TO BE CHINESE IN THE FIRST PLACE?)
          */
         detectScriptsAndLanguages(" ॆहिन्दी العربية Русский English 漢孵とひらがなとカタカナ𐐀𐐁𐐂𐐃");
         
