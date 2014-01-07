@@ -327,6 +327,7 @@
 		A8FD199E187BFB43000BE555 /* hb-ot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "hb-ot.h"; path = "../../../hb/hb-ot.h"; sourceTree = "<group>"; };
 		A8FD199F187BFB43000BE555 /* hb-private.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = "hb-private.hh"; path = "../../../hb/hb-private.hh"; sourceTree = "<group>"; };
 		A8FD19A0187BFB43000BE555 /* hb-set-private.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = "hb-set-private.hh"; path = "../../../hb/hb-set-private.hh"; sourceTree = "<group>"; };
+		A8FD19BC187C3944000BE555 /* Languages.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Languages.h; path = ../src/Languages.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -356,6 +357,7 @@
 				A871F16E186116D9001D0F98 /* scrptrun.cpp */,
 				A8FD1947187AEF07000BE555 /* Test.h */,
 				A8FD194A187BFACA000BE555 /* LanguageHelper.h */,
+				A8FD19BC187C3944000BE555 /* Languages.h */,
 			);
 			name = Source;
 			sourceTree = "<group>";

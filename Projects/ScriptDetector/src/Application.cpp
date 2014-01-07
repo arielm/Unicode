@@ -39,7 +39,8 @@ void Application::setup()
     LanguageHelper languageHelper;
     
     std::cout << languageHelper.includesScript("ja", HB_SCRIPT_HAN) << endl; // STEP 1: A LANGUAGE HAS BEEN DEFINED, SO WE CHECK IF THE DETECTED SCRIPT ALLOWS TO WRITE IT
-    std::cout << languageHelper.getDefaultLanguage(HB_SCRIPT_HAN) << endl; // STEP 2: CHECK IF THE SCRIPT CAN BE RESOLVED INTO A LANGUAGE FROM THE "DEFAULT LIST"
+    std::cout << languageHelper.getDefaultLanguage(HB_SCRIPT_HAN) << endl; // STEP 2: OTHERWISE, CHECK IF THE SCRIPT CAN BE RESOLVED INTO A LANGUAGE FROM THE "DEFAULT LIST"
+    std::cout << languageHelper.getSampleLanguage(HB_SCRIPT_HAN) << endl; // STEP 3: OTHERWISE, CHECK IF A PREDOMINANT LANGUAGE EXISTS FOR THE SCRIPT
     
 //    Test::run(" ॆहिन्दी العربية Русский English 漢孵とひらがなとカタカナ𐐀𐐁𐐂𐐃");
 //    Test::run("W3C‏ (World Wide Web Consortium) מעביר את שירותי הארחה באירופה ל - ERCIM.");
