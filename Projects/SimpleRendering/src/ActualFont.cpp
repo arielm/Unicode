@@ -134,7 +134,11 @@ ActualFont::Glyph* ActualFont::getGlyph(uint32_t codepoint)
     {
        glyph = entry->second.get();
         
-        if (!glyph->texture->isLoaded())
+        /*
+         * IN CASE A PREVIOUSLY-LOADED TEXTURE HAVE BEEN
+         * DISCARDED, E.G. AFTER SOME OPENGL CONTEXT-LOSS
+         */
+        if (glyph->texture && !glyph->texture->isLoaded())
         {
             GlyphData glyphData(ftFace, codepoint, useMipmap, padding);
             
@@ -144,7 +148,11 @@ ActualFont::Glyph* ActualFont::getGlyph(uint32_t codepoint)
             }
             else
             {
-                return NULL; // XXX: SHOULD NEVER OCCUR
+                /*
+                 * SHOULD NEVER OCCUR, BUT WE MUST RETURN
+                 * A VALUE TO MAKE THE COMPILER HAPPY
+                 */
+                return NULL;
             }
         }
     }
@@ -178,6 +186,13 @@ ActualFont::Glyph* ActualFont::createGlyph(uint32_t codepoint)
     }
     else
     {
-        return NULL;
+        /*
+         * RETURNING A VALUE IS NECESSARY, SO THAT THE TEXTURELESS
+         * Glyph (E.G. A "SPACE") IS PROPERLY INSERTED INTO THE CACHE
+         *
+         * OTHERWISE: createGlyph() WOULD BE INVOKED
+         * INDEFINITELY FOR THE SAME CODEPOINT
+         */
+        return new Glyph();
     }
 }

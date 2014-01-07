@@ -29,6 +29,11 @@ public:
         float tx2;
         float ty2;
         
+        Glyph()
+        :
+        texture(NULL)
+        {}
+        
         Glyph(ReloadableTexture *texture, ci::Vec2f offset, ci::Vec2f size)
         :
         texture(texture),

@@ -54,6 +54,11 @@ public:
                         offset = ci::Vec2f(ftSlot->bitmap_left, -ftSlot->bitmap_top) - ci::Vec2f(padding, padding);
                         size = ci::Vec2f(width, height) + ci::Vec2f(padding, padding) * 2;
                     }
+                    else
+                    {
+                        FT_Done_Glyph(ftGlyph);
+                        ftGlyph = NULL;
+                    }
                 }
             }
         }
