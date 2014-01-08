@@ -7,17 +7,10 @@
  */
 
 /*
- * DONE:
- *
- * 1) SCRIPT DETECTION IMPLEMENTED USING:
- *    http://source.icu-project.org/repos/icu/icu/trunk/source/extra/scrptrun
- *
- * 2) LANGUAGE DETECTION, AS DESCRIBED IN:
- *    http://www.mail-archive.com/harfbuzz@lists.freedesktop.org/msg03220.html
- *
- * 3) TEXT-RENDERING, BASED ON CODE FROM THE SimpleRendering PROJECT
- *
- *
+ * REFERENCE: https://github.com/arielm/Unicode/tree/master/Projects/ScriptDetector
+ */
+
+/*
  * TODO:
  *
  * 1) TEST ON iOS AND ANDROID
