@@ -15,7 +15,7 @@
     </Set>
     <!-- Hebrew, Yiddish -->
     <Set lang="he:yi">
-        <Ref>file:///System/Library/Fonts/ArialHB.ttf</Ref>
+        <Ref>file:///Library/Fonts/ArialHB.ttf</Ref>
     </Set>
     <!-- Japanese -->
     <Set lang="ja">
