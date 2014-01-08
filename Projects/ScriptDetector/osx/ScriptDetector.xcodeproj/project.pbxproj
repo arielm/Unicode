@@ -275,6 +275,7 @@
 		A8BCDEDD187D86EF00A7FCB8 /* SansSerif-osx.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = "SansSerif-osx.xml"; path = "../resources/SansSerif-osx.xml"; sourceTree = "<group>"; };
 		A8BCDEDE187D86EF00A7FCB8 /* SansSerif.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = SansSerif.xml; path = ../resources/SansSerif.xml; sourceTree = "<group>"; };
 		A8BCDEDF187D86EF00A7FCB8 /* Text.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = Text.xml; path = ../resources/Text.xml; sourceTree = "<group>"; };
+		A8BCDEE4187DA55700A7FCB8 /* ColorMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ColorMap.h; path = ../src/ColorMap.h; sourceTree = "<group>"; };
 		A8FD194C187BFB42000BE555 /* hb-ft.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "hb-ft.cc"; path = "../../../hb/hb-ft.cc"; sourceTree = "<group>"; };
 		A8FD194D187BFB42000BE555 /* hb-set.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "hb-set.cc"; path = "../../../hb/hb-set.cc"; sourceTree = "<group>"; };
 		A8FD194E187BFB42000BE555 /* hb-set.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "hb-set.h"; path = "../../../hb/hb-set.h"; sourceTree = "<group>"; };
@@ -655,6 +656,7 @@
 				A8BCDED2187D857900A7FCB8 /* ReloadableTexture.cpp */,
 				A8BCDED1187D857900A7FCB8 /* InputSource.h */,
 				A8BCDED0187D857900A7FCB8 /* InputSource.cpp */,
+				A8BCDEE4187DA55700A7FCB8 /* ColorMap.h */,
 			);
 			name = Rendering;
 			sourceTree = "<group>";

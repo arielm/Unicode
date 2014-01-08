@@ -683,6 +683,7 @@
 		A871F89918633321001D0F98 /* bmpset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = bmpset.h; path = ../../../icu/common/bmpset.h; sourceTree = "<group>"; };
 		A871F89A18633321001D0F98 /* bmpset.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = bmpset.cpp; path = ../../../icu/common/bmpset.cpp; sourceTree = "<group>"; };
 		A871F89B18633321001D0F98 /* appendable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = appendable.cpp; path = ../../../icu/common/appendable.cpp; sourceTree = "<group>"; };
+		A8BCDEE3187DA24400A7FCB8 /* ColorMap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ColorMap.h; path = ../src/ColorMap.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -719,6 +720,7 @@
 				A857CAF618639C6300250AEC /* TextGroup.cpp */,
 				A857CAEE18635ABE00250AEC /* TextLayout.h */,
 				A857CAF41863674000250AEC /* TextLayout.cpp */,
+				A8BCDEE3187DA24400A7FCB8 /* ColorMap.h */,
 			);
 			name = Source;
 			sourceTree = "<group>";

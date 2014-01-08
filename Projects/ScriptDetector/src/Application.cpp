@@ -15,12 +15,14 @@
  * 2) LANGUAGE DETECTION, AS DESCRIBED IN:
  *    http://www.mail-archive.com/harfbuzz@lists.freedesktop.org/msg03220.html
  *
- * 3) ADAPTING THE TEXT-RENDERING CODE FROM SimpleRendering...
+ * 3) TEXT-RENDERING, BASED ON CODE FROM THE SimpleRendering PROJECT
  *
  *
  * TODO:
  *
- * 1) NEXT PROJECT:
+ * 1) TEST ON iOS AND ANDROID
+ *
+ * 2) NEXT PROJECT:
  *    BIDI ITEMIZATION SHOULD TAKE PLACE,
  *    THEN THE SCRIPT/LANGUAGE AND BIDI ITEMS SHOULD BE "MIXED",
  *    AS DESCRIBED IN http://www.mail-archive.com/harfbuzz@lists.freedesktop.org/msg03190.html
@@ -64,7 +66,7 @@ public:
 
 void Application::prepareSettings(Settings *settings)
 {
-    settings->setWindowSize(1280, 736);
+    settings->setWindowSize(1024, 736);
     settings->enableHighDensityDisplay();
     settings->disableFrameRate();
 }
@@ -98,7 +100,7 @@ void Application::setup()
 
 void Application::draw()
 {
-    gl::clear(Color::gray(0.5f), false);
+    gl::clear(Color(1, 1, 0.95f), false);
     
     Vec2i windowSize = toPixels(getWindowSize());
     gl::setMatricesWindow(windowSize, true);
@@ -110,7 +112,6 @@ void Application::draw()
     float right = windowSize.x - 24;
     
     font->setSize(FONT_SIZE);
-    font->setColor(ColorA(1, 1, 1, 0.75f));
     
     for (auto &layout : lineLayouts)
     {
@@ -136,7 +137,7 @@ void Application::drawLineLayout(TextLayout &layout, float y, float left, float 
     
     // ---
     
-    glColor4f(1, 0.75f, 0, 0.25f);
+    glColor4f(0.5f, 0, 0, 0.075f);
     drawHLine(y);
 }
 

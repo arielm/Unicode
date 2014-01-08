@@ -7,6 +7,7 @@
  */
 
 #include "TextLayout.h"
+#include "ColorMap.h"
 
 using namespace std;
 using namespace ci;
@@ -115,8 +116,7 @@ void TextLayout::process(map<hb_script_t, FontList> &fontMap, const vector<TextS
                         }
                         else
                         {
-                            const ColorA color = (run.direction == HB_DIRECTION_LTR) ? colorLTR : colorRTL;
-                            clusterMap.insert(make_pair(cluster, Cluster(font.get(), color, codepoint, offset, advance)));
+                            clusterMap.insert(make_pair(cluster, Cluster(font.get(), ColorMap::get(run.direction), codepoint, offset, advance)));
                         }
                     }
                 }

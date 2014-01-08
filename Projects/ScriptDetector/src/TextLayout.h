@@ -32,13 +32,15 @@ struct Shape
 struct Cluster
 {
     ActualFont *font;
+    ci::ColorA color;
     
     float combinedAdvance;
     std::vector<Shape> shapes;
     
-    Cluster(ActualFont *font, hb_codepoint_t codepoint, const ci::Vec2f &offset, float advance)
+    Cluster(ActualFont *font, const ci::ColorA &color, hb_codepoint_t codepoint, const ci::Vec2f &offset, float advance)
     :
     font(font),
+    color(color),
     combinedAdvance(advance)
     {
         shapes.emplace_back(codepoint, offset);

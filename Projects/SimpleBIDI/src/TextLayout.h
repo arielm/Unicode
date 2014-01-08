@@ -11,9 +11,6 @@
 #include "TextGroup.h"
 #include "YFont.h"
 
-const ci::ColorA colorLTR = ci::ColorA(1, 1, 1, 1);
-const ci::ColorA colorRTL = ci::ColorA(1, 1, 0.5f, 1);
-
 struct Shape
 {
     hb_codepoint_t codepoint;

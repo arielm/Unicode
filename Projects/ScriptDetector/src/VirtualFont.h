@@ -31,7 +31,6 @@ public:
     TextLayout* createTextLayout(const TextGroup &group);
     
     void setSize(float size);
-    void setColor(const ci::ColorA &color);
     
     float getAdvance(const Cluster &cluster) const;
     float getAdvance(const TextLayout &layout) const;

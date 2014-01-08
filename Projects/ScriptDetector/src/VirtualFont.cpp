@@ -8,6 +8,7 @@
 
 #include "VirtualFont.h"
 #include "TextLayout.h"
+#include "ColorMap.h"
 
 using namespace std;
 using namespace ci;
@@ -18,9 +19,9 @@ baseSize(baseSize)
 {
     positions.reserve(4);
     coords.reserve(4);
+    colors.reserve(4);
     
     setSize(12);
-    setColor(ColorA(1, 1, 1, 1));
 }
 
 bool VirtualFont::add(const string &lang, ActualFont *font)
@@ -115,7 +116,7 @@ TextLayout* VirtualFont::createTextLayout(const TextGroup &group)
                         }
                         else
                         {
-                            clusterMap.insert(make_pair(cluster, Cluster(font, codepoint, offset, advance)));
+                            clusterMap.insert(make_pair(cluster, Cluster(font, ColorMap::get(item.lang), codepoint, offset, advance)));
                         }
                     }
                 }
@@ -158,15 +159,6 @@ void VirtualFont::setSize(float newSize)
     sizeRatio = newSize / baseSize;
 }
 
-void VirtualFont::setColor(const ColorA &color)
-{
-    colors.clear();
-    colors.emplace_back(color);
-    colors.emplace_back(color);
-    colors.emplace_back(color);
-    colors.emplace_back(color);
-}
-
 float VirtualFont::getAdvance(const Cluster &cluster) const
 {
     return cluster.combinedAdvance * sizeRatio;
@@ -201,6 +193,12 @@ void VirtualFont::end()
 
 void VirtualFont::drawCluster(const Cluster &cluster, const Vec2f &position)
 {
+    colors.clear();
+    colors.emplace_back(cluster.color);
+    colors.emplace_back(cluster.color);
+    colors.emplace_back(cluster.color);
+    colors.emplace_back(cluster.color);
+    
     for (auto shape : cluster.shapes)
     {
         auto glyph = cluster.font->getGlyph(shape.codepoint);
