@@ -177,7 +177,7 @@ void Application::draw()
     float left = 24;
     float right = windowSize.x - 24;
 
-    float size = 30 + 18 * math<float>::sin(getElapsedSeconds()); // OSCILLATING BETWEN 12 AND 48
+    float size = 30 + 18 * math<float>::sin(getElapsedSeconds()); // OSCILLATING BETWEEN 12 AND 48
     font->setSize(size);
     
     font->setColor(ColorA(1, 1, 1, 0.75f));

@@ -29,7 +29,7 @@
 
 #include "cinder/app/AppNative.h"
 
-#include "Test.h"
+#include "TextItemizer.h"
 
 using namespace std;
 using namespace ci;
@@ -37,6 +37,8 @@ using namespace app;
 
 class Application : public AppNative
 {
+    TextItemizer itemizer;
+    
 public:
     void setup();
     void draw();
@@ -44,7 +46,12 @@ public:
 
 void Application::setup()
 {
-    Test().run();
+//  Test().run();
+    
+    auto group1 = itemizer.process("ユニコードは、すべての文字に固有の番号を付与します", "ja");
+    auto group2 = itemizer.process(" ॆहिन्दी العربية Русский English 漢孵とひらがなとカタカナ𐐀𐐁𐐂𐐃");
+    auto group3 = itemizer.process("The title is \"مفتاح معايير الويب!\u200f\" in Arabic.");
+    auto group4 = itemizer.process("W3C‏ (World Wide Web Consortium) מעביר את שירותי הארחה באירופה ל - ERCIM.", "", HB_DIRECTION_RTL);
 }
 
 void Application::draw()
