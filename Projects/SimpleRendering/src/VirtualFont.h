@@ -48,5 +48,8 @@ protected:
     std::vector<ci::Vec2f> coords;
     std::vector<ci::ColorA> colors;
     
+    FontSet defaultFontSet;
+    ActualFont::Metrics defaultMetrics;
+    
     std::map<std::string, FontSet> fontSetMap;
 };

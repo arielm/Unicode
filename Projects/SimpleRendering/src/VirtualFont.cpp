@@ -44,7 +44,7 @@ const FontSet& VirtualFont::getFontSet(const string &lang) const
         
         if (it == fontSetMap.end())
         {
-            throw;
+            return defaultFontSet;
         }
     }
     
@@ -61,7 +61,7 @@ const ActualFont::Metrics& VirtualFont::getMetrics(const string &lang) const
         
         if (it == fontSetMap.end())
         {
-            throw;
+            return defaultMetrics;
         }
     }
     
