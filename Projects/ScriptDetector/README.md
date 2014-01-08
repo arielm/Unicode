@@ -15,4 +15,6 @@
 
 2. We're not, however, providing any means to define *local language hints* at the line level. So for line 2, even-though the second word from the left means "Japanese", it will not be detected as "ja" because the script is HAN (in this example, the *default languages* are set to "en:zh-cn", so whenever we need to associate a language to HAN, Chinese will be picked...)
 
-3. More details? See how [text is defined](resources/Text.xml), and [which fonts were used](resources/SansSerif.xml) to render the screenshot. There's also a [standalone test](src/Test.h) with insightful content. Finally, the [LanguageHelper](src/LanguageHelper.h) class contains a serious dose of Pango wisdom...
+3. More details? See how [text is defined](resources/Text.xml), and [which fonts were used](resources/SansSerif.xml) to render the screenshot. There's also a [**standalone test**](src/Test.h) with insightful content. Finally, the [**LanguageHelper**](src/LanguageHelper.h) class contains a serious dose of Pango wisdom.
+
+4. BIDI is deliberately left-aside, since we try to focus on one separate topic at a time...
