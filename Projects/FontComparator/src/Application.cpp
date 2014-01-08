@@ -244,7 +244,7 @@ void Application::fileDrop(FileDropEvent event)
                     applyDirective(slot, make_shared<Directive>(e));
                 }
             }
-            else if ((extension == ".ttf") || (extension == ".otf"))
+            else if ((extension == ".ttf") || (extension == ".otf") || (extension == ".ttc"))
             {
                 applyDirective(slot, make_shared<Directive>(file, *slot.directive));
             }
