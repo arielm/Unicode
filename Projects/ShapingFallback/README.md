@@ -23,9 +23,9 @@ Font 2: DroidSans.ttf. Not used.
 
 **Remarks**  
 
-1. This is a work in progress, following [this thread](http://www.mail-archive.com/harfbuzz@lists.freedesktop.org/msg03191.html) in Harfbuzz mailing-list.
+1. This is a work in progress, following [this thread](http://www.mail-archive.com/harfbuzz@lists.freedesktop.org/msg03191.html) in the Harfbuzz mailing-list.
 
 2. BIDI is not implemented and rendering is not optimized (consider each of the projects in this repository as an iteration...)
 
-3. This [class from the Mapnik project](https://github.com/mapnik/mapnik/blob/64d5153aeaeb1c9e736bfead297dfea39b066d2c/include/mapnik/text/harfbuzz_shaper.hpp) served as a starting-point. On one side, the code is more complete because it handles itemization (script and BIDI), but on the other side, font fallback seems to be implemented in a limited fashion (as far as I understand, it's not possible to mix glyphs from different fonts, as we do...)
+3. This [class from the Mapnik project](https://github.com/mapnik/mapnik/blob/64d5153aeaeb1c9e736bfead297dfea39b066d2c/include/mapnik/text/harfbuzz_shaper.hpp) served as a starting-point. Their implementation is currently more complete because it handles itemization (style, script and BIDI), but on the other hand, font fallback seems to be implemented in a limited fashion (it's not possible to mix glyphs from different fonts, as we do...)
 
