@@ -11,7 +11,7 @@
 
 **Remarks**
 
-1. The system allows to define some *global language hint* at the line level. For line 1, we provide a hint so that the whole content is treated as Japanese. Without it, the HAN glyphs would have been rendered in pink (i.e. using the font used to render Chinese.)  
+1. The system allows to define some *global language hint* at the line level. For line 1, we provide a hint so that the whole content is treated as Japanese. Without it, the HAN glyphs would have been rendered in pink (i.e. with the font used to render Chinese.)  
 
 2. We're not, however, providing any means to define *local language hints* at the line level. So for line 2, even-though the second word from the left means "Japanese", it will not be detected as "ja" because the script is HAN (in this example, the *default languages* are set to "en:zh-cn", so whenever we need to associate a language to HAN, Chinese will be picked...)
 
