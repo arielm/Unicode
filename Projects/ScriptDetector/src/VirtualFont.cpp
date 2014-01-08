@@ -44,7 +44,7 @@ const FontSet& VirtualFont::getFontSet(const string &lang) const
         
         if (it == fontSetMap.end())
         {
-            throw;
+            throw; // TODO: RETURN INSTEAD EMPTY FontSet (A "DEFAULT" VERSION, PREPARED IN ADVANCE)
         }
     }
     
@@ -61,85 +61,91 @@ const ActualFont::Metrics& VirtualFont::getMetrics(const string &lang) const
         
         if (it == fontSetMap.end())
         {
-            throw;
+            throw; // TODO: RETURN INSTEAD EMPTY Metrics (A "DEFAULT" VERSION, PREPARED IN ADVANCE)
         }
     }
     
     return (*it->second.begin())->metrics;
 }
 
-TextLayout* VirtualFont::createTextLayout(const TextRun &run)
+TextLayout* VirtualFont::createTextLayout(const TextGroup &group)
 {
-    auto layout = new TextLayout(this, run.lang, run.direction);
+    auto layout = new TextLayout(this, group.overallDirection);
     
     map<uint32_t, Cluster> clusterMap;
     auto buffer = hb_buffer_create();
     
-    for (auto &font : getFontSet(run.lang))
+    for (auto &item : group.items)
     {
-        run.apply(buffer);
-        hb_shape(font->hbFont, buffer, NULL, 0);
+        clusterMap.clear();
         
-        auto glyphCount = hb_buffer_get_length(buffer);
-        auto glyphInfos = hb_buffer_get_glyph_infos(buffer, NULL);
-        auto glyphPositions = hb_buffer_get_glyph_positions(buffer, NULL);
-        
-        bool hasMissingGlyphs = false;
-        
-        for (int i = 0; i < glyphCount; i++)
+        for (auto &font : getFontSet(item.lang))
         {
-            auto codepoint = glyphInfos[i].codepoint;
-            auto cluster = glyphInfos[i].cluster;
+            item.apply(group.text, buffer);
+            hb_shape(font->hbFont, buffer, NULL, 0);
             
-            auto it = clusterMap.find(cluster);
-            bool clusterFound = (it != clusterMap.end());
+            auto glyphCount = hb_buffer_get_length(buffer);
+            auto glyphInfos = hb_buffer_get_glyph_infos(buffer, NULL);
+            auto glyphPositions = hb_buffer_get_glyph_positions(buffer, NULL);
             
-            if (codepoint)
+            bool hasMissingGlyphs = false;
+            
+            for (int i = 0; i < glyphCount; i++)
             {
-                if (clusterFound && (it->second.font != font))
+                auto codepoint = glyphInfos[i].codepoint;
+                auto cluster = glyphInfos[i].cluster;
+                
+                auto it = clusterMap.find(cluster);
+                bool clusterFound = (it != clusterMap.end());
+                
+                if (codepoint)
                 {
-                    continue; // CLUSTER FOUND, WITH ANOTHER FONT (E.G. SPACE)
-                }
-                else
-                {
-                    auto offset = Vec2f(glyphPositions[i].x_offset, -glyphPositions[i].y_offset) * font->scale;
-                    float advance = glyphPositions[i].x_advance * font->scale.x;
-                    
-                    if (clusterFound)
+                    if (clusterFound && (it->second.font != font))
                     {
-                        it->second.addShape(codepoint, offset, advance);
+                        continue; // CLUSTER FOUND, WITH ANOTHER FONT (E.G. SPACE)
                     }
                     else
                     {
-                        clusterMap.insert(make_pair(cluster, Cluster(font, codepoint, offset, advance)));
+                        auto offset = Vec2f(glyphPositions[i].x_offset, -glyphPositions[i].y_offset) * font->scale;
+                        float advance = glyphPositions[i].x_advance * font->scale.x;
+                        
+                        if (clusterFound)
+                        {
+                            it->second.addShape(codepoint, offset, advance);
+                        }
+                        else
+                        {
+                            clusterMap.insert(make_pair(cluster, Cluster(font, codepoint, offset, advance)));
+                        }
                     }
                 }
+                else if (!clusterFound)
+                {
+                    hasMissingGlyphs = true;
+                }
             }
-            else if (!clusterFound)
+            
+            if (!hasMissingGlyphs)
             {
-                hasMissingGlyphs = true;
+                break; // NO NEED TO PROCEED TO THE NEXT FONT IN THE LIST
             }
         }
         
-        if (!hasMissingGlyphs)
+        if (group.overallDirection == HB_DIRECTION_RTL)
         {
-            break; // NO NEED TO PROCEED TO THE NEXT FONT IN THE LIST
+            for (auto it = clusterMap.rbegin(); it != clusterMap.rend(); ++it)
+            {
+                layout->addCluster(it->second);
+            }
         }
-    }
-    
-    if (run.direction == HB_DIRECTION_RTL)
-    {
-        for (auto it = clusterMap.rbegin(); it != clusterMap.rend(); ++it)
+        else
         {
-            layout->addCluster(it->second);
+            for (auto it = clusterMap.begin(); it != clusterMap.end(); ++it)
+            {
+                layout->addCluster(it->second);
+            }
         }
-    }
-    else
-    {
-        for (auto it = clusterMap.begin(); it != clusterMap.end(); ++it)
-        {
-            layout->addCluster(it->second);
-        }
+
     }
     
     hb_buffer_destroy(buffer);

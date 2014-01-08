@@ -10,6 +10,8 @@
 
 #include "hb.h"
 
+#include "unicode/unistr.h"
+
 #include <string>
 
 struct TextItem
@@ -29,4 +31,19 @@ struct TextItem
     lang(lang),
     direction(direction)
     {}
+    
+    void apply(const UnicodeString &text, hb_buffer_t *buffer) const
+    {
+        hb_buffer_clear_contents(buffer);
+
+        hb_buffer_set_script(buffer, script);
+        hb_buffer_set_direction(buffer, direction);
+        
+        if (!lang.empty())
+        {
+            hb_buffer_set_language(buffer, hb_language_from_string(lang.data(), -1));
+        }
+        
+        hb_buffer_add_utf16(buffer, text.getBuffer(), text.length(), start, end - start);
+    }
 };

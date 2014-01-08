@@ -10,8 +10,6 @@
 
 #include "TextItem.h"
 
-#include "unicode/unistr.h"
-
 #include <vector>
 
 struct TextGroup

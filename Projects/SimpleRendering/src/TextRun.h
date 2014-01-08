@@ -35,6 +35,8 @@ public:
     
     void apply(hb_buffer_t *buffer) const
     {
+        hb_buffer_clear_contents(buffer);
+
         hb_buffer_set_script(buffer, script);
         hb_buffer_set_direction(buffer, direction);
         

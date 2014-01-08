@@ -14,7 +14,7 @@ using namespace std;
 
 TextGroup TextItemizer::process(const string &input, const string &langHint, hb_direction_t overallDirection)
 {
-    TextGroup group(input);
+    TextGroup group(input, overallDirection);
     ScriptRun scriptRun(group.text.getBuffer(), group.text.length());
     
     while (scriptRun.next())

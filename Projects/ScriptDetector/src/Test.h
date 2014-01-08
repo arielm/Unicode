@@ -25,7 +25,7 @@ public:
          * WITHOUT THE "ja" HINT, THE HAN SCRIPTS WOULD HAVE BEEN DETECTED AS "zh-cn"
          */
         detectScriptsAndLanguages("ユニコードは、すべての文字に固有の番号を付与します", "ja");
-        
+
         /*
          * UNLESS WE CHANGE THE "DEFAULT LANGUAGES"...
          */

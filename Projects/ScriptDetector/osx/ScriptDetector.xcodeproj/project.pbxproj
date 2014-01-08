@@ -63,6 +63,15 @@
 		A871F5271862091A001D0F98 /* ubidiln.c in Sources */ = {isa = PBXBuildFile; fileRef = A871F5251862091A001D0F98 /* ubidiln.c */; };
 		A887CB19187C688D000B2DDB /* LanguageHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A887CB18187C688D000B2DDB /* LanguageHelper.cpp */; };
 		A8BCDEC6187D72DB00A7FCB8 /* TextItemizer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A8BCDEC4187D72DB00A7FCB8 /* TextItemizer.cpp */; };
+		A8BCDED7187D857900A7FCB8 /* VirtualFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A8BCDEC9187D857900A7FCB8 /* VirtualFont.cpp */; };
+		A8BCDED8187D857900A7FCB8 /* ActualFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A8BCDECB187D857900A7FCB8 /* ActualFont.cpp */; };
+		A8BCDED9187D857900A7FCB8 /* FontManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A8BCDECE187D857900A7FCB8 /* FontManager.cpp */; };
+		A8BCDEDA187D857900A7FCB8 /* InputSource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A8BCDED0187D857900A7FCB8 /* InputSource.cpp */; };
+		A8BCDEDB187D857900A7FCB8 /* ReloadableTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A8BCDED2187D857900A7FCB8 /* ReloadableTexture.cpp */; };
+		A8BCDEDC187D857900A7FCB8 /* FreetypeHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A8BCDED4187D857900A7FCB8 /* FreetypeHelper.cpp */; };
+		A8BCDEE0187D86EF00A7FCB8 /* SansSerif-osx.xml in Resources */ = {isa = PBXBuildFile; fileRef = A8BCDEDD187D86EF00A7FCB8 /* SansSerif-osx.xml */; };
+		A8BCDEE1187D86EF00A7FCB8 /* SansSerif.xml in Resources */ = {isa = PBXBuildFile; fileRef = A8BCDEDE187D86EF00A7FCB8 /* SansSerif.xml */; };
+		A8BCDEE2187D86EF00A7FCB8 /* Text.xml in Resources */ = {isa = PBXBuildFile; fileRef = A8BCDEDF187D86EF00A7FCB8 /* Text.xml */; };
 		A8FD19A1187BFB43000BE555 /* hb-ft.cc in Sources */ = {isa = PBXBuildFile; fileRef = A8FD194C187BFB42000BE555 /* hb-ft.cc */; };
 		A8FD19A2187BFB43000BE555 /* hb-set.cc in Sources */ = {isa = PBXBuildFile; fileRef = A8FD194D187BFB42000BE555 /* hb-set.cc */; };
 		A8FD19A3187BFB43000BE555 /* hb-shape-plan.cc in Sources */ = {isa = PBXBuildFile; fileRef = A8FD1950187BFB42000BE555 /* hb-shape-plan.cc */; };
@@ -249,6 +258,23 @@
 		A8BCDEC0187D68DE00A7FCB8 /* TextGroup.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TextGroup.h; path = ../src/TextGroup.h; sourceTree = "<group>"; };
 		A8BCDEC4187D72DB00A7FCB8 /* TextItemizer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TextItemizer.cpp; path = ../src/TextItemizer.cpp; sourceTree = "<group>"; };
 		A8BCDEC5187D72DB00A7FCB8 /* TextItemizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextItemizer.h; path = ../src/TextItemizer.h; sourceTree = "<group>"; };
+		A8BCDEC9187D857900A7FCB8 /* VirtualFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VirtualFont.cpp; path = ../src/VirtualFont.cpp; sourceTree = "<group>"; };
+		A8BCDECA187D857900A7FCB8 /* VirtualFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VirtualFont.h; path = ../src/VirtualFont.h; sourceTree = "<group>"; };
+		A8BCDECB187D857900A7FCB8 /* ActualFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ActualFont.cpp; path = ../src/ActualFont.cpp; sourceTree = "<group>"; };
+		A8BCDECC187D857900A7FCB8 /* ActualFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ActualFont.h; path = ../src/ActualFont.h; sourceTree = "<group>"; };
+		A8BCDECD187D857900A7FCB8 /* GlyphData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GlyphData.h; path = ../src/GlyphData.h; sourceTree = "<group>"; };
+		A8BCDECE187D857900A7FCB8 /* FontManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FontManager.cpp; path = ../src/FontManager.cpp; sourceTree = "<group>"; };
+		A8BCDECF187D857900A7FCB8 /* FontManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FontManager.h; path = ../src/FontManager.h; sourceTree = "<group>"; };
+		A8BCDED0187D857900A7FCB8 /* InputSource.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = InputSource.cpp; path = ../src/InputSource.cpp; sourceTree = "<group>"; };
+		A8BCDED1187D857900A7FCB8 /* InputSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InputSource.h; path = ../src/InputSource.h; sourceTree = "<group>"; };
+		A8BCDED2187D857900A7FCB8 /* ReloadableTexture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ReloadableTexture.cpp; path = ../src/ReloadableTexture.cpp; sourceTree = "<group>"; };
+		A8BCDED3187D857900A7FCB8 /* ReloadableTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ReloadableTexture.h; path = ../src/ReloadableTexture.h; sourceTree = "<group>"; };
+		A8BCDED4187D857900A7FCB8 /* FreetypeHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FreetypeHelper.cpp; path = ../src/FreetypeHelper.cpp; sourceTree = "<group>"; };
+		A8BCDED5187D857900A7FCB8 /* FreetypeHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FreetypeHelper.h; path = ../src/FreetypeHelper.h; sourceTree = "<group>"; };
+		A8BCDED6187D857900A7FCB8 /* TextLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextLayout.h; path = ../src/TextLayout.h; sourceTree = "<group>"; };
+		A8BCDEDD187D86EF00A7FCB8 /* SansSerif-osx.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = "SansSerif-osx.xml"; path = "../resources/SansSerif-osx.xml"; sourceTree = "<group>"; };
+		A8BCDEDE187D86EF00A7FCB8 /* SansSerif.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = SansSerif.xml; path = ../resources/SansSerif.xml; sourceTree = "<group>"; };
+		A8BCDEDF187D86EF00A7FCB8 /* Text.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = Text.xml; path = ../resources/Text.xml; sourceTree = "<group>"; };
 		A8FD194C187BFB42000BE555 /* hb-ft.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "hb-ft.cc"; path = "../../../hb/hb-ft.cc"; sourceTree = "<group>"; };
 		A8FD194D187BFB42000BE555 /* hb-set.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "hb-set.cc"; path = "../../../hb/hb-set.cc"; sourceTree = "<group>"; };
 		A8FD194E187BFB42000BE555 /* hb-set.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "hb-set.h"; path = "../../../hb/hb-set.h"; sourceTree = "<group>"; };
@@ -363,11 +389,12 @@
 				A871F16E186116D9001D0F98 /* scrptrun.cpp */,
 				A887CB17187C688D000B2DDB /* LanguageHelper.h */,
 				A887CB18187C688D000B2DDB /* LanguageHelper.cpp */,
-				A8BCDEBE187C902400A7FCB8 /* Test.h */,
 				A8BCDEBF187CB71600A7FCB8 /* TextItem.h */,
 				A8BCDEC0187D68DE00A7FCB8 /* TextGroup.h */,
 				A8BCDEC5187D72DB00A7FCB8 /* TextItemizer.h */,
 				A8BCDEC4187D72DB00A7FCB8 /* TextItemizer.cpp */,
+				A8BCDEBE187C902400A7FCB8 /* Test.h */,
+				A8BCDEC8187D851F00A7FCB8 /* Rendering */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -421,6 +448,9 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				A8BCDEDD187D86EF00A7FCB8 /* SansSerif-osx.xml */,
+				A8BCDEDE187D86EF00A7FCB8 /* SansSerif.xml */,
+				A8BCDEDF187D86EF00A7FCB8 /* Text.xml */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -608,6 +638,27 @@
 			path = ../../../icu/common/unicode;
 			sourceTree = "<group>";
 		};
+		A8BCDEC8187D851F00A7FCB8 /* Rendering */ = {
+			isa = PBXGroup;
+			children = (
+				A8BCDED5187D857900A7FCB8 /* FreetypeHelper.h */,
+				A8BCDED4187D857900A7FCB8 /* FreetypeHelper.cpp */,
+				A8BCDECF187D857900A7FCB8 /* FontManager.h */,
+				A8BCDECE187D857900A7FCB8 /* FontManager.cpp */,
+				A8BCDECC187D857900A7FCB8 /* ActualFont.h */,
+				A8BCDECB187D857900A7FCB8 /* ActualFont.cpp */,
+				A8BCDECA187D857900A7FCB8 /* VirtualFont.h */,
+				A8BCDEC9187D857900A7FCB8 /* VirtualFont.cpp */,
+				A8BCDED6187D857900A7FCB8 /* TextLayout.h */,
+				A8BCDECD187D857900A7FCB8 /* GlyphData.h */,
+				A8BCDED3187D857900A7FCB8 /* ReloadableTexture.h */,
+				A8BCDED2187D857900A7FCB8 /* ReloadableTexture.cpp */,
+				A8BCDED1187D857900A7FCB8 /* InputSource.h */,
+				A8BCDED0187D857900A7FCB8 /* InputSource.cpp */,
+			);
+			name = Rendering;
+			sourceTree = "<group>";
+		};
 		A8FD194B187BFB21000BE555 /* hb */ = {
 			isa = PBXGroup;
 			children = (
@@ -752,7 +803,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A8BCDEE2187D86EF00A7FCB8 /* Text.xml in Resources */,
 				A809523B16F360660011FAA3 /* icon.icns in Resources */,
+				A8BCDEE0187D86EF00A7FCB8 /* SansSerif-osx.xml in Resources */,
+				A8BCDEE1187D86EF00A7FCB8 /* SansSerif.xml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -771,6 +825,7 @@
 				A871F4721861E644001D0F98 /* uvector.cpp in Sources */,
 				A871F4601861E644001D0F98 /* uhash.c in Sources */,
 				A871F44D1861E644001D0F98 /* cmemory.c in Sources */,
+				A8BCDED8187D857900A7FCB8 /* ActualFont.cpp in Sources */,
 				A871F44F1861E644001D0F98 /* cwchar.c in Sources */,
 				A871F5271862091A001D0F98 /* ubidiln.c in Sources */,
 				A871F4611861E644001D0F98 /* uinvchar.c in Sources */,
@@ -817,18 +872,23 @@
 				A8FD19B0187BFB43000BE555 /* hb-ot-map.cc in Sources */,
 				A871F4691861E644001D0F98 /* unorm.cpp in Sources */,
 				A8FD19AF187BFB43000BE555 /* hb-ot-layout.cc in Sources */,
+				A8BCDEDC187D857900A7FCB8 /* FreetypeHelper.cpp in Sources */,
+				A8BCDEDB187D857900A7FCB8 /* ReloadableTexture.cpp in Sources */,
 				A871F44B1861E644001D0F98 /* bytestream.cpp in Sources */,
 				A871F45F1861E644001D0F98 /* uenum.c in Sources */,
 				A871F46C1861E644001D0F98 /* uprops.cpp in Sources */,
 				A871F46E1861E644001D0F98 /* ustring.cpp in Sources */,
+				A8BCDED9187D857900A7FCB8 /* FontManager.cpp in Sources */,
 				A8FD19B7187BFB43000BE555 /* hb-ot-shape-complex-thai.cc in Sources */,
 				A871F4521861E644001D0F98 /* normalizer2impl.cpp in Sources */,
 				A8FD19BB187BFB43000BE555 /* hb-ot-tag.cc in Sources */,
+				A8BCDEDA187D857900A7FCB8 /* InputSource.cpp in Sources */,
 				A871F4711861E644001D0F98 /* utypes.c in Sources */,
 				A8FD19B2187BFB43000BE555 /* hb-ot-shape-complex-default.cc in Sources */,
 				A871F45B1861E644001D0F98 /* ucmndata.c in Sources */,
 				A871F4541861E644001D0F98 /* stringpiece.cpp in Sources */,
 				A887CB19187C688D000B2DDB /* LanguageHelper.cpp in Sources */,
+				A8BCDED7187D857900A7FCB8 /* VirtualFont.cpp in Sources */,
 				A871F46F1861E644001D0F98 /* ustrtrns.cpp in Sources */,
 				A871F4621861E644001D0F98 /* uiter.cpp in Sources */,
 				A8FD19B9187BFB43000BE555 /* hb-ot-shape-normalize.cc in Sources */,
