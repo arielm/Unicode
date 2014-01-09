@@ -15,7 +15,7 @@
 #include <set>
 #include <map>
 
-typedef std::set<ActualFont*> FontSet;
+typedef std::vector<ActualFont*> FontSet;
 
 class VirtualFont
 {

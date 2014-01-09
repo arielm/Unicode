@@ -28,7 +28,20 @@ bool VirtualFont::add(const string &lang, ActualFont *font)
 {
     if (font)
     {
-        fontSetMap[lang].insert(font);
+        /*
+         * WHY USING std::vector INSTEAD OF std::set?
+         * BECAUSE ORDER OF INSERTION MATTERS
+         */
+        
+        for (auto tmp : fontSetMap[lang])
+        {
+            if (tmp == font)
+            {
+                return false;
+            }
+        }
+        
+        fontSetMap[lang].push_back(font);
         return true;
     }
     
