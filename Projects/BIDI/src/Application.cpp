@@ -73,18 +73,18 @@ void Application::setup()
     XmlTree doc(loadResource("Text.xml"));
     auto rootElement = doc.getChild("Text");
     
-    for (auto &lineElement : rootElement.getChildren())
-    {
-        auto text = trimText(lineElement->getValue());
-        auto language = lineElement->getAttributeValue<string>("lang", "");
-        hb_direction_t direction = (lineElement->getAttributeValue<string>("dir", "") == "rtl") ? HB_DIRECTION_RTL : HB_DIRECTION_LTR;
-        
-        addLineLayout(text, language, direction);
-    }
+//    for (auto &lineElement : rootElement.getChildren())
+//    {
+//        auto text = trimText(lineElement->getValue());
+//        auto language = lineElement->getAttributeValue<string>("lang", "");
+//        hb_direction_t direction = (lineElement->getAttributeValue<string>("dir", "") == "rtl") ? HB_DIRECTION_RTL : HB_DIRECTION_LTR;
+//        
+//        addLineLayout(text, language, direction);
+//    }
 
-    addLineLayout("The title is \"مفتاح معايير الويب!\u200f\" in Arabic.");
-    addLineLayout("W3C‏ (World Wide Web Consortium) מעביר את שירותי הארחה באירופה ל - ERCIM.");
-    addLineLayout("The title says \"W3C פעילות הבינאום,\u200f\" in Hebrew.");
+    addLineLayout("The title is \"مفتاح معايير الويب!\u200f\" in Arabic.", "ar");
+    addLineLayout("W3C‏ (World Wide Web Consortium) מעביר את שירותי הארחה באירופה ל - ERCIM.", "he", HB_DIRECTION_RTL);
+    addLineLayout("The title says \"W3C פעילות הבינאום,\u200f\" in Hebrew.", "he");
     
     // ---
     

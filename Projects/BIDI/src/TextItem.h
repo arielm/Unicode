@@ -23,6 +23,9 @@ struct TextItem
     std::string lang;
     hb_direction_t direction;
     
+    TextItem()
+    {}
+    
     TextItem(int32_t start, int32_t end, hb_script_t script, const std::string &lang, hb_direction_t direction)
     :
     start(start),

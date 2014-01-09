@@ -15,8 +15,6 @@
 
 #include "hb.h"
 
-#include "unicode/uscript.h"
-
 #include <vector>
 #include <map>
 #include <set>
@@ -85,21 +83,6 @@ public:
      * 3. IS THERE A PREDOMINANT LANGUAGE THAT IS LIKELY FOR @script?
      */
     std::string detectLanguage(hb_script_t script, const std::string &langHint = "") const;
-    
-    static hb_script_t hbScriptFromICU(UScriptCode script)
-    {
-        if (script == USCRIPT_INVALID_CODE)
-        {
-            return HB_SCRIPT_INVALID;
-        }
-        
-        return hb_script_from_string(uscript_getShortName(script), -1);
-    }
-    
-    inline std::string detectLanguage(UScriptCode script, const std::string &langHint = "") const
-    {
-        return detectLanguage(hbScriptFromICU(script), langHint);
-    }
     
 protected:
     std::map<std::string, std::vector<hb_script_t>> scriptMap;
