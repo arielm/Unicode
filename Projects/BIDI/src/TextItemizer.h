@@ -6,6 +6,29 @@
  * https://github.com/arielm/Unicode/blob/master/LICENSE.md
  */
 
+/*
+ * USING ICU 52.1 FOR SCRIPT-DETECTION AND FOR BIDI:
+ * http://www.icu-project.org/apiref/icu4c/ubidi_8h.html
+ */
+
+/*
+ * INSPIRED BY THE MAPNIK PROJECT:
+ * https://github.com/mapnik/mapnik/blob/64d5153aeaeb1c9e736bfead297dfea39b066d2c/src/text/itemizer.cpp
+ *
+ *
+ * SOME DIFFERENCES:
+ *
+ * 1) WE'RE NOT HANDLING STYLE
+ *    BUT THE Run TEMPLATE TOGETHER WITH THE mergeRuns() AND findRun()
+ *    FUNCTIONS ARE PREPARING THE TERRAIN FOR FUTURE IMPLEMENTATION
+ *
+ * 2) WE'RE DOING "LANGUAGE DETECTION" IN ADDITION TO "SCRIPT DETECTION"
+ *    NECESSARY IN ORDER TO HANDLE PROPERLY LANGUAGES SHARING THE SAME SCRIPT
+ *
+ * 3) WE'RE NOT DETERMINING THE PARAGRAPH-LEVEL FROM THE TEXT
+ *    NECESSARY IN ORDER TO PROPERLY HANDLE CERTAIN COMBINATIONS OF LTR AND RTL
+ */
+
 #pragma once
 
 #include "LanguageHelper.h"
