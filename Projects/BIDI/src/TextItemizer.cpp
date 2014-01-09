@@ -10,23 +10,40 @@
 
 #include "scrptrun.h"
 
-#include <iostream>
-
 using namespace std;
+
+hb_script_t TextItemizer::icuScriptToHB(UScriptCode script)
+{
+    if (script == USCRIPT_INVALID_CODE)
+    {
+        return HB_SCRIPT_INVALID;
+    }
+    
+    return hb_script_from_string(uscript_getShortName(script), -1);
+}
+
+hb_direction_t TextItemizer::icuDirectionToHB(UBiDiDirection direction)
+{
+    return (direction == UBIDI_RTL) ? HB_DIRECTION_RTL : HB_DIRECTION_LTR;
+}
 
 TextGroup TextItemizer::process(const string &input, const string &langHint, hb_direction_t overallDirection)
 {
     TextGroup group(input, overallDirection);
 
-    auto text = group.text.getBuffer();
-    auto length = group.text.length();
+    vector<ScriptAndLanguageRun> scriptAndLanguageRuns;
+    itemizeScriptAndLanguage(group.text, langHint, scriptAndLanguageRuns);
     
-    /*
-     * SCRIPT AND LANGUAGE ITEMIZATION
-     */
+    vector<DirectionRun> directionRuns;
+    itemizeDirection(group.text, overallDirection, directionRuns);
     
-    std::vector<ScriptAndLanguageRun> scriptAndLanguageRuns;
-    ScriptRun scriptRun(text, length);
+    mergeRuns(scriptAndLanguageRuns, directionRuns, group.items);
+    return group;
+}
+
+void TextItemizer::itemizeScriptAndLanguage(const UnicodeString &text, const string &langHint, vector<ScriptAndLanguageRun> &runs)
+{
+    ScriptRun scriptRun(text.getBuffer(), text.length());
     
     while (scriptRun.next())
     {
@@ -37,30 +54,28 @@ TextGroup TextItemizer::process(const string &input, const string &langHint, hb_
         auto script = icuScriptToHB(code);
         auto language = languageHelper.detectLanguage(script, langHint);
         
-        scriptAndLanguageRuns.emplace_back(start, end, make_pair(script, language));
+        runs.emplace_back(start, end, make_pair(script, language));
     }
-    
-    /*
-     * BIDI ITEMIZATION
-     */
-    
-    std::vector<DirectionRun> directionRuns;
+}
 
-    UErrorCode error = U_ZERO_ERROR;
-    UBiDi *bidi = ubidi_openSized(length, 0, &error);
-
+void TextItemizer::itemizeDirection(const UnicodeString &text, hb_direction_t overallDirection, vector<DirectionRun> &runs)
+{
     /*
      * WE WANT TO FORCE A DIRECTION (I.E. NOT DETERMINING THE PARAGRAPH-LEVEL FROM THE TEXT)
      * SEE: http://www.icu-project.org/apiref/icu4c/ubidi_8h.html#abdfe9e113a19dd8521d3b7ac8220fe11
      */
     UBiDiLevel paraLevel = (overallDirection == HB_DIRECTION_RTL) ? 1 : 0;
+
+    auto length = text.length();
+    UErrorCode error = U_ZERO_ERROR;
+    UBiDi *bidi = ubidi_openSized(length, 0, &error);
     
-    ubidi_setPara(bidi, text, length, paraLevel, 0, &error);
+    ubidi_setPara(bidi, text.getBuffer(), length, paraLevel, 0, &error);
     auto direction = ubidi_getDirection(bidi);
     
     if (direction != UBIDI_MIXED)
     {
-        directionRuns.emplace_back(0, length, uciDirectionToHB(direction));
+        runs.emplace_back(0, length, icuDirectionToHB(direction));
     }
     else
     {
@@ -70,21 +85,20 @@ TextGroup TextItemizer::process(const string &input, const string &langHint, hb_
         {
             int32_t start, length;
             direction = ubidi_getVisualRun(bidi, i, &start, &length);
-            directionRuns.emplace_back(start, start + length, uciDirectionToHB(direction));
+            runs.emplace_back(start, start + length, icuDirectionToHB(direction));
         }
     }
     
     ubidi_close(bidi);
-    
-    /*
-     * MIX
-     */
-    
+}
+
+void TextItemizer::mergeRuns(const vector<ScriptAndLanguageRun> &scriptAndLanguageRuns, const vector<DirectionRun> &directionRuns, vector<TextItem> &items)
+{
     for (auto &directionRun : directionRuns)
     {
         auto position = directionRun.start;
         auto end = directionRun.end;
-        auto rtlInsertionPoint = group.items.end();
+        auto rtlInsertionPoint = items.end();
         
         auto scriptAndLanguageIterator = findRun(scriptAndLanguageRuns, position);
         
@@ -99,44 +113,27 @@ TextGroup TextItemizer::process(const string &input, const string &langHint, hb_
             
             if (directionRun.data == HB_DIRECTION_LTR)
             {
-                group.items.emplace_back(item);
+                items.emplace_back(item);
             }
             else
             {
-                rtlInsertionPoint = group.items.insert(rtlInsertionPoint, item);
+                rtlInsertionPoint = items.insert(rtlInsertionPoint, item);
             }
-
+            
             position = item.end;
-
+            
             if (scriptAndLanguageIterator->end == position)
             {
                 ++scriptAndLanguageIterator;
             }
         }
     }
-    
-    return group;
-}
-
-hb_script_t TextItemizer::icuScriptToHB(UScriptCode script)
-{
-    if (script == USCRIPT_INVALID_CODE)
-    {
-        return HB_SCRIPT_INVALID;
-    }
-    
-    return hb_script_from_string(uscript_getShortName(script), -1);
-}
-
-hb_direction_t TextItemizer::uciDirectionToHB(UBiDiDirection direction)
-{
-    return (direction == UBIDI_RTL) ? HB_DIRECTION_RTL : HB_DIRECTION_LTR;
 }
 
 template <typename T>
-typename T::const_iterator TextItemizer::findRun(const T &list, unsigned position)
+typename T::const_iterator TextItemizer::findRun(const T &runs, int32_t position)
 {
-    for (auto it = list.begin(); it != list.end(); ++it)
+    for (auto it = runs.begin(); it != runs.end(); ++it)
     {
         if ((it->start <= position) && (it->end > position))
         {
@@ -144,5 +141,5 @@ typename T::const_iterator TextItemizer::findRun(const T &list, unsigned positio
         }
     }
     
-    return list.end();
+    return runs.end();
 }

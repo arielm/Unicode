@@ -7,7 +7,7 @@
  */
 
 /*
- * FOLLOWING ScriptDetector...
+ * THE MERGING OF SCRIPT/LANGUAGE AND BIDI ITEMS SEEMS TO WORK AS INTENDED!
  */
 
 /*
@@ -15,10 +15,13 @@
  *
  * 1) TEST ON iOS AND ANDROID
  *
- * 2) BIDI ITEMIZATION SHOULD TAKE PLACE,
- *    THEN THE SCRIPT/LANGUAGE AND BIDI ITEMS SHOULD BE "MIXED",
- *    AS DESCRIBED IN http://www.mail-archive.com/harfbuzz@lists.freedesktop.org/msg03190.html
- *    AND AS IMPLEMENTED IN THE MAPNIK PROJECT
+ * 2) INVESTIGATE WHY FONT-FALLBACK WITH "Geeza Pro" AND "Arial" IS NOT WORKING AS INTENDED:
+ *    - CURRENTLY, Arial IS ALWAYS TAKING THE PRECEDENCE EVEN IF IT'S DEFINED AFTER "Gezza Pro"
+ *
+ * 3) ADD SCALE-FACTOR FOR ACTUAL-FONTS IN XML DEFINITION:
+ *    - NECESSARY IN CASE WE NEED TO MATCH SIZES BETWEEN (SMALLER) "Geeza Pro" AND "Arial"
+ *
+ * 4) ADAPT TEXT-LAYOUT-CACHE SYSTEM TO TextGroup
  */
 
 #include "cinder/app/AppNative.h"
@@ -34,7 +37,7 @@ using namespace std;
 using namespace ci;
 using namespace app;
 
-const float FONT_SIZE = 32;
+const float FONT_SIZE = 27;
 const float LINE_TOP = 66;
 const float LINE_SPACING = 66;
 
@@ -66,25 +69,36 @@ void Application::prepareSettings(Settings *settings)
 
 void Application::setup()
 {
-    font = fontManager.getVirtualFont("res://SansSerif.xml", FONT_SIZE);
+    font = fontManager.getVirtualFont("res://SansSerif-osx.xml", FONT_SIZE);
     
     // ---
-    
+
+    /*
+     * TEXT EXAMPLES FROM THE ScriptDetector PROJECT
+     */
+
     XmlTree doc(loadResource("Text.xml"));
     auto rootElement = doc.getChild("Text");
     
-//    for (auto &lineElement : rootElement.getChildren())
-//    {
-//        auto text = trimText(lineElement->getValue());
-//        auto language = lineElement->getAttributeValue<string>("lang", "");
-//        hb_direction_t direction = (lineElement->getAttributeValue<string>("dir", "") == "rtl") ? HB_DIRECTION_RTL : HB_DIRECTION_LTR;
-//        
-//        addLineLayout(text, language, direction);
-//    }
+    for (auto &lineElement : rootElement.getChildren())
+    {
+        auto text = trimText(lineElement->getValue());
+        auto language = lineElement->getAttributeValue<string>("lang", "");
+        hb_direction_t direction = (lineElement->getAttributeValue<string>("dir", "") == "rtl") ? HB_DIRECTION_RTL : HB_DIRECTION_LTR;
+        
+        addLineLayout(text, language, direction);
+    }
 
-    addLineLayout("The title is \"مفتاح معايير الويب!\u200f\" in Arabic.", "ar");
-    addLineLayout("W3C‏ (World Wide Web Consortium) מעביר את שירותי הארחה באירופה ל - ERCIM.", "he", HB_DIRECTION_RTL);
-    addLineLayout("The title says \"W3C פעילות הבינאום,\u200f\" in Hebrew.", "he");
+    /*
+     * TEXT EXAMPLES FROM THE SimpleBIDI PROJECT
+     */
+    addLineLayout("The title is مفتاح معايير الويب in Arabic.");
+    addLineLayout("The title is \"مفتاح معايير الويب!\u200f\" in Arabic.");
+    addLineLayout("The names of these states in Arabic are مصر,‎ البحرين and الكويت respectively.");
+    addLineLayout("W3C‏ (World Wide Web Consortium) מעביר את שירותי הארחה באירופה ל - ERCIM.", "", HB_DIRECTION_RTL);
+    addLineLayout("The title says \"W3C פעילות הבינאום,\u200f\" in Hebrew.");
+    addLineLayout("one two ثلاثة four خمسة");
+    addLineLayout("one two ثلاثة 1234 خمسة");
     
     // ---
     

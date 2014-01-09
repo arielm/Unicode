@@ -18,21 +18,21 @@
 class TextItemizer
 {
 public:
-    TextGroup process(const std::string &input, const std::string &langHint = "", hb_direction_t overallDirection = HB_DIRECTION_LTR);
-    
     static hb_script_t icuScriptToHB(UScriptCode script);
-    static hb_direction_t uciDirectionToHB(UBiDiDirection direction);
+    static hb_direction_t icuDirectionToHB(UBiDiDirection direction);
+
+    TextGroup process(const std::string &input, const std::string &langHint = "", hb_direction_t overallDirection = HB_DIRECTION_LTR);
     
 protected:
     LanguageHelper languageHelper;
     
     template<typename T> struct Run
     {
-        unsigned start;
-        unsigned end;
+        int32_t start;
+        int32_t end;
         T data;
 
-        Run(unsigned start, unsigned end, T data)
+        Run(int32_t start, int32_t end, T data)
         :
         start(start),
         end(end),
@@ -42,6 +42,10 @@ protected:
 
     typedef Run<std::pair<hb_script_t, std::string>> ScriptAndLanguageRun;
     typedef Run<hb_direction_t> DirectionRun;
+
+    void itemizeScriptAndLanguage(const UnicodeString &text, const std::string &langHint, std::vector<ScriptAndLanguageRun> &runs);
+    void itemizeDirection(const UnicodeString &text, hb_direction_t overallDirection, std::vector<DirectionRun> &runs);
+    void mergeRuns(const std::vector<ScriptAndLanguageRun> &scriptAndLanguageRuns, const std::vector<DirectionRun> &directionRuns, std::vector<TextItem> &items);
     
-    template<typename T> typename T::const_iterator findRun(const T &list, unsigned position);
+    template<typename T> typename T::const_iterator findRun(const T &runs, int32_t position);
 };

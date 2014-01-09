@@ -11,7 +11,7 @@
     </Set>
     <!-- Arabic, Persian -->
     <Set lang="ar:fa">
-        <Ref>file:///System/Library/Fonts/Geeza Pro.ttf</Ref>
+        <Ref>file:///System/Library/Fonts/Geeza Pro.ttf</Ref><!-- PROBLEMATIC ON OSX: PUNCTUATION AND NUMBERS ARE MISSING -->
     </Set>
     <!-- Hebrew, Yiddish -->
     <Set lang="he:yi">
