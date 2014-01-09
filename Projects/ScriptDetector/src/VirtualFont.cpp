@@ -132,7 +132,7 @@ TextLayout* VirtualFont::createTextLayout(const TextGroup &group)
             }
         }
         
-        if (group.overallDirection == HB_DIRECTION_RTL)
+        if (item.direction == HB_DIRECTION_RTL)
         {
             for (auto it = clusterMap.rbegin(); it != clusterMap.rend(); ++it)
             {
