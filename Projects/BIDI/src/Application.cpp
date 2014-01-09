@@ -72,7 +72,7 @@ void Application::prepareSettings(Settings *settings)
 
 void Application::setup()
 {
-    font = fontManager.getVirtualFont("res://SansSerif-osx.xml", FONT_SIZE);
+    font = fontManager.getVirtualFont("res://SansSerif.xml", FONT_SIZE);
     
     // ---
 

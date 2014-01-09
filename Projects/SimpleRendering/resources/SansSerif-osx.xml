@@ -11,7 +11,8 @@
     </Set>
     <!-- Arabic, Persian -->
     <Set lang="ar:fa">
-        <Ref>file:///System/Library/Fonts/Geeza Pro.ttf</Ref>
+        <Ref>file:///System/Library/Fonts/Geeza Pro.ttf</Ref><!-- NOT IDEAL: PUNCTUATION AND NUMBERS ARE MISSING -->
+        <Ref>file:///Library/Fonts/Arial.ttf</Ref>
     </Set>
     <!-- Hebrew, Yiddish -->
     <Set lang="he:yi">

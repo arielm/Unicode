@@ -28,7 +28,7 @@ bool VirtualFont::add(const string &lang, ActualFont *font)
 {
     if (font)
     {
-        fontSetMap[lang].insert(font);
+        fontSetMap[lang].insert(font); // FIXME: SEE BIDI PROJECT
         return true;
     }
     

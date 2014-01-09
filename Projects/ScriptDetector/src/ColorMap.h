@@ -55,7 +55,7 @@ public:
         }
         if (lang == "he")
         {
-            return ci::ColorA::gray(0.5f);
+            return ci::ColorA::gray(0.66f);
         }
         
         return ci::ColorA::gray(0);
