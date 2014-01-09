@@ -25,11 +25,6 @@ struct TextGroup
         text = UnicodeString::fromUTF8(input);
     }
     
-    void addItem(const TextItem &item)
-    {
-        items.emplace_back(item);
-    }
-    
     void addItem(int32_t start, int32_t end, hb_script_t script, const std::string &lang, hb_direction_t direction)
     {
         items.emplace_back(start, end, script, lang, direction);

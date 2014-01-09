@@ -22,7 +22,6 @@ public:
     
     static hb_script_t icuScriptToHB(UScriptCode script);
     static hb_direction_t uciDirectionToHB(UBiDiDirection direction);
-    static UBiDiLevel hbDirectionToUBIDILevel(hb_direction_t direction);
     
 protected:
     LanguageHelper languageHelper;

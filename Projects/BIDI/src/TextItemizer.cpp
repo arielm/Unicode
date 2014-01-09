@@ -10,6 +10,8 @@
 
 #include "scrptrun.h"
 
+#include <iostream>
+
 using namespace std;
 
 TextGroup TextItemizer::process(const string &input, const string &langHint, hb_direction_t overallDirection)
@@ -43,11 +45,17 @@ TextGroup TextItemizer::process(const string &input, const string &langHint, hb_
      */
     
     std::vector<DirectionRun> directionRuns;
-    
+
     UErrorCode error = U_ZERO_ERROR;
     UBiDi *bidi = ubidi_openSized(length, 0, &error);
+
+    /*
+     * WE WANT TO FORCE A DIRECTION (I.E. NOT DETERMINING THE PARAGRAPH-LEVEL FROM THE TEXT)
+     * SEE: http://www.icu-project.org/apiref/icu4c/ubidi_8h.html#abdfe9e113a19dd8521d3b7ac8220fe11
+     */
+    UBiDiLevel paraLevel = (overallDirection == HB_DIRECTION_RTL) ? 1 : 0;
     
-    ubidi_setPara(bidi, text, length, hbDirectionToUBIDILevel(overallDirection), 0, &error);
+    ubidi_setPara(bidi, text, length, paraLevel, 0, &error);
     auto direction = ubidi_getDirection(bidi);
     
     if (direction != UBIDI_MIXED)
@@ -72,40 +80,37 @@ TextGroup TextItemizer::process(const string &input, const string &langHint, hb_
      * MIX
      */
     
-    auto &output = group.items;
-    
     for (auto &directionRun : directionRuns)
     {
         auto position = directionRun.start;
         auto end = directionRun.end;
-        auto rtlInsertionPoint = output.end();
+        auto rtlInsertionPoint = group.items.end();
         
-        auto scriptAndLanguageIt = findRun(scriptAndLanguageRuns, position);
+        auto scriptAndLanguageIterator = findRun(scriptAndLanguageRuns, position);
         
         while (position < end)
         {
-//            assert(scriptAndLanguageIt != scriptAndLanguageRuns.end());
-            
             TextItem item;
             item.start = position;
-            position = std::min(scriptAndLanguageIt->end, end);
-            item.end = position;
-            item.script = scriptAndLanguageIt->data.first;
-            item.lang = scriptAndLanguageIt->data.second;
+            item.end = std::min(scriptAndLanguageIterator->end, end);
+            item.script = scriptAndLanguageIterator->data.first;
+            item.lang = scriptAndLanguageIterator->data.second;
             item.direction = directionRun.data;
             
             if (directionRun.data == HB_DIRECTION_LTR)
             {
-                output.push_back(item);
+                group.items.emplace_back(item);
             }
             else
             {
-                rtlInsertionPoint = output.insert(rtlInsertionPoint, item);
+                rtlInsertionPoint = group.items.insert(rtlInsertionPoint, item);
             }
-            
-            if (scriptAndLanguageIt->end == position)
+
+            position = item.end;
+
+            if (scriptAndLanguageIterator->end == position)
             {
-                ++scriptAndLanguageIt;
+                ++scriptAndLanguageIterator;
             }
         }
     }
@@ -128,21 +133,10 @@ hb_direction_t TextItemizer::uciDirectionToHB(UBiDiDirection direction)
     return (direction == UBIDI_RTL) ? HB_DIRECTION_RTL : HB_DIRECTION_LTR;
 }
 
-/*
- * WE WANT TO FORCE A DIRECTION (I.E. NOT DETERMINING THE PARAGRAPH-LEVEL FROM THE TEXT)
- * SEE: http://www.icu-project.org/apiref/icu4c/ubidi_8h.html#abdfe9e113a19dd8521d3b7ac8220fe11
- */
-UBiDiLevel TextItemizer::hbDirectionToUBIDILevel(hb_direction_t direction)
-{
-    return (direction == HB_DIRECTION_RTL) ? 1 : 0;
-}
-
 template <typename T>
 typename T::const_iterator TextItemizer::findRun(const T &list, unsigned position)
 {
-    auto it = list.begin();
-    
-    for (; it != list.end(); ++it)
+    for (auto it = list.begin(); it != list.end(); ++it)
     {
         if ((it->start <= position) && (it->end > position))
         {
@@ -150,5 +144,5 @@ typename T::const_iterator TextItemizer::findRun(const T &list, unsigned positio
         }
     }
     
-    return it;
+    return list.end();
 }
