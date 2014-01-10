@@ -17,4 +17,4 @@
 
 3. More details? See how [text is defined](resources/Text.xml), and [which fonts were used](resources/SansSerif.xml) to render the screenshot. There's also a [**standalone test**](src/Test.h) with insightful content. Finally, the [**LanguageHelper**](src/LanguageHelper.h) class contains a serious dose of Pango wisdom.
 
-4. BIDI is deliberately left-aside (we're focusing on one separate topic at a time...) Anyway, if BIDI were taking place, we could place the Arabic and Hebrew of lines 3 and 4 (both RTL languages) on line 2. Currently, we can't even place Hebrew and Arabic properly on the same line (without BIDI, the 2 words are glued...)
+4. BIDI is deliberately left-aside (and properly addressed in our [BIDI](https://github.com/arielm/Unicode/tree/master/Projects/BIDI) project.) Anyway, if BIDI were taking place, we could place the Arabic and Hebrew of lines 3 and 4 (both RTL languages) on line 2. Currently, we can't even place Hebrew and Arabic properly on the same line (without BIDI, the 2 words are glued...)
