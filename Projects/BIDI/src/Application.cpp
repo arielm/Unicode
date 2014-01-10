@@ -9,69 +9,38 @@
 /*
  * DONE:
  *
- * 1) FONT METRICS
+ * 1) MERGING OF SCRIPT/LANGUAGE AND BIDI ITEMS:
+ *    SEEMS TO WORK AS INTENDED!
  *
- * 2) TEXTURE-PADDING:
- *    NECESSARY WHEN DRAWING A SMALLER SIZES WITH MIPMAPING
+ * 2) BUG-FIX:
+ *    USING std::set FOR FontSet WAS NOT PRESERVING THE (CRUCIAL) ORDER OF INSERTION
  *
- * 3) BASIC FONT-DRAWING AT ARBITRARY SIZE:
- *    NOT USING gl::Texture ANYMORE
- *
- * 4) TextLayout CREATED VIA VirtualFont
- *
- * 5) HANDLING OPEN-GL CONTEXT-LOSS (NECESSARY FOR ANDROID):
- *    - PRESS "ENTER" TO UNLOAD ALL THE TEXTURES
- *    - GLYPH RASTERIZATION WILL THEN HAPPEN ON THE FLY...
- *
- * 6) TEXT-SIZE VARIATION
- *
- * 7) ADAPTING TO iOS AND ANDROID:
- *    - WORKS AS INTENDED ON NEXUS-7
- *    - CRASH WHEN RETURNING TO APP ON XOOM 1 (ANDROID 3)
- *
- * 8) GLYPH-RENDERING NOW WORKS WITH glColorPointer
+ * 3) TESTED ON iOS AND ANDROID
  */
 
 /*
  * TODO:
  *
- * 1) ADVANCED GLYPH RENDERING:
- *    - BATCHING ("TEXTURE BUCKET"):
- *      - USING A MAP, WITH AN ENTRY FOR EACH TEXTURE:
- *        - EACH ENTRY CONTAINING A VECTOR OF FLOATS FILLED-WITH:
- *          - INTERLEAVED POSITIONS, TEXTURE-COORDS AND COLORS
- *    - TRANSFORMING VERTICES VIA FontMatrix
- *    - "BEGIN / END" MODES:
- *      - "DIRECT"
- *      - "TEXTURE BUCKET"
+ * 1) ADJUST FONTS:
+ *    - iOS:
+ *      - "Geeza Pro" SHOULD BE REPLACED (ARABIC GLYPHS ARE NOT JOINED)
+ *    - ANDROID:
+ *      - HEBREW FONT IS MISSING
+ *      - ARABIC FONT IS PROBABLY OUTDATED
+ *      - THAI FONT IS BUGGY...
  *
- * 2) TEXTURE-ATLASES:
- *    - SIMILAR TO THE SYSTEM USED IN XFont, BUT WITH N TEXTURES
- *    - WE NEED A SYSTEM FOR USERS TO DEFINE WHICH GLYPHS ARE CACHED
- *      - BECAUSE OF MIPMAPPING, WE CAN'T ADD GLYPHS ON-THE-FLY
- *      - THERE SHOULD BE A WAY TO ADD/REMOVE GROUPS OF GLYPHS, E.G. PER LANGUAGE
+ * 2) ADD SCALE-FACTOR FOR ACTUAL-FONTS IN XML DEFINITION:
+ *    - NECESSARY IN CASE WE NEED TO MATCH SIZES BETWEEN (SMALLER) "Geeza Pro" AND "Arial"
  *
- * 3) TextLayoutCache:
- *    - LRU STRATEGY
- *
- * 4) FontManager:
- *    - PROPER ERROR HANDLING UPON CREATION
- *    - FONT QUERYING:
- *      - HANDLING WEIGHTS (NORMAL BOLD)
- *      - HANDLING OPERATING SYSTEMS (ANDROID, iOS, ETC.)
- *    - POSSIBILITY TO REMOVE A PARTICULAR VirtualFont
- *    - WE NEED A KIND OF "GLOBAL TEXTURE STORE" FOR STANDALONE-TEXTURES AND ATLASES:
- *      - LRU STRATEGY FOR STANDALONE-TEXTURES
- *      - AUTOMATIC REMOVAL OF STANDALONE-TEXTURE WHENEVER AN ATLAS IS STORING THE ASSOCIATED GLYPH'S TEXTURE
+ * 3) ADAPT TEXT-LAYOUT-CACHE SYSTEM TO TextGroup
  */
 
 #include "cinder/app/AppNative.h"
 #include "cinder/Xml.h"
 #include "cinder/Utilities.h"
 
-#include "TextLayoutCache.h"
+#include "TextItemizer.h"
 #include "FontManager.h"
-#include "LanguageHelper.h"
 
 #include <boost/algorithm/string.hpp>
 
@@ -79,18 +48,16 @@ using namespace std;
 using namespace ci;
 using namespace app;
 
-const float FONT_SIZE = 48;
+const float FONT_SIZE = 27;
 const float LINE_TOP = 66;
 const float LINE_SPACING = 66;
 
 class Application : public AppNative
 {
-    LanguageHelper languageHelper;
     FontManager fontManager;
-    
+    TextItemizer itemizer;
     VirtualFont *font;
-    vector<TextRun> runs;
-    TextLayoutCache layoutCache;
+    vector<unique_ptr<TextLayout>> lineLayouts;
     
 public:
     void prepareSettings(Settings *settings);
@@ -100,15 +67,15 @@ public:
     void drawLineLayout(TextLayout &layout, float y, float left, float right);
     void drawHLine(float y);
     
-    TextRun createRun(const string &text, const string &lang, hb_direction_t direction = HB_DIRECTION_INVALID) const;
+    void addLineLayout(const string &text, const string &langHint = "", hb_direction_t overallDirection = HB_DIRECTION_LTR);
     string trimText(const string &text) const;
-
+    
 #if defined(CINDER_ANDROID)
     void resume(bool renewContext);
 #elif !defined(CINDER_COCOA_TOUCH)
     void keyDown(KeyEvent event);
 #endif
-
+    
 #if defined(CINDER_ANDROID)
     inline Vec2i toPixels(Vec2i s) { return s; }
     inline float toPixels(float s) { return s; }
@@ -117,7 +84,7 @@ public:
 
 void Application::prepareSettings(Settings *settings)
 {
-    settings->setWindowSize(1280, 736);
+    settings->setWindowSize(1024, 736);
     settings->enableHighDensityDisplay();
     settings->disableFrameRate();
 }
@@ -133,19 +100,37 @@ void Application::setup()
 #else
     auto uri = "res://SansSerif.xml"; // FOR QUICK TESTS ON THE DESKTOP
 #endif
-
+    
     font = fontManager.getVirtualFont(uri, FONT_SIZE);
     
+    // ---
+
+    /*
+     * TEXT EXAMPLES FROM THE ScriptDetector PROJECT
+     */
+
     XmlTree doc(loadResource("Text.xml"));
     auto rootElement = doc.getChild("Text");
     
     for (auto &lineElement : rootElement.getChildren())
     {
         auto text = trimText(lineElement->getValue());
-        auto lang = lineElement->getAttributeValue<string>("lang");
+        auto language = lineElement->getAttributeValue<string>("lang", "");
+        hb_direction_t direction = (lineElement->getAttributeValue<string>("dir", "") == "rtl") ? HB_DIRECTION_RTL : HB_DIRECTION_LTR;
         
-        runs.emplace_back(createRun(text, lang));
+        addLineLayout(text, language, direction);
     }
+
+    /*
+     * TEXT EXAMPLES FROM THE SimpleBIDI PROJECT
+     */
+    addLineLayout("The title is مفتاح معايير الويب in Arabic.");
+    addLineLayout("The title is \"مفتاح معايير الويب!\u200f\" in Arabic.");
+    addLineLayout("The names of these states in Arabic are مصر,‎ البحرين and الكويت respectively.");
+    addLineLayout("W3C‏ (World Wide Web Consortium) מעביר את שירותי הארחה באירופה ל - ERCIM.", "", HB_DIRECTION_RTL);
+    addLineLayout("The title says \"W3C פעילות הבינאום,\u200f\" in Hebrew.");
+    addLineLayout("one two ثلاثة four خمسة");
+    addLineLayout("one two ثلاثة 1234 خمسة");
     
     // ---
     
@@ -164,36 +149,33 @@ void Application::draw()
     
     // ---
     
-    gl::clear(Color::gray(0.5f), false);
+    gl::clear(Color(1, 1, 0.95f), false);
     
     Vec2i windowSize = toPixels(getWindowSize());
     gl::setMatricesWindow(windowSize, true);
-
+    
     // ---
-
+    
     float y = LINE_TOP;
     float left = 24;
     float right = windowSize.x - 24;
-
-    float size = 30 + 18 * math<float>::sin(getElapsedSeconds()); // OSCILLATING BETWEEN 12 AND 48
-    font->setSize(size);
     
-    font->setColor(ColorA(1, 1, 1, 0.75f));
-
-    for (auto run : runs)
+    font->setSize(FONT_SIZE);
+    
+    for (auto &layout : lineLayouts)
     {
-        drawLineLayout(*layoutCache.get(font, run), y, left, right);
+        drawLineLayout(*layout, y, left, right);
         y += LINE_SPACING;
     }
 }
 
 void Application::drawLineLayout(TextLayout &layout, float y, float left, float right)
 {
-    float x = (layout.direction == HB_DIRECTION_LTR) ? left : (right - font->getAdvance(layout));
+    float x = (layout.overallDirection == HB_DIRECTION_LTR) ? left : (right - font->getAdvance(layout));
     Vec2f position(x, y);
- 
+    
     font->begin();
-
+    
     for (auto cluster : layout.clusters)
     {
         font->drawCluster(cluster, position);
@@ -204,7 +186,7 @@ void Application::drawLineLayout(TextLayout &layout, float y, float left, float 
     
     // ---
     
-    glColor4f(1, 0.75f, 0, 0.25f);
+    glColor4f(0.5f, 0, 0, 0.075f);
     drawHLine(y);
 }
 
@@ -213,16 +195,9 @@ void Application::drawHLine(float y)
     gl::drawLine(Vec2f(-9999, y), Vec2f(+9999, y));
 }
 
-TextRun Application::createRun(const string &text, const string &lang, hb_direction_t direction) const
+void Application::addLineLayout(const string &text, const string &langHint, hb_direction_t overallDirection)
 {
-    auto script = languageHelper.getScript(lang);
-    
-    if (direction == HB_DIRECTION_INVALID)
-    {
-        direction = hb_script_get_horizontal_direction(script);
-    }
-    
-    return TextRun(text, script, lang, direction);
+    lineLayouts.emplace_back(unique_ptr<TextLayout>(font->createTextLayout(itemizer.process(text, langHint, overallDirection))));
 }
 
 string Application::trimText(const string &text) const

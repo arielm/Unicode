@@ -10,18 +10,6 @@
  * REFERENCE: https://github.com/arielm/Unicode/tree/master/Projects/ScriptDetector
  */
 
-/*
- * TODO:
- *
- * 1) TEST ON iOS AND ANDROID
- *
- * 2) NEXT PROJECT:
- *    BIDI ITEMIZATION SHOULD TAKE PLACE,
- *    THEN THE SCRIPT/LANGUAGE AND BIDI ITEMS SHOULD BE "MIXED",
- *    AS DESCRIBED IN http://www.mail-archive.com/harfbuzz@lists.freedesktop.org/msg03190.html
- *    AND AS IMPLEMENTED IN THE MAPNIK PROJECT
- */
-
 #include "cinder/app/AppNative.h"
 #include "cinder/Xml.h"
 #include "cinder/Utilities.h"
