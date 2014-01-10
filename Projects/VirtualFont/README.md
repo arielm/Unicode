@@ -11,9 +11,9 @@
 
 **Remarks**
 
-1. There seems to be a [risk of rejection](http://stackoverflow.com/questions/3692812/on-ios-can-i-access-the-system-provided-fonts-ttf-file) during AppStore submission for candidate apps accessing the fonts pre-installed on iOS. It sounds odds since we're currently able to access any of the files in */System/Library/Fonts/Cache* (*to be further checked*.)  
+1. There seems to be a [risk of rejection](http://stackoverflow.com/questions/3692812/on-ios-can-i-access-the-system-provided-fonts-ttf-file) during AppStore submission for candidate apps accessing the fonts pre-installed on iOS. It sounds odds since we're currently able to access any of the files in */System/Library/Fonts/Cache* (**to be further checked**.)  
 
-2. This system is not complete because it lacks *itemization* (BIDI, script and style), which is demonstrated in the [Mapnik project](https://github.com/mapnik/mapnik/blob/master/include/mapnik/text/itemizer.hpp).
+2. This system is not complete because it lacks *itemization* (BIDI, script and language), later implemented in our [BIDI project](https://github.com/arielm/Unicode/tree/master/Projects/BIDI).
 
 **Performance tests**
 
@@ -23,4 +23,4 @@ Shaping our ten lines with Harfbuzz 100 times takes (compiled with *O3*):
 2. On iPad 1: ~0.63s
 3. On Android Nexus 7: ~0.30s
 
-On the iPad 1, it corresponds to about 26 line shapings per frame (at 60 FPS), even before rendering anything. The conclusion is that shaping is a pretty slow operation. It also explains why [text-layout-caching](https://github.com/android/platform_frameworks_base/blob/677726b376402937f53ddb192dc97078b92b7c9e/core/jni/android/graphics/TextLayoutCache.cpp) is taking place in the recent Harfbuzz-flavored version of the Android OS...
+On the iPad 1, it corresponds to about 26 line shapings per frame (at 60 FPS), even before rendering anything. The conclusion is that shaping is a pretty slow operation. It also explains why text-layout-caching (demonstrated in our [LayoutCaching project](https://github.com/arielm/Unicode/tree/master/Projects/LayoutCaching)) is taking place in the recent [Harfbuzz-flavored version](https://github.com/android/platform_frameworks_base/blob/677726b376402937f53ddb192dc97078b92b7c9e/core/jni/android/graphics/TextLayoutCache.cpp) of the Android OS...
