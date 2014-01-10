@@ -6,6 +6,16 @@
  * https://github.com/arielm/Unicode/blob/master/LICENSE.md
  */
 
+/*
+ * USING ICU 52.1 FOR SCRIPT-DETECTION AND FOR BIDI:
+ * http://www.icu-project.org/apiref/icu4c/ubidi_8h.html
+ */
+
+/*
+ * INSPIRED BY THE MAPNIK PROJECT:
+ * https://github.com/mapnik/mapnik/blob/64d5153aeaeb1c9e736bfead297dfea39b066d2c/src/text/itemizer.cpp
+ */
+
 #include "TextItemizer.h"
 
 #include "scrptrun.h"

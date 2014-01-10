@@ -7,6 +7,10 @@
  */
 
 /*
+ * REFERENCE: https://github.com/arielm/Unicode/tree/master/Projects/BIDI
+ */
+
+/*
  * USING ICU 52.1 FOR SCRIPT-DETECTION AND FOR BIDI:
  * http://www.icu-project.org/apiref/icu4c/ubidi_8h.html
  */
