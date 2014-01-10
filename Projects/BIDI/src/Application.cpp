@@ -14,17 +14,22 @@
  *
  * 2) BUG-FIX:
  *    USING std::set FOR FontSet WAS NOT PRESERVING THE (CRUCIAL) ORDER OF INSERTION
+ *
+ * 3) TESTED ON iOS
  */
 
 /*
  * TODO:
  *
- * 1) TEST ON iOS AND ANDROID
+ * 1) FIX REPLACEMENT TO "Geeza Pro" ON iOS
+ *    ARABIC GLYPHS ARE NOT JOINED...
  *
- * 2) ADD SCALE-FACTOR FOR ACTUAL-FONTS IN XML DEFINITION:
+ * 2) TEST ON ANDROID
+ *
+ * 3) ADD SCALE-FACTOR FOR ACTUAL-FONTS IN XML DEFINITION:
  *    - NECESSARY IN CASE WE NEED TO MATCH SIZES BETWEEN (SMALLER) "Geeza Pro" AND "Arial"
  *
- * 3) ADAPT TEXT-LAYOUT-CACHE SYSTEM TO TextGroup
+ * 4) ADAPT TEXT-LAYOUT-CACHE SYSTEM TO TextGroup
  */
 
 #include "cinder/app/AppNative.h"
@@ -72,7 +77,17 @@ void Application::prepareSettings(Settings *settings)
 
 void Application::setup()
 {
-    font = fontManager.getVirtualFont("res://SansSerif.xml", FONT_SIZE);
+#if defined(CINDER_ANDROID)
+    auto uri = "res://SansSerif-android.xml";
+#elif defined(CINDER_COCOA_TOUCH)
+    auto uri = "res://SansSerif-ios.xml";
+#elif defined(CINDER_MAC) && 1
+    auto uri = "res://SansSerif-osx.xml";
+#else
+    auto uri = "res://SansSerif.xml"; // FOR QUICK TESTS ON THE DESKTOP
+#endif
+    
+    font = fontManager.getVirtualFont(uri, FONT_SIZE);
     
     // ---
 
@@ -110,6 +125,12 @@ void Application::setup()
     
     glDisable(GL_DEPTH_TEST);
     glDepthMask(GL_FALSE);
+    
+    // ---
+    
+#if defined(CINDER_COCOA_TOUCH)
+    getSignalSupportedOrientations().connect([] { return InterfaceOrientation::LandscapeRight; });
+#endif
 }
 
 void Application::draw()
