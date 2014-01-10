@@ -3,7 +3,7 @@
 
 **Features**
 
-Script and language itemization taking place together with BIDI. The 3 first lines are described in detail in the [ScriptDetector](https://github.com/arielm/Unicode/tree/master/Projects/ScriptDetector) project. The 7 last lines are described in detail in the [SimpleBIDI](https://github.com/arielm/Unicode/tree/master/Projects/SimpleBIDI) project.  
+Script and language itemization taking place together with BIDI. The 3 first lines of text in the screenshot below are described in detail in our [ScriptDetector project](https://github.com/arielm/Unicode/tree/master/Projects/ScriptDetector). The 7 last lines are described in our [SimpleBIDI project](https://github.com/arielm/Unicode/tree/master/Projects/SimpleBIDI).  
 
 ![Screenshot](screenshot.png)
 
