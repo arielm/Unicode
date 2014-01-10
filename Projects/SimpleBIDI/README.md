@@ -23,4 +23,4 @@ Using text examples from [what you need to know about the bidi algorithm and inl
 
 5. In lines 2 and 5, we use Unicode control character U+200F (aka *RLM* or *RIGHT-TO-LEFT MARK*) in order to get the RTL punctuation (in yelllow) in the right place.
 
-6. Font fallback is necessary (as demonstrated in our [ShapingFallback project](https://github.com/arielm/Unicode/tree/66e18d060096f0bec563af75ce360bcb5976c105/Projects/ShapingFallback)) in order to render the RTL punctuation in lines 2, 4, and 5.
+6. Font fallback is necessary (as demonstrated in our [ShapingFallback project](https://github.com/arielm/Unicode/blob/master/Projects/ShapingFallback)) in order to render the RTL punctuation in lines 2, 4, and 5.
