@@ -1,0 +1,22 @@
+setup()
+{
+  android update project --path . --name BIDI --target android-10
+
+  echo "READY TO RUN:"
+  echo "ndk-build -j 4"
+  echo "ant debug"
+  echo "adb install -r bin/BIDI-debug.apk"
+}
+
+if [ -z $NDK_MODULE_PATH ]
+  then if [ -z $CINDER_PATH ]
+    then echo "CINDER_PATH MUST BE DEFINED!"
+  else
+    export NDK_MODULE_PATH=$CINDER_PATH/android/prebuilt
+    echo "NDK_MODULE_PATH SET TO $NDK_MODULE_PATH"
+
+    setup
+  fi
+else
+  setup
+fi

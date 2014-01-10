@@ -15,21 +15,24 @@
  * 2) BUG-FIX:
  *    USING std::set FOR FontSet WAS NOT PRESERVING THE (CRUCIAL) ORDER OF INSERTION
  *
- * 3) TESTED ON iOS
+ * 3) TESTED ON iOS AND ANDROID
  */
 
 /*
  * TODO:
  *
- * 1) FIX REPLACEMENT TO "Geeza Pro" ON iOS
- *    ARABIC GLYPHS ARE NOT JOINED...
+ * 1) ADJUST FONTS:
+ *    - iOS:
+ *      - "Geeza Pro" SHOULD BE REPLACED (ARABIC GLYPHS ARE NOT JOINED)
+ *    - ANDROID:
+ *      - HEBREW FONT IS MISSING
+ *      - ARABIC FONT IS PROBABLY OUTDATED
+ *      - THAI FONT IS BUGGY...
  *
- * 2) TEST ON ANDROID
- *
- * 3) ADD SCALE-FACTOR FOR ACTUAL-FONTS IN XML DEFINITION:
+ * 2) ADD SCALE-FACTOR FOR ACTUAL-FONTS IN XML DEFINITION:
  *    - NECESSARY IN CASE WE NEED TO MATCH SIZES BETWEEN (SMALLER) "Geeza Pro" AND "Arial"
  *
- * 4) ADAPT TEXT-LAYOUT-CACHE SYSTEM TO TextGroup
+ * 3) ADAPT TEXT-LAYOUT-CACHE SYSTEM TO TextGroup
  */
 
 #include "cinder/app/AppNative.h"
@@ -66,6 +69,17 @@ public:
     
     void addLineLayout(const string &text, const string &langHint = "", hb_direction_t overallDirection = HB_DIRECTION_LTR);
     string trimText(const string &text) const;
+    
+#if defined(CINDER_ANDROID)
+    void resume(bool renewContext);
+#elif !defined(CINDER_COCOA_TOUCH)
+    void keyDown(KeyEvent event);
+#endif
+    
+#if defined(CINDER_ANDROID)
+    inline Vec2i toPixels(Vec2i s) { return s; }
+    inline float toPixels(float s) { return s; }
+#endif
 };
 
 void Application::prepareSettings(Settings *settings)
@@ -120,6 +134,13 @@ void Application::setup()
     
     // ---
     
+#if defined(CINDER_COCOA_TOUCH)
+    getSignalSupportedOrientations().connect([] { return InterfaceOrientation::LandscapeRight; });
+#endif
+}
+
+void Application::draw()
+{
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glEnable(GL_BLEND);
     
@@ -128,13 +149,6 @@ void Application::setup()
     
     // ---
     
-#if defined(CINDER_COCOA_TOUCH)
-    getSignalSupportedOrientations().connect([] { return InterfaceOrientation::LandscapeRight; });
-#endif
-}
-
-void Application::draw()
-{
     gl::clear(Color(1, 1, 0.95f), false);
     
     Vec2i windowSize = toPixels(getWindowSize());
@@ -202,5 +216,23 @@ string Application::trimText(const string &text) const
     
     return "";
 }
+
+#if defined(CINDER_ANDROID)
+void Application::resume(bool renewContext)
+{
+    if (renewContext)
+    {
+        fontManager.unloadTextures();
+    }
+}
+#elif !defined(CINDER_COCOA_TOUCH)
+void Application::keyDown(KeyEvent event)
+{
+    if (event.getCode() == KeyEvent::KEY_RETURN)
+    {
+        fontManager.unloadTextures();
+    }
+}
+#endif
 
 CINDER_APP_NATIVE(Application, RendererGl(RendererGl::AA_NONE))
