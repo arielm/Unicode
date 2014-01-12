@@ -1,4 +1,4 @@
-9. LayoutCaching
+9. SimpleLayoutCaching
 ================
 
 The [VirtualFont](https://github.com/arielm/Unicode/tree/master/Projects/VirtualFont) project demonstrated that shaping can be a slow operation. We've therefore implemented a simple text-layout-caching system inspired by the [solution implemented on the Android platform](https://github.com/android/platform_frameworks_base/blob/677726b376402937f53ddb192dc97078b92b7c9e/core/jni/android/graphics/TextLayoutCache.cpp).

@@ -7,7 +7,7 @@
  */
 
 /*
- * REFERENCE: https://github.com/arielm/Unicode/tree/master/Projects/LayoutCaching
+ * REFERENCE: https://github.com/arielm/Unicode/tree/master/Projects/SimpleLayoutCaching
  */
 
 #include "cinder/app/AppNative.h"
@@ -47,11 +47,6 @@ public:
     
     TextRun createRun(const string &text, const string &lang, hb_direction_t direction = HB_DIRECTION_INVALID) const;
     string trimText(const string &text) const;
-    
-#if defined(CINDER_ANDROID)
-    inline Vec2i toPixels(Vec2i s) { return s; }
-    inline float toPixels(float s) { return s; }
-#endif
 };
 
 void Application::prepareSettings(Settings *settings)
@@ -63,11 +58,7 @@ void Application::prepareSettings(Settings *settings)
 
 void Application::setup()
 {
-#if defined(CINDER_ANDROID)
-    auto ref = "res://SansSerif-android.xml";
-#elif defined(CINDER_COCOA_TOUCH)
-    auto ref = "res://SansSerif-ios.xml";
-#elif defined(CINDER_MAC) && 1
+#if 1
     auto ref = "res://SansSerif-osx.xml";
 #else
     auto ref = "res://SansSerif.xml"; // FOR QUICK TESTS ON THE DESKTOP
@@ -93,10 +84,6 @@ void Application::setup()
     
     glDisable(GL_DEPTH_TEST);
     glDepthMask(GL_FALSE);
-    
-#if defined(CINDER_COCOA_TOUCH)
-    getSignalSupportedOrientations().connect([] { return InterfaceOrientation::LandscapeRight; });
-#endif
 }
 
 void Application::draw()
