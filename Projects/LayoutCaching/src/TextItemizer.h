@@ -36,7 +36,7 @@
 #pragma once
 
 #include "LanguageHelper.h"
-#include "TextGroup.h"
+#include "TextLine.h"
 
 #include "unicode/unistr.h"
 #include "unicode/uscript.h"
@@ -48,7 +48,7 @@ public:
     static hb_script_t icuScriptToHB(UScriptCode script);
     static hb_direction_t icuDirectionToHB(UBiDiDirection direction);
 
-    TextGroup process(const std::string &input, const std::string &langHint = "", hb_direction_t overallDirection = HB_DIRECTION_LTR);
+    TextLine process(const std::string &input, const std::string &langHint = "", hb_direction_t overallDirection = HB_DIRECTION_LTR);
     
 protected:
     LanguageHelper languageHelper;

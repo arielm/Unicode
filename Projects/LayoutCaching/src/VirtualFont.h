@@ -10,7 +10,7 @@
 
 #include "ActualFont.h"
 #include "TextLayout.h"
-#include "TextGroup.h"
+#include "TextLine.h"
 
 #include <set>
 #include <map>
@@ -28,7 +28,7 @@ public:
     const FontSet& getFontSet(const std::string &lang) const;
     const ActualFont::Metrics& getMetrics(const std::string &lang) const;
     
-    TextLayout* createTextLayout(const TextGroup &group);
+    TextLayout* createLineLayout(const TextLine &line);
     
     void setSize(float size);
     

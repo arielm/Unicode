@@ -37,18 +37,18 @@ hb_direction_t TextItemizer::icuDirectionToHB(UBiDiDirection direction)
     return (direction == UBIDI_RTL) ? HB_DIRECTION_RTL : HB_DIRECTION_LTR;
 }
 
-TextGroup TextItemizer::process(const string &input, const string &langHint, hb_direction_t overallDirection)
+TextLine TextItemizer::process(const string &input, const string &langHint, hb_direction_t overallDirection)
 {
-    TextGroup group(input, overallDirection);
+    TextLine line(input, overallDirection);
 
     vector<ScriptAndLanguageRun> scriptAndLanguageRuns;
-    itemizeScriptAndLanguage(group.text, langHint, scriptAndLanguageRuns);
+    itemizeScriptAndLanguage(line.text, langHint, scriptAndLanguageRuns);
     
     vector<DirectionRun> directionRuns;
-    itemizeDirection(group.text, overallDirection, directionRuns);
+    itemizeDirection(line.text, overallDirection, directionRuns);
     
-    mergeRuns(scriptAndLanguageRuns, directionRuns, group.runs);
-    return group;
+    mergeRuns(scriptAndLanguageRuns, directionRuns, line.runs);
+    return line;
 }
 
 void TextItemizer::itemizeScriptAndLanguage(const UnicodeString &text, const string &langHint, vector<ScriptAndLanguageRun> &runs)

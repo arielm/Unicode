@@ -82,20 +82,20 @@ const ActualFont::Metrics& VirtualFont::getMetrics(const string &lang) const
     return (*it->second.begin())->metrics;
 }
 
-TextLayout* VirtualFont::createTextLayout(const TextGroup &group)
+TextLayout* VirtualFont::createLineLayout(const TextLine &line)
 {
-    auto layout = new TextLayout(this, group.overallDirection);
+    auto layout = new TextLayout(this, line.overallDirection);
     
     map<uint32_t, Cluster> clusterMap;
     auto buffer = hb_buffer_create();
     
-    for (auto &run : group.runs)
+    for (auto &run : line.runs)
     {
         clusterMap.clear();
         
         for (auto &font : getFontSet(run.language))
         {
-            run.apply(group.text, buffer);
+            run.apply(line.text, buffer);
             hb_shape(font->hbFont, buffer, NULL, 0);
             
             auto glyphCount = hb_buffer_get_length(buffer);

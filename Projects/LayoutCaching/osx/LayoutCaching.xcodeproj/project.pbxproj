@@ -254,7 +254,7 @@
 		A887CB17187C688D000B2DDB /* LanguageHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LanguageHelper.h; path = ../src/LanguageHelper.h; sourceTree = "<group>"; };
 		A887CB18187C688D000B2DDB /* LanguageHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LanguageHelper.cpp; path = ../src/LanguageHelper.cpp; sourceTree = "<group>"; };
 		A8BCDEBF187CB71600A7FCB8 /* TextRun.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TextRun.h; path = ../src/TextRun.h; sourceTree = "<group>"; };
-		A8BCDEC0187D68DE00A7FCB8 /* TextGroup.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TextGroup.h; path = ../src/TextGroup.h; sourceTree = "<group>"; };
+		A8BCDEC0187D68DE00A7FCB8 /* TextLine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TextLine.h; path = ../src/TextLine.h; sourceTree = "<group>"; };
 		A8BCDEC4187D72DB00A7FCB8 /* TextItemizer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TextItemizer.cpp; path = ../src/TextItemizer.cpp; sourceTree = "<group>"; };
 		A8BCDEC5187D72DB00A7FCB8 /* TextItemizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextItemizer.h; path = ../src/TextItemizer.h; sourceTree = "<group>"; };
 		A8BCDEC9187D857900A7FCB8 /* VirtualFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VirtualFont.cpp; path = ../src/VirtualFont.cpp; sourceTree = "<group>"; };
@@ -390,7 +390,7 @@
 				A887CB17187C688D000B2DDB /* LanguageHelper.h */,
 				A887CB18187C688D000B2DDB /* LanguageHelper.cpp */,
 				A8BCDEBF187CB71600A7FCB8 /* TextRun.h */,
-				A8BCDEC0187D68DE00A7FCB8 /* TextGroup.h */,
+				A8BCDEC0187D68DE00A7FCB8 /* TextLine.h */,
 				A8BCDEC5187D72DB00A7FCB8 /* TextItemizer.h */,
 				A8BCDEC4187D72DB00A7FCB8 /* TextItemizer.cpp */,
 				A8BCDEC8187D851F00A7FCB8 /* Rendering */,

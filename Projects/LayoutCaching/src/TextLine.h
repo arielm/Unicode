@@ -12,13 +12,13 @@
 
 #include <vector>
 
-struct TextGroup
+struct TextLine
 {
     UnicodeString text;
     hb_direction_t overallDirection;
     std::vector<TextRun> runs;
     
-    TextGroup(const std::string &input, hb_direction_t overallDirection = HB_DIRECTION_LTR)
+    TextLine(const std::string &input, hb_direction_t overallDirection = HB_DIRECTION_LTR)
     :
     overallDirection(overallDirection)
     {

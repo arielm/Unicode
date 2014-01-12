@@ -189,7 +189,7 @@ void Application::drawHLine(float y)
 
 void Application::addLineLayout(const string &text, const string &langHint, hb_direction_t overallDirection)
 {
-    lineLayouts.emplace_back(unique_ptr<TextLayout>(font->createTextLayout(itemizer.process(text, langHint, overallDirection))));
+    lineLayouts.emplace_back(unique_ptr<TextLayout>(font->createLineLayout(itemizer.process(text, langHint, overallDirection))));
 }
 
 string Application::trimText(const string &text) const
