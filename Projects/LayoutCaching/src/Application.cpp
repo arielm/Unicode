@@ -141,7 +141,7 @@ void Application::draw()
     
     // ---
     
-    gl::clear(Color(1, 1, 0.95f), false);
+    gl::clear(Color::gray(0.5f), false);
     
     Vec2i windowSize = toPixels(getWindowSize());
     gl::setMatricesWindow(windowSize, true);
@@ -153,6 +153,7 @@ void Application::draw()
     float right = windowSize.x - 24;
     
     font->setSize(FONT_SIZE);
+    font->setColor(ColorA(1, 1, 1, 0.75f));
     
     for (auto &layout : lineLayouts)
     {

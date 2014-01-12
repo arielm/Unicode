@@ -113,7 +113,7 @@ void Application::drawLineLayout(TextLayout &layout, float y, float left, float 
     glColor4f(1, 1, 1, 1);
     layout.draw(Vec2f(x, y));
     
-    glColor4f(1, 0.75f, 0, 0.5f);
+    glColor4f(1, 0.75f, 0, 0.25f);
     drawHLine(y);
 }
 
