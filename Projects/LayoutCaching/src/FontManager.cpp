@@ -58,7 +58,7 @@ VirtualFont* FontManager::getVirtualFont(const string &uri, float baseSize, bool
     }
     else
     {
-        auto font = new VirtualFont(baseSize);
+        auto font = new VirtualFont(itemizer, baseSize);
         virtualFonts[key] = unique_ptr<VirtualFont>(font);
         
         XmlTree doc(InputSource::getDataSource(uri));

@@ -33,7 +33,6 @@
 #include "cinder/Rand.h"
 
 #include "FontManager.h"
-#include "LineItemizer.h"
 #include "LayoutCache.h"
 
 #include <boost/algorithm/string.hpp>
@@ -47,12 +46,11 @@ const float LINE_TOP = 66;
 const float LINE_SPACING = 66;
 
 const int LINE_COUNT = 11;
-const int MAX_WORDS_PER_LINE = 5;
+const int MAX_WORDS_PER_LINE = 3;
 
 class Application : public AppNative
 {
     FontManager fontManager;
-    LineItemizer itemizer;
     LayoutCache layoutCache;
     
     VirtualFont *font;
@@ -69,9 +67,7 @@ public:
     void drawLineLayout(LineLayout &layout, float y, float left, float right);
     void drawHLine(float y);
     
-    void addLineLayout(const string &text, const string &langHint = "", hb_direction_t overallDirection = HB_DIRECTION_LTR);
     string trimText(const string &text) const;
-    void generateText();
     
 #if defined(CINDER_ANDROID)
     void resume(bool renewContext);
@@ -116,7 +112,7 @@ void Application::setup()
         auto text = trimText(lineElement->getValue());
         words.push_back(text);
     }
-
+    
     // ---
     
 #if defined(CINDER_COCOA_TOUCH)
@@ -141,8 +137,6 @@ void Application::draw()
     
     // ---
     
-    generateText();
-    
     float y = LINE_TOP;
     float left = 24;
     float right = windowSize.x - 24;
@@ -150,9 +144,18 @@ void Application::draw()
     font->setSize(FONT_SIZE);
     font->setColor(ColorA(1, 1, 1, 0.75f));
     
-    for (auto &layout : lineLayouts)
+    for (int i = 0; i < LINE_COUNT; i++)
     {
-        drawLineLayout(*layout, y, left, right);
+        string line;
+        int wordCount = rnd.nextInt(1, MAX_WORDS_PER_LINE);
+        
+        for (int j = 0; j < wordCount; j++)
+        {
+            line += words[rnd.nextInt(words.size())];
+            line += " ";
+        }
+        
+        drawLineLayout(*layoutCache.getLineLayout(font, line), y, left, right);
         y += LINE_SPACING;
     }
 }
@@ -183,11 +186,6 @@ void Application::drawHLine(float y)
     gl::drawLine(Vec2f(-9999, y), Vec2f(+9999, y));
 }
 
-void Application::addLineLayout(const string &text, const string &langHint, hb_direction_t overallDirection)
-{
-    lineLayouts.emplace_back(unique_ptr<LineLayout>(font->createLineLayout(itemizer.process(text, langHint, overallDirection))));
-}
-
 string Application::trimText(const string &text) const
 {
     auto rawLines = split(text, '\n');
@@ -203,25 +201,6 @@ string Application::trimText(const string &text) const
     }
     
     return "";
-}
-
-void Application::generateText()
-{
-    lineLayouts.clear();
-    
-    for (int i = 0; i < LINE_COUNT; i++)
-    {
-        string line;
-        int wordCount = rnd.nextInt(1, MAX_WORDS_PER_LINE);
-        
-        for (int j = 0; j < wordCount; j++)
-        {
-            line += words[rnd.nextInt(words.size())];
-            line += " ";
-        }
-        
-        addLineLayout(line);
-    }
 }
 
 #if defined(CINDER_ANDROID)

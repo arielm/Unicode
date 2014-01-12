@@ -8,6 +8,7 @@
 
 #pragma once
 
+#include "LineItemizer.h"
 #include "VirtualFont.h"
 
 struct FontKey
@@ -33,6 +34,7 @@ class FontManager
 {
 public:
     std::shared_ptr<FreetypeHelper> ftHelper; // THE UNDERLYING FT_Library WILL BE DESTROYED AFTER ALL THE ActualFont INSTANCES
+    LineItemizer itemizer;
     
     FontManager();
     

@@ -10,7 +10,7 @@
 
 #include "ActualFont.h"
 #include "LineLayout.h"
-#include "TextLine.h"
+#include "LineItemizer.h"
 
 #include <set>
 #include <map>
@@ -20,14 +20,16 @@ typedef std::vector<ActualFont*> FontSet;
 class VirtualFont
 {
 public:
+    LineItemizer &itemizer;
     float baseSize;
     
-    VirtualFont(float baseSize);
+    VirtualFont(LineItemizer &itemizer, float baseSize);
     
     bool add(const std::string &lang, ActualFont *font);
     const FontSet& getFontSet(const std::string &lang) const;
     const ActualFont::Metrics& getMetrics(const std::string &lang) const;
     
+    LineLayout* createLineLayout(const std::string &text, const std::string &langHint = "", hb_direction_t overallDirection = HB_DIRECTION_LTR);
     LineLayout* createLineLayout(const TextLine &line);
     
     void setSize(float size);
