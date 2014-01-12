@@ -11,7 +11,7 @@
 using namespace std;
 using namespace ci;
 
-VirtualFont::VirtualFont(LineItemizer &itemizer, float baseSize)
+VirtualFont::VirtualFont(TextItemizer &itemizer, float baseSize)
 :
 itemizer(itemizer),
 baseSize(baseSize)
@@ -83,7 +83,7 @@ const ActualFont::Metrics& VirtualFont::getMetrics(const string &lang) const
 
 LineLayout* VirtualFont::createLineLayout(const string &text, const string &langHint, hb_direction_t overallDirection)
 {
-    return createLineLayout(itemizer.process(text, langHint, overallDirection));
+    return createLineLayout(itemizer.processLine(text, langHint, overallDirection));
 }
 
 LineLayout* VirtualFont::createLineLayout(const TextLine &line)

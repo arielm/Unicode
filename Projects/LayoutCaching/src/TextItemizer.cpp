@@ -16,13 +16,13 @@
  * https://github.com/mapnik/mapnik/blob/64d5153aeaeb1c9e736bfead297dfea39b066d2c/src/text/itemizer.cpp
  */
 
-#include "LineItemizer.h"
+#include "TextItemizer.h"
 
 #include "scrptrun.h"
 
 using namespace std;
 
-hb_script_t LineItemizer::icuScriptToHB(UScriptCode script)
+hb_script_t TextItemizer::icuScriptToHB(UScriptCode script)
 {
     if (script == USCRIPT_INVALID_CODE)
     {
@@ -32,12 +32,12 @@ hb_script_t LineItemizer::icuScriptToHB(UScriptCode script)
     return hb_script_from_string(uscript_getShortName(script), -1);
 }
 
-hb_direction_t LineItemizer::icuDirectionToHB(UBiDiDirection direction)
+hb_direction_t TextItemizer::icuDirectionToHB(UBiDiDirection direction)
 {
     return (direction == UBIDI_RTL) ? HB_DIRECTION_RTL : HB_DIRECTION_LTR;
 }
 
-TextLine LineItemizer::process(const string &input, const string &langHint, hb_direction_t overallDirection)
+TextLine TextItemizer::processLine(const string &input, const string &langHint, hb_direction_t overallDirection)
 {
     TextLine line(input, overallDirection);
 
@@ -51,7 +51,7 @@ TextLine LineItemizer::process(const string &input, const string &langHint, hb_d
     return line;
 }
 
-void LineItemizer::itemizeScriptAndLanguage(const UnicodeString &text, const string &langHint, vector<ScriptAndLanguageItem> &items)
+void TextItemizer::itemizeScriptAndLanguage(const UnicodeString &text, const string &langHint, vector<ScriptAndLanguageItem> &items)
 {
     ScriptRun scriptRun(text.getBuffer(), text.length());
     
@@ -68,7 +68,7 @@ void LineItemizer::itemizeScriptAndLanguage(const UnicodeString &text, const str
     }
 }
 
-void LineItemizer::itemizeDirection(const UnicodeString &text, hb_direction_t overallDirection, vector<DirectionItem> &items)
+void TextItemizer::itemizeDirection(const UnicodeString &text, hb_direction_t overallDirection, vector<DirectionItem> &items)
 {
     /*
      * WE WANT TO FORCE A DIRECTION (I.E. NOT DETERMINING THE PARAGRAPH-LEVEL FROM THE TEXT)
@@ -102,7 +102,7 @@ void LineItemizer::itemizeDirection(const UnicodeString &text, hb_direction_t ov
     ubidi_close(bidi);
 }
 
-void LineItemizer::mergeItems(const vector<ScriptAndLanguageItem> &scriptAndLanguageItems, const vector<DirectionItem> &directionItems, vector<TextRun> &runs)
+void TextItemizer::mergeItems(const vector<ScriptAndLanguageItem> &scriptAndLanguageItems, const vector<DirectionItem> &directionItems, vector<TextRun> &runs)
 {
     for (auto &directionItem : directionItems)
     {
@@ -141,7 +141,7 @@ void LineItemizer::mergeItems(const vector<ScriptAndLanguageItem> &scriptAndLang
 }
 
 template <typename T>
-typename T::const_iterator LineItemizer::findItem(const T &items, int32_t position)
+typename T::const_iterator TextItemizer::findItem(const T &items, int32_t position)
 {
     for (auto it = items.begin(); it != items.end(); ++it)
     {

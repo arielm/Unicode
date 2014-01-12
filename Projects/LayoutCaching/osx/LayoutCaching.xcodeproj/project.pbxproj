@@ -63,7 +63,7 @@
 		A871F5271862091A001D0F98 /* ubidiln.c in Sources */ = {isa = PBXBuildFile; fileRef = A871F5251862091A001D0F98 /* ubidiln.c */; };
 		A887CB19187C688D000B2DDB /* LanguageHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A887CB18187C688D000B2DDB /* LanguageHelper.cpp */; };
 		A8B2BBEB1882C65E0053DC36 /* LayoutCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A8B2BBE91882C65E0053DC36 /* LayoutCache.cpp */; };
-		A8BCDEC6187D72DB00A7FCB8 /* LineItemizer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A8BCDEC4187D72DB00A7FCB8 /* LineItemizer.cpp */; };
+		A8BCDEC6187D72DB00A7FCB8 /* TextItemizer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A8BCDEC4187D72DB00A7FCB8 /* TextItemizer.cpp */; };
 		A8BCDED7187D857900A7FCB8 /* VirtualFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A8BCDEC9187D857900A7FCB8 /* VirtualFont.cpp */; };
 		A8BCDED8187D857900A7FCB8 /* ActualFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A8BCDECB187D857900A7FCB8 /* ActualFont.cpp */; };
 		A8BCDED9187D857900A7FCB8 /* FontManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A8BCDECE187D857900A7FCB8 /* FontManager.cpp */; };
@@ -258,8 +258,8 @@
 		A8B2BBEA1882C65E0053DC36 /* LayoutCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LayoutCache.h; path = ../src/LayoutCache.h; sourceTree = "<group>"; };
 		A8BCDEBF187CB71600A7FCB8 /* TextRun.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TextRun.h; path = ../src/TextRun.h; sourceTree = "<group>"; };
 		A8BCDEC0187D68DE00A7FCB8 /* TextLine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TextLine.h; path = ../src/TextLine.h; sourceTree = "<group>"; };
-		A8BCDEC4187D72DB00A7FCB8 /* LineItemizer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LineItemizer.cpp; path = ../src/LineItemizer.cpp; sourceTree = "<group>"; };
-		A8BCDEC5187D72DB00A7FCB8 /* LineItemizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LineItemizer.h; path = ../src/LineItemizer.h; sourceTree = "<group>"; };
+		A8BCDEC4187D72DB00A7FCB8 /* TextItemizer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TextItemizer.cpp; path = ../src/TextItemizer.cpp; sourceTree = "<group>"; };
+		A8BCDEC5187D72DB00A7FCB8 /* TextItemizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextItemizer.h; path = ../src/TextItemizer.h; sourceTree = "<group>"; };
 		A8BCDEC9187D857900A7FCB8 /* VirtualFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VirtualFont.cpp; path = ../src/VirtualFont.cpp; sourceTree = "<group>"; };
 		A8BCDECA187D857900A7FCB8 /* VirtualFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VirtualFont.h; path = ../src/VirtualFont.h; sourceTree = "<group>"; };
 		A8BCDECB187D857900A7FCB8 /* ActualFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ActualFont.cpp; path = ../src/ActualFont.cpp; sourceTree = "<group>"; };
@@ -393,8 +393,8 @@
 				A887CB18187C688D000B2DDB /* LanguageHelper.cpp */,
 				A8BCDEBF187CB71600A7FCB8 /* TextRun.h */,
 				A8BCDEC0187D68DE00A7FCB8 /* TextLine.h */,
-				A8BCDEC5187D72DB00A7FCB8 /* LineItemizer.h */,
-				A8BCDEC4187D72DB00A7FCB8 /* LineItemizer.cpp */,
+				A8BCDEC5187D72DB00A7FCB8 /* TextItemizer.h */,
+				A8BCDEC4187D72DB00A7FCB8 /* TextItemizer.cpp */,
 				A8B2BBEA1882C65E0053DC36 /* LayoutCache.h */,
 				A8B2BBE91882C65E0053DC36 /* LayoutCache.cpp */,
 				A8BCDEC8187D851F00A7FCB8 /* Rendering */,
@@ -846,7 +846,7 @@
 				A8FD19AB187BFB43000BE555 /* hb-common.cc in Sources */,
 				A871F45A1861E644001D0F98 /* ucln_cmn.c in Sources */,
 				A871F4671861E644001D0F98 /* unifunct.cpp in Sources */,
-				A8BCDEC6187D72DB00A7FCB8 /* LineItemizer.cpp in Sources */,
+				A8BCDEC6187D72DB00A7FCB8 /* TextItemizer.cpp in Sources */,
 				A8FD19A1187BFB43000BE555 /* hb-ft.cc in Sources */,
 				A871F45D1861E644001D0F98 /* udatamem.c in Sources */,
 				A8FD19B6187BFB43000BE555 /* hb-ot-shape-complex-sea.cc in Sources */,

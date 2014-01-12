@@ -42,13 +42,13 @@
 #include "unicode/uscript.h"
 #include "unicode/ubidi.h"
 
-class LineItemizer
+class TextItemizer
 {
 public:
     static hb_script_t icuScriptToHB(UScriptCode script);
     static hb_direction_t icuDirectionToHB(UBiDiDirection direction);
 
-    TextLine process(const std::string &input, const std::string &langHint = "", hb_direction_t overallDirection = HB_DIRECTION_LTR);
+    TextLine processLine(const std::string &input, const std::string &langHint = "", hb_direction_t overallDirection = HB_DIRECTION_LTR);
     
 protected:
     LanguageHelper languageHelper;

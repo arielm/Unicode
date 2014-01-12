@@ -10,7 +10,7 @@
 
 #include "ActualFont.h"
 #include "LineLayout.h"
-#include "LineItemizer.h"
+#include "TextItemizer.h"
 
 #include <set>
 #include <map>
@@ -20,10 +20,10 @@ typedef std::vector<ActualFont*> FontSet;
 class VirtualFont
 {
 public:
-    LineItemizer &itemizer;
+    TextItemizer &itemizer;
     float baseSize;
     
-    VirtualFont(LineItemizer &itemizer, float baseSize);
+    VirtualFont(TextItemizer &itemizer, float baseSize);
     
     bool add(const std::string &lang, ActualFont *font);
     const FontSet& getFontSet(const std::string &lang) const;
