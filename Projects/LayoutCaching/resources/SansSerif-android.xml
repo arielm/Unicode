@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<VirtualFont>
+    <!-- Undefined -->
+    <Set>
+        <Ref>file:///system/fonts/DroidSans.ttf</Ref>
+        <Ref>file:///system/fonts/DroidSansFallback.ttf</Ref>
+    </Set>
+    <!-- Arabic, Persian -->
+    <Set lang="ar:fa">
+        <Group>
+            <Ref>file:///system/fonts/DroidNaskh-Regular.ttf</Ref>
+            <Ref>file:///system/fonts/DroidKufi-Regular.ttf</Ref>
+            <Ref>file:///system/fonts/DroidSansArabic.ttf</Ref>
+        </Group>
+        <Ref>file:///system/fonts/DroidSansFallback.ttf</Ref>
+    </Set>
+    <!-- Bulgarian, Russian, Ukrainian -->
+    <Set lang="bg:ru:uk">
+        <Ref>file:///system/fonts/DroidSans.ttf</Ref>
+        <Ref>file:///system/fonts/DroidSansFallback.ttf</Ref>
+    </Set>
+    <!-- Greek -->
+    <Set lang="el">
+        <Ref>file:///system/fonts/DroidSans.ttf</Ref>
+        <Ref>file:///system/fonts/DroidSansFallback.ttf</Ref>
+    </Set>
+    <!-- Hebrew, Yiddish -->
+    <Set lang="he:yi">
+        <Ref>file:///system/fonts/DroidSansHebrew-Regular.ttf</Ref>
+        <Ref>file:///system/fonts/DroidSansFallback.ttf</Ref>
+    </Set>
+    <!-- Japanese -->
+    <Set lang="ja">
+        <Ref>file:///system/fonts/MTLmr3m.ttf</Ref>
+        <Ref>file:///system/fonts/DroidSansFallback.ttf</Ref>
+    </Set>
+    <!-- Korean -->
+    <Set lang="ko">
+        <Ref>file:///system/fonts/NanumGothic.ttf</Ref>
+        <Ref>file:///system/fonts/DroidSansFallback.ttf</Ref>
+    </Set>
+    <!-- Thai -->
+    <Set lang="th">
+        <Ref>file:///system/fonts/DroidSansThai.ttf</Ref>
+        <Ref>file:///system/fonts/DroidSansFallback.ttf</Ref>
+    </Set>
+    <!-- Hindi -->
+    <Set lang="hi">
+        <Ref>file:///system/fonts/DroidSansDevanagari-Regular.ttf</Ref>
+        <Ref>file:///system/fonts/DroidSansFallback.ttf</Ref>
+    </Set>
+    <!-- Chinese (Simplified, Traditional) -->
+    <Set lang="zh-cn:zh-hk:zh-sg:zh-mo:zh-tw">
+        <Ref>file:///system/fonts/DroidSansFallback.ttf</Ref>
+    </Set>
+</VirtualFont>
