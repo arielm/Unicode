@@ -23,7 +23,7 @@
  * SOME DIFFERENCES:
  *
  * 1) WE'RE NOT HANDLING STYLE
- *    BUT THE Run TEMPLATE TOGETHER WITH THE mergeRuns() AND findRun()
+ *    BUT THE Item TEMPLATE TOGETHER WITH THE mergeRuns() AND findRun()
  *    FUNCTIONS ARE PREPARING THE TERRAIN FOR FUTURE IMPLEMENTATION
  *
  * 2) WE'RE DOING "LANGUAGE DETECTION" IN ADDITION TO "SCRIPT DETECTION"
@@ -42,7 +42,7 @@
 #include "unicode/uscript.h"
 #include "unicode/ubidi.h"
 
-class TextItemizer
+class LineItemizer
 {
 public:
     static hb_script_t icuScriptToHB(UScriptCode script);
@@ -53,13 +53,13 @@ public:
 protected:
     LanguageHelper languageHelper;
     
-    template<typename T> struct Run
+    template<typename T> struct Item
     {
         int32_t start;
         int32_t end;
         T data;
 
-        Run(int32_t start, int32_t end, T data)
+        Item(int32_t start, int32_t end, T data)
         :
         start(start),
         end(end),
@@ -67,12 +67,12 @@ protected:
         {}
     };
 
-    typedef Run<std::pair<hb_script_t, std::string>> ScriptAndLanguageRun;
-    typedef Run<hb_direction_t> DirectionRun;
+    typedef Item<std::pair<hb_script_t, std::string>> ScriptAndLanguageItem;
+    typedef Item<hb_direction_t> DirectionItem;
 
-    void itemizeScriptAndLanguage(const UnicodeString &text, const std::string &langHint, std::vector<ScriptAndLanguageRun> &runs);
-    void itemizeDirection(const UnicodeString &text, hb_direction_t overallDirection, std::vector<DirectionRun> &runs);
-    void mergeRuns(const std::vector<ScriptAndLanguageRun> &scriptAndLanguageRuns, const std::vector<DirectionRun> &directionRuns, std::vector<TextRun> &runs);
+    void itemizeScriptAndLanguage(const UnicodeString &text, const std::string &langHint, std::vector<ScriptAndLanguageItem> &items);
+    void itemizeDirection(const UnicodeString &text, hb_direction_t overallDirection, std::vector<DirectionItem> &items);
+    void mergeItems(const std::vector<ScriptAndLanguageItem> &scriptAndLanguageItems, const std::vector<DirectionItem> &directionItems, std::vector<TextRun> &runs);
     
-    template<typename T> typename T::const_iterator findRun(const T &runs, int32_t position);
+    template<typename T> typename T::const_iterator findItem(const T &items, int32_t position);
 };

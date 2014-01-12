@@ -31,7 +31,7 @@
 #include "cinder/Xml.h"
 #include "cinder/Utilities.h"
 
-#include "TextItemizer.h"
+#include "LineItemizer.h"
 #include "FontManager.h"
 
 #include <boost/algorithm/string.hpp>
@@ -47,7 +47,7 @@ const float LINE_SPACING = 66;
 class Application : public AppNative
 {
     FontManager fontManager;
-    TextItemizer itemizer;
+    LineItemizer itemizer;
     VirtualFont *font;
     vector<unique_ptr<TextLayout>> lineLayouts;
     
