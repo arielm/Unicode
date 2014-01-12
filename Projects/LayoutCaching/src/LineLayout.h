@@ -66,6 +66,11 @@ struct LineLayout
     advance(0)
     {}
     
+    ~LineLayout()
+    {
+        std::cout << "~LineLayout " << (void*)this << std::endl;
+    }
+    
     void addCluster(const Cluster &cluster)
     {
         clusters.emplace_back(cluster);

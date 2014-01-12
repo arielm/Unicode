@@ -38,10 +38,18 @@ public:
         }
     };
     
+    LayoutCache(size_t capacity = 32 * 1024);
+    
     LineLayout* getLineLayout(VirtualFont *virtualFont, const std::string &text, const std::string &langHint = "", hb_direction_t overallDirection = HB_DIRECTION_LTR);
-    
     void clear();
-    
+
 protected:
+    size_t capacity;
+    size_t size;
+    size_t time;
+    
     std::map<LineLayoutKey, std::unique_ptr<LineLayout>> cache;
+    std::map<LineLayout*, size_t> usageMap;
+    
+    size_t removeOldest();
 };

@@ -7,13 +7,19 @@
  */
 
 /*
- * ...
+ * DONE:
+ *
+ * 1) LayoutCache IN PLACE:
+ *    - ADAPTED TO TextLine
+ *    - CACHE STRATEGY: LRU (NOT VERY EFFECTIVE)
  */
 
 /*
  * TODO:
  *
- * 1) ADJUST FONTS:
+ * 1) ENHANCE LRU STRATEGY IMPLEMENTATION, OR IMPLEMENTED ALTERNATIVE SOLUTION
+ *
+ * 2) ADJUST FONTS:
  *    - iOS:
  *      - "Geeza Pro" SHOULD BE REPLACED (ARABIC GLYPHS ARE NOT JOINED)
  *    - ANDROID:
@@ -21,10 +27,8 @@
  *      - ARABIC FONT IS PROBABLY OUTDATED
  *      - THAI FONT IS BUGGY...
  *
- * 2) ADD SCALE-FACTOR FOR ACTUAL-FONTS IN XML DEFINITION:
+ * 3) ADD SCALE-FACTOR FOR ACTUAL-FONTS IN XML DEFINITION:
  *    - NECESSARY IN CASE WE NEED TO MATCH SIZES BETWEEN "Geeza Pro" (SMALLER?) AND "Arial" (BIGGER?)
- *
- * 3) ADAPT TEXT-LAYOUT-CACHE SYSTEM TO TextGroup
  */
 
 #include "cinder/app/AppNative.h"
@@ -46,7 +50,7 @@ const float LINE_TOP = 66;
 const float LINE_SPACING = 66;
 
 const int LINE_COUNT = 11;
-const int MAX_WORDS_PER_LINE = 3;
+const int MAX_WORDS_PER_LINE = 4;
 
 class Application : public AppNative
 {
@@ -217,6 +221,7 @@ void Application::keyDown(KeyEvent event)
     if (event.getCode() == KeyEvent::KEY_RETURN)
     {
         fontManager.unloadTextures();
+        layoutCache.clear();
     }
 }
 #endif
