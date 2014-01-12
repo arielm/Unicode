@@ -89,13 +89,13 @@ TextLayout* VirtualFont::createTextLayout(const TextGroup &group)
     map<uint32_t, Cluster> clusterMap;
     auto buffer = hb_buffer_create();
     
-    for (auto &item : group.items)
+    for (auto &run : group.runs)
     {
         clusterMap.clear();
         
-        for (auto &font : getFontSet(item.lang))
+        for (auto &font : getFontSet(run.language))
         {
-            item.apply(group.text, buffer);
+            run.apply(group.text, buffer);
             hb_shape(font->hbFont, buffer, NULL, 0);
             
             auto glyphCount = hb_buffer_get_length(buffer);
@@ -129,7 +129,7 @@ TextLayout* VirtualFont::createTextLayout(const TextGroup &group)
                         }
                         else
                         {
-                            clusterMap.insert(make_pair(cluster, Cluster(font, ColorMap::get(item.lang), codepoint, offset, advance)));
+                            clusterMap.insert(make_pair(cluster, Cluster(font, ColorMap::get(run.language), codepoint, offset, advance)));
                         }
                     }
                 }
@@ -145,7 +145,7 @@ TextLayout* VirtualFont::createTextLayout(const TextGroup &group)
             }
         }
         
-        if (item.direction == HB_DIRECTION_RTL)
+        if (run.direction == HB_DIRECTION_RTL)
         {
             for (auto it = clusterMap.rbegin(); it != clusterMap.rend(); ++it)
             {

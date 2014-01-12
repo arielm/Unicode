@@ -14,24 +14,24 @@
 
 #include <string>
 
-struct TextItem
+struct TextRun
 {
     int32_t start;
     int32_t end;
     
     hb_script_t script;
-    std::string lang;
+    std::string language;
     hb_direction_t direction;
     
-    TextItem()
+    TextRun()
     {}
     
-    TextItem(int32_t start, int32_t end, hb_script_t script, const std::string &lang, hb_direction_t direction)
+    TextRun(int32_t start, int32_t end, hb_script_t script, const std::string &language, hb_direction_t direction)
     :
     start(start),
     end(end),
     script(script),
-    lang(lang),
+    language(language),
     direction(direction)
     {}
     
@@ -42,9 +42,9 @@ struct TextItem
         hb_buffer_set_script(buffer, script);
         hb_buffer_set_direction(buffer, direction);
         
-        if (!lang.empty())
+        if (!language.empty())
         {
-            hb_buffer_set_language(buffer, hb_language_from_string(lang.data(), -1));
+            hb_buffer_set_language(buffer, hb_language_from_string(language.data(), -1));
         }
         
         hb_buffer_add_utf16(buffer, text.getBuffer(), text.length(), start, end - start);

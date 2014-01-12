@@ -8,7 +8,7 @@
 
 #pragma once
 
-#include "TextItem.h"
+#include "TextRun.h"
 
 #include <vector>
 
@@ -16,7 +16,7 @@ struct TextGroup
 {
     UnicodeString text;
     hb_direction_t overallDirection;
-    std::vector<TextItem> items;
+    std::vector<TextRun> runs;
     
     TextGroup(const std::string &input, hb_direction_t overallDirection = HB_DIRECTION_LTR)
     :
@@ -25,8 +25,8 @@ struct TextGroup
         text = UnicodeString::fromUTF8(input);
     }
     
-    void addItem(int32_t start, int32_t end, hb_script_t script, const std::string &lang, hb_direction_t direction)
+    void addRun(int32_t start, int32_t end, hb_script_t script, const std::string &lang, hb_direction_t direction)
     {
-        items.emplace_back(start, end, script, lang, direction);
+        runs.emplace_back(start, end, script, lang, direction);
     }
 };

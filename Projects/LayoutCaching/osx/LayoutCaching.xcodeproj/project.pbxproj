@@ -253,7 +253,7 @@
 		A871F5251862091A001D0F98 /* ubidiln.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ubidiln.c; path = ../../../icu/common/ubidiln.c; sourceTree = "<group>"; };
 		A887CB17187C688D000B2DDB /* LanguageHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LanguageHelper.h; path = ../src/LanguageHelper.h; sourceTree = "<group>"; };
 		A887CB18187C688D000B2DDB /* LanguageHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LanguageHelper.cpp; path = ../src/LanguageHelper.cpp; sourceTree = "<group>"; };
-		A8BCDEBF187CB71600A7FCB8 /* TextItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TextItem.h; path = ../src/TextItem.h; sourceTree = "<group>"; };
+		A8BCDEBF187CB71600A7FCB8 /* TextRun.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TextRun.h; path = ../src/TextRun.h; sourceTree = "<group>"; };
 		A8BCDEC0187D68DE00A7FCB8 /* TextGroup.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TextGroup.h; path = ../src/TextGroup.h; sourceTree = "<group>"; };
 		A8BCDEC4187D72DB00A7FCB8 /* TextItemizer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TextItemizer.cpp; path = ../src/TextItemizer.cpp; sourceTree = "<group>"; };
 		A8BCDEC5187D72DB00A7FCB8 /* TextItemizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextItemizer.h; path = ../src/TextItemizer.h; sourceTree = "<group>"; };
@@ -389,7 +389,7 @@
 				A871F16E186116D9001D0F98 /* scrptrun.cpp */,
 				A887CB17187C688D000B2DDB /* LanguageHelper.h */,
 				A887CB18187C688D000B2DDB /* LanguageHelper.cpp */,
-				A8BCDEBF187CB71600A7FCB8 /* TextItem.h */,
+				A8BCDEBF187CB71600A7FCB8 /* TextRun.h */,
 				A8BCDEC0187D68DE00A7FCB8 /* TextGroup.h */,
 				A8BCDEC5187D72DB00A7FCB8 /* TextItemizer.h */,
 				A8BCDEC4187D72DB00A7FCB8 /* TextItemizer.cpp */,

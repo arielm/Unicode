@@ -47,7 +47,7 @@ TextGroup TextItemizer::process(const string &input, const string &langHint, hb_
     vector<DirectionRun> directionRuns;
     itemizeDirection(group.text, overallDirection, directionRuns);
     
-    mergeRuns(scriptAndLanguageRuns, directionRuns, group.items);
+    mergeRuns(scriptAndLanguageRuns, directionRuns, group.runs);
     return group;
 }
 
@@ -102,35 +102,35 @@ void TextItemizer::itemizeDirection(const UnicodeString &text, hb_direction_t ov
     ubidi_close(bidi);
 }
 
-void TextItemizer::mergeRuns(const vector<ScriptAndLanguageRun> &scriptAndLanguageRuns, const vector<DirectionRun> &directionRuns, vector<TextItem> &items)
+void TextItemizer::mergeRuns(const vector<ScriptAndLanguageRun> &scriptAndLanguageRuns, const vector<DirectionRun> &directionRuns, vector<TextRun> &runs)
 {
     for (auto &directionRun : directionRuns)
     {
         auto position = directionRun.start;
         auto end = directionRun.end;
-        auto rtlInsertionPoint = items.end();
+        auto rtlInsertionPoint = runs.end();
         
         auto scriptAndLanguageIterator = findRun(scriptAndLanguageRuns, position);
         
         while (position < end)
         {
-            TextItem item;
-            item.start = position;
-            item.end = std::min(scriptAndLanguageIterator->end, end);
-            item.script = scriptAndLanguageIterator->data.first;
-            item.lang = scriptAndLanguageIterator->data.second;
-            item.direction = directionRun.data;
+            TextRun run;
+            run.start = position;
+            run.end = std::min(scriptAndLanguageIterator->end, end);
+            run.script = scriptAndLanguageIterator->data.first;
+            run.language = scriptAndLanguageIterator->data.second;
+            run.direction = directionRun.data;
             
             if (directionRun.data == HB_DIRECTION_LTR)
             {
-                items.emplace_back(item);
+                runs.emplace_back(run);
             }
             else
             {
-                rtlInsertionPoint = items.insert(rtlInsertionPoint, item);
+                rtlInsertionPoint = runs.insert(rtlInsertionPoint, run);
             }
             
-            position = item.end;
+            position = run.end;
             
             if (scriptAndLanguageIterator->end == position)
             {

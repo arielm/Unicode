@@ -72,7 +72,7 @@ protected:
 
     void itemizeScriptAndLanguage(const UnicodeString &text, const std::string &langHint, std::vector<ScriptAndLanguageRun> &runs);
     void itemizeDirection(const UnicodeString &text, hb_direction_t overallDirection, std::vector<DirectionRun> &runs);
-    void mergeRuns(const std::vector<ScriptAndLanguageRun> &scriptAndLanguageRuns, const std::vector<DirectionRun> &directionRuns, std::vector<TextItem> &items);
+    void mergeRuns(const std::vector<ScriptAndLanguageRun> &scriptAndLanguageRuns, const std::vector<DirectionRun> &directionRuns, std::vector<TextRun> &runs);
     
     template<typename T> typename T::const_iterator findRun(const T &runs, int32_t position);
 };
