@@ -9,7 +9,7 @@
 #pragma once
 
 #include "ActualFont.h"
-#include "TextLayout.h"
+#include "LineLayout.h"
 #include "TextLine.h"
 
 #include <set>
@@ -28,12 +28,12 @@ public:
     const FontSet& getFontSet(const std::string &lang) const;
     const ActualFont::Metrics& getMetrics(const std::string &lang) const;
     
-    TextLayout* createLineLayout(const TextLine &line);
+    LineLayout* createLineLayout(const TextLine &line);
     
     void setSize(float size);
     
     float getAdvance(const Cluster &cluster) const;
-    float getAdvance(const TextLayout &layout) const;
+    float getAdvance(const LineLayout &layout) const;
     
     void begin();
     void end();

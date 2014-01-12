@@ -7,7 +7,6 @@
  */
 
 #include "VirtualFont.h"
-#include "TextLayout.h"
 #include "ColorMap.h"
 
 using namespace std;
@@ -82,9 +81,9 @@ const ActualFont::Metrics& VirtualFont::getMetrics(const string &lang) const
     return (*it->second.begin())->metrics;
 }
 
-TextLayout* VirtualFont::createLineLayout(const TextLine &line)
+LineLayout* VirtualFont::createLineLayout(const TextLine &line)
 {
-    auto layout = new TextLayout(this, line.overallDirection);
+    auto layout = new LineLayout(this, line.overallDirection);
     
     map<uint32_t, Cluster> clusterMap;
     auto buffer = hb_buffer_create();
@@ -177,7 +176,7 @@ float VirtualFont::getAdvance(const Cluster &cluster) const
     return cluster.combinedAdvance * sizeRatio;
 }
 
-float VirtualFont::getAdvance(const TextLayout &layout) const
+float VirtualFont::getAdvance(const LineLayout &layout) const
 {
     return layout.advance * sizeRatio;
 }

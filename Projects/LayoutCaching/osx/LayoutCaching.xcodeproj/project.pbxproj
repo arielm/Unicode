@@ -270,7 +270,7 @@
 		A8BCDED3187D857900A7FCB8 /* ReloadableTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ReloadableTexture.h; path = ../src/ReloadableTexture.h; sourceTree = "<group>"; };
 		A8BCDED4187D857900A7FCB8 /* FreetypeHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FreetypeHelper.cpp; path = ../src/FreetypeHelper.cpp; sourceTree = "<group>"; };
 		A8BCDED5187D857900A7FCB8 /* FreetypeHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FreetypeHelper.h; path = ../src/FreetypeHelper.h; sourceTree = "<group>"; };
-		A8BCDED6187D857900A7FCB8 /* TextLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextLayout.h; path = ../src/TextLayout.h; sourceTree = "<group>"; };
+		A8BCDED6187D857900A7FCB8 /* LineLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LineLayout.h; path = ../src/LineLayout.h; sourceTree = "<group>"; };
 		A8BCDEDD187D86EF00A7FCB8 /* SansSerif-osx.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = "SansSerif-osx.xml"; path = "../resources/SansSerif-osx.xml"; sourceTree = "<group>"; };
 		A8BCDEDE187D86EF00A7FCB8 /* SansSerif.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = SansSerif.xml; path = ../resources/SansSerif.xml; sourceTree = "<group>"; };
 		A8BCDEDF187D86EF00A7FCB8 /* Text.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = Text.xml; path = ../resources/Text.xml; sourceTree = "<group>"; };
@@ -648,7 +648,7 @@
 				A8BCDECB187D857900A7FCB8 /* ActualFont.cpp */,
 				A8BCDECA187D857900A7FCB8 /* VirtualFont.h */,
 				A8BCDEC9187D857900A7FCB8 /* VirtualFont.cpp */,
-				A8BCDED6187D857900A7FCB8 /* TextLayout.h */,
+				A8BCDED6187D857900A7FCB8 /* LineLayout.h */,
 				A8BCDECD187D857900A7FCB8 /* GlyphData.h */,
 				A8BCDED3187D857900A7FCB8 /* ReloadableTexture.h */,
 				A8BCDED2187D857900A7FCB8 /* ReloadableTexture.cpp */,

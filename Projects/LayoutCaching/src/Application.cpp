@@ -49,14 +49,14 @@ class Application : public AppNative
     FontManager fontManager;
     LineItemizer itemizer;
     VirtualFont *font;
-    vector<unique_ptr<TextLayout>> lineLayouts;
+    vector<unique_ptr<LineLayout>> lineLayouts;
     
 public:
     void prepareSettings(Settings *settings);
     void setup();
     
     void draw();
-    void drawLineLayout(TextLayout &layout, float y, float left, float right);
+    void drawLineLayout(LineLayout &layout, float y, float left, float right);
     void drawHLine(float y);
     
     void addLineLayout(const string &text, const string &langHint = "", hb_direction_t overallDirection = HB_DIRECTION_LTR);
@@ -161,7 +161,7 @@ void Application::draw()
     }
 }
 
-void Application::drawLineLayout(TextLayout &layout, float y, float left, float right)
+void Application::drawLineLayout(LineLayout &layout, float y, float left, float right)
 {
     float x = (layout.overallDirection == HB_DIRECTION_LTR) ? left : (right - font->getAdvance(layout));
     Vec2f position(x, y);
@@ -189,7 +189,7 @@ void Application::drawHLine(float y)
 
 void Application::addLineLayout(const string &text, const string &langHint, hb_direction_t overallDirection)
 {
-    lineLayouts.emplace_back(unique_ptr<TextLayout>(font->createLineLayout(itemizer.process(text, langHint, overallDirection))));
+    lineLayouts.emplace_back(unique_ptr<LineLayout>(font->createLineLayout(itemizer.process(text, langHint, overallDirection))));
 }
 
 string Application::trimText(const string &text) const

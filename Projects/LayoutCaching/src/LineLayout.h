@@ -53,7 +53,7 @@ struct Cluster
     }
 };
 
-struct TextLayout
+struct LineLayout
 {
     VirtualFont *font;
     hb_direction_t overallDirection;
@@ -61,7 +61,7 @@ struct TextLayout
     float advance;
     std::vector<Cluster> clusters;
     
-    TextLayout(VirtualFont *font, hb_direction_t overallDirection)
+    LineLayout(VirtualFont *font, hb_direction_t overallDirection)
     :
     font(font),
     overallDirection(overallDirection),
