@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Text>
+    <Line lang="zh-cn">中文</Line>
+    <Line lang="ja">日本語</Line>
+    <Line lang="hi">हिन्दी</Line>
+    <Line lang="ru">Русский</Line>
+    <Line lang="ko">한국어</Line>
+    <Line lang="en">English</Line>
+    <Line lang="th">ไทย</Line>
+    <Line dir="ar">العربية</Line>
+    <Line dir="he">עברית</Line>
+    <Line dir="el">Αγία Γραφή</Line>
+    <Line dir="cs">Čeština</Line>
+    <Line dir="bg">Български</Line>
+    <Line dir="tr">Türkçe</Line>
+    <Line dir="fr">Français</Line>
+</Text>

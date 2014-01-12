@@ -123,7 +123,7 @@ void LineItemizer::mergeItems(const vector<ScriptAndLanguageItem> &scriptAndLang
             
             if (directionItem.data == HB_DIRECTION_LTR)
             {
-                runs.emplace_back(run);
+                runs.push_back(run);
             }
             else
             {

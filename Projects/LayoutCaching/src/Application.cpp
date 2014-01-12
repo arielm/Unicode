@@ -30,9 +30,11 @@
 #include "cinder/app/AppNative.h"
 #include "cinder/Xml.h"
 #include "cinder/Utilities.h"
+#include "cinder/Rand.h"
 
-#include "LineItemizer.h"
 #include "FontManager.h"
+#include "LineItemizer.h"
+#include "LayoutCache.h"
 
 #include <boost/algorithm/string.hpp>
 
@@ -44,13 +46,21 @@ const float FONT_SIZE = 27;
 const float LINE_TOP = 66;
 const float LINE_SPACING = 66;
 
+const int LINE_COUNT = 11;
+const int MAX_WORDS_PER_LINE = 5;
+
 class Application : public AppNative
 {
     FontManager fontManager;
     LineItemizer itemizer;
+    LayoutCache layoutCache;
+    
     VirtualFont *font;
     vector<unique_ptr<LineLayout>> lineLayouts;
-    
+
+    vector<string> words;
+    Rand rnd;
+
 public:
     void prepareSettings(Settings *settings);
     void setup();
@@ -61,6 +71,7 @@ public:
     
     void addLineLayout(const string &text, const string &langHint = "", hb_direction_t overallDirection = HB_DIRECTION_LTR);
     string trimText(const string &text) const;
+    void generateText();
     
 #if defined(CINDER_ANDROID)
     void resume(bool renewContext);
@@ -87,7 +98,7 @@ void Application::setup()
     auto uri = "res://SansSerif-android.xml";
 #elif defined(CINDER_COCOA_TOUCH)
     auto uri = "res://SansSerif-ios.xml";
-#elif defined(CINDER_MAC) && 1
+#elif defined(CINDER_MAC) && 0
     auto uri = "res://SansSerif-osx.xml";
 #else
     auto uri = "res://SansSerif.xml"; // FOR QUICK TESTS ON THE DESKTOP
@@ -97,33 +108,15 @@ void Application::setup()
     
     // ---
 
-    /*
-     * TEXT EXAMPLES FROM THE ScriptDetector PROJECT
-     */
-
-    XmlTree doc(loadResource("Text.xml"));
+    XmlTree doc(loadResource("Words.xml"));
     auto rootElement = doc.getChild("Text");
     
     for (auto &lineElement : rootElement.getChildren())
     {
         auto text = trimText(lineElement->getValue());
-        auto language = lineElement->getAttributeValue<string>("lang", "");
-        hb_direction_t direction = (lineElement->getAttributeValue<string>("dir", "") == "rtl") ? HB_DIRECTION_RTL : HB_DIRECTION_LTR;
-        
-        addLineLayout(text, language, direction);
+        words.push_back(text);
     }
 
-    /*
-     * TEXT EXAMPLES FROM THE SimpleBIDI PROJECT
-     */
-    addLineLayout("The title is مفتاح معايير الويب in Arabic.");
-    addLineLayout("The title is \"مفتاح معايير الويب!\u200f\" in Arabic.");
-    addLineLayout("The names of these states in Arabic are مصر,‎ البحرين and الكويت respectively.");
-    addLineLayout("W3C‏ (World Wide Web Consortium) מעביר את שירותי הארחה באירופה ל - ERCIM.", "", HB_DIRECTION_RTL);
-    addLineLayout("The title says \"W3C פעילות הבינאום,\u200f\" in Hebrew.");
-    addLineLayout("one two ثلاثة four خمسة");
-    addLineLayout("one two ثلاثة 1234 خمسة");
-    
     // ---
     
 #if defined(CINDER_COCOA_TOUCH)
@@ -147,6 +140,8 @@ void Application::draw()
     gl::setMatricesWindow(windowSize, true);
     
     // ---
+    
+    generateText();
     
     float y = LINE_TOP;
     float left = 24;
@@ -179,7 +174,7 @@ void Application::drawLineLayout(LineLayout &layout, float y, float left, float 
     
     // ---
     
-    glColor4f(0.5f, 0, 0, 0.075f);
+    glColor4f(1, 0.75f, 0, 0.25f);
     drawHLine(y);
 }
 
@@ -208,6 +203,25 @@ string Application::trimText(const string &text) const
     }
     
     return "";
+}
+
+void Application::generateText()
+{
+    lineLayouts.clear();
+    
+    for (int i = 0; i < LINE_COUNT; i++)
+    {
+        string line;
+        int wordCount = rnd.nextInt(1, MAX_WORDS_PER_LINE);
+        
+        for (int j = 0; j < wordCount; j++)
+        {
+            line += words[rnd.nextInt(words.size())];
+            line += " ";
+        }
+        
+        addLineLayout(line);
+    }
 }
 
 #if defined(CINDER_ANDROID)
