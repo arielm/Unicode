@@ -62,6 +62,16 @@
 		A871F5261862091A001D0F98 /* ubidiwrt.c in Sources */ = {isa = PBXBuildFile; fileRef = A871F5241862091A001D0F98 /* ubidiwrt.c */; };
 		A871F5271862091A001D0F98 /* ubidiln.c in Sources */ = {isa = PBXBuildFile; fileRef = A871F5251862091A001D0F98 /* ubidiln.c */; };
 		A887CB19187C688D000B2DDB /* LanguageHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A887CB18187C688D000B2DDB /* LanguageHelper.cpp */; };
+		A88E59CE18842D0D00E737F3 /* CinderApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A88E590318842D0D00E737F3 /* CinderApp.cpp */; };
+		A88E59CF18842D0D00E737F3 /* CinderSketchSimple.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A88E590718842D0D00E737F3 /* CinderSketchSimple.cpp */; };
+		A88E59D318842D0D00E737F3 /* FileSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A88E591118842D0D00E737F3 /* FileSystem.cpp */; };
+		A88E59E618842D0D00E737F3 /* InputSource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A88E593C18842D0D00E737F3 /* InputSource.cpp */; };
+		A88E59EC18842D0D00E737F3 /* Handler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A88E594E18842D0D00E737F3 /* Handler.cpp */; };
+		A88E59ED18842D0D00E737F3 /* SuperHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A88E595218842D0D00E737F3 /* SuperHandler.cpp */; };
+		A88E59EE18842D0D00E737F3 /* CinderDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = A88E595718842D0D00E737F3 /* CinderDelegate.mm */; };
+		A88E5A0618842D0D00E737F3 /* GLUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A88E599918842D0D00E737F3 /* GLUtils.cpp */; };
+		A88E5A0718842D0D00E737F3 /* MathUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A88E599C18842D0D00E737F3 /* MathUtils.cpp */; };
+		A88E5A0818842D0D00E737F3 /* Utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A88E59A318842D0D00E737F3 /* Utils.cpp */; };
 		A8B2BBEB1882C65E0053DC36 /* LayoutCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A8B2BBE91882C65E0053DC36 /* LayoutCache.cpp */; };
 		A8BCDEC6187D72DB00A7FCB8 /* TextItemizer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A8BCDEC4187D72DB00A7FCB8 /* TextItemizer.cpp */; };
 		A8BCDED7187D857900A7FCB8 /* VirtualFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A8BCDEC9187D857900A7FCB8 /* VirtualFont.cpp */; };
@@ -254,6 +264,32 @@
 		A871F5251862091A001D0F98 /* ubidiln.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ubidiln.c; path = ../../../icu/common/ubidiln.c; sourceTree = "<group>"; };
 		A887CB17187C688D000B2DDB /* LanguageHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LanguageHelper.h; path = ../src/LanguageHelper.h; sourceTree = "<group>"; };
 		A887CB18187C688D000B2DDB /* LanguageHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LanguageHelper.cpp; path = ../src/LanguageHelper.cpp; sourceTree = "<group>"; };
+		A88E590318842D0D00E737F3 /* CinderApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CinderApp.cpp; sourceTree = "<group>"; };
+		A88E590418842D0D00E737F3 /* CinderApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CinderApp.h; sourceTree = "<group>"; };
+		A88E590518842D0D00E737F3 /* CinderSketch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CinderSketch.h; sourceTree = "<group>"; };
+		A88E590618842D0D00E737F3 /* CinderSketchBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CinderSketchBase.h; sourceTree = "<group>"; };
+		A88E590718842D0D00E737F3 /* CinderSketchSimple.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CinderSketchSimple.cpp; sourceTree = "<group>"; };
+		A88E590818842D0D00E737F3 /* CinderSketchSimple.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CinderSketchSimple.h; sourceTree = "<group>"; };
+		A88E591118842D0D00E737F3 /* FileSystem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FileSystem.cpp; sourceTree = "<group>"; };
+		A88E591218842D0D00E737F3 /* FileSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileSystem.h; sourceTree = "<group>"; };
+		A88E593C18842D0D00E737F3 /* InputSource.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = InputSource.cpp; sourceTree = "<group>"; };
+		A88E593D18842D0D00E737F3 /* InputSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InputSource.h; sourceTree = "<group>"; };
+		A88E594E18842D0D00E737F3 /* Handler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Handler.cpp; sourceTree = "<group>"; };
+		A88E594F18842D0D00E737F3 /* Handler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Handler.h; sourceTree = "<group>"; };
+		A88E595018842D0D00E737F3 /* Message.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Message.h; sourceTree = "<group>"; };
+		A88E595118842D0D00E737F3 /* SubHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubHandler.h; sourceTree = "<group>"; };
+		A88E595218842D0D00E737F3 /* SuperHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SuperHandler.cpp; sourceTree = "<group>"; };
+		A88E595318842D0D00E737F3 /* SuperHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuperHandler.h; sourceTree = "<group>"; };
+		A88E595618842D0D00E737F3 /* CinderDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CinderDelegate.h; sourceTree = "<group>"; };
+		A88E595718842D0D00E737F3 /* CinderDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CinderDelegate.mm; sourceTree = "<group>"; };
+		A88E599918842D0D00E737F3 /* GLUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GLUtils.cpp; sourceTree = "<group>"; };
+		A88E599A18842D0D00E737F3 /* GLUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLUtils.h; sourceTree = "<group>"; };
+		A88E599B18842D0D00E737F3 /* Hasher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Hasher.h; sourceTree = "<group>"; };
+		A88E599C18842D0D00E737F3 /* MathUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MathUtils.cpp; sourceTree = "<group>"; };
+		A88E599D18842D0D00E737F3 /* MathUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MathUtils.h; sourceTree = "<group>"; };
+		A88E59A218842D0D00E737F3 /* Timing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Timing.h; sourceTree = "<group>"; };
+		A88E59A318842D0D00E737F3 /* Utils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Utils.cpp; sourceTree = "<group>"; };
+		A88E59A418842D0D00E737F3 /* Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
 		A8B2BBE91882C65E0053DC36 /* LayoutCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LayoutCache.cpp; path = ../src/LayoutCache.cpp; sourceTree = "<group>"; };
 		A8B2BBEA1882C65E0053DC36 /* LayoutCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LayoutCache.h; path = ../src/LayoutCache.h; sourceTree = "<group>"; };
 		A8BCDEBF187CB71600A7FCB8 /* TextRun.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TextRun.h; path = ../src/TextRun.h; sourceTree = "<group>"; };
@@ -437,6 +473,7 @@
 		29B97314FDCFA39411CA2CEA /* LayoutCaching */ = {
 			isa = PBXGroup;
 			children = (
+				A88E58F318842D0D00E737F3 /* chronotext */,
 				A8FD194B187BFB21000BE555 /* hb */,
 				A871F2BD18611842001D0F98 /* icu */,
 				080E96DDFE201D6D7F000001 /* Source */,
@@ -641,6 +678,80 @@
 			path = ../../../icu/common/unicode;
 			sourceTree = "<group>";
 		};
+		A88E58F318842D0D00E737F3 /* chronotext */ = {
+			isa = PBXGroup;
+			children = (
+				A88E590218842D0D00E737F3 /* cinder */,
+				A88E591118842D0D00E737F3 /* FileSystem.cpp */,
+				A88E591218842D0D00E737F3 /* FileSystem.h */,
+				A88E593C18842D0D00E737F3 /* InputSource.cpp */,
+				A88E593D18842D0D00E737F3 /* InputSource.h */,
+				A88E594D18842D0D00E737F3 /* os */,
+				A88E595418842D0D00E737F3 /* osx */,
+				A88E599518842D0D00E737F3 /* utils */,
+			);
+			name = chronotext;
+			path = "../../../../../blocks/new-chronotext-toolkit/src/chronotext";
+			sourceTree = "<group>";
+		};
+		A88E590218842D0D00E737F3 /* cinder */ = {
+			isa = PBXGroup;
+			children = (
+				A88E590318842D0D00E737F3 /* CinderApp.cpp */,
+				A88E590418842D0D00E737F3 /* CinderApp.h */,
+				A88E590518842D0D00E737F3 /* CinderSketch.h */,
+				A88E590618842D0D00E737F3 /* CinderSketchBase.h */,
+				A88E590718842D0D00E737F3 /* CinderSketchSimple.cpp */,
+				A88E590818842D0D00E737F3 /* CinderSketchSimple.h */,
+			);
+			path = cinder;
+			sourceTree = "<group>";
+		};
+		A88E594D18842D0D00E737F3 /* os */ = {
+			isa = PBXGroup;
+			children = (
+				A88E594E18842D0D00E737F3 /* Handler.cpp */,
+				A88E594F18842D0D00E737F3 /* Handler.h */,
+				A88E595018842D0D00E737F3 /* Message.h */,
+				A88E595118842D0D00E737F3 /* SubHandler.h */,
+				A88E595218842D0D00E737F3 /* SuperHandler.cpp */,
+				A88E595318842D0D00E737F3 /* SuperHandler.h */,
+			);
+			path = os;
+			sourceTree = "<group>";
+		};
+		A88E595418842D0D00E737F3 /* osx */ = {
+			isa = PBXGroup;
+			children = (
+				A88E595518842D0D00E737F3 /* cinder */,
+			);
+			path = osx;
+			sourceTree = "<group>";
+		};
+		A88E595518842D0D00E737F3 /* cinder */ = {
+			isa = PBXGroup;
+			children = (
+				A88E595618842D0D00E737F3 /* CinderDelegate.h */,
+				A88E595718842D0D00E737F3 /* CinderDelegate.mm */,
+			);
+			path = cinder;
+			sourceTree = "<group>";
+		};
+		A88E599518842D0D00E737F3 /* utils */ = {
+			isa = PBXGroup;
+			children = (
+				A88E599918842D0D00E737F3 /* GLUtils.cpp */,
+				A88E599A18842D0D00E737F3 /* GLUtils.h */,
+				A88E599B18842D0D00E737F3 /* Hasher.h */,
+				A88E599C18842D0D00E737F3 /* MathUtils.cpp */,
+				A88E599D18842D0D00E737F3 /* MathUtils.h */,
+				A88E59A218842D0D00E737F3 /* Timing.h */,
+				A88E59A318842D0D00E737F3 /* Utils.cpp */,
+				A88E59A418842D0D00E737F3 /* Utils.h */,
+			);
+			path = utils;
+			sourceTree = "<group>";
+		};
 		A8BCDEC8187D851F00A7FCB8 /* Rendering */ = {
 			isa = PBXGroup;
 			children = (
@@ -826,6 +937,7 @@
 				A8FD19A4187BFB43000BE555 /* hb-shape.cc in Sources */,
 				A8FD19B4187BFB43000BE555 /* hb-ot-shape-complex-indic.cc in Sources */,
 				A8FD19AC187BFB43000BE555 /* hb-face.cc in Sources */,
+				A88E59CE18842D0D00E737F3 /* CinderApp.cpp in Sources */,
 				A871F4721861E644001D0F98 /* uvector.cpp in Sources */,
 				A871F4601861E644001D0F98 /* uhash.c in Sources */,
 				A871F44D1861E644001D0F98 /* cmemory.c in Sources */,
@@ -847,12 +959,15 @@
 				A871F45A1861E644001D0F98 /* ucln_cmn.c in Sources */,
 				A871F4671861E644001D0F98 /* unifunct.cpp in Sources */,
 				A8BCDEC6187D72DB00A7FCB8 /* TextItemizer.cpp in Sources */,
+				A88E59D318842D0D00E737F3 /* FileSystem.cpp in Sources */,
 				A8FD19A1187BFB43000BE555 /* hb-ft.cc in Sources */,
 				A871F45D1861E644001D0F98 /* udatamem.c in Sources */,
 				A8FD19B6187BFB43000BE555 /* hb-ot-shape-complex-sea.cc in Sources */,
 				A8FD19A7187BFB43000BE555 /* hb-unicode.cc in Sources */,
 				A871F4511861E644001D0F98 /* normalizer2.cpp in Sources */,
+				A88E59EE18842D0D00E737F3 /* CinderDelegate.mm in Sources */,
 				A8FD19AA187BFB43000BE555 /* hb-buffer.cc in Sources */,
+				A88E5A0818842D0D00E737F3 /* Utils.cpp in Sources */,
 				A871F45C1861E644001D0F98 /* udata.cpp in Sources */,
 				A8FD19A3187BFB43000BE555 /* hb-shape-plan.cc in Sources */,
 				A871F5261862091A001D0F98 /* ubidiwrt.c in Sources */,
@@ -866,9 +981,11 @@
 				A871F4641861E644001D0F98 /* umapfile.c in Sources */,
 				A8FD19A5187BFB43000BE555 /* hb-shaper.cc in Sources */,
 				A871F4561861E644001D0F98 /* ubidi_props.c in Sources */,
+				A88E59E618842D0D00E737F3 /* InputSource.cpp in Sources */,
 				A871F44C1861E644001D0F98 /* charstr.cpp in Sources */,
 				A871F4591861E644001D0F98 /* uchar.c in Sources */,
 				A871F44A1861E644001D0F98 /* appendable.cpp in Sources */,
+				A88E59ED18842D0D00E737F3 /* SuperHandler.cpp in Sources */,
 				A809530916F361E20011FAA3 /* Application.cpp in Sources */,
 				A871F4551861E644001D0F98 /* uarrsort.c in Sources */,
 				A8FD19AE187BFB43000BE555 /* hb-font.cc in Sources */,
@@ -877,12 +994,15 @@
 				A871F4691861E644001D0F98 /* unorm.cpp in Sources */,
 				A8FD19AF187BFB43000BE555 /* hb-ot-layout.cc in Sources */,
 				A8BCDEDC187D857900A7FCB8 /* FreetypeHelper.cpp in Sources */,
+				A88E5A0618842D0D00E737F3 /* GLUtils.cpp in Sources */,
+				A88E5A0718842D0D00E737F3 /* MathUtils.cpp in Sources */,
 				A8BCDEDB187D857900A7FCB8 /* ReloadableTexture.cpp in Sources */,
 				A871F44B1861E644001D0F98 /* bytestream.cpp in Sources */,
 				A871F45F1861E644001D0F98 /* uenum.c in Sources */,
 				A871F46C1861E644001D0F98 /* uprops.cpp in Sources */,
 				A871F46E1861E644001D0F98 /* ustring.cpp in Sources */,
 				A8BCDED9187D857900A7FCB8 /* FontManager.cpp in Sources */,
+				A88E59CF18842D0D00E737F3 /* CinderSketchSimple.cpp in Sources */,
 				A8FD19B7187BFB43000BE555 /* hb-ot-shape-complex-thai.cc in Sources */,
 				A871F4521861E644001D0F98 /* normalizer2impl.cpp in Sources */,
 				A8FD19BB187BFB43000BE555 /* hb-ot-tag.cc in Sources */,
@@ -894,6 +1014,7 @@
 				A887CB19187C688D000B2DDB /* LanguageHelper.cpp in Sources */,
 				A8BCDED7187D857900A7FCB8 /* VirtualFont.cpp in Sources */,
 				A871F46F1861E644001D0F98 /* ustrtrns.cpp in Sources */,
+				A88E59EC18842D0D00E737F3 /* Handler.cpp in Sources */,
 				A871F4621861E644001D0F98 /* uiter.cpp in Sources */,
 				A8FD19B9187BFB43000BE555 /* hb-ot-shape-normalize.cc in Sources */,
 				A8FD19A6187BFB43000BE555 /* hb-ucdn.cc in Sources */,
@@ -966,7 +1087,7 @@
 		C01FCF4F08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = i386;
 				CINDER_PATH = ../../../../..;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
@@ -981,14 +1102,14 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				SDKROOT = macosx;
-				USER_HEADER_SEARCH_PATHS = "../include \"$(CINDER_PATH)/include\"";
+				USER_HEADER_SEARCH_PATHS = "../include \"$(CINDER_PATH)/include\" \"$(CINDER_PATH)/blocks/new-chronotext-toolkit/src\"";
 			};
 			name = Debug;
 		};
 		C01FCF5008A954540054247B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = i386;
 				CINDER_PATH = ../../../../..;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
@@ -1003,7 +1124,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				SDKROOT = macosx;
-				USER_HEADER_SEARCH_PATHS = "../include \"$(CINDER_PATH)/include\"";
+				USER_HEADER_SEARCH_PATHS = "../include \"$(CINDER_PATH)/include\" \"$(CINDER_PATH)/blocks/new-chronotext-toolkit/src\"";
 			};
 			name = Release;
 		};
