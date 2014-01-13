@@ -37,8 +37,9 @@ So far, [Harfbuzz](https://github.com/behdad/harfbuzz) and [ICU](http://site.icu
 10. [SimpleRendering](Projects/SimpleRendering)
 11. [ScriptDetector](Projects/ScriptDetector)
 12. [BIDI](Projects/BIDI)
+13. [LayoutCaching](Projects/LayoutCaching)
 
-More work remains, notably with layout-caching, line-breaking and OpenGL rendering...
+More work remains, notably with line-breaking and OpenGL rendering...
 
 Installation
 ------------
