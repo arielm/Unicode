@@ -11,6 +11,9 @@
 #include "LineLayout.h"
 #include "VirtualFont.h"
 
+#include "lru_cache_using_std.h"
+#include "lru_cache_using_boost.h"
+
 #include <map>
 #include <memory>
 

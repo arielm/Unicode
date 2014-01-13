@@ -256,6 +256,9 @@
 		A887CB18187C688D000B2DDB /* LanguageHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LanguageHelper.cpp; path = ../src/LanguageHelper.cpp; sourceTree = "<group>"; };
 		A8B2BBE91882C65E0053DC36 /* LayoutCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LayoutCache.cpp; path = ../src/LayoutCache.cpp; sourceTree = "<group>"; };
 		A8B2BBEA1882C65E0053DC36 /* LayoutCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LayoutCache.h; path = ../src/LayoutCache.h; sourceTree = "<group>"; };
+		A8B2BBEC188356EF0053DC36 /* lru_cache_using_std.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = lru_cache_using_std.h; path = ../src/lru_cache_using_std.h; sourceTree = "<group>"; };
+		A8B2BBED188360750053DC36 /* lru_cache_using_boost.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = lru_cache_using_boost.h; path = ../src/lru_cache_using_boost.h; sourceTree = "<group>"; };
+		A8B2BBEE188364F40053DC36 /* Test.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Test.h; path = ../src/Test.h; sourceTree = "<group>"; };
 		A8BCDEBF187CB71600A7FCB8 /* TextRun.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TextRun.h; path = ../src/TextRun.h; sourceTree = "<group>"; };
 		A8BCDEC0187D68DE00A7FCB8 /* TextLine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TextLine.h; path = ../src/TextLine.h; sourceTree = "<group>"; };
 		A8BCDEC4187D72DB00A7FCB8 /* TextItemizer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TextItemizer.cpp; path = ../src/TextItemizer.cpp; sourceTree = "<group>"; };
@@ -397,6 +400,9 @@
 				A8BCDEC4187D72DB00A7FCB8 /* TextItemizer.cpp */,
 				A8B2BBEA1882C65E0053DC36 /* LayoutCache.h */,
 				A8B2BBE91882C65E0053DC36 /* LayoutCache.cpp */,
+				A8B2BBEC188356EF0053DC36 /* lru_cache_using_std.h */,
+				A8B2BBED188360750053DC36 /* lru_cache_using_boost.h */,
+				A8B2BBEE188364F40053DC36 /* Test.h */,
 				A8BCDEC8187D851F00A7FCB8 /* Rendering */,
 			);
 			name = Source;
