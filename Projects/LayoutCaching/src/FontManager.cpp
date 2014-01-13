@@ -7,13 +7,15 @@
  */
 
 #include "FontManager.h"
-#include "InputSource.h"
+
+#include "chronotext/InputSource.h"
 
 #include "cinder/Xml.h"
 #include "cinder/Utilities.h"
 
 using namespace std;
 using namespace ci;
+using namespace chr;
 
 FontManager::FontManager()
 {
@@ -31,19 +33,17 @@ ActualFont* FontManager::getActualFont(const string &uri, float baseSize, bool u
     }
     else
     {
-        auto filePath = InputSource::getFilePath(uri);
-        
-        if (!filePath.empty())
+        try
         {
-            auto font = new ActualFont(ftHelper, filePath, baseSize, useMipmap, padding);
+            auto font = new ActualFont(ftHelper, InputSource::get(uri), baseSize, useMipmap, padding);
             actualFonts[key] = unique_ptr<ActualFont>(font);
             
             return font;
         }
-        else
-        {
-            return NULL;
-        }
+        catch (exception &e)
+        {}
+        
+        return NULL;
     }
 }
 
@@ -61,7 +61,7 @@ VirtualFont* FontManager::getVirtualFont(const string &uri, float baseSize, bool
         auto font = new VirtualFont(itemizer, baseSize);
         virtualFonts[key] = unique_ptr<VirtualFont>(font);
         
-        XmlTree doc(InputSource::getDataSource(uri));
+        XmlTree doc(InputSource::load(uri));
         auto rootElement = doc.getChild("VirtualFont");
         
         for (auto &fontElement : rootElement.getChildren())

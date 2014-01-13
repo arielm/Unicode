@@ -14,6 +14,7 @@
 
 using namespace std;
 using namespace ci;
+using namespace chr;
 
 /*
  See http://www.microsoft.com/typography/otspec/name.htm for a list of some
@@ -39,14 +40,19 @@ static FT_Error force_ucs2_charmap(FT_Face face)
     return -1;
 }
 
-ActualFont::ActualFont(shared_ptr<FreetypeHelper> ftHelper, const fs::path &filePath, float baseSize, bool useMipmap, int padding)
+ActualFont::ActualFont(shared_ptr<FreetypeHelper> ftHelper, InputSourceRef source, float baseSize, bool useMipmap, int padding)
 :
 ftHelper(ftHelper),
 baseSize(baseSize),
 useMipmap(useMipmap),
 padding(padding)
 {
-    FT_Error error = FT_New_Face(ftHelper->getLib(), filePath.c_str(), 0, &ftFace);
+    if (!source->isFile())
+    {
+        throw runtime_error("ActualFont MUST BE CREATED FROM FILE");
+    }
+    
+    FT_Error error = FT_New_Face(ftHelper->getLib(), source->getFilePath().c_str(), 0, &ftFace);
     
     if (error)
     {

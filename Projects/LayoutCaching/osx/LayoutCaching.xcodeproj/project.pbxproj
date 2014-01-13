@@ -77,7 +77,6 @@
 		A8BCDED7187D857900A7FCB8 /* VirtualFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A8BCDEC9187D857900A7FCB8 /* VirtualFont.cpp */; };
 		A8BCDED8187D857900A7FCB8 /* ActualFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A8BCDECB187D857900A7FCB8 /* ActualFont.cpp */; };
 		A8BCDED9187D857900A7FCB8 /* FontManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A8BCDECE187D857900A7FCB8 /* FontManager.cpp */; };
-		A8BCDEDA187D857900A7FCB8 /* InputSource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A8BCDED0187D857900A7FCB8 /* InputSource.cpp */; };
 		A8BCDEDB187D857900A7FCB8 /* ReloadableTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A8BCDED2187D857900A7FCB8 /* ReloadableTexture.cpp */; };
 		A8BCDEDC187D857900A7FCB8 /* FreetypeHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A8BCDED4187D857900A7FCB8 /* FreetypeHelper.cpp */; };
 		A8BCDEE0187D86EF00A7FCB8 /* SansSerif-osx.xml in Resources */ = {isa = PBXBuildFile; fileRef = A8BCDEDD187D86EF00A7FCB8 /* SansSerif-osx.xml */; };
@@ -303,8 +302,6 @@
 		A8BCDECD187D857900A7FCB8 /* GlyphData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GlyphData.h; path = ../src/GlyphData.h; sourceTree = "<group>"; };
 		A8BCDECE187D857900A7FCB8 /* FontManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FontManager.cpp; path = ../src/FontManager.cpp; sourceTree = "<group>"; };
 		A8BCDECF187D857900A7FCB8 /* FontManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FontManager.h; path = ../src/FontManager.h; sourceTree = "<group>"; };
-		A8BCDED0187D857900A7FCB8 /* InputSource.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = InputSource.cpp; path = ../src/InputSource.cpp; sourceTree = "<group>"; };
-		A8BCDED1187D857900A7FCB8 /* InputSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InputSource.h; path = ../src/InputSource.h; sourceTree = "<group>"; };
 		A8BCDED2187D857900A7FCB8 /* ReloadableTexture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ReloadableTexture.cpp; path = ../src/ReloadableTexture.cpp; sourceTree = "<group>"; };
 		A8BCDED3187D857900A7FCB8 /* ReloadableTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ReloadableTexture.h; path = ../src/ReloadableTexture.h; sourceTree = "<group>"; };
 		A8BCDED4187D857900A7FCB8 /* FreetypeHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FreetypeHelper.cpp; path = ../src/FreetypeHelper.cpp; sourceTree = "<group>"; };
@@ -767,8 +764,6 @@
 				A8BCDECD187D857900A7FCB8 /* GlyphData.h */,
 				A8BCDED3187D857900A7FCB8 /* ReloadableTexture.h */,
 				A8BCDED2187D857900A7FCB8 /* ReloadableTexture.cpp */,
-				A8BCDED1187D857900A7FCB8 /* InputSource.h */,
-				A8BCDED0187D857900A7FCB8 /* InputSource.cpp */,
 			);
 			name = Rendering;
 			sourceTree = "<group>";
@@ -1006,7 +1001,6 @@
 				A8FD19B7187BFB43000BE555 /* hb-ot-shape-complex-thai.cc in Sources */,
 				A871F4521861E644001D0F98 /* normalizer2impl.cpp in Sources */,
 				A8FD19BB187BFB43000BE555 /* hb-ot-tag.cc in Sources */,
-				A8BCDEDA187D857900A7FCB8 /* InputSource.cpp in Sources */,
 				A871F4711861E644001D0F98 /* utypes.c in Sources */,
 				A8FD19B2187BFB43000BE555 /* hb-ot-shape-complex-default.cc in Sources */,
 				A871F45B1861E644001D0F98 /* ucmndata.c in Sources */,

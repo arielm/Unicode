@@ -11,6 +11,8 @@
 #include "GlyphData.h"
 #include "ReloadableTexture.h"
 
+#include "chronotext/InputSource.h"
+
 #include "hb.h"
 
 #include <map>
@@ -65,7 +67,7 @@ public:
     Metrics metrics;
     hb_font_t *hbFont;
     
-    ActualFont(std::shared_ptr<FreetypeHelper> ftHelper, const ci::fs::path &filePath, float baseSize, bool useMipmap, int padding);
+    ActualFont(std::shared_ptr<FreetypeHelper> ftHelper, chr::InputSourceRef source, float baseSize, bool useMipmap, int padding);
     ~ActualFont();
     
     Glyph* getGlyph(uint32_t codepoint);
