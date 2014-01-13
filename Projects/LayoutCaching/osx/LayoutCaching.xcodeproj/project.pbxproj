@@ -72,6 +72,7 @@
 		A88E5A0618842D0D00E737F3 /* GLUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A88E599918842D0D00E737F3 /* GLUtils.cpp */; };
 		A88E5A0718842D0D00E737F3 /* MathUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A88E599C18842D0D00E737F3 /* MathUtils.cpp */; };
 		A88E5A0818842D0D00E737F3 /* Utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A88E59A318842D0D00E737F3 /* Utils.cpp */; };
+		A88E5A151884389F00E737F3 /* Sketch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A88E5A131884389F00E737F3 /* Sketch.cpp */; };
 		A8B2BBEB1882C65E0053DC36 /* LayoutCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A8B2BBE91882C65E0053DC36 /* LayoutCache.cpp */; };
 		A8BCDEC6187D72DB00A7FCB8 /* TextItemizer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A8BCDEC4187D72DB00A7FCB8 /* TextItemizer.cpp */; };
 		A8BCDED7187D857900A7FCB8 /* VirtualFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A8BCDEC9187D857900A7FCB8 /* VirtualFont.cpp */; };
@@ -289,6 +290,8 @@
 		A88E59A218842D0D00E737F3 /* Timing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Timing.h; sourceTree = "<group>"; };
 		A88E59A318842D0D00E737F3 /* Utils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Utils.cpp; sourceTree = "<group>"; };
 		A88E59A418842D0D00E737F3 /* Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
+		A88E5A131884389F00E737F3 /* Sketch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Sketch.cpp; path = ../src/Sketch.cpp; sourceTree = "<group>"; };
+		A88E5A141884389F00E737F3 /* Sketch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Sketch.h; path = ../src/Sketch.h; sourceTree = "<group>"; };
 		A8B2BBE91882C65E0053DC36 /* LayoutCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LayoutCache.cpp; path = ../src/LayoutCache.cpp; sourceTree = "<group>"; };
 		A8B2BBEA1882C65E0053DC36 /* LayoutCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LayoutCache.h; path = ../src/LayoutCache.h; sourceTree = "<group>"; };
 		A8BCDEBF187CB71600A7FCB8 /* TextRun.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TextRun.h; path = ../src/TextRun.h; sourceTree = "<group>"; };
@@ -419,6 +422,8 @@
 		080E96DDFE201D6D7F000001 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				A88E5A141884389F00E737F3 /* Sketch.h */,
+				A88E5A131884389F00E737F3 /* Sketch.cpp */,
 				A809530316F361E20011FAA3 /* Application.cpp */,
 				A871F16F186116D9001D0F98 /* scrptrun.h */,
 				A871F16E186116D9001D0F98 /* scrptrun.cpp */,
@@ -953,6 +958,7 @@
 				A8FD19AB187BFB43000BE555 /* hb-common.cc in Sources */,
 				A871F45A1861E644001D0F98 /* ucln_cmn.c in Sources */,
 				A871F4671861E644001D0F98 /* unifunct.cpp in Sources */,
+				A88E5A151884389F00E737F3 /* Sketch.cpp in Sources */,
 				A8BCDEC6187D72DB00A7FCB8 /* TextItemizer.cpp in Sources */,
 				A88E59D318842D0D00E737F3 /* FileSystem.cpp in Sources */,
 				A8FD19A1187BFB43000BE555 /* hb-ft.cc in Sources */,
