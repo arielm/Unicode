@@ -6,15 +6,20 @@
  * https://github.com/arielm/Unicode/blob/master/LICENSE.md
  */
 
+/*
+ * CACHE STRATEGY BASED ON "LRU cache implementation in C++" BY TIM DAY
+ * http://timday.bitbucket.org/lru.html
+ */
+
 #pragma once
 
 #include "LineLayout.h"
 #include "VirtualFont.h"
 
-#include "lru_cache_using_std.h"
-#include "lru_cache_using_boost.h"
+#include <boost/bimap.hpp>
+#include <boost/bimap/list_of.hpp>
+#include <boost/bimap/set_of.hpp>
 
-#include <map>
 #include <memory>
 
 class LayoutCache
@@ -47,12 +52,12 @@ public:
     void clear();
 
 protected:
+    typedef boost::bimaps::bimap<
+    boost::bimaps::set_of<LineLayoutKey>,
+    boost::bimaps::list_of<std::shared_ptr<LineLayout>> // XXX: THIS IS NOT WORKING WITH unique_ptr
+    > container_type;
+
     size_t capacity;
     size_t size;
-    size_t time;
-    
-    std::map<LineLayoutKey, std::unique_ptr<LineLayout>> cache;
-    std::map<LineLayout*, size_t> usageMap;
-    
-    size_t removeOldest();
+    container_type cache;
 };

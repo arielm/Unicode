@@ -8,27 +8,26 @@
 
 #include "LayoutCache.h"
 
-#include <limits> 
-
 using namespace std;
 
 LayoutCache::LayoutCache(size_t capacity)
 :
 capacity(capacity),
-size(0),
-time(0)
+size(0)
 {}
 
 LineLayout* LayoutCache::getLineLayout(VirtualFont *virtualFont, const string &text, const string &langHint, hb_direction_t overallDirection)
 {
-    LineLayout *value;
-
     const LineLayoutKey key(virtualFont, text, langHint, overallDirection);
-    auto it = cache.find(key);
+    auto it = cache.left.find(key);
     
-    if (it != cache.end())
+    if (it != cache.left.end())
     {
-        value = it->second.get();
+        /*
+         * MOVING ACCESSED ENTRY TO THE TAIL OF THE bimaps::list_of
+         */
+        cache.right.relocate(cache.right.end(), cache.project_right(it));
+        return it->second.get();
     }
     else
     {
@@ -42,59 +41,28 @@ LineLayout* LayoutCache::getLineLayout(VirtualFont *virtualFont, const string &t
         {
             while (size + newSize > capacity)
             {
-                size -= removeOldest();
+                /*
+                 * OLDEST ENTRIES ARE AT THE HEAD OF THE bimaps::list_of
+                 */
+                size -= cache.right.begin()->second.text.size();
+                cache.right.erase(cache.right.begin());
             }
         }
 
         size += newSize;
 
-        value = virtualFont->createLineLayout(text, langHint, overallDirection);
-        cache[key] = unique_ptr<LineLayout>(value);
+        /*
+         * NEW ENTRIES ARE INSERTED AT THE TAIL OF THE bimaps::list_of
+         */
+        auto value = virtualFont->createLineLayout(text, langHint, overallDirection);
+        cache.insert(typename container_type::value_type(key, shared_ptr<LineLayout>(value)));
+        
+        return value;
     }
-    
-    usageMap[value] = ++time;
-    return value;
 }
 
 void LayoutCache::clear()
 {
     cache.clear();
-    usageMap.clear();
-    
-    size = time = 0;
-}
-
-/*
- * FIXME: NOT VERY EFFECTIVE
- */
-size_t LayoutCache::removeOldest()
-{
-    LineLayout *oldest = NULL;
-    size_t earliest = numeric_limits<size_t>::max();
-    
-    for (auto &it : usageMap)
-    {
-        if (it.second < earliest)
-        {
-            oldest = it.first;
-            earliest = it.second;
-        }
-    }
-    
-    if (oldest)
-    {
-        usageMap.erase(oldest);
-        
-        for (auto it = cache.begin(); it != cache.end(); ++it)
-        {
-            if (it->second.get() == oldest)
-            {
-                size_t gain = it->first.text.size();
-                cache.erase(it);
-                return gain;
-            }
-        }
-    }
-    
-    return 0;
+    size = 0;
 }

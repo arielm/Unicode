@@ -11,14 +11,13 @@
  *
  * 1) LayoutCache IN PLACE:
  *    - ADAPTED TO TextLine
- *    - CACHE STRATEGY: LRU (NOT VERY EFFECTIVE)
+ *    - LRU CACHE STRATEGY BASED ON boost::bimaps
  */
 
 /*
  * TODO:
  *
- * 1) ENHANCE LRU STRATEGY IMPLEMENTATION, E.G. http://timday.bitbucket.org/lru.html
- *    OR IMPLEMENT ALTERNATIVE SOLUTION, E.G. "RANDOM REPLACEMENT"
+ * 1) TEST LRU CACHE ON iOS AND ANDROID
  *
  * 2) ADJUST FONTS:
  *    - iOS:
@@ -39,7 +38,6 @@
 
 #include "FontManager.h"
 #include "LayoutCache.h"
-#include "Test.h" // FIXME
 
 #include <boost/algorithm/string.hpp>
 
@@ -96,8 +94,6 @@ void Application::prepareSettings(Settings *settings)
 
 void Application::setup()
 {
-    Test::run();
-    
 #if defined(CINDER_ANDROID)
     auto uri = "res://SansSerif-android.xml";
 #elif defined(CINDER_COCOA_TOUCH)
