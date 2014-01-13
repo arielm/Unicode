@@ -12,12 +12,17 @@
  * 1) LayoutCache IN PLACE:
  *    - ADAPTED TO TextLine
  *    - LRU CACHE STRATEGY BASED ON boost::bimaps
+ *    - TESTED ON iOS AND ANDROID:
+ *      - LIKE IN SimpleRendering PROJECT:
+ *        CRASH WHEN RETURNING TO APP ON XOOM 1 (ANDROID 3)
  */
 
 /*
  * TODO:
  *
- * 1) TEST LRU CACHE ON ANDROID
+ * 1) ANDROID CRASH WHEN RETURNING TO APP ON XOOM 1:
+ *    SEE IF IT OCCURS WHEN USING new-chronotext-toolkit
+ *    (I.E. INSTEAD OF USING A SOLUTION BASED ON NativeActivity)
  *
  * 2) ADJUST FONTS:
  *    - iOS:
