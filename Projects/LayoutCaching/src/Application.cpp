@@ -17,7 +17,7 @@
 /*
  * TODO:
  *
- * 1) TEST LRU CACHE ON iOS AND ANDROID
+ * 1) TEST LRU CACHE ON ANDROID
  *
  * 2) ADJUST FONTS:
  *    - iOS:

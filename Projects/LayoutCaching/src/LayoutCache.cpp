@@ -24,7 +24,7 @@ LineLayout* LayoutCache::getLineLayout(VirtualFont *virtualFont, const string &t
     if (it != cache.left.end())
     {
         /*
-         * MOVING ACCESSED ENTRY TO THE TAIL OF THE bimaps::list_of
+         * MOVING USED-ENTRY TO THE TAIL OF THE bimaps::list_of
          */
         cache.right.relocate(cache.right.end(), cache.project_right(it));
         return it->second.get();
@@ -42,7 +42,7 @@ LineLayout* LayoutCache::getLineLayout(VirtualFont *virtualFont, const string &t
             while (size + newSize > capacity)
             {
                 /*
-                 * OLDEST ENTRIES ARE AT THE HEAD OF THE bimaps::list_of
+                 * LEAST-RECENTLY-USED ENTRIES ARE AT THE HEAD OF THE bimaps::list_of
                  */
                 size -= cache.right.begin()->second.text.size();
                 cache.right.erase(cache.right.begin());
