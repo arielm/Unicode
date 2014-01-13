@@ -1,20 +1,19 @@
-<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-        package="org.libcinder.LayoutCaching"
-        android:versionCode="1"
-        android:versionName="1.0">
+    package="com.dongle.LayoutCaching"
+    android:versionCode="1"
+    android:versionName="1.0" >
     <uses-sdk android:minSdkVersion="10" />
-    <application android:label="LayoutCaching" android:hasCode="false">
-        <activity android:name="android.app.NativeActivity"
-                android:label="LayoutCaching"
-                android:configChanges="keyboardHidden|orientation"
-                android:screenOrientation="landscape"
-                android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
-            <meta-data android:name="android.app.lib_name" android:value="LayoutCaching" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <application
+        android:label="LayoutCaching"
+        android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="landscape" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
     </application>
-</manifest> 
+</manifest>
