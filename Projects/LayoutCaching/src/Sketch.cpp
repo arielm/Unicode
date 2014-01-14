@@ -31,8 +31,8 @@ Sketch::Sketch(void *context, void *delegate)
 :
 CinderSketch(context, delegate)
 {
-//    Test::run();
-//    exit(0);
+    Test().run();
+    exit(0);
 }
 
 void Sketch::setup(bool renewContext)

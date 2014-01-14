@@ -1,72 +1,67 @@
+/*
+ * TRYING TO OPTIMIZE LayoutCache
+ * SEE http://stackoverflow.com/questions/21112208/how-to-avoid-key-copying-when-using-boost-bimap
+ */
+
 #pragma once
 
 #include <string>
-#include <tuple>
 #include <iostream>
 
-struct TestObject
-{
-    std::string s;
-    int i;
-    
-    TestObject(const std::string &s, int i)
-    :
-    s(s),
-    i(i)
-    {    }
-    
-    ~TestObject()
-    {
-        std::cout << "TestObject DESTROYED: " << s << std::endl;
-    }
-    
-    bool operator<(const TestObject &rhs) const
-    {
-        return std::tie(s, i) < std::tie(rhs.s, rhs.i);
-    }
-};
-
-struct TestKey
-{
-    TestObject o;
-    float f;
-    
-    TestKey(const TestObject &o, float f)
-    :
-    o(o),
-    f(f)
-    {}
-    
-    bool operator<(const TestKey &rhs) const
-    {
-        return std::tie(o, f) < std::tie(rhs.o, f);
-    }
-};
-
+#include <boost/bimap.hpp>
+#include <boost/bimap/list_of.hpp>
+#include <boost/bimap/set_of.hpp>
 
 class Test
 {
 public:
-    static void run()
+    struct ComplexKey
     {
-        std::map<TestKey, std::string> testMap;
+        std::string text;
+        int dummy;
         
-        const TestKey k1(TestObject("foo", 123), 0.5f);
-        const TestKey k2(TestObject("bar", 123), 0.5f);
-        const TestKey k3(TestObject("baz", 123), 0.5f);
+        ComplexKey(const std::string &text, int dummy) : text(text), dummy(dummy) {}
         
-        /*
-         * KEYS ARE COPIED
-         */
-        testMap[k1] = "hello foo";
-        testMap[k2] = "hello bar";
-        testMap[k3] = "hello baz";
-
-        /*
-         * KEYS ARE NOT COPIED
-         */
-        testMap.find(k1);
-        testMap.find(k2);
-        testMap.find(k3);
+        ~ComplexKey()
+        {
+            std::cout << "~ComplexKey " << (void*)this << " " << text << std::endl;
+        }
+        
+        bool operator<(const ComplexKey &rhs) const
+        {
+            return tie(text, dummy) < tie(rhs.text, rhs.dummy);
+        }
+    };
+    
+    typedef boost::bimaps::bimap<
+    boost::bimaps::set_of<ComplexKey>,
+    boost::bimaps::list_of<std::string>
+    > container_type;
+    
+    container_type cache;
+    
+    void run()
+    {
+        getValue("foo", 123); // 3 COPIES
+        getValue("bar", 456); // 3 COPIES
+        getValue("foo", 123); // 2 COPIES
+    }
+    
+    std::string getValue(const std::string &text, int dummy)
+    {
+        const ComplexKey key(text, dummy); // COPY #1 OF text
+        auto it = cache.left.find(key); // COPY #2 OF text (BECAUSE key IS COPIED)
+        
+        if (it != cache.left.end())
+        {
+            return it->second;
+        }
+        else
+        {
+            auto value = std::to_string(text.size()) + "." + std::to_string(dummy); // WHATEVER...
+            cache.insert(typename container_type::value_type(key, value)); // COPY #3 OF text
+            
+            return value;
+        }
     }
 };
