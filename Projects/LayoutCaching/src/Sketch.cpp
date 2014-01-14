@@ -63,7 +63,7 @@ void Sketch::setup(bool renewContext)
             sentences.push_back(text);
         }
         
-        Measurement(font).run(sentences, LINE_COUNT, MAX_SENTENCES_PER_LINE);
+//      Measurement(font).run(sentences, LINE_COUNT, MAX_SENTENCES_PER_LINE);
     }
     
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
