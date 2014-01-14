@@ -40,11 +40,6 @@ public:
         overallDirection(overallDirection)
         {}
         
-//        ~LineLayoutKey()
-//        {
-//            std::cout << "~LineLayoutKey " << (void*)this << " " << text << std::endl;
-//        }
-        
         bool operator<(const LineLayoutKey &rhs) const
         {
             return tie(virtualFont, overallDirection, langHint, text) < tie(rhs.virtualFont, rhs.overallDirection, rhs.langHint, rhs.text);

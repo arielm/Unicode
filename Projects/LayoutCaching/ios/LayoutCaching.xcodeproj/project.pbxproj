@@ -231,9 +231,9 @@
 		A88E5B9D188445CA00E737F3 /* Utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A88E5B29188445CA00E737F3 /* Utils.cpp */; };
 		A88E5BAA1884464B00E737F3 /* Sketch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A88E5BA81884464B00E737F3 /* Sketch.cpp */; };
 		A88E5BAE188448B000E737F3 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = A88E5BAD188448B000E737F3 /* AppDelegate.mm */; };
+		A88E5BB5188574DF00E737F3 /* Text.xml in Resources */ = {isa = PBXBuildFile; fileRef = A88E5BB4188574DF00E737F3 /* Text.xml */; };
 		A8994D441726E33900C8851E /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8994D431726E33900C8851E /* GLKit.framework */; };
 		A8B2BBF3188400BD0053DC36 /* LayoutCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A8B2BBEF188400BD0053DC36 /* LayoutCache.cpp */; };
-		A8B2BBF6188401340053DC36 /* Words.xml in Resources */ = {isa = PBXBuildFile; fileRef = A8B2BBF5188401340053DC36 /* Words.xml */; };
 		A8C73CC818549F2E0081E110 /* FreetypeHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A8C73CC718549F2E0081E110 /* FreetypeHelper.cpp */; };
 		A8F9B9F9186B31C100724EED /* SansSerif-ios.xml in Resources */ = {isa = PBXBuildFile; fileRef = A8F9B9F7186B31C100724EED /* SansSerif-ios.xml */; };
 		A8F9BA03186B31EF00724EED /* FontManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A8F9B9FB186B31EF00724EED /* FontManager.cpp */; };
@@ -735,13 +735,15 @@
 		A88E5BA91884464B00E737F3 /* Sketch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Sketch.h; path = ../src/Sketch.h; sourceTree = "<group>"; };
 		A88E5BAC188448B000E737F3 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		A88E5BAD188448B000E737F3 /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AppDelegate.mm; sourceTree = "<group>"; };
+		A88E5BB4188574DF00E737F3 /* Text.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = Text.xml; path = ../resources/Text.xml; sourceTree = "<group>"; };
+		A88E5BB6188574EC00E737F3 /* Measurement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Measurement.h; path = ../src/Measurement.h; sourceTree = "<group>"; };
+		A88E5BB7188574EC00E737F3 /* Test.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Test.h; path = ../src/Test.h; sourceTree = "<group>"; };
 		A8994D431726E33900C8851E /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		A8B2BBEF188400BD0053DC36 /* LayoutCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LayoutCache.cpp; path = ../src/LayoutCache.cpp; sourceTree = "<group>"; };
 		A8B2BBF0188400BD0053DC36 /* LayoutCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LayoutCache.h; path = ../src/LayoutCache.h; sourceTree = "<group>"; };
 		A8B2BBF1188400BD0053DC36 /* TextLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextLine.h; path = ../src/TextLine.h; sourceTree = "<group>"; };
 		A8B2BBF2188400BD0053DC36 /* TextRun.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextRun.h; path = ../src/TextRun.h; sourceTree = "<group>"; };
 		A8B2BBF4188400EF0053DC36 /* LineLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LineLayout.h; path = ../src/LineLayout.h; sourceTree = "<group>"; };
-		A8B2BBF5188401340053DC36 /* Words.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = Words.xml; path = ../resources/Words.xml; sourceTree = "<group>"; };
 		A8C73CC618549F2E0081E110 /* FreetypeHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FreetypeHelper.h; path = ../src/FreetypeHelper.h; sourceTree = "<group>"; };
 		A8C73CC718549F2E0081E110 /* FreetypeHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FreetypeHelper.cpp; path = ../src/FreetypeHelper.cpp; sourceTree = "<group>"; };
 		A8F9B9F7186B31C100724EED /* SansSerif-ios.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = "SansSerif-ios.xml"; path = "../resources/SansSerif-ios.xml"; sourceTree = "<group>"; };
@@ -841,6 +843,8 @@
 				A838FE51187F6F430074BFF0 /* TextItemizer.cpp */,
 				A8B2BBF0188400BD0053DC36 /* LayoutCache.h */,
 				A8B2BBEF188400BD0053DC36 /* LayoutCache.cpp */,
+				A88E5BB7188574EC00E737F3 /* Test.h */,
+				A88E5BB6188574EC00E737F3 /* Measurement.h */,
 				A838FE4B187F6F180074BFF0 /* Rendering */,
 			);
 			name = Source;
@@ -850,7 +854,7 @@
 			isa = PBXGroup;
 			children = (
 				A8F9B9F7186B31C100724EED /* SansSerif-ios.xml */,
-				A8B2BBF5188401340053DC36 /* Words.xml */,
+				A88E5BB4188574DF00E737F3 /* Text.xml */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -1503,9 +1507,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A88E5BB5188574DF00E737F3 /* Text.xml in Resources */,
 				A8F9B9F9186B31C100724EED /* SansSerif-ios.xml in Resources */,
 				A82C900916DF91D300FF519C /* icon.png in Resources */,
-				A8B2BBF6188401340053DC36 /* Words.xml in Resources */,
 				A82C900A16DF91D300FF519C /* Default-568h@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -52,7 +52,7 @@ public:
     VirtualFont *font;
     std::vector<std::unique_ptr<LineLayout>> lineLayouts;
     
-    std::vector<std::string> words;
+    std::vector<std::string> sentences;
     ci::Rand rnd;
     
     Sketch(void *context, void *delegate = NULL);

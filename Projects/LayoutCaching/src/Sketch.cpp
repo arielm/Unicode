@@ -7,7 +7,7 @@
  */
 
 #include "Sketch.h"
-#include "Test.h"
+#include "Measurement.h"
 
 #include "chronotext/InputSource.h"
 
@@ -30,10 +30,7 @@ const int MAX_SENTENCES_PER_LINE = 3;
 Sketch::Sketch(void *context, void *delegate)
 :
 CinderSketch(context, delegate)
-{
-//    Test().run();
-//    exit(0);
-}
+{}
 
 void Sketch::setup(bool renewContext)
 {
@@ -63,8 +60,10 @@ void Sketch::setup(bool renewContext)
         for (auto &lineElement : rootElement.getChildren())
         {
             auto text = trimText(lineElement->getValue());
-            words.push_back(text);
+            sentences.push_back(text);
         }
+        
+        Measurement(font).run(sentences, LINE_COUNT, MAX_SENTENCES_PER_LINE);
     }
     
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -93,11 +92,11 @@ void Sketch::draw()
     for (int i = 0; i < LINE_COUNT; i++)
     {
         string line;
-        int wordCount = rnd.nextInt(1, MAX_SENTENCES_PER_LINE);
+        int sentenceCount = rnd.nextInt(1, MAX_SENTENCES_PER_LINE);
         
-        for (int j = 0; j < wordCount; j++)
+        for (int j = 0; j < sentenceCount; j++)
         {
-            line += words[rnd.nextInt(words.size())];
+            line += sentences[rnd.nextInt(sentences.size())];
             line += " ";
         }
         
