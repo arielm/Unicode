@@ -16,10 +16,15 @@ capacity(capacity),
 size(0)
 {}
 
+/*
+ * TODO:
+ * CURRENTLY, text WILL BE COPIED 2 OR 3 TIMES
+ * CAN WE MAKE IT LESS?
+ */
 LineLayout* LayoutCache::getLineLayout(VirtualFont *virtualFont, const string &text, const string &langHint, hb_direction_t overallDirection)
 {
-    const LineLayoutKey key(virtualFont, text, langHint, overallDirection);
-    auto it = cache.left.find(key);
+    const LineLayoutKey key(virtualFont, text, langHint, overallDirection); // COPY #1 OF text
+    auto it = cache.left.find(key); // COPY #2 OF text (A DRAWBACK OF Boost.bimap: key IS COPIED)
     
     if (it != cache.left.end())
     {
@@ -55,7 +60,7 @@ LineLayout* LayoutCache::getLineLayout(VirtualFont *virtualFont, const string &t
          * NEW ENTRIES ARE INSERTED AT THE TAIL OF THE bimaps::list_of
          */
         auto value = virtualFont->createLineLayout(text, langHint, overallDirection);
-        cache.insert(typename container_type::value_type(key, shared_ptr<LineLayout>(value)));
+        cache.insert(typename container_type::value_type(key, shared_ptr<LineLayout>(value))); // COPY #3 OF text (ONLY IF key WAS NOT FOUND)
         
         return value;
     }

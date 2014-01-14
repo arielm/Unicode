@@ -289,6 +289,7 @@
 		A88E5A131884389F00E737F3 /* Sketch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Sketch.cpp; path = ../src/Sketch.cpp; sourceTree = "<group>"; };
 		A88E5A141884389F00E737F3 /* Sketch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Sketch.h; path = ../src/Sketch.h; sourceTree = "<group>"; };
 		A88E5BB0188449B300E737F3 /* Application.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Application.cpp; sourceTree = "<group>"; };
+		A88E5BB21884B49800E737F3 /* Test.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Test.h; path = ../src/Test.h; sourceTree = "<group>"; };
 		A8B2BBE91882C65E0053DC36 /* LayoutCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LayoutCache.cpp; path = ../src/LayoutCache.cpp; sourceTree = "<group>"; };
 		A8B2BBEA1882C65E0053DC36 /* LayoutCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LayoutCache.h; path = ../src/LayoutCache.h; sourceTree = "<group>"; };
 		A8BCDEBF187CB71600A7FCB8 /* TextRun.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TextRun.h; path = ../src/TextRun.h; sourceTree = "<group>"; };
@@ -431,6 +432,7 @@
 				A8BCDEC4187D72DB00A7FCB8 /* TextItemizer.cpp */,
 				A8B2BBEA1882C65E0053DC36 /* LayoutCache.h */,
 				A8B2BBE91882C65E0053DC36 /* LayoutCache.cpp */,
+				A88E5BB21884B49800E737F3 /* Test.h */,
 				A8BCDEC8187D851F00A7FCB8 /* Rendering */,
 			);
 			name = Source;

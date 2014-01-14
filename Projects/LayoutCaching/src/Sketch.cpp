@@ -7,6 +7,7 @@
  */
 
 #include "Sketch.h"
+#include "Test.h"
 
 #include "chronotext/InputSource.h"
 
@@ -29,7 +30,10 @@ const int MAX_WORDS_PER_LINE = 4;
 Sketch::Sketch(void *context, void *delegate)
 :
 CinderSketch(context, delegate)
-{}
+{
+//    Test::run();
+//    exit(0);
+}
 
 void Sketch::setup(bool renewContext)
 {
