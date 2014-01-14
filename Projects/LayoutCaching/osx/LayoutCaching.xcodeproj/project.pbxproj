@@ -81,7 +81,7 @@
 		A8BCDEDC187D857900A7FCB8 /* FreetypeHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A8BCDED4187D857900A7FCB8 /* FreetypeHelper.cpp */; };
 		A8BCDEE0187D86EF00A7FCB8 /* SansSerif-osx.xml in Resources */ = {isa = PBXBuildFile; fileRef = A8BCDEDD187D86EF00A7FCB8 /* SansSerif-osx.xml */; };
 		A8BCDEE1187D86EF00A7FCB8 /* SansSerif.xml in Resources */ = {isa = PBXBuildFile; fileRef = A8BCDEDE187D86EF00A7FCB8 /* SansSerif.xml */; };
-		A8BCDEE2187D86EF00A7FCB8 /* Words.xml in Resources */ = {isa = PBXBuildFile; fileRef = A8BCDEDF187D86EF00A7FCB8 /* Words.xml */; };
+		A8BCDEE2187D86EF00A7FCB8 /* Text.xml in Resources */ = {isa = PBXBuildFile; fileRef = A8BCDEDF187D86EF00A7FCB8 /* Text.xml */; };
 		A8FD19A1187BFB43000BE555 /* hb-ft.cc in Sources */ = {isa = PBXBuildFile; fileRef = A8FD194C187BFB42000BE555 /* hb-ft.cc */; };
 		A8FD19A2187BFB43000BE555 /* hb-set.cc in Sources */ = {isa = PBXBuildFile; fileRef = A8FD194D187BFB42000BE555 /* hb-set.cc */; };
 		A8FD19A3187BFB43000BE555 /* hb-shape-plan.cc in Sources */ = {isa = PBXBuildFile; fileRef = A8FD1950187BFB42000BE555 /* hb-shape-plan.cc */; };
@@ -310,7 +310,7 @@
 		A8BCDED6187D857900A7FCB8 /* LineLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LineLayout.h; path = ../src/LineLayout.h; sourceTree = "<group>"; };
 		A8BCDEDD187D86EF00A7FCB8 /* SansSerif-osx.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = "SansSerif-osx.xml"; path = "../resources/SansSerif-osx.xml"; sourceTree = "<group>"; };
 		A8BCDEDE187D86EF00A7FCB8 /* SansSerif.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = SansSerif.xml; path = ../resources/SansSerif.xml; sourceTree = "<group>"; };
-		A8BCDEDF187D86EF00A7FCB8 /* Words.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = Words.xml; path = ../resources/Words.xml; sourceTree = "<group>"; };
+		A8BCDEDF187D86EF00A7FCB8 /* Text.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = Text.xml; path = ../resources/Text.xml; sourceTree = "<group>"; };
 		A8FD194C187BFB42000BE555 /* hb-ft.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "hb-ft.cc"; path = "../../../hb/hb-ft.cc"; sourceTree = "<group>"; };
 		A8FD194D187BFB42000BE555 /* hb-set.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "hb-set.cc"; path = "../../../hb/hb-set.cc"; sourceTree = "<group>"; };
 		A8FD194E187BFB42000BE555 /* hb-set.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "hb-set.h"; path = "../../../hb/hb-set.h"; sourceTree = "<group>"; };
@@ -490,7 +490,7 @@
 			children = (
 				A8BCDEDD187D86EF00A7FCB8 /* SansSerif-osx.xml */,
 				A8BCDEDE187D86EF00A7FCB8 /* SansSerif.xml */,
-				A8BCDEDF187D86EF00A7FCB8 /* Words.xml */,
+				A8BCDEDF187D86EF00A7FCB8 /* Text.xml */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -906,7 +906,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A8BCDEE2187D86EF00A7FCB8 /* Words.xml in Resources */,
+				A8BCDEE2187D86EF00A7FCB8 /* Text.xml in Resources */,
 				A809523B16F360660011FAA3 /* icon.icns in Resources */,
 				A8BCDEE0187D86EF00A7FCB8 /* SansSerif-osx.xml in Resources */,
 				A8BCDEE1187D86EF00A7FCB8 /* SansSerif.xml in Resources */,

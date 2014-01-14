@@ -25,14 +25,14 @@ const float LINE_TOP = 66;
 const float LINE_SPACING = 66;
 
 const int LINE_COUNT = 11;
-const int MAX_WORDS_PER_LINE = 4;
+const int MAX_SENTENCES_PER_LINE = 3;
 
 Sketch::Sketch(void *context, void *delegate)
 :
 CinderSketch(context, delegate)
 {
-    Test().run();
-    exit(0);
+//    Test().run();
+//    exit(0);
 }
 
 void Sketch::setup(bool renewContext)
@@ -57,7 +57,7 @@ void Sketch::setup(bool renewContext)
         
         // ---
         
-        XmlTree doc(InputSource::loadResource("Words.xml"));
+        XmlTree doc(InputSource::loadResource("Text.xml"));
         auto rootElement = doc.getChild("Text");
         
         for (auto &lineElement : rootElement.getChildren())
@@ -93,7 +93,7 @@ void Sketch::draw()
     for (int i = 0; i < LINE_COUNT; i++)
     {
         string line;
-        int wordCount = rnd.nextInt(1, MAX_WORDS_PER_LINE);
+        int wordCount = rnd.nextInt(1, MAX_SENTENCES_PER_LINE);
         
         for (int j = 0; j < wordCount; j++)
         {
