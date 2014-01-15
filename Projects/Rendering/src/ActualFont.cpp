@@ -8,9 +8,9 @@
 
 #include "ActualFont.h"
 
-#include "hb-ft.h"
+#include "chronotext/utils/Utils.h"
 
-#include "cinder/Utilities.h"
+#include "hb-ft.h"
 
 using namespace std;
 using namespace ci;
@@ -40,136 +40,116 @@ static FT_Error force_ucs2_charmap(FT_Face face)
     return -1;
 }
 
-ActualFont::ActualFont(shared_ptr<FreetypeHelper> ftHelper, InputSourceRef source, float baseSize, bool useMipmap, int padding)
+ActualFont::ActualFont(shared_ptr<FreetypeHelper> ftHelper, InputSourceRef inputSource, float baseSize, bool useMipmap, int padding)
 :
 ftHelper(ftHelper),
+inputSource(inputSource),
 baseSize(baseSize),
 useMipmap(useMipmap),
-padding(padding)
+padding(padding),
+loaded(false),
+ftFace(NULL),
+hbFont(NULL)
 {
-    if (!source->isFile())
-    {
-        throw runtime_error("ActualFont MUST BE CREATED FROM FILE");
-    }
-    
-    FT_Error error = FT_New_Face(ftHelper->getLib(), source->getFilePath().c_str(), 0, &ftFace);
-    
-    if (error)
-    {
-        throw runtime_error("FREETYPE: ERROR " + toString(error));
-    }
-    
-    if (force_ucs2_charmap(ftFace))
-    {
-        throw runtime_error("HARFBUZZ: FONT IS BROKEN OR IRRELEVANT");
-    }
-    
-    // ---
-    
-    /*
-     * USING A MATRIX WITH A MULTIPLIER ALLOWS FOR FRACTIONAL VALUES
-     * TRICK FROM http://code.google.com/p/freetype-gl/
-     *
-     * - WITHOUT A FRACTIONAL ADVANCE: CHARACTER SPACING LOOKS DUMB
-     * - WITHOUT A FRACTIONAL HEIGHT: SOME CHARACTERS WON'T BE PERFECTLY ALIGNED ON THE BASELINE
-     */
-    int res = 64;
-    int dpi = 72;
-    
-    scale = Vec2f::one() / Vec2f(res, res) / 64;
-    FT_Set_Char_Size(ftFace, baseSize * 64, 0, dpi * res, dpi * res);
-    
-    FT_Matrix matrix =
-    {
-        int((1.0 / res) * 0x10000L),
-        int((0.0) * 0x10000L),
-        int((0.0) * 0x10000L),
-        int((1.0 / res) * 0x10000L)
-    };
-    
-    FT_Set_Transform(ftFace, &matrix, NULL);
-    
-    // ---
-    
-    metrics.height = ftFace->size->metrics.height * scale.y;
-    metrics.ascent = ftFace->size->metrics.ascender * scale.y;
-    metrics.descent = -ftFace->size->metrics.descender * scale.y;
-
-    metrics.lineThickness = ftFace->underline_thickness / 64.0f;
-    metrics.underlineOffset = -ftFace->underline_position / 64.0f;
-    
-    //
-    
-    auto os2 = (TT_OS2*)FT_Get_Sfnt_Table(ftFace, ft_sfnt_os2);
-    
-    if (os2 && (os2->version != 0xFFFF))
-    {
-        metrics.strikethroughOffset = FT_MulFix(os2->yStrikeoutPosition, ftFace->size->metrics.y_scale) * scale.y;
-    }
-    else
-    {
-        metrics.strikethroughOffset = 0.5f * (metrics.ascent - metrics.descent);
-    }
-    
-    // ---
-    
-    hbFont = hb_ft_font_create(ftFace, NULL);
+    reload();
 }
 
 ActualFont::~ActualFont()
 {
-    hb_font_destroy(hbFont);
-    FT_Done_Face(ftFace);
+    unload();
 }
 
-ActualFont::Glyph* ActualFont::getGlyph(uint32_t codepoint)
+void ActualFont::reload()
 {
-    Glyph *glyph = NULL;
-    auto entry = glyphCache.find(codepoint);
-    
-    if (entry == glyphCache.end())
+    if (!loaded)
     {
-        glyph = createGlyph(codepoint);
-        
-        if (glyph)
+        if (!inputSource->isFile())
         {
-            glyphCache[codepoint] = unique_ptr<Glyph>(glyph);
+            throw runtime_error("ActualFont MUST BE CREATED FROM FILE");
+        }
+        
+        FT_Error error = FT_New_Face(ftHelper->getLib(), inputSource->getFilePath().c_str(), 0, &ftFace);
+        
+        if (error)
+        {
+            throw runtime_error("FREETYPE: ERROR " + toString(error));
+        }
+        
+        if (force_ucs2_charmap(ftFace))
+        {
+            FT_Done_Face(ftFace);
+            throw runtime_error("HARFBUZZ: FONT IS BROKEN OR IRRELEVANT");
+        }
+        
+        hbFont = hb_ft_font_create(ftFace, NULL);
+
+        // ---
+        
+        /*
+         * USING A MATRIX WITH A MULTIPLIER ALLOWS FOR FRACTIONAL VALUES
+         * TRICK FROM http://code.google.com/p/freetype-gl/
+         *
+         * - WITHOUT A FRACTIONAL ADVANCE: CHARACTER SPACING LOOKS DUMB
+         * - WITHOUT A FRACTIONAL HEIGHT: SOME CHARACTERS WON'T BE PERFECTLY ALIGNED ON THE BASELINE
+         */
+        int res = 64;
+        int dpi = 72;
+        
+        scale = Vec2f::one() / Vec2f(res, res) / 64;
+        FT_Set_Char_Size(ftFace, baseSize * 64, 0, dpi * res, dpi * res);
+        
+        FT_Matrix matrix =
+        {
+            int((1.0 / res) * 0x10000L),
+            int((0.0) * 0x10000L),
+            int((0.0) * 0x10000L),
+            int((1.0 / res) * 0x10000L)
+        };
+        
+        FT_Set_Transform(ftFace, &matrix, NULL);
+        
+        // ---
+        
+        metrics.height = ftFace->size->metrics.height * scale.y;
+        metrics.ascent = ftFace->size->metrics.ascender * scale.y;
+        metrics.descent = -ftFace->size->metrics.descender * scale.y;
+        
+        metrics.lineThickness = ftFace->underline_thickness / 64.0f;
+        metrics.underlineOffset = -ftFace->underline_position / 64.0f;
+        
+        //
+        
+        auto os2 = (TT_OS2*)FT_Get_Sfnt_Table(ftFace, ft_sfnt_os2);
+        
+        if (os2 && (os2->version != 0xFFFF))
+        {
+            metrics.strikethroughOffset = FT_MulFix(os2->yStrikeoutPosition, ftFace->size->metrics.y_scale) * scale.y;
         }
         else
         {
-            /*
-             * INSERTING A VALUE FOR TEXTURELESS GLYPHS (E.G. A "SPACE")
-             * IS NECESSARY, OTHERWISE createGlyph() WOULD BE INVOKED
-             * INDEFINITELY FOR THE SAME CODEPOINT
-             */
-            glyphCache[codepoint] = unique_ptr<Glyph>(new Glyph());
+            metrics.strikethroughOffset = 0.5f * (metrics.ascent - metrics.descent);
         }
-    }
-    else
-    {
-       glyph = entry->second.get();
         
-        /*
-         * IN CASE A PREVIOUSLY-LOADED TEXTURE HAVE BEEN
-         * DISCARDED, E.G. AFTER SOME OPENGL CONTEXT-LOSS
-         */
-        if (glyph->texture && !glyph->texture->isLoaded())
-        {
-            GlyphData glyphData(ftFace, codepoint, useMipmap, padding);
-            
-            if (glyphData.isValid())
-            {
-                glyph->texture->load(glyphData);
-            }
-        }
+        // ---
+        
+        loaded = true;
+        LOGD << "LOADING FONT: " << ftFace->family_name << " "  << ftFace->style_name << endl;
     }
-    
-    return glyph;
 }
 
-void ActualFont::clearGlyphCache()
+void ActualFont::unload()
 {
-    glyphCache.clear();
+    if (loaded)
+    {
+        loaded = false;
+        LOGD << "UNLOADING FONT: " << ftFace->family_name << " "  << ftFace->style_name << endl;
+
+        unloadTextures();
+        clearGlyphCache();
+
+        hb_font_destroy(hbFont);
+        FT_Done_Face(ftFace);
+    }
 }
 
 void ActualFont::unloadTextures()
@@ -178,6 +158,60 @@ void ActualFont::unloadTextures()
     {
         texture->unload();
     }
+}
+
+void ActualFont::clearGlyphCache()
+{
+    glyphCache.clear();
+}
+
+ActualFont::Glyph* ActualFont::getGlyph(uint32_t codepoint)
+{
+    Glyph *glyph = NULL;
+    
+    if (loaded)
+    {
+        auto entry = glyphCache.find(codepoint);
+        
+        if (entry == glyphCache.end())
+        {
+            glyph = createGlyph(codepoint);
+            
+            if (glyph)
+            {
+                glyphCache[codepoint] = unique_ptr<Glyph>(glyph);
+            }
+            else
+            {
+                /*
+                 * INSERTING A VALUE FOR TEXTURELESS GLYPHS (E.G. A "SPACE")
+                 * IS NECESSARY, OTHERWISE createGlyph() WOULD BE INVOKED
+                 * INDEFINITELY FOR THE SAME CODEPOINT
+                 */
+                glyphCache[codepoint] = unique_ptr<Glyph>(new Glyph());
+            }
+        }
+        else
+        {
+            glyph = entry->second.get();
+            
+            /*
+             * IN CASE A PREVIOUSLY-LOADED TEXTURE HAVE BEEN
+             * DISCARDED, E.G. AFTER SOME OPENGL CONTEXT-LOSS
+             */
+            if (glyph->texture && !glyph->texture->isLoaded())
+            {
+                GlyphData glyphData(ftFace, codepoint, useMipmap, padding);
+                
+                if (glyphData.isValid())
+                {
+                    glyph->texture->load(glyphData);
+                }
+            }
+        }
+    }
+    
+    return glyph;
 }
 
 ActualFont::Glyph* ActualFont::createGlyph(uint32_t codepoint)
@@ -191,8 +225,6 @@ ActualFont::Glyph* ActualFont::createGlyph(uint32_t codepoint)
         
         return new Glyph(texture, glyphData.offset, glyphData.size);
     }
-    else
-    {
-        return NULL;
-    }
+    
+    return NULL;
 }

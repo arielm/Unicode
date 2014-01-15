@@ -97,55 +97,58 @@ LineLayout* VirtualFont::createLineLayout(const TextLine &line)
     {
         clusterMap.clear();
         
-        for (auto &font : getFontSet(run.language))
+        for (auto font : getFontSet(run.language))
         {
-            run.apply(line.text, buffer);
-            hb_shape(font->hbFont, buffer, NULL, 0);
-            
-            auto glyphCount = hb_buffer_get_length(buffer);
-            auto glyphInfos = hb_buffer_get_glyph_infos(buffer, NULL);
-            auto glyphPositions = hb_buffer_get_glyph_positions(buffer, NULL);
-            
-            bool hasMissingGlyphs = false;
-            
-            for (int i = 0; i < glyphCount; i++)
+            if (font->hbFont)
             {
-                auto codepoint = glyphInfos[i].codepoint;
-                auto cluster = glyphInfos[i].cluster;
+                run.apply(line.text, buffer);
+                hb_shape(font->hbFont, buffer, NULL, 0);
                 
-                auto it = clusterMap.find(cluster);
-                bool clusterFound = (it != clusterMap.end());
+                auto glyphCount = hb_buffer_get_length(buffer);
+                auto glyphInfos = hb_buffer_get_glyph_infos(buffer, NULL);
+                auto glyphPositions = hb_buffer_get_glyph_positions(buffer, NULL);
                 
-                if (codepoint)
+                bool hasMissingGlyphs = false;
+                
+                for (int i = 0; i < glyphCount; i++)
                 {
-                    if (clusterFound && (it->second.font != font))
+                    auto codepoint = glyphInfos[i].codepoint;
+                    auto cluster = glyphInfos[i].cluster;
+                    
+                    auto it = clusterMap.find(cluster);
+                    bool clusterFound = (it != clusterMap.end());
+                    
+                    if (codepoint)
                     {
-                        continue; // CLUSTER FOUND, WITH ANOTHER FONT (E.G. SPACE)
-                    }
-                    else
-                    {
-                        auto offset = Vec2f(glyphPositions[i].x_offset, -glyphPositions[i].y_offset) * font->scale;
-                        float advance = glyphPositions[i].x_advance * font->scale.x;
-                        
-                        if (clusterFound)
+                        if (clusterFound && (it->second.font != font))
                         {
-                            it->second.addShape(codepoint, offset, advance);
+                            continue; // CLUSTER FOUND, WITH ANOTHER FONT (E.G. SPACE)
                         }
                         else
                         {
-                            clusterMap.insert(make_pair(cluster, Cluster(font, codepoint, offset, advance)));
+                            auto offset = Vec2f(glyphPositions[i].x_offset, -glyphPositions[i].y_offset) * font->scale;
+                            float advance = glyphPositions[i].x_advance * font->scale.x;
+                            
+                            if (clusterFound)
+                            {
+                                it->second.addShape(codepoint, offset, advance);
+                            }
+                            else
+                            {
+                                clusterMap.insert(make_pair(cluster, Cluster(font, codepoint, offset, advance)));
+                            }
                         }
                     }
+                    else if (!clusterFound)
+                    {
+                        hasMissingGlyphs = true;
+                    }
                 }
-                else if (!clusterFound)
+                
+                if (!hasMissingGlyphs)
                 {
-                    hasMissingGlyphs = true;
+                    break; // NO NEED TO PROCEED TO THE NEXT FONT IN THE LIST
                 }
-            }
-            
-            if (!hasMissingGlyphs)
-            {
-                break; // NO NEED TO PROCEED TO THE NEXT FONT IN THE LIST
             }
         }
         
@@ -163,7 +166,6 @@ LineLayout* VirtualFont::createLineLayout(const TextLine &line)
                 layout->addCluster(it->second);
             }
         }
-
     }
     
     hb_buffer_destroy(buffer);

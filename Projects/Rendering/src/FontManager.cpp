@@ -9,9 +9,9 @@
 #include "FontManager.h"
 
 #include "chronotext/InputSource.h"
+#include "chronotext/utils/Utils.h"
 
 #include "cinder/Xml.h"
-#include "cinder/Utilities.h"
 
 using namespace std;
 using namespace ci;
@@ -41,7 +41,9 @@ ActualFont* FontManager::getActualFont(const string &uri, float baseSize, bool u
             return font;
         }
         catch (exception &e)
-        {}
+        {
+            LOGD << e.what() << " - " << uri << endl;
+        }
         
         return NULL;
     }

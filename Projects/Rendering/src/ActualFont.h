@@ -59,27 +59,35 @@ public:
         float lineThickness;
     };
 
-    float baseSize;
-    bool useMipmap;
-    int padding;
-    
     ci::Vec2f scale;
     Metrics metrics;
-    hb_font_t *hbFont;
     
-    ActualFont(std::shared_ptr<FreetypeHelper> ftHelper, chr::InputSourceRef source, float baseSize, bool useMipmap, int padding);
+    ActualFont(std::shared_ptr<FreetypeHelper> ftHelper, chr::InputSourceRef inputSource, float baseSize, bool useMipmap, int padding);
     ~ActualFont();
+
+    void reload();
+    void unload();
     
-    Glyph* getGlyph(uint32_t codepoint);
-    void clearGlyphCache();
     void unloadTextures();
+    void clearGlyphCache();
+    Glyph* getGlyph(uint32_t codepoint);
     
 protected:
     std::shared_ptr<FreetypeHelper> ftHelper;
+
+    chr::InputSourceRef inputSource;
+    float baseSize;
+    bool useMipmap;
+    int padding;
+
+    bool loaded;
     FT_Face ftFace;
+    hb_font_t *hbFont;
     
     std::map<uint32_t, std::unique_ptr<Glyph>> glyphCache;
     std::vector<std::unique_ptr<ReloadableTexture>> standaloneTextures;
     
     Glyph* createGlyph(uint32_t codepoint);
+    
+    friend class VirtualFont;
 };
