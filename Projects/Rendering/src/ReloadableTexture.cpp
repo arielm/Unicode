@@ -8,20 +8,11 @@
 
 #include "ReloadableTexture.h"
 
+#include "chronotext/utils/MathUtils.h"
+
 using namespace std;
 using namespace ci;
-
-static int nextPowerOfTwo(int x)
-{
-    int result = 1;
-    
-    while (result < x)
-    {
-        result <<= 1;
-    }
-    
-    return result;
-}
+using namespace chr;
 
 ReloadableTexture::ReloadableTexture(const GlyphData &glyphData)
 :
