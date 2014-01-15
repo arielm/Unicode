@@ -17,14 +17,17 @@ using namespace chr;
 
 class Application : public CinderApp
 {
+    Sketch *target;
+    
 public:
     Application();
     void prepareSettings(Settings *settings);
+    void keyDown(KeyEvent event);
 };
 
 Application::Application()
 {
-    sketch = new Sketch(this);
+    sketch = target = new Sketch(this);
 }
 
 void Application::prepareSettings(Settings *settings)
@@ -34,6 +37,20 @@ void Application::prepareSettings(Settings *settings)
     settings->enableHighDensityDisplay();
     settings->disableFrameRate();
 #endif
+}
+
+void Application::keyDown(KeyEvent event)
+{
+    switch (event.getCode())
+    {
+        case KeyEvent::KEY_u:
+            target->fontManager.unload();
+            break;
+            
+        case KeyEvent::KEY_r:
+            target->fontManager.reload();
+            break;
+    }
 }
 
 CINDER_APP_NATIVE(Application, RendererGl(RendererGl::AA_NONE))

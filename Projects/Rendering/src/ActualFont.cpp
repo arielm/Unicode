@@ -144,25 +144,24 @@ void ActualFont::unload()
         loaded = false;
         LOGD << "UNLOADING FONT: " << ftFace->family_name << " "  << ftFace->style_name << endl;
 
-        unloadTextures();
-        clearGlyphCache();
+        glyphCache.clear();
+        standaloneTextures.clear();
 
-        hb_font_destroy(hbFont);
-        FT_Done_Face(ftFace);
+        hb_font_destroy(hbFont); hbFont = NULL;
+        FT_Done_Face(ftFace); ftFace = NULL;
     }
 }
 
+/*
+ * THIS IS NOT DESTROYING THE ReloadableTexture INSTANCES
+ * I.E. THE POINTER INSIDE ActualFont::Glyph REMAINS VALID
+ */
 void ActualFont::unloadTextures()
 {
     for (auto &texture : standaloneTextures)
     {
         texture->unload();
     }
-}
-
-void ActualFont::clearGlyphCache()
-{
-    glyphCache.clear();
 }
 
 ActualFont::Glyph* ActualFont::getGlyph(uint32_t codepoint)

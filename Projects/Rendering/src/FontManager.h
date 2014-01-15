@@ -41,6 +41,8 @@ public:
     ActualFont* getActualFont(const std::string &uri, float baseSize, bool useMipmap = true, int padding = 2);
     VirtualFont* getVirtualFont(const std::string &uri, float baseSize, bool useMipmap = true, int padding = 2);
     
+    void reload();
+    void unload();
     void unloadTextures();
     
 protected:

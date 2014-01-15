@@ -99,6 +99,22 @@ VirtualFont* FontManager::getVirtualFont(const string &uri, float baseSize, bool
     }
 }
 
+void FontManager::reload()
+{
+    for (auto &it : actualFonts)
+    {
+        it.second->reload();
+    }
+}
+
+void FontManager::unload()
+{
+    for (auto &it : actualFonts)
+    {
+        it.second->unload();
+    }
+}
+
 void FontManager::unloadTextures()
 {
     for (auto &it : actualFonts)

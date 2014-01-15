@@ -67,9 +67,8 @@ public:
 
     void reload();
     void unload();
-    
     void unloadTextures();
-    void clearGlyphCache();
+    
     Glyph* getGlyph(uint32_t codepoint);
     
 protected:
