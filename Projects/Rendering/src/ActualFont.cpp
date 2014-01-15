@@ -135,6 +135,15 @@ ActualFont::Glyph* ActualFont::getGlyph(uint32_t codepoint)
         {
             glyphCache[codepoint] = unique_ptr<Glyph>(glyph);
         }
+        else
+        {
+            /*
+             * INSERTING A VALUE FOR TEXTURELESS GLYPHS (E.G. A "SPACE")
+             * IS NECESSARY, OTHERWISE createGlyph() WOULD BE INVOKED
+             * INDEFINITELY FOR THE SAME CODEPOINT
+             */
+            glyphCache[codepoint] = unique_ptr<Glyph>(new Glyph());
+        }
     }
     else
     {
@@ -151,14 +160,6 @@ ActualFont::Glyph* ActualFont::getGlyph(uint32_t codepoint)
             if (glyphData.isValid())
             {
                 glyph->texture->load(glyphData);
-            }
-            else
-            {
-                /*
-                 * SHOULD NEVER OCCUR, BUT WE MUST RETURN
-                 * A VALUE TO MAKE THE COMPILER HAPPY
-                 */
-                return NULL;
             }
         }
     }
@@ -192,13 +193,6 @@ ActualFont::Glyph* ActualFont::createGlyph(uint32_t codepoint)
     }
     else
     {
-        /*
-         * RETURNING A VALUE IS NECESSARY, SO THAT THE TEXTURELESS
-         * Glyph (E.G. A "SPACE") IS PROPERLY INSERTED INTO THE CACHE
-         *
-         * OTHERWISE: createGlyph() WOULD BE INVOKED
-         * INDEFINITELY FOR THE SAME CODEPOINT
-         */
-        return new Glyph();
+        return NULL;
     }
 }

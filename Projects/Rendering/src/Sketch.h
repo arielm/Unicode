@@ -7,7 +7,9 @@
  */
 
 /*
- * ...
+ * DONE:
+ *
+ * 1) ActualFont: ENHANCING getGlyph() AND createGlyph()
  */
 
 /*
