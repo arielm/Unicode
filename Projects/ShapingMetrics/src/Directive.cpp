@@ -41,7 +41,7 @@ Directive::Directive(const std::exception &e)
 :
 fontPath(DEFAULT_FONT_PATH)
 {
-    span = TextSpan("ERROR:\n" + string(e.what()));
+    span = TextSpan("ERROR: " + string(e.what()));
 }
 
 Directive::Directive(const fs::path &fontPath, const Directive &baseDirective)

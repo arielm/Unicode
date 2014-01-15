@@ -111,20 +111,20 @@ void Application::fileDrop(FileDropEvent event)
         
         if (!is_directory(file))
         {
-            if (extension == ".xml")
+            try
             {
-                try
+                if (extension == ".xml")
                 {
                     applyDirective(make_shared<Directive>(loadFile(file)));
                 }
-                catch (exception &e)
+                else if ((extension == ".ttf") || (extension == ".otf") || (extension == ".ttc"))
                 {
-                    applyDirective(make_shared<Directive>(e));
+                    applyDirective(make_shared<Directive>(file, *currentDirective));
                 }
             }
-            else if ((extension == ".ttf") || (extension == ".otf") || (extension == ".ttc"))
+            catch (exception &e)
             {
-                applyDirective(make_shared<Directive>(file, *currentDirective));
+                applyDirective(make_shared<Directive>(e));
             }
         }
     }

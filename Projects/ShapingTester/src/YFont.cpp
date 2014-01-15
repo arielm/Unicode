@@ -88,6 +88,7 @@ ftHelper(ftHelper)
     
     if (force_ucs2_charmap(face))
     {
+        FT_Done_Face(face);
         throw runtime_error("HARFBUZZ: FONT IS BROKEN OR IRRELEVANT");
     }
     
