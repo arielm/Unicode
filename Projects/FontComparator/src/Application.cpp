@@ -232,21 +232,21 @@ void Application::fileDrop(FileDropEvent event)
         {
             bool isLeft = (event.getX() < toPixels(getWindowWidth()) / 2);
             Slot &slot = isLeft ? slot1 : slot2;
-            
-            if (extension == ".xml")
+
+            try
             {
-                try
+                if (extension == ".xml")
                 {
                     applyDirective(slot, make_shared<Directive>(loadFile(file)));
                 }
-                catch (exception &e)
+                else if ((extension == ".ttf") || (extension == ".otf") || (extension == ".ttc"))
                 {
-                    applyDirective(slot, make_shared<Directive>(e));
+                    applyDirective(slot, make_shared<Directive>(file, *slot.directive));
                 }
             }
-            else if ((extension == ".ttf") || (extension == ".otf") || (extension == ".ttc"))
+            catch (exception &e)
             {
-                applyDirective(slot, make_shared<Directive>(file, *slot.directive));
+                applyDirective(slot, make_shared<Directive>(e));
             }
         }
     }
