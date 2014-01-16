@@ -18,7 +18,7 @@ LOCAL_CFLAGS += -O3
 LOCAL_LDLIBS := -landroid
 LOCAL_STATIC_LIBRARIES := cinder boost_system boost_filesystem freeimage ft2 android_native_app_glue 
 
-LOCAL_MODULE := VirtualFont
+LOCAL_MODULE := SimpleVirtualFont
 include $(BUILD_SHARED_LIBRARY)
 
 $(call import-module,android/native_app_glue)

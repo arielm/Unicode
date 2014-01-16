@@ -5,4 +5,4 @@ APP_CPPFLAGS += -std=c++11 -D_LIBCPP_VERSION
 
 APP_ABI := armeabi-v7a
 #APP_OPTIM := debug
-APP_MODULES := VirtualFont
+APP_MODULES := SimpleVirtualFont
