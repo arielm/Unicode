@@ -1,5 +1,5 @@
 
-package com.dongle.Rendering;
+package com.dongle.VirtualFont;
 
 import org.chronotext.cinder.CinderDelegate;
 
@@ -11,7 +11,7 @@ public class MainActivity extends Activity
 {
   static
   {
-    System.loadLibrary("Rendering");
+    System.loadLibrary("VirtualFont");
   }
 
   CinderDelegate delegate;

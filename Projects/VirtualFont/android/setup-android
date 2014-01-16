@@ -1,11 +1,11 @@
 setup()
 {
-  android update project --path . --name Rendering --target android-10
+  android update project --path . --name VirtualFont --target android-10
 
   echo "READY TO RUN:"
   echo "ndk-build -j 4"
   echo "ant debug"
-  echo "adb install -r bin/Rendering-debug.apk"
+  echo "adb install -r bin/VirtualFont-debug.apk"
 }
 
 if [ -z $NDK_MODULE_PATH ]

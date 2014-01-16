@@ -41,9 +41,6 @@
 /*
  * TODO:
  *
- * 0) RENAME THIS PROJECT FROM Rendering TO VirtualFont
- *    REQUIRES TO RENAME OLD VirtualFont PROJECT TO SimpleVirtualFont
- *
  * 0) ActualFont:
  *    - POSSIBILITY TO LOAD FROM MEMORY
  *    - SUPPORTING FREETYPE'S FACE-INDEX
