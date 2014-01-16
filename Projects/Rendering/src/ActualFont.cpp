@@ -40,17 +40,31 @@ static FT_Error force_ucs2_charmap(FT_Face face)
     return -1;
 }
 
-ActualFont::ActualFont(shared_ptr<FreetypeHelper> ftHelper, InputSourceRef inputSource, float baseSize, bool useMipmap, int padding)
+ActualFont::ActualFont(shared_ptr<FreetypeHelper> ftHelper, InputSourceRef inputSource, float baseSize, bool useMipmap)
 :
 ftHelper(ftHelper),
 inputSource(inputSource),
 baseSize(baseSize),
 useMipmap(useMipmap),
-padding(padding),
 loaded(false),
 ftFace(NULL),
 hbFont(NULL)
 {
+    /*
+     * PADDING IS NECESSARY TO AVOID BORDER ARTIFACTS
+     *
+     * MIPMAPPING IS EVEN ACCENTUATING THE PROBLEM
+     * BECAUSE OF THE CONSECUTIVE TEXTURE SCALE-DOWNS
+     */
+    if (useMipmap)
+    {
+        padding = 2; // TODO: USE baseSize TO DEFINE AN OPTIMAL VALUE
+    }
+    else
+    {
+        padding = 1; // THE MINIMUM POSSIBLE
+    }
+    
     reload();
 }
 

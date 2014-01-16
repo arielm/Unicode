@@ -22,7 +22,7 @@ FontManager::FontManager()
     ftHelper = make_shared<FreetypeHelper>();
 }
 
-ActualFont* FontManager::getActualFont(const string &uri, float baseSize, bool useMipmap, int padding)
+ActualFont* FontManager::getActualFont(const string &uri, float baseSize, bool useMipmap)
 {
     FontKey key(uri, baseSize, useMipmap);
     auto it = actualFonts.find(key);
@@ -35,7 +35,7 @@ ActualFont* FontManager::getActualFont(const string &uri, float baseSize, bool u
     {
         try
         {
-            auto font = new ActualFont(ftHelper, InputSource::get(uri), baseSize, useMipmap, padding);
+            auto font = new ActualFont(ftHelper, InputSource::get(uri), baseSize, useMipmap);
             actualFonts[key] = unique_ptr<ActualFont>(font);
             
             return font;
@@ -49,7 +49,7 @@ ActualFont* FontManager::getActualFont(const string &uri, float baseSize, bool u
     }
 }
 
-VirtualFont* FontManager::getVirtualFont(const string &uri, float baseSize, bool useMipmap, int padding)
+VirtualFont* FontManager::getVirtualFont(const string &uri, float baseSize, bool useMipmap)
 {
     FontKey key(uri, baseSize, useMipmap);
     auto it = virtualFonts.find(key);
@@ -79,7 +79,7 @@ VirtualFont* FontManager::getVirtualFont(const string &uri, float baseSize, bool
                         {
                             string uri = refElement->getValue();
                             
-                            if (font->add(lang, getActualFont(uri, baseSize, useMipmap, padding)))
+                            if (font->add(lang, getActualFont(uri, baseSize, useMipmap)))
                             {
                                 break;
                             }
@@ -88,7 +88,7 @@ VirtualFont* FontManager::getVirtualFont(const string &uri, float baseSize, bool
                     else
                     {
                         string uri = variantElement->getValue();
-                        font->add(lang, getActualFont(uri, baseSize, useMipmap, padding));
+                        font->add(lang, getActualFont(uri, baseSize, useMipmap));
                     }
                 }
             }

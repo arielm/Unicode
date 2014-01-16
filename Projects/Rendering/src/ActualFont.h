@@ -62,7 +62,7 @@ public:
     ci::Vec2f scale;
     Metrics metrics;
     
-    ActualFont(std::shared_ptr<FreetypeHelper> ftHelper, chr::InputSourceRef inputSource, float baseSize, bool useMipmap, int padding);
+    ActualFont(std::shared_ptr<FreetypeHelper> ftHelper, chr::InputSourceRef inputSource, float baseSize, bool useMipmap);
     ~ActualFont();
 
     void reload();

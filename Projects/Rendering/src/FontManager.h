@@ -38,8 +38,8 @@ public:
     
     FontManager();
     
-    ActualFont* getActualFont(const std::string &uri, float baseSize, bool useMipmap = true, int padding = 2);
-    VirtualFont* getVirtualFont(const std::string &uri, float baseSize, bool useMipmap = true, int padding = 2);
+    ActualFont* getActualFont(const std::string &uri, float baseSize, bool useMipmap = false);
+    VirtualFont* getVirtualFont(const std::string &uri, float baseSize, bool useMipmap = false);
     
     void reload();
     void unload();
