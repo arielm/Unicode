@@ -115,11 +115,11 @@ void FontManager::unload()
     }
 }
 
-void FontManager::unloadTextures()
+void FontManager::discardTextures()
 {
     for (auto &it : actualFonts)
     {
-        it.second->unloadTextures();
+        it.second->discardTextures();
     }
 }
 

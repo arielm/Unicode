@@ -156,7 +156,7 @@ void ActualFont::unload()
  * THIS IS NOT DESTROYING THE ReloadableTexture INSTANCES
  * I.E. THE POINTER INSIDE ActualFont::Glyph REMAINS VALID
  */
-void ActualFont::unloadTextures()
+void ActualFont::discardTextures()
 {
     for (auto &texture : standaloneTextures)
     {

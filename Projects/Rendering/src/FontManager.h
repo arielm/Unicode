@@ -43,7 +43,7 @@ public:
     
     void reload();
     void unload();
-    void unloadTextures();
+    void discardTextures();
     
 protected:
     std::map<FontKey, std::unique_ptr<ActualFont>> actualFonts;

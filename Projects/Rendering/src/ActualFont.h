@@ -67,7 +67,7 @@ public:
 
     void reload();
     void unload();
-    void unloadTextures();
+    void discardTextures();
     
     Glyph* getGlyph(uint32_t codepoint);
     

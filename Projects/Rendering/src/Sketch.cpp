@@ -36,7 +36,7 @@ void Sketch::setup(bool renewContext)
 {
     if (renewContext)
     {
-        fontManager.unloadTextures();
+        fontManager.discardTextures(); // NECESSARY ON ANDROID (AFTER OPENGL CONTEXT-LOSS...)
     }
     else
     {
