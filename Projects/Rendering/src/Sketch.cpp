@@ -98,7 +98,7 @@ void Sketch::draw()
                 line += " ";
             }
             
-            drawLineLayout(*layoutCache.getLineLayout(font, line), y, left, right);
+            drawLineLayout(*fontManager.layoutCache.getLineLayout(font, line), y, left, right);
             y += LINE_SPACING;
         }
     }

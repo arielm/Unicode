@@ -32,6 +32,10 @@
  * 5) "HIGHER-LEVEL" FONT-LOADING IN FontManager:
  *     - E.G. FontManager::load("sans-serif", VirtualFont::STYLE_BOLD, 27)
  *     - THANKS TO A FONT-DEFINITION XML FILE ALLOWING TO MAP BETWEEN NAME/STYLE AND URI
+ *
+ * 6) LayoutManager IS NOW DEFINED WITHIN FontManager:
+ *    - SIMILARELY AS TextItemizer
+ *    - WILL SIMPLIFY USAGE, BY REQUIRING ONLY ONE "PSEUDO SINGLETON" (I.E. FontManager)
  */
 
 /*
@@ -39,9 +43,6 @@
  *
  * 0) RENAME THIS PROJECT FROM Rendering TO VirtualFont
  *    REQUIRES TO RENAME OLD VirtualFont PROJECT TO SimpleVirtualFont
- *
- * 0) LayoutManager SHOULD BE DEFINED WITHIN FontManager:
- *    - SIMILAR TO TextItemizer
  *
  * 0) ActualFont:
  *    - POSSIBILITY TO LOAD FROM MEMORY
@@ -69,7 +70,6 @@
 #include "chronotext/cinder/CinderSketch.h"
 
 #include "FontManager.h"
-#include "LayoutCache.h"
 
 #include "cinder/Rand.h"
 
@@ -77,7 +77,6 @@ class Sketch : public chr::CinderSketch
 {
 public:
     FontManager fontManager;
-    LayoutCache layoutCache;
     
     VirtualFont *font;
     std::vector<std::unique_ptr<LineLayout>> lineLayouts;

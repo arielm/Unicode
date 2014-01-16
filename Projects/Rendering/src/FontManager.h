@@ -9,7 +9,7 @@
 #pragma once
 
 #include "TextItemizer.h"
-#include "VirtualFont.h"
+#include "LayoutCache.h"
 
 #include "chronotext/InputSource.h"
 
@@ -37,6 +37,7 @@ class FontManager
 public:
     std::shared_ptr<FreetypeHelper> ftHelper; // THE UNDERLYING FT_Library WILL BE DESTROYED AFTER ALL THE ActualFont INSTANCES
     TextItemizer itemizer;
+    LayoutCache layoutCache;
     
     FontManager();
     
@@ -53,8 +54,8 @@ protected:
     int platform;
     std::map<std::pair<std::string, int>, std::pair<std::string, float>> definitions;
     
-    std::map<FontKey, std::unique_ptr<ActualFont>> actualFonts;
     std::map<FontKey, std::unique_ptr<VirtualFont>> virtualFonts;
+    std::map<FontKey, std::unique_ptr<ActualFont>> actualFonts;
 
     ActualFont* getActualFont(const std::string &uri, float baseSize, bool useMipmap = false);
 
