@@ -15,6 +15,7 @@
 		28FD15080DC6FC5B0079059D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28FD15070DC6FC5B0079059D /* QuartzCore.framework */; };
 		A82C900916DF91D300FF519C /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = A82C900716DF91D300FF519C /* icon.png */; };
 		A82C900A16DF91D300FF519C /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A82C900816DF91D300FF519C /* Default-568h@2x.png */; };
+		A8363B96188855720015C5FF /* Fonts.xml in Resources */ = {isa = PBXBuildFile; fileRef = A8363B95188855720015C5FF /* Fonts.xml */; };
 		A8380000187F72630074BFF0 /* ucase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A838FECF187F72620074BFF0 /* ucase.cpp */; };
 		A8380001187F72630074BFF0 /* ucasemap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A838FED2187F72620074BFF0 /* ucasemap.cpp */; };
 		A8380002187F72630074BFF0 /* ucasemap_titlecase_brkiter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A838FED3187F72620074BFF0 /* ucasemap_titlecase_brkiter.cpp */; };
@@ -235,7 +236,7 @@
 		A8994D441726E33900C8851E /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8994D431726E33900C8851E /* GLKit.framework */; };
 		A8B2BBF3188400BD0053DC36 /* LayoutCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A8B2BBEF188400BD0053DC36 /* LayoutCache.cpp */; };
 		A8C73CC818549F2E0081E110 /* FreetypeHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A8C73CC718549F2E0081E110 /* FreetypeHelper.cpp */; };
-		A8F9B9F9186B31C100724EED /* SansSerif-ios.xml in Resources */ = {isa = PBXBuildFile; fileRef = A8F9B9F7186B31C100724EED /* SansSerif-ios.xml */; };
+		A8F9B9F9186B31C100724EED /* sans-serif_ios.xml in Resources */ = {isa = PBXBuildFile; fileRef = A8F9B9F7186B31C100724EED /* sans-serif_ios.xml */; };
 		A8F9BA03186B31EF00724EED /* FontManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A8F9B9FB186B31EF00724EED /* FontManager.cpp */; };
 		A8F9BA05186B31EF00724EED /* VirtualFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A8F9B9FD186B31EF00724EED /* VirtualFont.cpp */; };
 		A8F9BBDC186C982B006E9350 /* ActualFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A8F9BBD8186C982B006E9350 /* ActualFont.cpp */; };
@@ -259,6 +260,7 @@
 		28FD15070DC6FC5B0079059D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		A82C900716DF91D300FF519C /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
 		A82C900816DF91D300FF519C /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		A8363B95188855720015C5FF /* Fonts.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = Fonts.xml; path = ../resources/Fonts.xml; sourceTree = "<group>"; };
 		A838FE4C187F6F430074BFF0 /* LanguageHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LanguageHelper.cpp; path = ../src/LanguageHelper.cpp; sourceTree = "<group>"; };
 		A838FE4D187F6F430074BFF0 /* scrptrun.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = scrptrun.cpp; path = ../src/scrptrun.cpp; sourceTree = "<group>"; };
 		A838FE4E187F6F430074BFF0 /* scrptrun.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = scrptrun.h; path = ../src/scrptrun.h; sourceTree = "<group>"; };
@@ -746,7 +748,7 @@
 		A8B2BBF4188400EF0053DC36 /* LineLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LineLayout.h; path = ../src/LineLayout.h; sourceTree = "<group>"; };
 		A8C73CC618549F2E0081E110 /* FreetypeHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FreetypeHelper.h; path = ../src/FreetypeHelper.h; sourceTree = "<group>"; };
 		A8C73CC718549F2E0081E110 /* FreetypeHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FreetypeHelper.cpp; path = ../src/FreetypeHelper.cpp; sourceTree = "<group>"; };
-		A8F9B9F7186B31C100724EED /* SansSerif-ios.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = "SansSerif-ios.xml"; path = "../resources/SansSerif-ios.xml"; sourceTree = "<group>"; };
+		A8F9B9F7186B31C100724EED /* sans-serif_ios.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = "sans-serif_ios.xml"; path = "../resources/sans-serif_ios.xml"; sourceTree = "<group>"; };
 		A8F9B9FB186B31EF00724EED /* FontManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FontManager.cpp; path = ../src/FontManager.cpp; sourceTree = "<group>"; };
 		A8F9B9FD186B31EF00724EED /* VirtualFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VirtualFont.cpp; path = ../src/VirtualFont.cpp; sourceTree = "<group>"; };
 		A8F9B9FE186B31EF00724EED /* FontManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FontManager.h; path = ../src/FontManager.h; sourceTree = "<group>"; };
@@ -853,7 +855,8 @@
 		00692BD914FF149000D0FFFF /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				A8F9B9F7186B31C100724EED /* SansSerif-ios.xml */,
+				A8363B95188855720015C5FF /* Fonts.xml */,
+				A8F9B9F7186B31C100724EED /* sans-serif_ios.xml */,
 				A88E5BB4188574DF00E737F3 /* Text.xml */,
 			);
 			name = Resources;
@@ -1508,8 +1511,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				A88E5BB5188574DF00E737F3 /* Text.xml in Resources */,
-				A8F9B9F9186B31C100724EED /* SansSerif-ios.xml in Resources */,
+				A8F9B9F9186B31C100724EED /* sans-serif_ios.xml in Resources */,
 				A82C900916DF91D300FF519C /* icon.png in Resources */,
+				A8363B96188855720015C5FF /* Fonts.xml in Resources */,
 				A82C900A16DF91D300FF519C /* Default-568h@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

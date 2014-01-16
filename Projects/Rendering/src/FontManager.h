@@ -11,6 +11,8 @@
 #include "TextItemizer.h"
 #include "VirtualFont.h"
 
+#include "chronotext/InputSource.h"
+
 struct FontKey
 {
     std::string uri;
@@ -38,16 +40,24 @@ public:
     
     FontManager();
     
-    ActualFont* getActualFont(const std::string &uri, float baseSize, bool useMipmap = false);
-    VirtualFont* getVirtualFont(const std::string &uri, float baseSize, bool useMipmap = false);
+    void loadDefinitions(chr::InputSourceRef source);
+
+    VirtualFont* getFont(const std::string &name, int style = VirtualFont::STYLE_PLAIN, float baseSize = 0);
+    VirtualFont* getFont(chr::InputSourceRef source, float baseSize, bool useMipmap = false);
     
     void reload();
     void unload();
     void discardTextures();
     
 protected:
+    int platform;
+    std::map<std::pair<std::string, int>, std::pair<std::string, float>> definitions;
+    
     std::map<FontKey, std::unique_ptr<ActualFont>> actualFonts;
     std::map<FontKey, std::unique_ptr<VirtualFont>> virtualFonts;
 
+    ActualFont* getActualFont(const std::string &uri, float baseSize, bool useMipmap = false);
+
     static std::vector<std::string> splitLanguages(const std::string &languages);
+    static int parseStyle(const std::string &style);
 };

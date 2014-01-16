@@ -20,7 +20,6 @@ using namespace std;
 using namespace ci;
 using namespace chr;
 
-const float FONT_SIZE = 27;
 const float LINE_TOP = 66;
 const float LINE_SPACING = 66;
 
@@ -41,19 +40,11 @@ void Sketch::setup(bool renewContext)
     }
     else
     {
-#if defined(CINDER_ANDROID)
-        auto uri = "res://SansSerif-android.xml";
-#elif defined(CINDER_COCOA_TOUCH)
-        auto uri = "res://SansSerif-ios.xml";
-#elif defined(CINDER_MAC) && 0
-        auto uri = "res://SansSerif-osx.xml";
-#else
-        auto uri = "res://SansSerif.xml"; // FOR QUICK TESTS ON THE DESKTOP
-#endif
+        fontManager.loadDefinitions(InputSource::getResource("Fonts.xml"));
         
         try
         {
-            font = fontManager.getVirtualFont(uri, FONT_SIZE);
+            font = fontManager.getFont("sans-serif", VirtualFont::STYLE_PLAIN, 27);
         }
         catch (exception &e)
         {

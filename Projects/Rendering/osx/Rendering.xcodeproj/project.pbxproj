@@ -16,6 +16,7 @@
 		5323E6B60EAFCA7E003A9687 /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5323E6B50EAFCA7E003A9687 /* QTKit.framework */; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		A809523B16F360660011FAA3 /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = A809523A16F360660011FAA3 /* icon.icns */; };
+		A8363B9418876C5A0015C5FF /* Fonts.xml in Resources */ = {isa = PBXBuildFile; fileRef = A8363B9318876C5A0015C5FF /* Fonts.xml */; };
 		A871F170186116D9001D0F98 /* scrptrun.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A871F16E186116D9001D0F98 /* scrptrun.cpp */; };
 		A871F44A1861E644001D0F98 /* appendable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A871F3C71861E644001D0F98 /* appendable.cpp */; };
 		A871F44B1861E644001D0F98 /* bytestream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A871F3C81861E644001D0F98 /* bytestream.cpp */; };
@@ -79,8 +80,8 @@
 		A8BCDED9187D857900A7FCB8 /* FontManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A8BCDECE187D857900A7FCB8 /* FontManager.cpp */; };
 		A8BCDEDB187D857900A7FCB8 /* ReloadableTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A8BCDED2187D857900A7FCB8 /* ReloadableTexture.cpp */; };
 		A8BCDEDC187D857900A7FCB8 /* FreetypeHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A8BCDED4187D857900A7FCB8 /* FreetypeHelper.cpp */; };
-		A8BCDEE0187D86EF00A7FCB8 /* SansSerif-osx.xml in Resources */ = {isa = PBXBuildFile; fileRef = A8BCDEDD187D86EF00A7FCB8 /* SansSerif-osx.xml */; };
-		A8BCDEE1187D86EF00A7FCB8 /* SansSerif.xml in Resources */ = {isa = PBXBuildFile; fileRef = A8BCDEDE187D86EF00A7FCB8 /* SansSerif.xml */; };
+		A8BCDEE0187D86EF00A7FCB8 /* sans-serif_osx.xml in Resources */ = {isa = PBXBuildFile; fileRef = A8BCDEDD187D86EF00A7FCB8 /* sans-serif_osx.xml */; };
+		A8BCDEE1187D86EF00A7FCB8 /* sans-serif.xml in Resources */ = {isa = PBXBuildFile; fileRef = A8BCDEDE187D86EF00A7FCB8 /* sans-serif.xml */; };
 		A8BCDEE2187D86EF00A7FCB8 /* Text.xml in Resources */ = {isa = PBXBuildFile; fileRef = A8BCDEDF187D86EF00A7FCB8 /* Text.xml */; };
 		A8FD19A1187BFB43000BE555 /* hb-ft.cc in Sources */ = {isa = PBXBuildFile; fileRef = A8FD194C187BFB42000BE555 /* hb-ft.cc */; };
 		A8FD19A2187BFB43000BE555 /* hb-set.cc in Sources */ = {isa = PBXBuildFile; fileRef = A8FD194D187BFB42000BE555 /* hb-set.cc */; };
@@ -126,6 +127,7 @@
 		5323E6B50EAFCA7E003A9687 /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = /System/Library/Frameworks/QTKit.framework; sourceTree = "<absolute>"; };
 		8D1107320486CEB800E47090 /* Rendering.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Rendering.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A809523A16F360660011FAA3 /* icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = icon.icns; sourceTree = "<group>"; };
+		A8363B9318876C5A0015C5FF /* Fonts.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = Fonts.xml; path = ../resources/Fonts.xml; sourceTree = "<group>"; };
 		A871F16E186116D9001D0F98 /* scrptrun.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = scrptrun.cpp; path = ../src/scrptrun.cpp; sourceTree = "<group>"; };
 		A871F16F186116D9001D0F98 /* scrptrun.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = scrptrun.h; path = ../src/scrptrun.h; sourceTree = "<group>"; };
 		A871F3C71861E644001D0F98 /* appendable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = appendable.cpp; path = ../../../icu/common/appendable.cpp; sourceTree = "<group>"; };
@@ -309,8 +311,8 @@
 		A8BCDED4187D857900A7FCB8 /* FreetypeHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FreetypeHelper.cpp; path = ../src/FreetypeHelper.cpp; sourceTree = "<group>"; };
 		A8BCDED5187D857900A7FCB8 /* FreetypeHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FreetypeHelper.h; path = ../src/FreetypeHelper.h; sourceTree = "<group>"; };
 		A8BCDED6187D857900A7FCB8 /* LineLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LineLayout.h; path = ../src/LineLayout.h; sourceTree = "<group>"; };
-		A8BCDEDD187D86EF00A7FCB8 /* SansSerif-osx.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = "SansSerif-osx.xml"; path = "../resources/SansSerif-osx.xml"; sourceTree = "<group>"; };
-		A8BCDEDE187D86EF00A7FCB8 /* SansSerif.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = SansSerif.xml; path = ../resources/SansSerif.xml; sourceTree = "<group>"; };
+		A8BCDEDD187D86EF00A7FCB8 /* sans-serif_osx.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = "sans-serif_osx.xml"; path = "../resources/sans-serif_osx.xml"; sourceTree = "<group>"; };
+		A8BCDEDE187D86EF00A7FCB8 /* sans-serif.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = "sans-serif.xml"; path = "../resources/sans-serif.xml"; sourceTree = "<group>"; };
 		A8BCDEDF187D86EF00A7FCB8 /* Text.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = Text.xml; path = ../resources/Text.xml; sourceTree = "<group>"; };
 		A8FD194C187BFB42000BE555 /* hb-ft.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "hb-ft.cc"; path = "../../../hb/hb-ft.cc"; sourceTree = "<group>"; };
 		A8FD194D187BFB42000BE555 /* hb-set.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "hb-set.cc"; path = "../../../hb/hb-set.cc"; sourceTree = "<group>"; };
@@ -490,8 +492,9 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				A8BCDEDD187D86EF00A7FCB8 /* SansSerif-osx.xml */,
-				A8BCDEDE187D86EF00A7FCB8 /* SansSerif.xml */,
+				A8363B9318876C5A0015C5FF /* Fonts.xml */,
+				A8BCDEDD187D86EF00A7FCB8 /* sans-serif_osx.xml */,
+				A8BCDEDE187D86EF00A7FCB8 /* sans-serif.xml */,
 				A8BCDEDF187D86EF00A7FCB8 /* Text.xml */,
 			);
 			name = Resources;
@@ -910,8 +913,9 @@
 			files = (
 				A8BCDEE2187D86EF00A7FCB8 /* Text.xml in Resources */,
 				A809523B16F360660011FAA3 /* icon.icns in Resources */,
-				A8BCDEE0187D86EF00A7FCB8 /* SansSerif-osx.xml in Resources */,
-				A8BCDEE1187D86EF00A7FCB8 /* SansSerif.xml in Resources */,
+				A8BCDEE0187D86EF00A7FCB8 /* sans-serif_osx.xml in Resources */,
+				A8363B9418876C5A0015C5FF /* Fonts.xml in Resources */,
+				A8BCDEE1187D86EF00A7FCB8 /* sans-serif.xml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

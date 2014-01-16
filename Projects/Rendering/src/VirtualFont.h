@@ -20,6 +20,14 @@ typedef std::vector<ActualFont*> FontSet;
 class VirtualFont
 {
 public:
+    enum
+    {
+        STYLE_PLAIN,
+        STYLE_BOLD,
+        STYLE_ITALIC,
+        STYLE_BOLD_ITALIC
+    };
+    
     TextItemizer &itemizer;
     float baseSize;
     

@@ -147,7 +147,7 @@ void ActualFont::reload()
         // ---
         
         loaded = true;
-        LOGD << "LOADING FONT: " << ftFace->family_name << " "  << ftFace->style_name << endl;
+        LOGD << "LOADING FONT: " << ftFace->family_name << " "  << ftFace->style_name << " " << baseSize << endl;
     }
 }
 
@@ -156,7 +156,7 @@ void ActualFont::unload()
     if (loaded)
     {
         loaded = false;
-        LOGD << "UNLOADING FONT: " << ftFace->family_name << " "  << ftFace->style_name << endl;
+        LOGD << "UNLOADING FONT: " << ftFace->family_name << " "  << ftFace->style_name << " " << baseSize << endl;
 
         glyphCache.clear();
         standaloneTextures.clear();
