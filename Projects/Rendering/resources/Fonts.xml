@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Fonts>
     <Font name="sans-serif">
-        <File os="ios" uri="res://sans-serif_ios.xml" />
-        <File os="android" uri="res://sans-serif_android.xml" />
-        <!--<File os="osx" uri="res://sans-serif_osx.xml" />-->
-        <File os="osx" uri="res://sans-serif.xml" />
+        <Ref os="ios" uri="res://sans-serif_ios.xml" />
+        <Ref os="android" uri="res://sans-serif_android.xml" />
+        <!--<Ref os="osx" uri="res://sans-serif_osx.xml" />-->
+        <Ref os="osx" uri="res://sans-serif.xml" />
     </Font>
     
     <Font name="sans-serif" style="bold">
-        <File os="ios" uri="res://sans-serif_bold_ios.xml" />
-        <File os="android" uri="res://sans-serif_bold_android.xml" />
-        <File os="osx" uri="res://sans-serif_bold_osx.xml" />
+        <Ref os="ios" uri="res://sans-serif_bold_ios.xml" />
+        <Ref os="android" uri="res://sans-serif_bold_android.xml" />
+        <Ref os="osx" uri="res://sans-serif_bold_osx.xml" />
     </Font>
 </Fonts>

@@ -53,13 +53,13 @@ void FontManager::loadDefinitions(InputSourceRef source)
         int style = parseStyle(fontElement.getAttributeValue<string>("style", "plain"));
         float baseSize = fontElement.getAttributeValue<float>("base-size", 0);
         
-        for (auto &fileElement : fontElement.getChildren())
+        for (auto &refElement : fontElement.getChildren())
         {
-            auto os = fileElement->getAttributeValue<string>("os");
+            auto os = refElement->getAttributeValue<string>("os");
             
             if (os == PLATFORM_NAMES[platform])
             {
-                auto uri = fileElement->getAttributeValue<string>("uri");
+                auto uri = refElement->getAttributeValue<string>("uri");
                 definitions[make_pair(name, style)] = make_pair(uri, baseSize);
                 break;
             }
