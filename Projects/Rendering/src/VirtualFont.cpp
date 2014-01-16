@@ -20,7 +20,7 @@ baseSize(baseSize)
     coords.reserve(4);
     colors.reserve(4);
     
-    setSize(12);
+    setSize(baseSize);
 }
 
 bool VirtualFont::add(const string &lang, ActualFont *font)

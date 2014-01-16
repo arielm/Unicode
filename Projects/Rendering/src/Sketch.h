@@ -20,9 +20,14 @@
  *
  * 3) FontManager: MORE ROBUST PARSING OF VirtualFont
  *
- * 4) FontManager AND ActualFont:
+ * 4) FontManager, VirtualFont AND ActualFont:
  *    - NOT PASSING padding AS ARGUMENT ANYMORE
- *    - INSTEAD, IT IS "AUTOMATICALLY" DEFINED INSISDE ActualFont CONSTRUCTOR
+ *      INSTEAD, IT IS "AUTOMATICALLY" DEFINED INSIDE ActualFont CONSTRUCTOR
+ *    - useMipmap IS NOW PREDEFINED TO false BY DEFAULT
+ *      - CONSISTENT WITH XFont
+ *    - FONT-SIZE IS NOW SET TO baseSize INSIDE VirtualFont CONSTRUCTOR
+ *      - SIMPLIFIES THE WORKFLOW WITH "NON MIPMAP" FONTS
+ *        I.E. NO NEED TO CALL VirtualFont::setSize() AFTER THE FONT-CREATION...
  */
 
 /*

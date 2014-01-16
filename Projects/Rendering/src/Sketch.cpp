@@ -94,7 +94,6 @@ void Sketch::draw()
         float left = 24;
         float right = windowSize.x - 24;
         
-        font->setSize(FONT_SIZE);
         font->setColor(ColorA(1, 1, 1, 0.75f));
         
         for (int i = 0; i < LINE_COUNT; i++)
