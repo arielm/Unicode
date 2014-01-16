@@ -49,5 +49,5 @@ protected:
     std::map<FontKey, std::unique_ptr<ActualFont>> actualFonts;
     std::map<FontKey, std::unique_ptr<VirtualFont>> virtualFonts;
 
-    static std::vector<std::string> getLanguageList(const std::string &languages);
+    static std::vector<std::string> splitLanguages(const std::string &languages);
 };

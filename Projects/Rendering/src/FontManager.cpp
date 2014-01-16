@@ -67,7 +67,7 @@ VirtualFont* FontManager::getVirtualFont(const string &uri, float baseSize, bool
         
         for (auto fontElement : doc.getChild("VirtualFont"))
         {
-            auto langList = getLanguageList(fontElement.getAttributeValue<string>("lang", ""));
+            auto langList = splitLanguages(fontElement.getAttributeValue<string>("lang", ""));
             
             for (auto lang : langList)
             {
@@ -122,7 +122,7 @@ void FontManager::discardTextures()
     }
 }
 
-vector<string> FontManager::getLanguageList(const string &languages)
+vector<string> FontManager::splitLanguages(const string &languages)
 {
 	return split(languages, ":");
 }
