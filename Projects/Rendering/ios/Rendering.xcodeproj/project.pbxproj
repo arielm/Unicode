@@ -738,8 +738,6 @@
 		A88E5BAC188448B000E737F3 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		A88E5BAD188448B000E737F3 /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AppDelegate.mm; sourceTree = "<group>"; };
 		A88E5BB4188574DF00E737F3 /* Text.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = Text.xml; path = ../resources/Text.xml; sourceTree = "<group>"; };
-		A88E5BB6188574EC00E737F3 /* Measurement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Measurement.h; path = ../src/Measurement.h; sourceTree = "<group>"; };
-		A88E5BB7188574EC00E737F3 /* Test.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Test.h; path = ../src/Test.h; sourceTree = "<group>"; };
 		A8994D431726E33900C8851E /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		A8B2BBEF188400BD0053DC36 /* LayoutCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LayoutCache.cpp; path = ../src/LayoutCache.cpp; sourceTree = "<group>"; };
 		A8B2BBF0188400BD0053DC36 /* LayoutCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LayoutCache.h; path = ../src/LayoutCache.h; sourceTree = "<group>"; };
@@ -845,8 +843,6 @@
 				A838FE51187F6F430074BFF0 /* TextItemizer.cpp */,
 				A8B2BBF0188400BD0053DC36 /* LayoutCache.h */,
 				A8B2BBEF188400BD0053DC36 /* LayoutCache.cpp */,
-				A88E5BB7188574EC00E737F3 /* Test.h */,
-				A88E5BB6188574EC00E737F3 /* Measurement.h */,
 				A838FE4B187F6F180074BFF0 /* Rendering */,
 			);
 			name = Source;

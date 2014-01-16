@@ -7,14 +7,11 @@
  */
 
 #include "Sketch.h"
-#include "Measurement.h"
 
 #include "chronotext/InputSource.h"
+#include "chronotext/utils/Utils.h"
 
 #include "cinder/Xml.h"
-#include "cinder/Utilities.h"
-
-#include <boost/algorithm/string.hpp>
 
 using namespace std;
 using namespace ci;
