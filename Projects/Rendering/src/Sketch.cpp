@@ -29,7 +29,8 @@ const int MAX_SENTENCES_PER_LINE = 3;
 
 Sketch::Sketch(void *context, void *delegate)
 :
-CinderSketch(context, delegate)
+CinderSketch(context, delegate),
+font(NULL)
 {}
 
 void Sketch::setup(bool renewContext)
@@ -50,7 +51,14 @@ void Sketch::setup(bool renewContext)
         auto uri = "res://SansSerif.xml"; // FOR QUICK TESTS ON THE DESKTOP
 #endif
         
-        font = fontManager.getVirtualFont(uri, FONT_SIZE);
+        try
+        {
+            font = fontManager.getVirtualFont(uri, FONT_SIZE);
+        }
+        catch (exception &e)
+        {
+            LOGD << "CAN'T LOAD FONT: " << e.what() << endl;
+        }
         
         // ---
         
@@ -80,28 +88,29 @@ void Sketch::draw()
     Vec2i windowSize = getWindowSize();
     gl::setMatricesWindow(windowSize, true);
     
-    // ---
-    
-    float y = LINE_TOP;
-    float left = 24;
-    float right = windowSize.x - 24;
-    
-    font->setSize(FONT_SIZE);
-    font->setColor(ColorA(1, 1, 1, 0.75f));
-    
-    for (int i = 0; i < LINE_COUNT; i++)
+    if (font)
     {
-        string line;
-        int sentenceCount = rnd.nextInt(1, MAX_SENTENCES_PER_LINE);
+        float y = LINE_TOP;
+        float left = 24;
+        float right = windowSize.x - 24;
         
-        for (int j = 0; j < sentenceCount; j++)
+        font->setSize(FONT_SIZE);
+        font->setColor(ColorA(1, 1, 1, 0.75f));
+        
+        for (int i = 0; i < LINE_COUNT; i++)
         {
-            line += sentences[rnd.nextInt(sentences.size())];
-            line += " ";
+            string line;
+            int sentenceCount = rnd.nextInt(1, MAX_SENTENCES_PER_LINE);
+            
+            for (int j = 0; j < sentenceCount; j++)
+            {
+                line += sentences[rnd.nextInt(sentences.size())];
+                line += " ";
+            }
+            
+            drawLineLayout(*layoutCache.getLineLayout(font, line), y, left, right);
+            y += LINE_SPACING;
         }
-        
-        drawLineLayout(*layoutCache.getLineLayout(font, line), y, left, right);
-        y += LINE_SPACING;
     }
 }
 

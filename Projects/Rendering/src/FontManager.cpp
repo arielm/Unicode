@@ -60,19 +60,18 @@ VirtualFont* FontManager::getVirtualFont(const string &uri, float baseSize, bool
     }
     else
     {
+        XmlTree doc(InputSource::load(uri)); // IF THE DOCUMENT IS MALFORMED, AN EXCEPTION WILL BE THROWN
+        
         auto font = new VirtualFont(itemizer, baseSize);
         virtualFonts[key] = unique_ptr<VirtualFont>(font);
         
-        XmlTree doc(InputSource::load(uri));
-        auto rootElement = doc.getChild("VirtualFont");
-        
-        for (auto &fontElement : rootElement.getChildren())
+        for (auto fontElement : doc.getChild("VirtualFont"))
         {
-            auto langList = getLanguageList(fontElement->getAttributeValue<string>("lang", ""));
+            auto langList = getLanguageList(fontElement.getAttributeValue<string>("lang", ""));
             
-            for (auto &lang : langList)
+            for (auto lang : langList)
             {
-                for (auto &variantElement : fontElement->getChildren())
+                for (auto &variantElement : fontElement.getChildren())
                 {
                     if (variantElement->getTag() == "Group")
                     {
