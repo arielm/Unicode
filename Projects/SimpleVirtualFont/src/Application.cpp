@@ -7,7 +7,7 @@
  */
 
 /*
- * REFERENCE: https://github.com/arielm/Unicode/tree/master/Projects/VirtualFont
+ * REFERENCE: https://github.com/arielm/Unicode/tree/master/Projects/SimpleVirtualFont
  */
 
 /*

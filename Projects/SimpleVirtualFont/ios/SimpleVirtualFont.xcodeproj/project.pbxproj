@@ -60,7 +60,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		00692BCF14FF149000D0A05E /* VirtualFont.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VirtualFont.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		00692BCF14FF149000D0A05E /* SimpleVirtualFont.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimpleVirtualFont.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0087D25412CD809F002CD69F /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		00CFDF6A1138442D0091E310 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		00CFDF6A1138442D0091FFFF /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
@@ -221,7 +221,7 @@
 		00692BD014FF149000D0A05E /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				00692BCF14FF149000D0A05E /* VirtualFont.app */,
+				00692BCF14FF149000D0A05E /* SimpleVirtualFont.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -391,9 +391,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		00692BCE14FF149000D0A05E /* VirtualFont */ = {
+		00692BCE14FF149000D0A05E /* SimpleVirtualFont */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 00692BF514FF149000D0A05E /* Build configuration list for PBXNativeTarget "VirtualFont" */;
+			buildConfigurationList = 00692BF514FF149000D0A05E /* Build configuration list for PBXNativeTarget "SimpleVirtualFont" */;
 			buildPhases = (
 				00692BCB14FF149000D0A05E /* Sources */,
 				00692BCC14FF149000D0A05E /* Frameworks */,
@@ -403,9 +403,9 @@
 			);
 			dependencies = (
 			);
-			name = VirtualFont;
-			productName = VirtualFont;
-			productReference = 00692BCF14FF149000D0A05E /* VirtualFont.app */;
+			name = SimpleVirtualFont;
+			productName = SimpleVirtualFont;
+			productReference = 00692BCF14FF149000D0A05E /* SimpleVirtualFont.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -415,7 +415,7 @@
 			isa = PBXProject;
 			attributes = {
 			};
-			buildConfigurationList = 00692BC914FF149000D0A05E /* Build configuration list for PBXProject "VirtualFont" */;
+			buildConfigurationList = 00692BC914FF149000D0A05E /* Build configuration list for PBXProject "SimpleVirtualFont" */;
 			compatibilityVersion = "Xcode 3.1";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -427,7 +427,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				00692BCE14FF149000D0A05E /* VirtualFont */,
+				00692BCE14FF149000D0A05E /* SimpleVirtualFont */,
 			);
 		};
 /* End PBXProject section */
@@ -600,7 +600,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		00692BC914FF149000D0A05E /* Build configuration list for PBXProject "VirtualFont" */ = {
+		00692BC914FF149000D0A05E /* Build configuration list for PBXProject "SimpleVirtualFont" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				00692BF314FF149000D0A05E /* Debug */,
@@ -609,7 +609,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		00692BF514FF149000D0A05E /* Build configuration list for PBXNativeTarget "VirtualFont" */ = {
+		00692BF514FF149000D0A05E /* Build configuration list for PBXNativeTarget "SimpleVirtualFont" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				00692BF614FF149000D0A05E /* Debug */,

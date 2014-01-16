@@ -1,4 +1,4 @@
-8. VirtualFont
+8. SimpleVirtualFont
 -----------
 
 **Features**

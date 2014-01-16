@@ -32,7 +32,7 @@ So far, [Harfbuzz](https://github.com/behdad/harfbuzz) and [ICU](http://site.icu
 5. [LanguageFeatures](Projects/LanguageFeatures)
 6. [ShapingFallback](Projects/ShapingFallback)
 7. [SimpleBIDI](Projects/SimpleBIDI)
-8. [VirtualFont](Projects/VirtualFont)
+8. [SimpleRVirtualFont](Projects/SimpleRVirtualFont)
 9. [SimpleLayoutCaching](Projects/SimpleLayoutCaching)
 10. [SimpleRendering](Projects/SimpleRendering)
 11. [ScriptDetector](Projects/ScriptDetector)
