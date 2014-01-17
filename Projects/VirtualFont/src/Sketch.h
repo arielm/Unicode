@@ -39,14 +39,15 @@
  *
  * 7) POSSIBILITY TO LOAD ActualFont FROM MEMORY-BUFFER:
  *    - NECESSARY FOR ANDROID ASSETS AND WINDOWS EMBEDDED RESOURCES
+ *    - SEE ActualFont::Descriptor
+ *
+ * 8) POSSIBILITY TO USE FREETYPE'S FACE-INDEX:
+ *    - DEFINED VIA THe face-inded ATTRIBUTE AT THE XML LEVEL
+ *    - SEE VIA ActualFont::Descriptor
  */
 
 /*
  * TODO:
- *
- * 0) ActualFont:
- *    - SUPPORTING FREETYPE'S FACE-INDEX
- *      AT THE XML LEVEL: <Ref uri="file:///system/fonts/Helvetica.dfont" face-index="4" />
  *
  * 0) InputSource: "internal" PROTOCOL:
  *    - TO BE USED FOR "LOADING FONTS COPIED FROM ASSETS" ON ANDROID

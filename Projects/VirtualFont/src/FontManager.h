@@ -85,7 +85,7 @@ protected:
     std::map<FontKey, std::unique_ptr<VirtualFont>> virtualFonts;
     std::map<FontKey, std::unique_ptr<ActualFont>> actualFonts;
 
-    ActualFont* getActualFont(const std::string &uri, float baseSize, bool useMipmap = false);
+    ActualFont* getActualFont(const ActualFont::Descriptor &descriptor, float baseSize, bool useMipmap = false);
 
     static std::vector<std::string> splitLanguages(const std::string &languages);
     static int parseStyle(const std::string &style);

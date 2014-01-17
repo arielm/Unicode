@@ -144,10 +144,13 @@ VirtualFont* FontManager::getFont(InputSourceRef source, float baseSize, bool us
                             for (auto &refElement : variantElement->getChildren())
                             {
                                 auto uri = refElement->getAttributeValue<string>("uri", "");
+                                auto faceIndex = refElement->getAttributeValue<int>("face-index", 0);
                                 
                                 if (!uri.empty())
                                 {
-                                    if (font->add(lang, getActualFont(uri, baseSize, useMipmap)))
+                                    auto descriptor = ActualFont::Descriptor(InputSource::get(uri), faceIndex);
+                                    
+                                    if (font->add(lang, getActualFont(descriptor, baseSize, useMipmap)))
                                     {
                                         break;
                                     }
@@ -157,10 +160,12 @@ VirtualFont* FontManager::getFont(InputSourceRef source, float baseSize, bool us
                         else
                         {
                             auto uri = variantElement->getAttributeValue<string>("uri", "");
+                            auto faceIndex = variantElement->getAttributeValue<int>("face-index", 0);
                             
                             if (!uri.empty())
                             {
-                                font->add(lang, getActualFont(uri, baseSize, useMipmap));
+                                auto descriptor = ActualFont::Descriptor(InputSource::get(uri), faceIndex);
+                                font->add(lang, getActualFont(descriptor, baseSize, useMipmap));
                             }
                         }
                     }
@@ -196,9 +201,9 @@ void FontManager::discardTextures()
     }
 }
 
-ActualFont* FontManager::getActualFont(const string &uri, float baseSize, bool useMipmap)
+ActualFont* FontManager::getActualFont(const ActualFont::Descriptor &descriptor, float baseSize, bool useMipmap)
 {
-    FontKey key(uri, baseSize, useMipmap);
+    FontKey key(descriptor.source->getURI(), baseSize, useMipmap);
     auto it = actualFonts.find(key);
     
     if (it != actualFonts.end())
@@ -209,14 +214,14 @@ ActualFont* FontManager::getActualFont(const string &uri, float baseSize, bool u
     {
         try
         {
-            auto font = new ActualFont(ftHelper, InputSource::get(uri), baseSize, useMipmap);
+            auto font = new ActualFont(ftHelper, descriptor, baseSize, useMipmap);
             actualFonts[key] = unique_ptr<ActualFont>(font);
             
             return font;
         }
         catch (exception &e)
         {
-            LOGD << e.what() << " - " << uri << endl;
+            LOGD << e.what() << " - " << descriptor.source->getURI() << endl;
         }
         
         return NULL;
