@@ -74,8 +74,6 @@ void Sketch::draw()
     Vec2i windowSize = getWindowSize();
     gl::setMatricesWindow(windowSize, true);
     
-    rnd.seed(123); // FIXME: TEMPORARY
-    
     if (font)
     {
         float y = LINE_TOP;

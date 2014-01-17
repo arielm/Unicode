@@ -28,6 +28,25 @@ public:
         STYLE_BOLD_ITALIC
     };
     
+    struct Key
+    {
+        std::string uri;
+        float baseSize;
+        bool useMipmap;
+        
+        Key(const std::string &uri, float baseSize, bool useMipmap)
+        :
+        uri(uri),
+        baseSize(baseSize),
+        useMipmap(useMipmap)
+        {}
+        
+        bool operator<(const Key &rhs) const
+        {
+            return tie(uri, baseSize, useMipmap) < tie(rhs.uri, rhs.baseSize, rhs.useMipmap);
+        }
+    };
+    
     TextItemizer &itemizer;
     float baseSize;
     

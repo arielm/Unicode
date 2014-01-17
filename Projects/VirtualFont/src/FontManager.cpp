@@ -47,7 +47,7 @@ void FontManager::loadGlobalMap(InputSourceRef source)
     
     /*
      * THE FOLLOWING IS NOT SUPPOSED TO THROW...
-     * IN THE WORST-CASE: THE MAP WILL BE "EMPTY"
+     * IN THE WORST-CASE: THE MAP WILL BE EMPTY OR PARTIAL
      */
     if (doc.hasChild("GlobalMap"))
     {
@@ -108,7 +108,7 @@ VirtualFont* FontManager::getFont(const std::string &name, int style, float base
 
 VirtualFont* FontManager::getFont(InputSourceRef source, float baseSize, bool useMipmap)
 {
-    FontKey key(source->getURI(), baseSize, useMipmap);
+    VirtualFont::Key key(source->getURI(), baseSize, useMipmap);
     auto it = virtualFonts.find(key);
     
     if (it != virtualFonts.end())
@@ -121,7 +121,7 @@ VirtualFont* FontManager::getFont(InputSourceRef source, float baseSize, bool us
         
         /*
          * THE FOLLOWING IS NOT SUPPOSED TO THROW...
-         * IN THE WORST-CASE: THE FONT WILL BE "EMPTY"
+         * IN THE WORST-CASE: THE FONT WILL BE "EMPTY" OR "PARTIAL"
          */
         if (doc.hasChild("VirtualFont"))
         {
@@ -194,7 +194,7 @@ void FontManager::discardTextures()
 
 ActualFont* FontManager::getActualFont(const ActualFont::Descriptor &descriptor, float baseSize, bool useMipmap)
 {
-    FontKey key(descriptor.source->getURI(), baseSize, useMipmap);
+    ActualFont::Key key(descriptor, baseSize, useMipmap);
     auto it = actualFonts.find(key);
     
     if (it != actualFonts.end())

@@ -43,6 +43,27 @@ public:
             return !bool(source);
         }
     };
+    
+    struct Key
+    {
+        std::string uri;
+        int faceIndex;
+        float baseSize;
+        bool useMipmap;
+        
+        Key(const Descriptor &descriptor, float baseSize, bool useMipmap)
+        :
+        uri(descriptor.source->getURI()),
+        faceIndex(descriptor.faceIndex),
+        baseSize(baseSize * descriptor.scale),
+        useMipmap(useMipmap)
+        {}
+        
+        bool operator<(const Key &rhs) const
+        {
+            return tie(uri, faceIndex, baseSize, useMipmap) < tie(rhs.uri, rhs.faceIndex, rhs.baseSize, rhs.useMipmap);
+        }
+    };
 
     struct Glyph
     {

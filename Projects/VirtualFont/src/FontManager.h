@@ -15,25 +15,6 @@
 
 #include "cinder/Xml.h"
 
-struct FontKey
-{
-    std::string uri;
-    float baseSize;
-    bool useMipmap;
-    
-    FontKey(const std::string &uri, float baseSize, bool useMipmap)
-    :
-    uri(uri),
-    baseSize(baseSize),
-    useMipmap(useMipmap)
-    {}
-    
-    bool operator<(const FontKey &rhs) const
-    {
-        return tie(useMipmap, baseSize, uri) < tie(rhs.useMipmap, rhs.baseSize, rhs.uri);
-    }
-};
-
 class FontManager
 {
 public:
@@ -84,8 +65,8 @@ protected:
     int platform;
     std::map<std::pair<std::string, int>, std::pair<std::string, float>> globalMap;
     
-    std::map<FontKey, std::unique_ptr<VirtualFont>> virtualFonts;
-    std::map<FontKey, std::unique_ptr<ActualFont>> actualFonts;
+    std::map<VirtualFont::Key, std::unique_ptr<VirtualFont>> virtualFonts;
+    std::map<ActualFont::Key, std::unique_ptr<ActualFont>> actualFonts;
 
     ActualFont* getActualFont(const ActualFont::Descriptor &descriptor, float baseSize, bool useMipmap = false);
 
