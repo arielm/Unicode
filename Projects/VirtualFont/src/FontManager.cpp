@@ -237,10 +237,11 @@ ActualFont::Descriptor FontManager::parseDescriptor(const XmlTree &element)
 {
     auto uri = element.getAttributeValue<string>("uri", "");
     auto faceIndex = element.getAttributeValue<int>("face-index", 0);
+    auto scale = element.getAttributeValue<float>("scale", 1);
     
     if (!uri.empty())
     {
-        return ActualFont::Descriptor(InputSource::get(uri), faceIndex);
+        return ActualFont::Descriptor(InputSource::get(uri), faceIndex, scale);
     }
     else
     {

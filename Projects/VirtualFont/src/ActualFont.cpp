@@ -44,7 +44,7 @@ ActualFont::ActualFont(shared_ptr<FreetypeHelper> ftHelper, const Descriptor &de
 :
 ftHelper(ftHelper),
 descriptor(descriptor),
-baseSize(baseSize),
+baseSize(baseSize * descriptor.scale),
 useMipmap(useMipmap),
 loaded(false),
 ftFace(NULL),

@@ -24,15 +24,17 @@ public:
     {
         chr::InputSourceRef source;
         int faceIndex;
+        float scale;
         bool forceMemoryLoad;
         
         Descriptor()
         {}
         
-        Descriptor(chr::InputSourceRef source, int faceIndex = 0, bool forceMemoryLoad = false)
+        Descriptor(chr::InputSourceRef source, int faceIndex = 0, float scale = 1, bool forceMemoryLoad = false)
         :
         source(source),
         faceIndex(faceIndex),
+        scale(scale),
         forceMemoryLoad(forceMemoryLoad)
         {}
         

@@ -58,8 +58,6 @@ void Sketch::setup(bool renewContext)
             auto text = trimText(lineElement->getValue());
             sentences.push_back(text);
         }
-        
-//      Measurement(font).run(sentences, LINE_COUNT, MAX_SENTENCES_PER_LINE);
     }
     
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -76,7 +74,7 @@ void Sketch::draw()
     Vec2i windowSize = getWindowSize();
     gl::setMatricesWindow(windowSize, true);
     
-    rnd.seed(123);
+    rnd.seed(123); // FIXME: TEMPORARY
     
     if (font)
     {
