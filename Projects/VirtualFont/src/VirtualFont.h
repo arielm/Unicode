@@ -22,7 +22,7 @@ class VirtualFont
 public:
     enum
     {
-        STYLE_PLAIN,
+        STYLE_REGULAR,
         STYLE_BOLD,
         STYLE_ITALIC,
         STYLE_BOLD_ITALIC

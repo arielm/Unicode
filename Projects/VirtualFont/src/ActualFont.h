@@ -26,12 +26,20 @@ public:
         int faceIndex;
         bool forceMemoryLoad;
         
+        Descriptor()
+        {}
+        
         Descriptor(chr::InputSourceRef source, int faceIndex = 0, bool forceMemoryLoad = false)
         :
         source(source),
         faceIndex(faceIndex),
         forceMemoryLoad(forceMemoryLoad)
         {}
+        
+        bool empty()
+        {
+            return !bool(source);
+        }
     };
 
     struct Glyph

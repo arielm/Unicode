@@ -13,6 +13,8 @@
 
 #include "chronotext/InputSource.h"
 
+#include "cinder/Xml.h"
+
 struct FontKey
 {
     std::string uri;
@@ -64,7 +66,7 @@ public:
      * FURTHER CALLS WILL BE CACHED.
      * THE RETURNED POINTER IS MANAGED BY FontManager AND WILL BE VALID AS LONG AS THE LATTER IS ALIVE
      */
-    VirtualFont* getFont(const std::string &name, int style = VirtualFont::STYLE_PLAIN, float baseSize = 0);
+    VirtualFont* getFont(const std::string &name, int style = VirtualFont::STYLE_REGULAR, float baseSize = 0);
     
     /*
      * LOWER-LEVEL METHOD, FOR ACCESSING A FONT DIRECTLY VIA ITS XML-DEFINITION
@@ -89,4 +91,5 @@ protected:
 
     static std::vector<std::string> splitLanguages(const std::string &languages);
     static int parseStyle(const std::string &style);
+    static ActualFont::Descriptor parseDescriptor(const ci::XmlTree &element);
 };

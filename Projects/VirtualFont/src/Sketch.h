@@ -42,8 +42,8 @@
  *    - SEE ActualFont::Descriptor
  *
  * 8) POSSIBILITY TO USE FREETYPE'S FACE-INDEX:
- *    - DEFINED VIA THe face-inded ATTRIBUTE AT THE XML LEVEL
- *    - SEE VIA ActualFont::Descriptor
+ *    - DEFINED VIA THE face-index ATTRIBUTE AT THE XML LEVEL
+ *    - SEE ActualFont::Descriptor
  */
 
 /*

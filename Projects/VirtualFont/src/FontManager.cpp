@@ -10,8 +10,6 @@
 
 #include "chronotext/utils/Utils.h"
 
-#include "cinder/Xml.h"
-
 using namespace std;
 using namespace ci;
 using namespace chr;
@@ -119,7 +117,6 @@ VirtualFont* FontManager::getFont(InputSourceRef source, float baseSize, bool us
     }
     else
     {
-        VirtualFont *font = NULL;
         XmlTree doc(source->loadDataSource()); // EARLY-THROW IF THE DOCUMENT IS MALFORMED
         
         /*
@@ -128,7 +125,7 @@ VirtualFont* FontManager::getFont(InputSourceRef source, float baseSize, bool us
          */
         if (doc.hasChild("VirtualFont"))
         {
-            font = new VirtualFont(itemizer, baseSize);
+            auto font = new VirtualFont(itemizer, baseSize);
             virtualFonts[key] = unique_ptr<VirtualFont>(font);
 
             for (auto fontElement : doc.getChild("VirtualFont"))
@@ -143,37 +140,31 @@ VirtualFont* FontManager::getFont(InputSourceRef source, float baseSize, bool us
                         {
                             for (auto &refElement : variantElement->getChildren())
                             {
-                                auto uri = refElement->getAttributeValue<string>("uri", "");
-                                auto faceIndex = refElement->getAttributeValue<int>("face-index", 0);
+                                auto descriptor = parseDescriptor(*refElement);
                                 
-                                if (!uri.empty())
+                                if (!descriptor.empty() && font->add(lang, getActualFont(descriptor, baseSize, useMipmap)))
                                 {
-                                    auto descriptor = ActualFont::Descriptor(InputSource::get(uri), faceIndex);
-                                    
-                                    if (font->add(lang, getActualFont(descriptor, baseSize, useMipmap)))
-                                    {
-                                        break;
-                                    }
+                                    break;
                                 }
                             }
                         }
                         else
                         {
-                            auto uri = variantElement->getAttributeValue<string>("uri", "");
-                            auto faceIndex = variantElement->getAttributeValue<int>("face-index", 0);
+                            auto descriptor = parseDescriptor(*variantElement);
                             
-                            if (!uri.empty())
+                            if (!descriptor.empty())
                             {
-                                auto descriptor = ActualFont::Descriptor(InputSource::get(uri), faceIndex);
                                 font->add(lang, getActualFont(descriptor, baseSize, useMipmap));
                             }
                         }
                     }
                 }
             }
+            
+            return font;
         }
         
-        return font;
+        return NULL;
     }
 }
 
@@ -239,5 +230,20 @@ int FontManager::parseStyle(const string &style)
     if (style == "italic") return VirtualFont::STYLE_ITALIC;
     if (style == "bold-italic") return VirtualFont::STYLE_BOLD_ITALIC;
     
-    return VirtualFont::STYLE_PLAIN;
+    return VirtualFont::STYLE_REGULAR;
+}
+
+ActualFont::Descriptor FontManager::parseDescriptor(const XmlTree &element)
+{
+    auto uri = element.getAttributeValue<string>("uri", "");
+    auto faceIndex = element.getAttributeValue<int>("face-index", 0);
+    
+    if (!uri.empty())
+    {
+        return ActualFont::Descriptor(InputSource::get(uri), faceIndex);
+    }
+    else
+    {
+        return ActualFont::Descriptor();
+    }
 }

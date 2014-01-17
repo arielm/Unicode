@@ -41,7 +41,7 @@ void Sketch::setup(bool renewContext)
         
         try
         {
-            font = fontManager.getFont("sans-serif", VirtualFont::STYLE_PLAIN, 27);
+            font = fontManager.getFont("sans-serif", VirtualFont::STYLE_REGULAR, 27);
         }
         catch (exception &e)
         {
