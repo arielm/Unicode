@@ -47,21 +47,36 @@ void FontManager::loadGlobalMap(InputSourceRef source)
 {
     XmlTree doc(source->loadDataSource()); // EARLY-THROW IF THE DOCUMENT IS MALFORMED
     
-    for (auto fontElement : doc.getChild("GlobalMap"))
+    /*
+     * THE FOLLOWING IS NOT SUPPOSED TO THROW...
+     * IN THE WORST-CASE: THE MAP WILL BE "EMPTY"
+     */
+    if (doc.hasChild("GlobalMap"))
     {
-        auto name = fontElement.getAttributeValue<string>("name");
-        int style = parseStyle(fontElement.getAttributeValue<string>("style", "plain"));
-        float baseSize = fontElement.getAttributeValue<float>("base-size", 0);
-        
-        for (auto &refElement : fontElement.getChildren())
+        for (auto fontElement : doc.getChild("GlobalMap"))
         {
-            auto os = refElement->getAttributeValue<string>("os");
+            auto name = fontElement.getAttributeValue<string>("name");
             
-            if (os == PLATFORM_NAMES[platform])
+            if (!name.empty())
             {
-                auto uri = refElement->getAttributeValue<string>("uri");
-                globalMap[make_pair(name, style)] = make_pair(uri, baseSize);
-                break;
+                int style = parseStyle(fontElement.getAttributeValue<string>("style", "plain"));
+                float baseSize = fontElement.getAttributeValue<float>("base-size", 0);
+                
+                for (auto &refElement : fontElement.getChildren())
+                {
+                    auto os = refElement->getAttributeValue<string>("os", "");
+                    
+                    if (os == PLATFORM_NAMES[platform])
+                    {
+                        auto uri = refElement->getAttributeValue<string>("uri", "");
+                        
+                        if (!uri.empty())
+                        {
+                            globalMap[make_pair(name, style)] = make_pair(uri, baseSize);
+                            break;
+                        }
+                    }
+                }
             }
         }
     }
@@ -104,35 +119,50 @@ VirtualFont* FontManager::getFont(InputSourceRef source, float baseSize, bool us
     }
     else
     {
+        VirtualFont *font = NULL;
         XmlTree doc(source->loadDataSource()); // EARLY-THROW IF THE DOCUMENT IS MALFORMED
         
-        auto font = new VirtualFont(itemizer, baseSize);
-        virtualFonts[key] = unique_ptr<VirtualFont>(font);
-        
-        for (auto fontElement : doc.getChild("VirtualFont"))
+        /*
+         * THE FOLLOWING IS NOT SUPPOSED TO THROW...
+         * IN THE WORST-CASE: THE FONT WILL BE "EMPTY"
+         */
+        if (doc.hasChild("VirtualFont"))
         {
-            auto langList = splitLanguages(fontElement.getAttributeValue<string>("lang", ""));
-            
-            for (auto lang : langList)
+            font = new VirtualFont(itemizer, baseSize);
+            virtualFonts[key] = unique_ptr<VirtualFont>(font);
+
+            for (auto fontElement : doc.getChild("VirtualFont"))
             {
-                for (auto &variantElement : fontElement.getChildren())
+                auto langList = splitLanguages(fontElement.getAttributeValue<string>("lang", ""));
+                
+                for (auto lang : langList)
                 {
-                    if (variantElement->getTag() == "Group")
+                    for (auto &variantElement : fontElement.getChildren())
                     {
-                        for (auto &refElement : variantElement->getChildren())
+                        if (variantElement->getTag() == "Group")
                         {
-                            string uri = refElement->getValue();
-                            
-                            if (font->add(lang, getActualFont(uri, baseSize, useMipmap)))
+                            for (auto &refElement : variantElement->getChildren())
                             {
-                                break;
+                                auto uri = refElement->getAttributeValue<string>("uri", "");
+                                
+                                if (!uri.empty())
+                                {
+                                    if (font->add(lang, getActualFont(uri, baseSize, useMipmap)))
+                                    {
+                                        break;
+                                    }
+                                }
                             }
                         }
-                    }
-                    else
-                    {
-                        string uri = variantElement->getValue();
-                        font->add(lang, getActualFont(uri, baseSize, useMipmap));
+                        else
+                        {
+                            auto uri = variantElement->getAttributeValue<string>("uri", "");
+                            
+                            if (!uri.empty())
+                            {
+                                font->add(lang, getActualFont(uri, baseSize, useMipmap));
+                            }
+                        }
                     }
                 }
             }

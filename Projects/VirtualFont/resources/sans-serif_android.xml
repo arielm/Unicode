@@ -2,55 +2,55 @@
 <VirtualFont>
     <!-- Undefined -->
     <Set>
-        <Ref>file:///system/fonts/DroidSans.ttf</Ref>
-        <Ref>file:///system/fonts/DroidSansFallback.ttf</Ref>
+        <Ref uri="file:///system/fonts/DroidSans.ttf" />
+        <Ref uri="file:///system/fonts/DroidSansFallback.ttf" />
     </Set>
     <!-- Arabic, Persian -->
     <Set lang="ar:fa">
         <Group>
-            <Ref>file:///system/fonts/DroidNaskh-Regular.ttf</Ref>
-            <Ref>file:///system/fonts/DroidKufi-Regular.ttf</Ref>
-            <Ref>file:///system/fonts/DroidSansArabic.ttf</Ref>
+            <Ref uri="file:///system/fonts/DroidNaskh-Regular.ttf" />
+            <Ref uri="file:///system/fonts/DroidKufi-Regular.ttf" />
+            <Ref uri="file:///system/fonts/DroidSansArabic.ttf" />
         </Group>
-        <Ref>file:///system/fonts/DroidSansFallback.ttf</Ref>
+        <Ref uri="file:///system/fonts/DroidSansFallback.ttf" />
     </Set>
     <!-- Bulgarian, Russian, Ukrainian -->
     <Set lang="bg:ru:uk">
-        <Ref>file:///system/fonts/DroidSans.ttf</Ref>
-        <Ref>file:///system/fonts/DroidSansFallback.ttf</Ref>
+        <Ref uri="file:///system/fonts/DroidSans.ttf" />
+        <Ref uri="file:///system/fonts/DroidSansFallback.ttf" />
     </Set>
     <!-- Greek -->
     <Set lang="el">
-        <Ref>file:///system/fonts/DroidSans.ttf</Ref>
-        <Ref>file:///system/fonts/DroidSansFallback.ttf</Ref>
+        <Ref uri="file:///system/fonts/DroidSans.ttf" />
+        <Ref uri="file:///system/fonts/DroidSansFallback.ttf" />
     </Set>
     <!-- Hebrew, Yiddish -->
     <Set lang="he:yi">
-        <Ref>file:///system/fonts/DroidSansHebrew-Regular.ttf</Ref>
-        <Ref>file:///system/fonts/DroidSansFallback.ttf</Ref>
+        <Ref uri="file:///system/fonts/DroidSansHebrew-Regular.ttf" />
+        <Ref uri="file:///system/fonts/DroidSansFallback.ttf" />
     </Set>
     <!-- Japanese -->
     <Set lang="ja">
-        <Ref>file:///system/fonts/MTLmr3m.ttf</Ref>
-        <Ref>file:///system/fonts/DroidSansFallback.ttf</Ref>
+        <Ref uri="file:///system/fonts/MTLmr3m.ttf" />
+        <Ref uri="file:///system/fonts/DroidSansFallback.ttf" />
     </Set>
     <!-- Korean -->
     <Set lang="ko">
-        <Ref>file:///system/fonts/NanumGothic.ttf</Ref>
-        <Ref>file:///system/fonts/DroidSansFallback.ttf</Ref>
+        <Ref uri="file:///system/fonts/NanumGothic.ttf" />
+        <Ref uri="file:///system/fonts/DroidSansFallback.ttf" />
     </Set>
     <!-- Thai -->
     <Set lang="th">
-        <Ref>file:///system/fonts/DroidSansThai.ttf</Ref>
-        <Ref>file:///system/fonts/DroidSansFallback.ttf</Ref>
+        <Ref uri="file:///system/fonts/DroidSansThai.ttf" />
+        <Ref uri="file:///system/fonts/DroidSansFallback.ttf" />
     </Set>
     <!-- Hindi -->
     <Set lang="hi">
-        <Ref>file:///system/fonts/DroidSansDevanagari-Regular.ttf</Ref>
-        <Ref>file:///system/fonts/DroidSansFallback.ttf</Ref>
+        <Ref uri="file:///system/fonts/DroidSansDevanagari-Regular.ttf" />
+        <Ref uri="file:///system/fonts/DroidSansFallback.ttf" />
     </Set>
     <!-- Chinese (Simplified, Traditional) -->
     <Set lang="zh-cn:zh-hk:zh-sg:zh-mo:zh-tw">
-        <Ref>file:///system/fonts/DroidSansFallback.ttf</Ref>
+        <Ref uri="file:///system/fonts/DroidSansFallback.ttf" />
     </Set>
 </VirtualFont>

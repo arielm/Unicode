@@ -7,38 +7,38 @@
 <VirtualFont>
     <!-- Undefined -->
     <Set>
-        <Ref>file:///System/Library/Fonts/Cache/Arial.ttf</Ref>
+        <Ref uri="file:///System/Library/Fonts/Cache/Arial.ttf" />
     </Set>
     <!-- Arabic, Persian -->
     <Set lang="ar:fa">
-        <Ref>file:///System/Library/Fonts/Cache/GeezaPro.ttf</Ref><!-- FIXME: LOOKS LIKE "JOINING" IS BROKEN WITH THAT FONT (NOT ON OSX) -->
+        <Ref uri="file:///System/Library/Fonts/Cache/GeezaPro.ttf" /><!-- FIXME: LOOKS LIKE "JOINING" IS BROKEN WITH THAT FONT (NOT ON OSX) -->
     </Set>
     <!-- Hebrew -->
     <Set lang="he">
-        <Ref>file:///System/Library/Fonts/Cache/ArialHB.ttf</Ref>
+        <Ref uri="file:///System/Library/Fonts/Cache/ArialHB.ttf" />
     </Set>
     <!-- Japanese -->
     <Set lang="ja">
-        <Ref>file:///System/Library/Fonts/Cache/HiraginoKakuGothicProNW3.otf</Ref>
+        <Ref uri="file:///System/Library/Fonts/Cache/HiraginoKakuGothicProNW3.otf" />
     </Set>
     <!-- Korean -->
     <Set lang="ko">
-        <Ref>file:///System/Library/Fonts/Cache/AppleGothic.ttf</Ref>
+        <Ref uri="file:///System/Library/Fonts/Cache/AppleGothic.ttf" />
     </Set>
     <!-- Thai -->
     <Set lang="th">
-        <Ref>file:///System/Library/Fonts/Cache/Thonburi.ttf</Ref>
+        <Ref uri="file:///System/Library/Fonts/Cache/Thonburi.ttf" />
     </Set>
     <!-- Hindi -->
     <Set lang="hi">
-        <Ref>file:///System/Library/Fonts/Cache/DevanagariSangamMN.ttc</Ref>
+        <Ref uri="file:///System/Library/Fonts/Cache/DevanagariSangamMN.ttc" />
     </Set>
     <!-- Chinese (Simplified) -->
     <Set lang="zh-cn:zh-hk:zh-sg">
-        <Ref>file:///System/Library/Fonts/Cache/STHeiti-Medium.ttc</Ref>
+        <Ref uri="file:///System/Library/Fonts/Cache/STHeiti-Medium.ttc" />
     </Set>
     <!-- Chinese (Traditional) -->
     <Set lang="zh-mo:zh-tw">
-        <Ref>file:///System/Library/Fonts/Cache/STHeiti-Medium.ttc</Ref>
+        <Ref uri="file:///System/Library/Fonts/Cache/STHeiti-Medium.ttc" />
     </Set>
 </VirtualFont>
