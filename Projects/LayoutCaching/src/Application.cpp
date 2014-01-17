@@ -15,25 +15,7 @@
  *    - TESTED ON iOS AND ANDROID:
  *      - LIKE IN SimpleRendering PROJECT:
  *        CRASH WHEN RETURNING TO APP ON XOOM 1 (ANDROID 3)
- */
-
-/*
- * TODO:
- *
- * 1) ANDROID CRASH WHEN RETURNING TO APP ON XOOM 1:
- *    SEE IF IT OCCURS WHEN USING new-chronotext-toolkit
- *    (I.E. INSTEAD OF USING A SOLUTION BASED ON NativeActivity)
- *
- * 2) ADJUST FONTS:
- *    - iOS:
- *      - "Geeza Pro" SHOULD BE REPLACED (ARABIC GLYPHS ARE NOT JOINED)
- *    - ANDROID:
- *      - HEBREW FONT IS MISSING
- *      - ARABIC FONT IS PROBABLY OUTDATED
- *      - THAI FONT IS BUGGY...
- *
- * 3) ADD SCALE-FACTOR FOR ACTUAL-FONTS IN XML DEFINITION:
- *    - NECESSARY IN CASE WE NEED TO MATCH SIZES BETWEEN "Geeza Pro" (SMALLER?) AND "Arial" (BIGGER?)
+ *        - SOLVED BY USING new-chronotext-toolkit
  */
 
 #include "cinder/app/AppNative.h"

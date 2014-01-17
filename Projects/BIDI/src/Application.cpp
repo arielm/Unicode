@@ -7,6 +7,10 @@
  */
 
 /*
+ * REFERENCE: https://github.com/arielm/Unicode/tree/master/Projects/BIDI
+ */
+
+/*
  * DONE:
  *
  * 1) MERGING OF SCRIPT/LANGUAGE AND BIDI ITEMS:
@@ -16,23 +20,6 @@
  *    USING std::set FOR FontSet WAS NOT PRESERVING THE (CRUCIAL) ORDER OF INSERTION
  *
  * 3) TESTED ON iOS AND ANDROID
- */
-
-/*
- * TODO:
- *
- * 1) ADJUST FONTS:
- *    - iOS:
- *      - "Geeza Pro" SHOULD BE REPLACED (ARABIC GLYPHS ARE NOT JOINED)
- *    - ANDROID:
- *      - HEBREW FONT IS MISSING
- *      - ARABIC FONT IS PROBABLY OUTDATED
- *      - THAI FONT IS BUGGY...
- *
- * 2) ADD SCALE-FACTOR FOR ACTUAL-FONTS IN XML DEFINITION:
- *    - NECESSARY IN CASE WE NEED TO MATCH SIZES BETWEEN "Geeza Pro" (SMALLER?) AND "Arial" (BIGGER?)
- *
- * 3) ADAPT TEXT-LAYOUT-CACHE SYSTEM TO TextGroup
  */
 
 #include "cinder/app/AppNative.h"
