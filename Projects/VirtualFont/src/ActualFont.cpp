@@ -40,10 +40,10 @@ static FT_Error force_ucs2_charmap(FT_Face face)
     return -1;
 }
 
-ActualFont::ActualFont(shared_ptr<FreetypeHelper> ftHelper, InputSourceRef inputSource, float baseSize, bool useMipmap)
+ActualFont::ActualFont(shared_ptr<FreetypeHelper> ftHelper, const Descriptor &descriptor, float baseSize, bool useMipmap)
 :
 ftHelper(ftHelper),
-inputSource(inputSource),
+descriptor(descriptor),
 baseSize(baseSize),
 useMipmap(useMipmap),
 loaded(false),
@@ -51,7 +51,7 @@ ftFace(NULL),
 hbFont(NULL)
 {
     /*
-     * PADDING IS NECESSARY TO AVOID BORDER ARTIFACTS
+     * PADDING IS NECESSARY IN ORDER TO AVOID BORDER ARTIFACTS
      *
      * MIPMAPPING IS EVEN ACCENTUATING THE PROBLEM
      * BECAUSE OF THE CONSECUTIVE TEXTURE SCALE-DOWNS
@@ -77,12 +77,17 @@ void ActualFont::reload()
 {
     if (!loaded)
     {
-        if (!inputSource->isFile())
-        {
-            throw runtime_error("ActualFont MUST BE CREATED FROM FILE");
-        }
+        FT_Error error;
         
-        FT_Error error = FT_New_Face(ftHelper->getLib(), inputSource->getFilePath().c_str(), 0, &ftFace);
+        if (descriptor.forceMemoryLoad || !descriptor.source->isFile())
+        {
+            memoryBuffer = descriptor.source->getBuffer();
+            error = FT_New_Memory_Face(ftHelper->getLib(), (FT_Byte*)memoryBuffer.getData(), memoryBuffer.getDataSize(), descriptor.faceIndex, &ftFace);
+        }
+        else
+        {
+            error = FT_New_Face(ftHelper->getLib(), descriptor.source->getFilePath().c_str(), descriptor.faceIndex, &ftFace);
+        }
         
         if (error)
         {
@@ -160,6 +165,11 @@ void ActualFont::unload()
 
         glyphCache.clear();
         standaloneTextures.clear();
+        
+        if (descriptor.forceMemoryLoad)
+        {
+            memoryBuffer.reset();
+        }
 
         hb_font_destroy(hbFont); hbFont = NULL;
         FT_Done_Face(ftFace); ftFace = NULL;

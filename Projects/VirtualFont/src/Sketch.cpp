@@ -37,7 +37,7 @@ void Sketch::setup(bool renewContext)
     }
     else
     {
-        fontManager.loadDefinitions(InputSource::getResource("Fonts.xml"));
+        fontManager.loadGlobalMap(InputSource::getResource("Fonts.xml"));
         
         try
         {

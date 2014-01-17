@@ -43,11 +43,11 @@ FontManager::FontManager()
 #endif
 }
 
-void FontManager::loadDefinitions(InputSourceRef source)
+void FontManager::loadGlobalMap(InputSourceRef source)
 {
     XmlTree doc(source->loadDataSource()); // EARLY-THROW IF THE DOCUMENT IS MALFORMED
     
-    for (auto fontElement : doc.getChild("Fonts"))
+    for (auto fontElement : doc.getChild("GlobalMap"))
     {
         auto name = fontElement.getAttributeValue<string>("name");
         int style = parseStyle(fontElement.getAttributeValue<string>("style", "plain"));
@@ -60,7 +60,7 @@ void FontManager::loadDefinitions(InputSourceRef source)
             if (os == PLATFORM_NAMES[platform])
             {
                 auto uri = refElement->getAttributeValue<string>("uri");
-                definitions[make_pair(name, style)] = make_pair(uri, baseSize);
+                globalMap[make_pair(name, style)] = make_pair(uri, baseSize);
                 break;
             }
         }
@@ -69,9 +69,9 @@ void FontManager::loadDefinitions(InputSourceRef source)
 
 VirtualFont* FontManager::getFont(const std::string &name, int style, float baseSize)
 {
-    auto it = definitions.find(make_pair(name, style));
+    auto it = globalMap.find(make_pair(name, style));
     
-    if (it != definitions.end())
+    if (it != globalMap.end())
     {
         bool useMipmap = false;
         

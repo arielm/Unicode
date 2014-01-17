@@ -41,9 +41,37 @@ public:
     
     FontManager();
     
-    void loadDefinitions(chr::InputSourceRef source);
+    /*
+     * THE GLOBAL-MAP, MAPPING BETWEEN:
+     * - A STRING LIKE "sans-serif" AND SOME STYLE (E.G. VirtualFont::STYLE_BOLD)
+     * - AND SOME FONT XML-DEFINITION LIKE "sans-serif_bold_ios.xml"
+     */
+    void loadGlobalMap(chr::InputSourceRef source);
 
+    /*
+     * SCENARIO 1:
+     * - CALLER IS DEFINING A FONT-SIZE (baseSize != 0)
+     * - IF A FONT-SIZE IS DEFINED AT THE GLOBAL-MAP LEVEL (base-size ATTRIBUTE), IT IS IGNORED
+     * - MIPMAPS ARE NOT ALLOWED
+     * - VirtualFont::setSize() IS NOT SUPPOSED TO BE USED DURING THE FONT'S LIFE-CYCLE
+     *
+     * SCENARIO 2:
+     * - CALLER IS NOT DEFINING A FONT-SIZE (baseSize == 0)
+     * - THE FONT-SIZE DEFINED AT THE GLOBAL-MAP LEVEL (base-size ATTRIBUTE) IS USED
+     * - MIPMAPS ARE ALLOWED
+     * - VirtualFont::setSize() SHALL BE USED DURING THE FONT'S LIFE-CYCLE
+     *
+     * FURTHER CALLS WILL BE CACHED.
+     * THE RETURNED POINTER IS MANAGED BY FontManager AND WILL BE VALID AS LONG AS THE LATTER IS ALIVE
+     */
     VirtualFont* getFont(const std::string &name, int style = VirtualFont::STYLE_PLAIN, float baseSize = 0);
+    
+    /*
+     * LOWER-LEVEL METHOD, FOR ACCESSING A FONT DIRECTLY VIA ITS XML-DEFINITION
+     *
+     * FURTHER CALLS WILL BE CACHED.
+     * THE RETURNED POINTER IS MANAGED BY FontManager AND WILL BE VALID AS LONG AS THE LATTER IS ALIVE
+     */
     VirtualFont* getFont(chr::InputSourceRef source, float baseSize, bool useMipmap = false);
     
     void reload();
@@ -52,7 +80,7 @@ public:
     
 protected:
     int platform;
-    std::map<std::pair<std::string, int>, std::pair<std::string, float>> definitions;
+    std::map<std::pair<std::string, int>, std::pair<std::string, float>> globalMap;
     
     std::map<FontKey, std::unique_ptr<VirtualFont>> virtualFonts;
     std::map<FontKey, std::unique_ptr<ActualFont>> actualFonts;

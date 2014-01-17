@@ -20,6 +20,20 @@
 class ActualFont
 {
 public:
+    struct Descriptor
+    {
+        chr::InputSourceRef source;
+        int faceIndex;
+        bool forceMemoryLoad;
+        
+        Descriptor(chr::InputSourceRef source, int faceIndex = 0, bool forceMemoryLoad = false)
+        :
+        source(source),
+        faceIndex(faceIndex),
+        forceMemoryLoad(forceMemoryLoad)
+        {}
+    };
+
     struct Glyph
     {
         ReloadableTexture *texture;
@@ -62,7 +76,7 @@ public:
     ci::Vec2f scale;
     Metrics metrics;
     
-    ActualFont(std::shared_ptr<FreetypeHelper> ftHelper, chr::InputSourceRef inputSource, float baseSize, bool useMipmap);
+    ActualFont(std::shared_ptr<FreetypeHelper> ftHelper, const Descriptor &descriptor, float baseSize, bool useMipmap);
     ~ActualFont();
 
     void reload();
@@ -74,14 +88,15 @@ public:
 protected:
     std::shared_ptr<FreetypeHelper> ftHelper;
 
-    chr::InputSourceRef inputSource;
+    Descriptor descriptor;
     float baseSize;
     bool useMipmap;
     int padding;
 
-    bool loaded;
+    ci::Buffer memoryBuffer;
     FT_Face ftFace;
     hb_font_t *hbFont;
+    bool loaded;
     
     std::map<uint32_t, std::unique_ptr<Glyph>> glyphCache;
     std::vector<std::unique_ptr<ReloadableTexture>> standaloneTextures;

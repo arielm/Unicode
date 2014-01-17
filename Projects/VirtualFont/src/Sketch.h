@@ -36,13 +36,15 @@
  * 6) LayoutManager IS NOW DEFINED WITHIN FontManager:
  *    - SIMILARELY AS TextItemizer
  *    - WILL SIMPLIFY USAGE, BY REQUIRING ONLY ONE "PSEUDO SINGLETON" (I.E. FontManager)
+ *
+ * 7) POSSIBILITY TO LOAD ActualFont FROM MEMORY-BUFFER:
+ *    - NECESSARY FOR ANDROID ASSETS AND WINDOWS EMBEDDED RESOURCES
  */
 
 /*
  * TODO:
  *
  * 0) ActualFont:
- *    - POSSIBILITY TO LOAD FROM MEMORY
  *    - SUPPORTING FREETYPE'S FACE-INDEX
  *      AT THE XML LEVEL: <Ref uri="file:///system/fonts/Helvetica.dfont" face-index="4" />
  *
