@@ -19,21 +19,6 @@
  *    NO MORE CRASH WHEN RETURNING TO APP ON XOOM 1 (ANDROID 3)
  */
 
-/*
- * TODO:
- *
- * 1) ADJUST FONTS:
- *    - iOS:
- *      - "Geeza Pro" SHOULD BE REPLACED (ARABIC GLYPHS ARE NOT JOINED)
- *    - ANDROID:
- *      - HEBREW FONT IS MISSING
- *      - ARABIC FONT IS PROBABLY OUTDATED
- *      - THAI FONT IS BUGGY...
- *
- * 2) ADD SCALE-FACTOR FOR ACTUAL-FONTS IN XML DEFINITION:
- *    - NECESSARY IN CASE WE NEED TO MATCH SIZES BETWEEN "Geeza Pro" (SMALLER?) AND "Arial" (BIGGER?)
- */
-
 #pragma once
 
 #include "chronotext/cinder/CinderSketch.h"
