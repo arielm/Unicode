@@ -56,6 +56,9 @@ public:
     const FontSet& getFontSet(const std::string &lang) const;
     const ActualFont::Metrics& getMetrics(const std::string &lang) const;
     
+    /*
+     * THE RETURNED POINTERS ARE NOT MANAGED AND SHOULD BE DELETED BY THE CALLER
+     */
     LineLayout* createLineLayout(const std::string &text, const std::string &langHint = "", hb_direction_t overallDirection = HB_DIRECTION_LTR);
     LineLayout* createLineLayout(const TextLine &line);
     
