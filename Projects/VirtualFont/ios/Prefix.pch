@@ -3,8 +3,4 @@
 	#import <Foundation/Foundation.h>
 #endif
 
-#define HAVE_UCDN
-#define HAVE_OT
-#define HB_NO_MT
-
 #define CHR_COMPLEX
