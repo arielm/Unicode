@@ -37,6 +37,11 @@ hb_direction_t TextItemizer::icuDirectionToHB(UBiDiDirection direction)
     return (direction == UBIDI_RTL) ? HB_DIRECTION_RTL : HB_DIRECTION_LTR;
 }
 
+TextItemizer::TextItemizer(LangHelper &langHelper)
+:
+langHelper(langHelper)
+{}
+
 TextLine TextItemizer::processLine(const string &input, const string &langHint, hb_direction_t overallDirection)
 {
     TextLine line(input, overallDirection);
@@ -62,7 +67,7 @@ void TextItemizer::itemizeScriptAndLanguage(const UnicodeString &text, const str
         auto code = scriptRun.getScriptCode();
         
         auto script = icuScriptToHB(code);
-        auto language = languageHelper.detectLanguage(script, langHint);
+        auto language = langHelper.detectLanguage(script, langHint);
         
         items.emplace_back(start, end, make_pair(script, language));
     }

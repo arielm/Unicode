@@ -35,7 +35,7 @@
 
 #pragma once
 
-#include "LanguageHelper.h"
+#include "LangHelper.h"
 #include "TextLine.h"
 
 #include "unicode/unistr.h"
@@ -47,11 +47,12 @@ class TextItemizer
 public:
     static hb_script_t icuScriptToHB(UScriptCode script);
     static hb_direction_t icuDirectionToHB(UBiDiDirection direction);
-
+    
+    TextItemizer(LangHelper &langHelper);
     TextLine processLine(const std::string &input, const std::string &langHint = "", hb_direction_t overallDirection = HB_DIRECTION_LTR);
     
 protected:
-    LanguageHelper languageHelper;
+    LangHelper &langHelper;
     
     template<typename T> struct Item
     {

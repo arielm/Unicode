@@ -25,9 +25,10 @@ enum
 const string PLATFORM_NAMES[4] = {"osx", "windows", "ios", "android"};
 
 FontManager::FontManager()
+:
+ftHelper(make_shared<FreetypeHelper>()),
+itemizer(langHelper)
 {
-    ftHelper = make_shared<FreetypeHelper>();
-
 #if defined(CINDER_MAC)
     platform = PLATFORM_OSX;
 #elif defined(CINDER_MSW)

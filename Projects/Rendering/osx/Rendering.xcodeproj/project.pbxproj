@@ -18,7 +18,7 @@
 		A809523B16F360660011FAA3 /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = A809523A16F360660011FAA3 /* icon.icns */; };
 		A8363B9418876C5A0015C5FF /* Fonts.xml in Resources */ = {isa = PBXBuildFile; fileRef = A8363B9318876C5A0015C5FF /* Fonts.xml */; };
 		A871F170186116D9001D0F98 /* scrptrun.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A871F16E186116D9001D0F98 /* scrptrun.cpp */; };
-		A887CB19187C688D000B2DDB /* LanguageHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A887CB18187C688D000B2DDB /* LanguageHelper.cpp */; };
+		A887CB19187C688D000B2DDB /* LangHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A887CB18187C688D000B2DDB /* LangHelper.cpp */; };
 		A88E59CE18842D0D00E737F3 /* CinderApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A88E590318842D0D00E737F3 /* CinderApp.cpp */; };
 		A88E59CF18842D0D00E737F3 /* CinderSketchSimple.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A88E590718842D0D00E737F3 /* CinderSketchSimple.cpp */; };
 		A88E59D318842D0D00E737F3 /* FileSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A88E591118842D0D00E737F3 /* FileSystem.cpp */; };
@@ -60,8 +60,8 @@
 		A8363B9318876C5A0015C5FF /* Fonts.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = Fonts.xml; path = ../resources/Fonts.xml; sourceTree = "<group>"; };
 		A871F16E186116D9001D0F98 /* scrptrun.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = scrptrun.cpp; path = ../src/scrptrun.cpp; sourceTree = "<group>"; };
 		A871F16F186116D9001D0F98 /* scrptrun.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = scrptrun.h; path = ../src/scrptrun.h; sourceTree = "<group>"; };
-		A887CB17187C688D000B2DDB /* LanguageHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LanguageHelper.h; path = ../src/LanguageHelper.h; sourceTree = "<group>"; };
-		A887CB18187C688D000B2DDB /* LanguageHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LanguageHelper.cpp; path = ../src/LanguageHelper.cpp; sourceTree = "<group>"; };
+		A887CB17187C688D000B2DDB /* LangHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LangHelper.h; path = ../src/LangHelper.h; sourceTree = "<group>"; };
+		A887CB18187C688D000B2DDB /* LangHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LangHelper.cpp; path = ../src/LangHelper.cpp; sourceTree = "<group>"; };
 		A88E590318842D0D00E737F3 /* CinderApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CinderApp.cpp; sourceTree = "<group>"; };
 		A88E590418842D0D00E737F3 /* CinderApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CinderApp.h; sourceTree = "<group>"; };
 		A88E590518842D0D00E737F3 /* CinderSketch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CinderSketch.h; sourceTree = "<group>"; };
@@ -138,8 +138,8 @@
 				A88E5A131884389F00E737F3 /* Sketch.cpp */,
 				A871F16F186116D9001D0F98 /* scrptrun.h */,
 				A871F16E186116D9001D0F98 /* scrptrun.cpp */,
-				A887CB17187C688D000B2DDB /* LanguageHelper.h */,
-				A887CB18187C688D000B2DDB /* LanguageHelper.cpp */,
+				A887CB17187C688D000B2DDB /* LangHelper.h */,
+				A887CB18187C688D000B2DDB /* LangHelper.cpp */,
 				A8BCDEBF187CB71600A7FCB8 /* TextRun.h */,
 				A8BCDEC0187D68DE00A7FCB8 /* TextLine.h */,
 				A8BCDEC5187D72DB00A7FCB8 /* TextItemizer.h */,
@@ -402,7 +402,7 @@
 				A8BCDEDB187D857900A7FCB8 /* ReloadableTexture.cpp in Sources */,
 				A8BCDED9187D857900A7FCB8 /* FontManager.cpp in Sources */,
 				A88E59CF18842D0D00E737F3 /* CinderSketchSimple.cpp in Sources */,
-				A887CB19187C688D000B2DDB /* LanguageHelper.cpp in Sources */,
+				A887CB19187C688D000B2DDB /* LangHelper.cpp in Sources */,
 				A8BCDED7187D857900A7FCB8 /* VirtualFont.cpp in Sources */,
 				A88E59EC18842D0D00E737F3 /* Handler.cpp in Sources */,
 			);

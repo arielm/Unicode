@@ -19,8 +19,9 @@ class FontManager
 {
 public:
     std::shared_ptr<FreetypeHelper> ftHelper; // THE UNDERLYING FT_Library WILL BE DESTROYED AFTER ALL THE ActualFont INSTANCES
-    TextItemizer itemizer;
+    LangHelper langHelper;
     LayoutCache layoutCache;
+    TextItemizer itemizer;
     
     FontManager();
     

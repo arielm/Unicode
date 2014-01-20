@@ -24,10 +24,10 @@
 #define DEFAULT_LANGUAGES "en:zh-cn"
 #endif
 
-class LanguageHelper
+class LangHelper
 {
 public:
-    LanguageHelper();
+    LangHelper();
     
     /*
      * EXPECTS A LIST LANGUAGES SEPARATED BY COLONS

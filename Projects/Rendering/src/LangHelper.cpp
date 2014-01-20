@@ -11,7 +11,7 @@
  * https://developer.gnome.org/pango/stable/pango-Scripts-and-Languages.html
  */
 
-#include "LanguageHelper.h"
+#include "LangHelper.h"
 
 #include "cinder/Utilities.h"
 
@@ -355,14 +355,14 @@ static void initSampleLanguageMap(std::map<hb_script_t, std::string> &sampleLang
     sampleLanguageMap[HB_SCRIPT_INVALID] = "";
 };
 
-LanguageHelper::LanguageHelper()
+LangHelper::LangHelper()
 {
     initScriptMap(scriptMap);
     initSampleLanguageMap(sampleLanguageMap);
     setDefaultLanguages(DEFAULT_LANGUAGES);
 }
 
-void LanguageHelper::setDefaultLanguages(const std::string &languages)
+void LangHelper::setDefaultLanguages(const std::string &languages)
 {
     defaultLanguageSet.clear();
     
@@ -372,7 +372,7 @@ void LanguageHelper::setDefaultLanguages(const std::string &languages)
     }
 }
 
-const std::vector<hb_script_t>& LanguageHelper::getScriptsForLang(const std::string &lang) const
+const std::vector<hb_script_t>& LangHelper::getScriptsForLang(const std::string &lang) const
 {
     auto it = scriptMap.find(lang);
     
@@ -384,7 +384,7 @@ const std::vector<hb_script_t>& LanguageHelper::getScriptsForLang(const std::str
     return it->second;
 }
 
-bool LanguageHelper::includesScript(const std::string &lang, hb_script_t script) const
+bool LangHelper::includesScript(const std::string &lang, hb_script_t script) const
 {
     for (auto &value : getScriptsForLang(lang))
     {
@@ -397,7 +397,7 @@ bool LanguageHelper::includesScript(const std::string &lang, hb_script_t script)
     return false;
 }
 
-std::string LanguageHelper::getDefaultLanguage(hb_script_t script) const
+std::string LangHelper::getDefaultLanguage(hb_script_t script) const
 {
     for (auto &lang : defaultLanguageSet)
     {
@@ -413,7 +413,7 @@ std::string LanguageHelper::getDefaultLanguage(hb_script_t script) const
     return "";
 }
 
-std::string LanguageHelper::getSampleLanguage(hb_script_t script) const
+std::string LangHelper::getSampleLanguage(hb_script_t script) const
 {
     auto it = sampleLanguageMap.find(script);
     
@@ -425,7 +425,7 @@ std::string LanguageHelper::getSampleLanguage(hb_script_t script) const
     return it->second;
 }
 
-std::string LanguageHelper::detectLanguage(hb_script_t script, const std::string &langHint) const
+std::string LangHelper::detectLanguage(hb_script_t script, const std::string &langHint) const
 {
     /*
      * 1. CAN @script BE USED TO WRITE @langHint?

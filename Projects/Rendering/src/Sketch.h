@@ -7,7 +7,9 @@
  */
 
 /*
- * ...
+ * DONE:
+ *
+ * 1) MOVING LangHelper TO FontManager
  */
 
 /*
