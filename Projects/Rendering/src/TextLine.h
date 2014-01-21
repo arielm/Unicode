@@ -18,7 +18,7 @@ struct TextLine
     hb_direction_t overallDirection;
     std::vector<TextRun> runs;
     
-    TextLine(const std::string &input, hb_direction_t overallDirection = HB_DIRECTION_LTR)
+    TextLine(const std::string &input, hb_direction_t overallDirection = HB_DIRECTION_INVALID)
     :
     overallDirection(overallDirection)
     {

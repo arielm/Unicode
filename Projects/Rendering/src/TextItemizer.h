@@ -49,7 +49,7 @@ public:
     static hb_direction_t icuDirectionToHB(UBiDiDirection direction);
     
     TextItemizer(LangHelper &langHelper);
-    TextLine processLine(const std::string &input, const std::string &langHint = "", hb_direction_t overallDirection = HB_DIRECTION_LTR);
+    TextLine processLine(const std::string &input, const std::string &langHint = "", hb_direction_t overallDirection = HB_DIRECTION_INVALID);
     
 protected:
     LangHelper &langHelper;

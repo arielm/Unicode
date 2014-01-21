@@ -52,6 +52,14 @@ TextLine TextItemizer::processLine(const string &input, const string &langHint, 
     vector<DirectionItem> directionItems;
     itemizeDirection(line.text, overallDirection, directionItems);
     
+    /*
+     * NECESSARY WHEN overallDirection IS UNDEFINED
+     */
+    if (!directionItems.empty())
+    {
+        line.overallDirection = directionItems[0].data;
+    }
+    
     mergeItems(scriptAndLanguageItems, directionItems, line.runs);
     return line;
 }
@@ -76,10 +84,11 @@ void TextItemizer::itemizeScriptAndLanguage(const UnicodeString &text, const str
 void TextItemizer::itemizeDirection(const UnicodeString &text, hb_direction_t overallDirection, vector<DirectionItem> &items)
 {
     /*
-     * WE WANT TO FORCE A DIRECTION (I.E. NOT DETERMINING THE PARAGRAPH-LEVEL FROM THE TEXT)
+     * IF overallDirection IS UNDEFINED: THE PARAGRAPH-LEVEL WILL BE DETERMINED FROM THE TEXT
+     *
      * SEE: http://www.icu-project.org/apiref/icu4c/ubidi_8h.html#abdfe9e113a19dd8521d3b7ac8220fe11
      */
-    UBiDiLevel paraLevel = (overallDirection == HB_DIRECTION_RTL) ? 1 : 0;
+    UBiDiLevel paraLevel = (overallDirection == HB_DIRECTION_INVALID) ? UBIDI_DEFAULT_LTR : ((overallDirection == HB_DIRECTION_RTL) ? 1 : 0);
 
     auto length = text.length();
     UErrorCode error = U_ZERO_ERROR;

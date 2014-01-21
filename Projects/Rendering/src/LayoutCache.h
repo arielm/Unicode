@@ -51,7 +51,7 @@ public:
     /*
      * THE RETURNED POINTER IS MANAGED BY LayoutCache AND WILL BE VALID AS LONG AS THE LATTER IS ALIVE
      */
-    LineLayout* getLineLayout(VirtualFont *virtualFont, const std::string &text, const std::string &langHint = "", hb_direction_t overallDirection = HB_DIRECTION_LTR);
+    LineLayout* getLineLayout(VirtualFont *virtualFont, const std::string &text, const std::string &langHint = "", hb_direction_t overallDirection = HB_DIRECTION_INVALID);
     
     void clear();
 

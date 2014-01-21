@@ -92,6 +92,16 @@ ActualFont::Metrics VirtualFont::getMetrics(const Cluster &cluster) const
     return cluster.font->metrics * sizeRatio;
 }
 
+float VirtualFont::getAdvance(const Cluster &cluster) const
+{
+    return cluster.combinedAdvance * sizeRatio;
+}
+
+float VirtualFont::getAdvance(const LineLayout &layout) const
+{
+    return layout.advance * sizeRatio;
+}
+
 LineLayout* VirtualFont::createLineLayout(const string &text, const string &langHint, hb_direction_t overallDirection)
 {
     return createLineLayout(itemizer.processLine(text, langHint, overallDirection));
@@ -196,16 +206,6 @@ void VirtualFont::setColor(const ColorA &color)
     colors.emplace_back(color);
     colors.emplace_back(color);
     colors.emplace_back(color);
-}
-
-float VirtualFont::getAdvance(const Cluster &cluster) const
-{
-    return cluster.combinedAdvance * sizeRatio;
-}
-
-float VirtualFont::getAdvance(const LineLayout &layout) const
-{
-    return layout.advance * sizeRatio;
 }
 
 void VirtualFont::begin()

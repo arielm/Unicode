@@ -58,18 +58,18 @@ public:
     const ActualFont::Metrics& getRawMetrics(const std::string &lang) const;
     ActualFont::Metrics getMetrics(const std::string &lang) const;
     ActualFont::Metrics getMetrics(const Cluster &cluster) const;
-    
+
+    float getAdvance(const Cluster &cluster) const;
+    float getAdvance(const LineLayout &layout) const;
+
     /*
      * THE RETURNED POINTERS ARE NOT MANAGED AND SHOULD BE DELETED BY THE CALLER
      */
-    LineLayout* createLineLayout(const std::string &text, const std::string &langHint = "", hb_direction_t overallDirection = HB_DIRECTION_LTR);
+    LineLayout* createLineLayout(const std::string &text, const std::string &langHint = "", hb_direction_t overallDirection = HB_DIRECTION_INVALID);
     LineLayout* createLineLayout(const TextLine &line);
     
     void setSize(float size);
     void setColor(const ci::ColorA &color);
-    
-    float getAdvance(const Cluster &cluster) const;
-    float getAdvance(const LineLayout &layout) const;
     
     void begin();
     void end();
