@@ -64,7 +64,7 @@ const FontSet& VirtualFont::getFontSet(const string &lang) const
     return it->second;
 }
 
-const ActualFont::Metrics& VirtualFont::getMetrics(const string &lang) const
+const ActualFont::Metrics& VirtualFont::getRawMetrics(const string &lang) const
 {
     auto it = fontSetMap.find(lang);
     
@@ -79,6 +79,17 @@ const ActualFont::Metrics& VirtualFont::getMetrics(const string &lang) const
     }
     
     return (*it->second.begin())->metrics;
+}
+
+ActualFont::Metrics VirtualFont::getMetrics(const string &lang) const
+{
+    auto tmp = getRawMetrics(lang);
+    return tmp * sizeRatio;
+}
+
+ActualFont::Metrics VirtualFont::getMetrics(const Cluster &cluster) const
+{
+    return cluster.font->metrics * sizeRatio;
 }
 
 LineLayout* VirtualFont::createLineLayout(const string &text, const string &langHint, hb_direction_t overallDirection)

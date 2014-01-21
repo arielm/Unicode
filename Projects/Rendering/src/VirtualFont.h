@@ -54,7 +54,10 @@ public:
     
     bool add(const std::string &lang, ActualFont *font);
     const FontSet& getFontSet(const std::string &lang) const;
-    const ActualFont::Metrics& getMetrics(const std::string &lang) const;
+    
+    const ActualFont::Metrics& getRawMetrics(const std::string &lang) const;
+    ActualFont::Metrics getMetrics(const std::string &lang) const;
+    ActualFont::Metrics getMetrics(const Cluster &cluster) const;
     
     /*
      * THE RETURNED POINTERS ARE NOT MANAGED AND SHOULD BE DELETED BY THE CALLER

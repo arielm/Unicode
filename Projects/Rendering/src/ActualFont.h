@@ -102,6 +102,18 @@ public:
         float strikethroughOffset;
         float underlineOffset;
         float lineThickness;
+        
+        Metrics& operator*(float s)
+        {
+            height *= s;
+            ascent *= s;
+            descent *= s;
+            strikethroughOffset *= s;
+            underlineOffset *= s;
+            lineThickness *= s;
+            
+            return *this;
+        }
     };
 
     ci::Vec2f scale;

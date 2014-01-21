@@ -10,6 +10,8 @@
  * DONE:
  *
  * 1) MOVING LangHelper TO FontManager
+ *
+ * 2) VirtualFont: ADDING MEANS OF OBTAINING ActualFont::Metrics (E.G. FROM A GIVEN Cluster)
  */
 
 /*
