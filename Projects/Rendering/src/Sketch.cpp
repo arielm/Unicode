@@ -55,7 +55,7 @@ void Sketch::setup(bool renewContext)
         
         for (auto &lineElement : rootElement.getChildren())
         {
-            auto text = trimText(lineElement->getValue());
+            auto text = trimText(lineElement->getValue()); // WE'RE NOT USING THE lang ATTRIBUTE
             sentences.push_back(text);
         }
     }
