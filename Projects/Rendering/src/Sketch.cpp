@@ -41,7 +41,7 @@ void Sketch::setup(bool renewContext)
         
         try
         {
-            font = fontManager.getFont("sans-serif", VirtualFont::STYLE_REGULAR, 27);
+            font = fontManager.getFont("sans-serif");
         }
         catch (exception &e)
         {
@@ -79,6 +79,9 @@ void Sketch::draw()
         float y = LINE_TOP;
         float left = 24;
         float right = windowSize.x - 24;
+        
+        float size = 27 + 15 * math<float>::sin(getElapsedSeconds() * 3); // OSCILLATING BETWEEN 12 AND 42
+        font->setSize(size);
         
         font->setColor(ColorA(1, 1, 1, 0.75f));
         

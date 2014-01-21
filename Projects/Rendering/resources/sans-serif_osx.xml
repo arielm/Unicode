@@ -7,7 +7,7 @@
 <VirtualFont>
     <!-- Undefined -->
     <Set>
-        <Ref uri="file:///System/Library/Fonts/Helvetica.dfont" face-index="4" scale="0.95" /><!-- FACE-INDEX 4 CORRESPOND TO Helvetica Regular -->
+        <Ref uri="file:///Library/Fonts/Arial.ttf" />
     </Set>
     <!-- Arabic, Persian -->
     <Set lang="ar:fa">
