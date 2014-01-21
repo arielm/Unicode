@@ -39,6 +39,7 @@ So far, [Harfbuzz](https://github.com/behdad/harfbuzz) and [ICU](http://site.icu
 12. [BIDI](Projects/BIDI)
 13. [LayoutCaching](Projects/LayoutCaching)
 14. [VirtualFont](https://github.com/arielm/Unicode/tree/feature/chr/Projects/VirtualFont)
+15. [Rendering](https://github.com/arielm/Unicode/tree/feature/chr/Projects/Rendering)
 
 More work remains, notably with line-breaking and OpenGL rendering...
 
