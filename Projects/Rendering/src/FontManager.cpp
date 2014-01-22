@@ -58,7 +58,7 @@ void FontManager::loadGlobalMap(InputSourceRef source)
             
             if (!name.empty())
             {
-                int style = parseStyle(fontElement.getAttributeValue<string>("style", "plain"));
+                int style = parseStyle(fontElement.getAttributeValue<string>("style", "regular"));
                 float baseSize = fontElement.getAttributeValue<float>("base-size", 0);
                 
                 for (auto &refElement : fontElement.getChildren())
@@ -231,7 +231,7 @@ int FontManager::parseStyle(const string &style)
     if (style == "italic") return VirtualFont::STYLE_ITALIC;
     if (style == "bold-italic") return VirtualFont::STYLE_BOLD_ITALIC;
     
-    return VirtualFont::STYLE_REGULAR;
+    return VirtualFont::STYLE_REGULAR; // DEFAULT
 }
 
 ActualFont::Descriptor FontManager::parseDescriptor(const XmlTree &element)
