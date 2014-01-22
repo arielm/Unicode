@@ -96,7 +96,7 @@ void ActualFont::reload()
         
         if (force_ucs2_charmap(ftFace))
         {
-            FT_Done_Face(ftFace);
+            FT_Done_Face(ftFace); ftFace = NULL;
             throw runtime_error("HARFBUZZ: FONT IS BROKEN OR IRRELEVANT");
         }
         
