@@ -58,6 +58,11 @@ void Sketch::setup(bool renewContext)
             auto text = trimText(lineElement->getValue()); // WE'RE NOT USING THE lang ATTRIBUTE
             sentences.push_back(text);
         }
+        
+        shuffleLines();
+        
+        fontSize = 27;
+        oscillate = true;
     }
     
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -65,6 +70,14 @@ void Sketch::setup(bool renewContext)
     
     glDisable(GL_DEPTH_TEST);
     glDepthMask(GL_FALSE);
+}
+
+void Sketch::update()
+{
+    if (oscillate)
+    {
+        fontSize = 27 + 15 * math<float>::sin(getElapsedSeconds() * 3); // OSCILLATING BETWEEN 12 AND 42
+    }
 }
 
 void Sketch::draw()
@@ -80,22 +93,11 @@ void Sketch::draw()
         float left = 24;
         float right = windowSize.x - 24;
         
-        float size = 27 + 15 * math<float>::sin(getElapsedSeconds() * 3); // OSCILLATING BETWEEN 12 AND 42
-        font->setSize(size);
-        
+        font->setSize(fontSize);
         font->setColor(ColorA(1, 1, 1, 0.75f));
         
-        for (int i = 0; i < LINE_COUNT; i++)
+        for (auto line : lines)
         {
-            string line;
-            int sentenceCount = rnd.nextInt(1, MAX_SENTENCES_PER_LINE);
-            
-            for (int j = 0; j < sentenceCount; j++)
-            {
-                line += sentences[rnd.nextInt(sentences.size())];
-                line += " ";
-            }
-            
             drawLineLayout(*fontManager.layoutCache.getLineLayout(font, line), y, left, right);
             y += LINE_SPACING;
         }
@@ -126,6 +128,25 @@ void Sketch::drawLineLayout(LineLayout &layout, float y, float left, float right
 void Sketch::drawHLine(float y)
 {
     gl::drawLine(Vec2f(-9999, y), Vec2f(+9999, y));
+}
+
+void Sketch::shuffleLines()
+{
+    lines.clear();
+    
+    for (int i = 0; i < LINE_COUNT; i++)
+    {
+        string line;
+        int sentenceCount = rnd.nextInt(1, MAX_SENTENCES_PER_LINE);
+        
+        for (int j = 0; j < sentenceCount; j++)
+        {
+            line += sentences[rnd.nextInt(sentences.size())];
+            line += " ";
+        }
+        
+        lines.push_back(line);
+    }
 }
 
 string Sketch::trimText(const string &text)

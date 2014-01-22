@@ -55,7 +55,7 @@ public:
     bool add(const std::string &lang, ActualFont *font);
     const FontSet& getFontSet(const std::string &lang) const;
     
-    const ActualFont::Metrics& getRawMetrics(const std::string &lang) const;
+    ActualFont::Metrics getRawMetrics(const std::string &lang) const;
     ActualFont::Metrics getMetrics(const std::string &lang) const;
     ActualFont::Metrics getMetrics(const Cluster &cluster) const;
 
@@ -83,8 +83,6 @@ protected:
     std::vector<ci::Vec2f> coords;
     std::vector<ci::ColorA> colors;
     
-    FontSet defaultFontSet;
-    ActualFont::Metrics defaultMetrics;
-    
+    FontSet defaultFontSet; // ALLOWING getFontSet() TO RETURN CONST VALUES
     std::map<std::string, FontSet> fontSetMap;
 };

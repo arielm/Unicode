@@ -19,7 +19,22 @@
  */
 
 /*
+ * - PRESS U TO CALL FontManager::unload()
+ * - PRESS R TO CALL FontManager::reload()
+ * - PRESS SPACE TO SHUFFLE THE LINES
+ * - PRESS SPACE TO TOGGLE SIZE OSCILLATION
+ */
+
+/*
  * TODO:
+ *
+ * 0) THERE SEEMS TO BE A PROBLEM WITH THAI DIACRITICS WHEN USING DroidSansThai.ttf
+ *
+ * 0) SOLUTION FOR OBTAINING FROM A LineLayout:
+ *    - THE "MAX" HEIGHT
+ *    - THE "MAX" ASCENT
+ *    - THE "MAX" DESCENT
+ *    - THE "MEAN LINE" (AVERAGE OF ALL THE STRIKETHROUGH-OFFSETS?)
  *
  * 0) InputSource: "internal" PROTOCOL:
  *    - TO BE USED FOR "LOADING FONTS COPIED FROM ASSETS" ON ANDROID
@@ -52,13 +67,20 @@ public:
     
     std::vector<std::string> sentences;
     ci::Rand rnd;
+    std::vector<std::string> lines;
+
+    float fontSize;
+    bool oscillate;
     
     Sketch(void *context, void *delegate = NULL);
     
     void setup(bool renewContext);
+    void update();
     void draw();
-    
+
     void drawLineLayout(LineLayout &layout, float y, float left, float right);
     static void drawHLine(float y);
+    
+    void shuffleLines();
     static std::string trimText(const std::string &text);
 };

@@ -64,27 +64,23 @@ const FontSet& VirtualFont::getFontSet(const string &lang) const
     return it->second;
 }
 
-const ActualFont::Metrics& VirtualFont::getRawMetrics(const string &lang) const
+ActualFont::Metrics VirtualFont::getRawMetrics(const string &lang) const
 {
-    auto it = fontSetMap.find(lang);
+    auto &fontSet = getFontSet(lang);
     
-    if (it == fontSetMap.end())
+    if (fontSet.empty())
     {
-        it = fontSetMap.find("");
-        
-        if (it == fontSetMap.end())
-        {
-            return defaultMetrics;
-        }
+        return ActualFont::Metrics();
     }
-    
-    return (*it->second.begin())->metrics;
+    else
+    {
+        return fontSet.front()->metrics;
+    }
 }
 
 ActualFont::Metrics VirtualFont::getMetrics(const string &lang) const
 {
-    auto tmp = getRawMetrics(lang);
-    return tmp * sizeRatio;
+    return getRawMetrics(lang) * sizeRatio;
 }
 
 ActualFont::Metrics VirtualFont::getMetrics(const Cluster &cluster) const

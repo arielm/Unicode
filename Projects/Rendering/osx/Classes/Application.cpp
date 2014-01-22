@@ -50,6 +50,14 @@ void Application::keyDown(KeyEvent event)
         case KeyEvent::KEY_r:
             target->fontManager.reload();
             break;
+
+        case KeyEvent::KEY_RETURN:
+            target->shuffleLines();
+            break;
+
+        case KeyEvent::KEY_SPACE:
+            target->oscillate ^= true;
+            break;
     }
 }
 
