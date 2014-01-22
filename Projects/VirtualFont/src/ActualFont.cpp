@@ -100,8 +100,6 @@ void ActualFont::reload()
             throw runtime_error("HARFBUZZ: FONT IS BROKEN OR IRRELEVANT");
         }
         
-        hbFont = hb_ft_font_create(ftFace, NULL);
-
         // ---
         
         /*
@@ -126,6 +124,11 @@ void ActualFont::reload()
         };
         
         FT_Set_Transform(ftFace, &matrix, NULL);
+        
+        /*
+         * THIS MUST TAKE PLACE AFTER ftFace IS PROPERLY SCALED AND TRANSFORMED
+         */
+        hbFont = hb_ft_font_create(ftFace, NULL);
         
         // ---
         
