@@ -44,7 +44,7 @@ langHelper(langHelper)
 
 TextLine TextItemizer::processLine(const string &input, const string &langHint, hb_direction_t overallDirection)
 {
-    TextLine line(input, overallDirection);
+    TextLine line(input, langHint, overallDirection);
 
     vector<ScriptAndLanguageItem> scriptAndLanguageItems;
     itemizeScriptAndLanguage(line.text, langHint, scriptAndLanguageItems);
@@ -52,15 +52,21 @@ TextLine TextItemizer::processLine(const string &input, const string &langHint, 
     vector<DirectionItem> directionItems;
     itemizeDirection(line.text, overallDirection, directionItems);
     
-    /*
-     * NECESSARY WHEN overallDirection IS UNDEFINED
-     */
-    if (!directionItems.empty())
+    mergeItems(scriptAndLanguageItems, directionItems, line.runs);
+    
+    if (!line.runs.empty())
     {
-        line.overallDirection = directionItems[0].data;
+        if (langHint.empty())
+        {
+            line.langHint = line.runs[0].language;
+        }
+        
+        if (overallDirection == HB_DIRECTION_INVALID)
+        {
+            line.overallDirection = line.runs[0].direction;
+        }
     }
     
-    mergeItems(scriptAndLanguageItems, directionItems, line.runs);
     return line;
 }
 

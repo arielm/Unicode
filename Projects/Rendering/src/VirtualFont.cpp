@@ -105,7 +105,7 @@ LineLayout* VirtualFont::createLineLayout(const string &text, const string &lang
 
 LineLayout* VirtualFont::createLineLayout(const TextLine &line)
 {
-    auto layout = new LineLayout(this, line.overallDirection);
+    auto layout = new LineLayout(this, line.langHint, line.overallDirection);
     
     map<uint32_t, Cluster> clusterMap;
     auto buffer = hb_buffer_create();

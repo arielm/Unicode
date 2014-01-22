@@ -15,11 +15,13 @@
 struct TextLine
 {
     UnicodeString text;
+    std::string langHint;
     hb_direction_t overallDirection;
     std::vector<TextRun> runs;
     
-    TextLine(const std::string &input, hb_direction_t overallDirection = HB_DIRECTION_INVALID)
+    TextLine(const std::string &input, const std::string &langHint, hb_direction_t overallDirection = HB_DIRECTION_INVALID)
     :
+    langHint(langHint),
     overallDirection(overallDirection)
     {
         text = UnicodeString::fromUTF8(input);
