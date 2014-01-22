@@ -16,7 +16,7 @@
     </Set>
     <!-- Hebrew, Yiddish -->
     <Set lang="he:yi">
-        <Ref uri="file:///Library/Fonts/ArialHB.ttf" />
+        <Ref uri="file:///Library/Fonts/Arial.ttf" />
     </Set>
     <!-- Japanese -->
     <Set lang="ja">
