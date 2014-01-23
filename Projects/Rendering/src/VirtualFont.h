@@ -67,10 +67,6 @@ public:
     bool add(const std::string &lang, ActualFont *font);
     const FontSet& getFontSet(const std::string &lang) const;
     
-    ActualFont::Metrics getRawMetrics(const std::string &lang) const;
-    ActualFont::Metrics getMetrics(const std::string &lang) const;
-    ActualFont::Metrics getMetrics(const Cluster &cluster) const;
-    
     float getAscent(const LineLayout &layout) const;
     float getDescent(const LineLayout &layout) const;
     float getMiddleLine(const LineLayout &layout) const;
@@ -78,8 +74,11 @@ public:
     float getOffsetX(const LineLayout &layout, Alignment align) const;
     float getOffsetY(const LineLayout &layout, Alignment align) const;
 
-    float getAdvance(const Cluster &cluster) const;
     float getAdvance(const LineLayout &layout) const;
+    float getAdvance(const Cluster &cluster) const;
+
+    ActualFont::Metrics getMetrics(const Cluster &cluster) const;
+    ActualFont::Metrics getMetrics(const std::string &lang) const;
 
     /*
      * THE RETURNED LineLayout INSTANCES ARE NOT MANAGED AND SHOULD BE DELETED BY THE CALLER

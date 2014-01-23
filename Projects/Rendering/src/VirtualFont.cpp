@@ -64,35 +64,6 @@ const FontSet& VirtualFont::getFontSet(const string &lang) const
     return it->second;
 }
 
-ActualFont::Metrics VirtualFont::getRawMetrics(const string &lang) const
-{
-    auto &fontSet = getFontSet(lang);
-    
-    if (fontSet.empty())
-    {
-        return ActualFont::Metrics();
-    }
-    else
-    {
-        return fontSet.front()->metrics;
-    }
-}
-
-ActualFont::Metrics VirtualFont::getMetrics(const string &lang) const
-{
-    return getRawMetrics(lang) * sizeRatio;
-}
-
-ActualFont::Metrics VirtualFont::getMetrics(const Cluster &cluster) const
-{
-    return cluster.font->metrics * sizeRatio;
-}
-
-float VirtualFont::getAscent(const LineLayout &layout) const
-{
-    return layout.maxAscent * sizeRatio;
-}
-
 float VirtualFont::getDescent(const LineLayout &layout) const
 {
     return layout.maxDescent * sizeRatio;
@@ -136,14 +107,38 @@ float VirtualFont::getOffsetY(const LineLayout &layout, Alignment align) const
     }
 }
 
+float VirtualFont::getAdvance(const LineLayout &layout) const
+{
+    return layout.advance * sizeRatio;
+}
+
 float VirtualFont::getAdvance(const Cluster &cluster) const
 {
     return cluster.combinedAdvance * sizeRatio;
 }
 
-float VirtualFont::getAdvance(const LineLayout &layout) const
+ActualFont::Metrics VirtualFont::getMetrics(const Cluster &cluster) const
 {
-    return layout.advance * sizeRatio;
+    return cluster.font->metrics * sizeRatio;
+}
+
+ActualFont::Metrics VirtualFont::getMetrics(const string &lang) const
+{
+    auto &fontSet = getFontSet(lang);
+    
+    if (fontSet.empty())
+    {
+        return ActualFont::Metrics();
+    }
+    else
+    {
+        return fontSet.front()->metrics * sizeRatio;
+    }
+}
+
+float VirtualFont::getAscent(const LineLayout &layout) const
+{
+    return layout.maxAscent * sizeRatio;
 }
 
 LineLayout* VirtualFont::createLineLayout(const string &text, const string &langHint, hb_direction_t overallDirection)
