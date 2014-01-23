@@ -58,8 +58,8 @@ void FontManager::loadGlobalMap(InputSourceRef source)
             
             if (!name.empty())
             {
-                int style = parseStyle(fontElement.getAttributeValue<string>("style", "regular"));
-                float baseSize = fontElement.getAttributeValue<float>("base-size", 0);
+                auto style = parseStyle(fontElement.getAttributeValue<string>("style", "regular"));
+                auto baseSize = fontElement.getAttributeValue<float>("base-size", 0);
                 
                 for (auto &refElement : fontElement.getChildren())
                 {
@@ -81,7 +81,7 @@ void FontManager::loadGlobalMap(InputSourceRef source)
     }
 }
 
-VirtualFont* FontManager::getFont(const std::string &name, int style, float baseSize)
+VirtualFont* FontManager::getFont(const std::string &name, VirtualFont::Style style, float baseSize)
 {
     auto it = globalMap.find(make_pair(name, style));
     
@@ -225,7 +225,7 @@ vector<string> FontManager::splitLanguages(const string &languages)
 	return split(languages, ":");
 }
 
-int FontManager::parseStyle(const string &style)
+VirtualFont::Style FontManager::parseStyle(const string &style)
 {
     if (style == "bold") return VirtualFont::STYLE_BOLD;
     if (style == "italic") return VirtualFont::STYLE_ITALIC;

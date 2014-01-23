@@ -20,13 +20,25 @@ typedef std::vector<ActualFont*> FontSet;
 class VirtualFont
 {
 public:
-    enum
+    typedef enum
     {
         STYLE_REGULAR,
         STYLE_BOLD,
         STYLE_ITALIC,
         STYLE_BOLD_ITALIC
-    };
+    }
+    Style;
+    
+    typedef enum
+    {
+        ALIGN_MIDDLE,
+        ALIGN_LEFT,
+        ALIGN_RIGHT,
+        ALIGN_TOP,
+        ALIGN_BASELINE,
+        ALIGN_BOTTOM
+    }
+    Alignment;
     
     struct Key
     {
@@ -58,12 +70,19 @@ public:
     ActualFont::Metrics getRawMetrics(const std::string &lang) const;
     ActualFont::Metrics getMetrics(const std::string &lang) const;
     ActualFont::Metrics getMetrics(const Cluster &cluster) const;
+    
+    float getAscent(const LineLayout &layout) const;
+    float getDescent(const LineLayout &layout) const;
+    float getMiddleLine(const LineLayout &layout) const;
+    
+    float getOffsetX(const LineLayout &layout, Alignment align) const;
+    float getOffsetY(const LineLayout &layout, Alignment align) const;
 
     float getAdvance(const Cluster &cluster) const;
     float getAdvance(const LineLayout &layout) const;
 
     /*
-     * THE RETURNED POINTERS ARE NOT MANAGED AND SHOULD BE DELETED BY THE CALLER
+     * THE RETURNED LineLayout INSTANCES ARE NOT MANAGED AND SHOULD BE DELETED BY THE CALLER
      */
     LineLayout* createLineLayout(const std::string &text, const std::string &langHint = "", hb_direction_t overallDirection = HB_DIRECTION_INVALID);
     LineLayout* createLineLayout(const TextLine &line);

@@ -88,6 +88,54 @@ ActualFont::Metrics VirtualFont::getMetrics(const Cluster &cluster) const
     return cluster.font->metrics * sizeRatio;
 }
 
+float VirtualFont::getAscent(const LineLayout &layout) const
+{
+    return layout.maxAscent * sizeRatio;
+}
+
+float VirtualFont::getDescent(const LineLayout &layout) const
+{
+    return layout.maxDescent * sizeRatio;
+}
+
+float VirtualFont::getMiddleLine(const LineLayout &layout) const
+{
+    return 0.5f * (layout.maxAscent - layout.maxDescent) * sizeRatio;
+}
+
+float VirtualFont::getOffsetX(const LineLayout &layout, Alignment align) const
+{
+    switch (align)
+    {
+        case ALIGN_RIGHT:
+            return -getAdvance(layout);
+            
+        case ALIGN_MIDDLE:
+            return -0.5f * getAdvance(layout);
+            
+        default:
+            return 0;
+    }
+}
+
+float VirtualFont::getOffsetY(const LineLayout &layout, Alignment align) const
+{
+    switch (align)
+    {
+        case ALIGN_TOP:
+            return +getAscent(layout);
+            
+        case ALIGN_MIDDLE:
+            return getMiddleLine(layout);
+
+        case ALIGN_BOTTOM:
+            return -getDescent(layout);
+
+        default:
+            return 0;
+    }
+}
+
 float VirtualFont::getAdvance(const Cluster &cluster) const
 {
     return cluster.combinedAdvance * sizeRatio;
@@ -118,13 +166,17 @@ LineLayout* VirtualFont::createLineLayout(const TextLine &line)
         {
             if (font->hbFont)
             {
+                layout->maxHeight = std::max(layout->maxHeight, font->metrics.height);
+                layout->maxAscent = std::max(layout->maxAscent, font->metrics.ascent);
+                layout->maxDescent = std::max(layout->maxDescent, font->metrics.descent);
+                
                 run.apply(line.text, buffer);
                 hb_shape(font->hbFont, buffer, NULL, 0);
                 
                 auto glyphCount = hb_buffer_get_length(buffer);
                 auto glyphInfos = hb_buffer_get_glyph_infos(buffer, NULL);
                 auto glyphPositions = hb_buffer_get_glyph_positions(buffer, NULL);
-                
+
                 bool hasMissingGlyphs = false;
                 
                 for (int i = 0; i < glyphCount; i++)

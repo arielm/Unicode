@@ -58,6 +58,22 @@ void Application::keyDown(KeyEvent event)
         case KeyEvent::KEY_SPACE:
             target->oscillate ^= true;
             break;
+            
+        case KeyEvent::KEY_t:
+            target->align = VirtualFont::ALIGN_TOP;
+            break;
+            
+        case KeyEvent::KEY_m:
+            target->align = VirtualFont::ALIGN_MIDDLE;
+            break;
+
+        case KeyEvent::KEY_b:
+            target->align = VirtualFont::ALIGN_BOTTOM;
+            break;
+            
+        case KeyEvent::KEY_ESCAPE:
+            quit();
+            break;
     }
 }
 

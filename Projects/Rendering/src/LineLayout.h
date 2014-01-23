@@ -56,16 +56,23 @@ struct LineLayout
     VirtualFont *font;
     std::string langHint;
     hb_direction_t overallDirection;
-    
-    float advance;
+
     std::vector<Cluster> clusters;
+
+    float advance;
+    float maxHeight;
+    float maxAscent;
+    float maxDescent;
     
     LineLayout(VirtualFont *font, const std::string &langHint, hb_direction_t overallDirection)
     :
     font(font),
     langHint(langHint),
     overallDirection(overallDirection),
-    advance(0)
+    advance(0),
+    maxHeight(0),
+    maxAscent(0),
+    maxDescent(0)
     {}
     
     void addCluster(const Cluster &cluster)

@@ -22,13 +22,22 @@
  *        ON THE LANGUAGE DETECTED FOR THE FIRST RUN
  *
  * 4) FIXING REGRESSION (INTRODUCED IN COMMIT 604c7ab) AFECTING (AT LEAST) HEBREW AND THAI
+ *
+ * 5) "COMPOSITE METRICS" FOR VirtualFont GIVEN A LineLayout:
+ *    - getHeight() WILL RETURN THE MAXIMUM HEIGHT
+ *    - getAscent() WILL RETURN THE MAXIMUM ASCENT
+ *    - getDescent() WILL RETURN THE MAXIMUM DESCENT
+ *    - getMiddleLine() WILL RETURN HALF OF getAscent() - getDescent():
+ *      THIS IS LESS IDEAL THAN USING THE STRIKETHROUGH-OFFSET,
+ *      BUT WE HAVE NO CHOICE IN THE CASE OF A "COMPOSITE" LineLayout
  */
 
 /*
  * - PRESS U TO CALL FontManager::unload()
  * - PRESS R TO CALL FontManager::reload()
- * - PRESS SPACE TO SHUFFLE THE LINES
+ * - PRESS ENTER TO SHUFFLE THE LINES
  * - PRESS SPACE TO TOGGLE SIZE OSCILLATION
+ * - PRESS T, M OR P TO SWITCH BETWEEN TOP, MIDDLE OR BOTTOM ALIGNMENT
  */
 
 /*
@@ -73,6 +82,7 @@ public:
     std::vector<std::string> lines;
 
     float fontSize;
+    VirtualFont::Alignment align;
     bool oscillate;
     
     Sketch(void *context, void *delegate = NULL);

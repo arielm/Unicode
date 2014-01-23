@@ -62,6 +62,7 @@ void Sketch::setup(bool renewContext)
         shuffleLines();
         
         fontSize = 27;
+        align = VirtualFont::ALIGN_BASELINE;
         oscillate = false;
     }
     
@@ -107,7 +108,7 @@ void Sketch::draw()
 void Sketch::drawLineLayout(LineLayout &layout, float y, float left, float right)
 {
     float x = (layout.overallDirection == HB_DIRECTION_RTL) ? (right - font->getAdvance(layout)) : left;
-    Vec2f position(x, y);
+    Vec2f position(x, y + font->getOffsetY(layout, align));
     
     font->begin();
     
