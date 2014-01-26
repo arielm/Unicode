@@ -122,6 +122,8 @@ public:
     ActualFont(std::shared_ptr<FreetypeHelper> ftHelper, const Descriptor &descriptor, float baseSize, bool useMipmap);
     ~ActualFont();
 
+    std::string getFullName();
+
     void reload();
     void unload();
     void discardTextures();

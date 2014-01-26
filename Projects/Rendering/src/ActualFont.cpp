@@ -73,6 +73,18 @@ ActualFont::~ActualFont()
     unload();
 }
 
+string ActualFont::getFullName()
+{
+    if (ftFace)
+    {
+        return string(ftFace->family_name) + " " + ftFace->style_name;
+    }
+    else
+    {
+        return "";
+    }
+}
+
 void ActualFont::reload()
 {
     if (!loaded)
@@ -155,7 +167,7 @@ void ActualFont::reload()
         // ---
         
         loaded = true;
-        LOGD << "LOADING FONT: " << ftFace->family_name << " "  << ftFace->style_name << " " << baseSize << endl;
+        LOGD << "LOADING ActualFont: " << getFullName() << " " << baseSize << endl;
     }
 }
 
@@ -164,7 +176,7 @@ void ActualFont::unload()
     if (loaded)
     {
         loaded = false;
-        LOGD << "UNLOADING FONT: " << ftFace->family_name << " "  << ftFace->style_name << " " << baseSize << endl;
+        LOGD << "UNLOADING ActualFont: " << getFullName() << " " << baseSize << endl;
 
         glyphCache.clear();
         standaloneTextures.clear();

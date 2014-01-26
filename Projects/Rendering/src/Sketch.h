@@ -30,6 +30,8 @@
  *    - getMiddleLine() WILL RETURN HALF OF getAscent() - getDescent():
  *      THIS IS LESS IDEAL THAN USING THE STRIKETHROUGH-OFFSET,
  *      BUT WE HAVE NO CHOICE IN THE CASE OF A "COMPOSITE" LineLayout
+ *
+ * 6) ActualFont::getFullName()
  */
 
 /*
@@ -43,10 +45,10 @@
 /*
  * TODO:
  *
- * 0) THE USAGE OF METRICS NEED TO BE REVISITED:
- *    - IT WILL NOT BE POSSIBLE TO GET ONE STRIKETHROUGH-OFFSET FOR A
- *      WHOLE LineLayout AND TO USE IT AS AN OFFSET PRIOR TO RENDERING
- *    - IDEM FOR ASCENT AND DESCENT...
+ * 0) VirtualFont::getFullName()
+ *    - PREREQUISITES:
+ *      - PARSING name AND style ATTRIBUTES IN VirtualFont ELEMENT
+ *        IN CASE A VirtualFont IS INSTANCIATED "DIRECTLY" VIA InputSource
  *
  * 0) InputSource: "internal" PROTOCOL:
  *    - TO BE USED FOR "LOADING FONTS COPIED FROM ASSETS" ON ANDROID
