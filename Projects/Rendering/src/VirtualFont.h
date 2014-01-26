@@ -77,8 +77,8 @@ public:
     float getAdvance(const LineLayout &layout) const;
     float getAdvance(const Cluster &cluster) const;
 
-    ActualFont::Metrics getMetrics(const Cluster &cluster) const;
-    ActualFont::Metrics getMetrics(const std::string &lang) const;
+    ActualFont::Metrics getMetrics(const Cluster &cluster) const; // RETURNS THE SIZED METRICS OF THE ActualFont USED BY cluster
+    ActualFont::Metrics getMetrics(const std::string &lang = "") const; // RETURNS THE SIZED METRICS OF THE FIRST ActualFont IN THE SET USED FOR lang
 
     /*
      * THE RETURNED LineLayout INSTANCES ARE NOT MANAGED AND SHOULD BE DELETED BY THE CALLER
