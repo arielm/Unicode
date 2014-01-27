@@ -50,7 +50,7 @@ public:
     LayoutCache(size_t capacity = 32 * 1024);
     
     /*
-     * THE RETURNED INSTANCE IS MANAGED BY LayoutCache AND WILL BE VALID AS LONG AS THE LATTER IS ALIVE
+     * THE CACHED INSTANCES ARE MANAGED BY LayoutCache AND WILL BE VALID AS LONG AS THE LATTER IS ALIVE
      */
     const LineLayout& getLineLayout(VirtualFont *virtualFont, const std::string &text, const std::string &langHint = "", hb_direction_t overallDirection = HB_DIRECTION_INVALID);
     

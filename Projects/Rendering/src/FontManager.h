@@ -44,18 +44,18 @@ public:
      * - MIPMAPS ARE ALLOWED
      * - VirtualFont::setSize() SHALL BE USED DURING THE FONT'S LIFE-CYCLE
      *
-     * FURTHER CALLS WILL BE CACHED.
-     * THE RETURNED INSTANCE IS MANAGED BY FontManager AND WILL BE VALID AS LONG AS THE LATTER IS ALIVE
+     * RESULTS ARE CACHED:
+     * INSTANCES ARE MANAGED BY FontManager AND WILL BE VALID AS LONG AS THE LATTER IS ALIVE
      */
-    VirtualFont* getFont(const std::string &name, VirtualFont::Style style = VirtualFont::STYLE_REGULAR, float baseSize = 0);
+    VirtualFont& getFont(const std::string &name, VirtualFont::Style style = VirtualFont::STYLE_REGULAR, float baseSize = 0);
     
     /*
      * LOWER-LEVEL METHOD, FOR ACCESSING A FONT DIRECTLY VIA ITS XML-DEFINITION
      *
-     * FURTHER CALLS WILL BE CACHED.
-     * THE RETURNED INSTANCE IS MANAGED BY FontManager AND WILL BE VALID AS LONG AS THE LATTER IS ALIVE
+     * RESULTS ARE CACHED:
+     * INSTANCES ARE MANAGED BY FontManager AND WILL BE VALID AS LONG AS THE LATTER IS ALIVE
      */
-    VirtualFont* getFont(chr::InputSourceRef source, float baseSize, bool useMipmap = false);
+    VirtualFont& getFont(chr::InputSourceRef source, float baseSize, bool useMipmap = false);
     
     void reload();
     void unload();

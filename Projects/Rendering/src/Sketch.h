@@ -35,8 +35,16 @@
  *    - ActualFont::getFullName()
  *    - VirtualFont::getCachedLineLayout()
  *
- * 7) C++ IMPROVEMENTS:
- *    - LayoutCache::getLineLayout() IS NOW RETURNING A CONST REFERENCE
+ * 7) CACHED RESULTS ARE NOW MORE FLEXIBLE:
+ *    - LayoutCache::getLineLayout() IS NOW RETURNING A CONST REFERENCE:
+ *      - ALLOWS FOR EASY COPY OF THE RETURNED LineLayout
+ *    - FontManager::getFont() METHODS ARE NOW RETURNING A REFERENCE:
+ *      - ALLOWS FOR EASY COPY OF THE RETURNED VirtualFont (WHICH IS A RELATIVELY LIGHTWEIGHT OBJECT BTW)
+ *    - BEWARE:
+ *      - UN-NECESSARY COPIES CAN OCCUR EASILY
+ *      - RECOMMENDED USAGE TO AVOID COPIES:
+ *        - auto &layout = layoutCache.getLineLayout(...);
+ *        - auto &font = fontManager.getFont(...);
  */
 
 /*

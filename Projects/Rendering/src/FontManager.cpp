@@ -49,6 +49,8 @@ void FontManager::loadGlobalMap(InputSourceRef source)
     /*
      * THE FOLLOWING IS NOT SUPPOSED TO THROW...
      * IN THE WORST-CASE: THE MAP WILL BE EMPTY OR PARTIAL
+     *
+     * TODO: THROW WHEN DOCUMENT IS INVALID
      */
     if (doc.hasChild("GlobalMap"))
     {
@@ -81,7 +83,7 @@ void FontManager::loadGlobalMap(InputSourceRef source)
     }
 }
 
-VirtualFont* FontManager::getFont(const std::string &name, VirtualFont::Style style, float baseSize)
+VirtualFont& FontManager::getFont(const std::string &name, VirtualFont::Style style, float baseSize)
 {
     auto it = globalMap.find(make_pair(name, style));
     
@@ -107,14 +109,14 @@ VirtualFont* FontManager::getFont(const std::string &name, VirtualFont::Style st
     throw invalid_argument("UNDEFINED FONT");
 }
 
-VirtualFont* FontManager::getFont(InputSourceRef source, float baseSize, bool useMipmap)
+VirtualFont& FontManager::getFont(InputSourceRef source, float baseSize, bool useMipmap)
 {
     VirtualFont::Key key(source->getURI(), baseSize, useMipmap);
     auto it = virtualFonts.find(key);
     
     if (it != virtualFonts.end())
     {
-        return it->second.get();
+        return *it->second.get();
     }
     else
     {
@@ -123,6 +125,8 @@ VirtualFont* FontManager::getFont(InputSourceRef source, float baseSize, bool us
         /*
          * THE FOLLOWING IS NOT SUPPOSED TO THROW...
          * IN THE WORST-CASE: THE FONT WILL BE "EMPTY" OR "PARTIAL"
+         *
+         * TODO: THROW WHEN DOCUMENT IS INVALID
          */
         if (doc.hasChild("VirtualFont"))
         {
@@ -162,10 +166,10 @@ VirtualFont* FontManager::getFont(InputSourceRef source, float baseSize, bool us
                 }
             }
             
-            return font;
+            return *font;
         }
         
-        return NULL; // FIXME
+        throw invalid_argument("INVALID FONT-DEFINITION");
     }
 }
 

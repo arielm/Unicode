@@ -84,13 +84,13 @@ public:
     ActualFont::Metrics getMetrics(const std::string &lang = "") const; // RETURNS THE SIZED METRICS OF THE FIRST ActualFont IN THE SET USED FOR lang
 
     /*
-     * THE RETURNED LineLayout INSTANCES ARE NOT MANAGED AND SHOULD BE DELETED BY THE CALLER
+     * THE RETURNED INSTANCES ARE NOT MANAGED AND SHOULD BE DELETED BY THE CALLER
      */
     LineLayout* createLineLayout(const std::string &text, const std::string &langHint = "", hb_direction_t overallDirection = HB_DIRECTION_INVALID);
     LineLayout* createLineLayout(const TextLine &line);
     
     /*
-     * THE RETURNED INSTANCE IS MANAGED BY LayoutCache AND WILL BE VALID AS LONG AS THE LATTER IS ALIVE (I.E. AS LONG AS FontManager IS ALIVE)
+     * THE CACHED INSTANCES ARE MANAGED BY LayoutCache AND WILL BE VALID AS LONG AS THE LATTER IS ALIVE (I.E. AS LONG AS FontManager IS ALIVE)
      */
     const LineLayout& getCachedLineLayout(const std::string &text, const std::string &langHint = "", hb_direction_t overallDirection = HB_DIRECTION_INVALID);
     

@@ -41,7 +41,11 @@ void Sketch::setup(bool renewContext)
         
         try
         {
-            font = fontManager.getFont("sans-serif");
+            font = &fontManager.getFont("sans-serif");
+            
+            drawLineLayout(font->getCachedLineLayout("abc"), 0, 0, 0);
+            drawLineLayout(font->getCachedLineLayout("abc"), 0, 0, 0);
+            exit(0);
         }
         catch (exception &e)
         {
@@ -107,6 +111,8 @@ void Sketch::draw()
 
 void Sketch::drawLineLayout(const LineLayout &layout, float y, float left, float right)
 {
+    cout << &layout << endl;
+    
     float x = (layout.overallDirection == HB_DIRECTION_RTL) ? (right - font->getAdvance(layout)) : left;
     Vec2f position(x, y + font->getOffsetY(layout, align));
     
