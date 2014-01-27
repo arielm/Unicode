@@ -20,10 +20,6 @@
 #include <set>
 #include <string>
 
-#ifndef DEFAULT_LANGUAGES
-#define DEFAULT_LANGUAGES "en:zh-cn"
-#endif
-
 class LangHelper
 {
 public:

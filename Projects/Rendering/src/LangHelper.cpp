@@ -17,6 +17,8 @@
 
 using namespace std;
 
+const std::string DEFAULT_LANGUAGES = "en:zh-cn"; // GIVING PRIORITY (BY DEFAULT) TO CHINESE OVER JAPANESE
+
 struct HBScriptForLang
 {
     const char lang[7];
