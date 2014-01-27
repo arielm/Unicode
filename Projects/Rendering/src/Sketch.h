@@ -58,10 +58,19 @@
 /*
  * TODO:
  *
+ * 0) FontManager::getFont()
+ *    - PROVIDE FASTER LOOKUPS (BASED on name AND style)
+ *    - XML FORMAT:
+ *      - POSSIBILITY TO DEFINE ALIASES, E.G.
+ *        - "Arial" COULD BE AN ALIAS FOR "sans-serif"
+ *        - "Times" COULD BE AN ALIAS FOR "serif"
+ *      - POSSIBILITY TO DEFINE A "GLOBAL FALLBACK" FONT, E.G. "sans-serif"
+ *      - THEN: getFont() WOULD CRASH ONLY WHEN NO ALIASES NOR "GLOBAL FALLBACK" FONT ARE DEFINED
+ *
  * 0) VirtualFont::getFullName()
- *    - PREREQUISITES:
- *      - PARSING name AND style ATTRIBUTES IN VirtualFont ELEMENT
- *        IN CASE A VirtualFont IS INSTANCIATED "DIRECTLY" VIA InputSource
+ *    - DEPENDING ON HOW THE FONT WAS INITIATED, WILL USE EITHER:
+ *      - THE name AND style ATTRIBUTES
+ *      - THE INPUT-SOURCE URI
  *
  * 0) InputSource: "internal" PROTOCOL:
  *    - TO BE USED FOR "LOADING FONTS COPIED FROM ASSETS" ON ANDROID
