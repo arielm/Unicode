@@ -105,7 +105,7 @@ void Sketch::draw()
     }
 }
 
-void Sketch::drawLineLayout(LineLayout &layout, float y, float left, float right)
+void Sketch::drawLineLayout(const LineLayout &layout, float y, float left, float right)
 {
     float x = (layout.overallDirection == HB_DIRECTION_RTL) ? (right - font->getAdvance(layout)) : left;
     Vec2f position(x, y + font->getOffsetY(layout, align));

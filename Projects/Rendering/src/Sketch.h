@@ -21,7 +21,7 @@
  *      - THE RESULTING LineLayout WILL RECEIVE A langHint VALUE BASED
  *        ON THE LANGUAGE DETECTED FOR THE FIRST RUN
  *
- * 4) FIXING REGRESSION (INTRODUCED IN COMMIT 604c7ab) AFECTING (AT LEAST) HEBREW AND THAI
+ * 4) FIXING REGRESSION (INTRODUCED IN COMMIT 604c7ab) AFFECTING (AT LEAST) HEBREW AND THAI
  *
  * 5) "COMPOSITE METRICS" FOR VirtualFont GIVEN A LineLayout:
  *    - getHeight() WILL RETURN THE MAXIMUM HEIGHT
@@ -93,7 +93,7 @@ public:
     void update();
     void draw();
 
-    void drawLineLayout(LineLayout &layout, float y, float left, float right);
+    void drawLineLayout(const LineLayout &layout, float y, float left, float right);
     static void drawHLine(float y);
     
     void shuffleLines();

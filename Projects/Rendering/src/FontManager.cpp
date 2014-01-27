@@ -104,7 +104,7 @@ VirtualFont* FontManager::getFont(const std::string &name, VirtualFont::Style st
         return getFont(InputSource::get(uri), baseSize, useMipmap);
     }
     
-    throw invalid_argument("UNDEFINED FONT");;
+    throw invalid_argument("UNDEFINED FONT");
 }
 
 VirtualFont* FontManager::getFont(InputSourceRef source, float baseSize, bool useMipmap)
