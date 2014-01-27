@@ -67,12 +67,14 @@ public:
     bool add(const std::string &lang, ActualFont *font);
     const FontSet& getFontSet(const std::string &lang) const;
     
+    float getHeight(const LineLayout &layout) const;
     float getAscent(const LineLayout &layout) const;
     float getDescent(const LineLayout &layout) const;
     float getMiddleLine(const LineLayout &layout) const;
     
     float getOffsetX(const LineLayout &layout, Alignment align) const;
     float getOffsetY(const LineLayout &layout, Alignment align) const;
+    ci::Vec2f getOffset(const LineLayout &layout, Alignment alignX, Alignment alignY) const;
 
     float getAdvance(const LineLayout &layout) const;
     float getAdvance(const Cluster &cluster) const;

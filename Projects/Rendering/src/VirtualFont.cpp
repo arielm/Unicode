@@ -107,6 +107,11 @@ float VirtualFont::getOffsetY(const LineLayout &layout, Alignment align) const
     }
 }
 
+Vec2f VirtualFont::getOffset(const LineLayout &layout, Alignment alignX, Alignment alignY) const
+{
+    return Vec2f(getOffsetX(layout, alignX), getOffsetY(layout, alignY));
+}
+
 float VirtualFont::getAdvance(const LineLayout &layout) const
 {
     return layout.advance * sizeRatio;
@@ -134,6 +139,11 @@ ActualFont::Metrics VirtualFont::getMetrics(const string &lang) const
     {
         return fontSet.front()->metrics * sizeRatio;
     }
+}
+
+float VirtualFont::getHeight(const LineLayout &layout) const
+{
+    return layout.maxHeight * sizeRatio;
 }
 
 float VirtualFont::getAscent(const LineLayout &layout) const
