@@ -99,7 +99,7 @@ void Sketch::draw()
         
         for (auto line : lines)
         {
-            drawLineLayout(fontManager.layoutCache.getLineLayout(font, line), y, left, right);
+            drawLineLayout(font->getCachedLineLayout(line), y, left, right);
             y += LINE_SPACING;
         }
     }

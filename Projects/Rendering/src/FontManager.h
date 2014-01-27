@@ -8,8 +8,7 @@
 
 #pragma once
 
-#include "TextItemizer.h"
-#include "LayoutCache.h"
+#include "VirtualFont.h"
 
 #include "chronotext/InputSource.h"
 

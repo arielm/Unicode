@@ -14,13 +14,14 @@
 #pragma once
 
 #include "LineLayout.h"
-#include "VirtualFont.h"
 
 #include <boost/bimap.hpp>
 #include <boost/bimap/list_of.hpp>
 #include <boost/bimap/set_of.hpp>
 
 #include <memory>
+
+class VirtualFont;
 
 class LayoutCache
 {
@@ -49,7 +50,7 @@ public:
     LayoutCache(size_t capacity = 32 * 1024);
     
     /*
-     * THE RETURNED REFERENCE IS MANAGED BY LayoutCache AND WILL BE VALID AS LONG AS THE LATTER IS ALIVE
+     * THE RETURNED INSTANCE IS MANAGED BY LayoutCache AND WILL BE VALID AS LONG AS THE LATTER IS ALIVE
      */
     const LineLayout& getLineLayout(VirtualFont *virtualFont, const std::string &text, const std::string &langHint = "", hb_direction_t overallDirection = HB_DIRECTION_INVALID);
     

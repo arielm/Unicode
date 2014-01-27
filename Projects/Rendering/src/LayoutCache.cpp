@@ -7,6 +7,7 @@
  */
 
 #include "LayoutCache.h"
+#include "VirtualFont.h"
 
 using namespace std;
 

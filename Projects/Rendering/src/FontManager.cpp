@@ -38,7 +38,7 @@ itemizer(langHelper)
 #elif defined(CINDER_ANDROID)
     platform = PLATFORM_ANDROID;
 #else
-    throw;
+    throw; // TODO: PROVIDE MESSAGE
 #endif
 }
 
@@ -126,7 +126,7 @@ VirtualFont* FontManager::getFont(InputSourceRef source, float baseSize, bool us
          */
         if (doc.hasChild("VirtualFont"))
         {
-            auto font = new VirtualFont(itemizer, baseSize);
+            auto font = new VirtualFont(layoutCache, itemizer, baseSize);
             virtualFonts[key] = unique_ptr<VirtualFont>(font);
 
             for (auto fontElement : doc.getChild("VirtualFont"))
@@ -165,7 +165,7 @@ VirtualFont* FontManager::getFont(InputSourceRef source, float baseSize, bool us
             return font;
         }
         
-        return NULL;
+        return NULL; // FIXME
     }
 }
 

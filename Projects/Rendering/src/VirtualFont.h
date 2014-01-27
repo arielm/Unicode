@@ -9,7 +9,7 @@
 #pragma once
 
 #include "ActualFont.h"
-#include "LineLayout.h"
+#include "LayoutCache.h"
 #include "TextItemizer.h"
 
 #include <set>
@@ -59,10 +59,11 @@ public:
         }
     };
     
+    LayoutCache &layoutCache;
     TextItemizer &itemizer;
     float baseSize;
     
-    VirtualFont(TextItemizer &itemizer, float baseSize);
+    VirtualFont(LayoutCache &layoutCache, TextItemizer &itemizer, float baseSize);
     
     bool add(const std::string &lang, ActualFont *font);
     const FontSet& getFontSet(const std::string &lang) const;
@@ -87,6 +88,11 @@ public:
      */
     LineLayout* createLineLayout(const std::string &text, const std::string &langHint = "", hb_direction_t overallDirection = HB_DIRECTION_INVALID);
     LineLayout* createLineLayout(const TextLine &line);
+    
+    /*
+     * THE RETURNED INSTANCE IS MANAGED BY LayoutCache AND WILL BE VALID AS LONG AS THE LATTER IS ALIVE (I.E. AS LONG AS FontManager IS ALIVE)
+     */
+    const LineLayout& getCachedLineLayout(const std::string &text, const std::string &langHint = "", hb_direction_t overallDirection = HB_DIRECTION_INVALID);
     
     void setSize(float size);
     void setColor(const ci::ColorA &color);

@@ -11,8 +11,9 @@
 using namespace std;
 using namespace ci;
 
-VirtualFont::VirtualFont(TextItemizer &itemizer, float baseSize)
+VirtualFont::VirtualFont(LayoutCache &layoutCache, TextItemizer &itemizer, float baseSize)
 :
+layoutCache(layoutCache),
 itemizer(itemizer),
 baseSize(baseSize)
 {
@@ -244,6 +245,11 @@ LineLayout* VirtualFont::createLineLayout(const TextLine &line)
     
     hb_buffer_destroy(buffer);
     return layout;
+}
+
+const LineLayout& VirtualFont::getCachedLineLayout(const string &text, const string &langHint, hb_direction_t overallDirection)
+{
+    return layoutCache.getLineLayout(this, text, langHint, overallDirection);
 }
 
 void VirtualFont::setSize(float newSize)
