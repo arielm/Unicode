@@ -45,6 +45,8 @@
  *      - RECOMMENDED USAGE TO AVOID COPIES:
  *        - auto &layout = layoutCache.getLineLayout(...);
  *        - auto &font = fontManager.getFont(...);
+ *
+ * 8) SETTING DEFAULT COLOR FOR VirtualFont
  */
 
 /*

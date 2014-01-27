@@ -38,7 +38,7 @@ itemizer(langHelper)
 #elif defined(CINDER_ANDROID)
     platform = PLATFORM_ANDROID;
 #else
-    throw; // TODO: PROVIDE MESSAGE
+    throw;
 #endif
 }
 

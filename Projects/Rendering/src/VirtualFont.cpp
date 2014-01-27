@@ -22,7 +22,7 @@ baseSize(baseSize)
     colors.reserve(4);
     
     setSize(baseSize);
-    // TODO: SET DEFAULT COLOR
+    setColor(ColorA(0, 0, 0, 1));
 }
 
 bool VirtualFont::add(const string &lang, ActualFont *font)
