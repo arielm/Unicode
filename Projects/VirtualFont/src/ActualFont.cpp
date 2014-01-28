@@ -81,7 +81,7 @@ void ActualFont::reload()
         
         if (descriptor.forceMemoryLoad || !descriptor.source->isFile())
         {
-            memoryBuffer = descriptor.source->getBuffer();
+            memoryBuffer = descriptor.source->loadDataSource()->getBuffer();
             error = FT_New_Memory_Face(ftHelper->getLib(), (FT_Byte*)memoryBuffer.getData(), memoryBuffer.getDataSize(), descriptor.faceIndex, &ftFace);
         }
         else
