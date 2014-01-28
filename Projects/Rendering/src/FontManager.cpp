@@ -85,15 +85,25 @@ void FontManager::loadGlobalMap(InputSourceRef source)
 
 VirtualFont& FontManager::getFont(const std::string &name, VirtualFont::Style style, float baseSize)
 {
-    auto it = globalMap.find(make_pair(name, style));
+    auto key = make_tuple(name, style, baseSize);
+    auto it1 = shortcuts.find(key);
     
-    if (it != globalMap.end())
+    if (it1 != shortcuts.end())
+    {
+        return *it1->second;
+    }
+    
+    // ---
+    
+    auto it2 = globalMap.find(make_pair(name, style));
+    
+    if (it2 != globalMap.end())
     {
         bool useMipmap = false;
         
         if (baseSize == 0)
         {
-            baseSize = it->second.second;
+            baseSize = it2->second.second;
             useMipmap = true;
         }
         
@@ -102,8 +112,15 @@ VirtualFont& FontManager::getFont(const std::string &name, VirtualFont::Style st
             throw invalid_argument("INVALID FONT-SIZE");
         }
         
-        auto uri = it->second.first;
-        return getFont(InputSource::get(uri), baseSize, useMipmap);
+        auto uri = it2->second.first;
+        auto &font = getFont(InputSource::get(uri), baseSize, useMipmap); // CAN THROW
+        
+        /*
+         * ALLOWING CACHING UPON FURTHER ACCESS
+         */
+        shortcuts[key] = &font;
+        
+        return font;
     }
     
     throw invalid_argument("UNDEFINED FONT");

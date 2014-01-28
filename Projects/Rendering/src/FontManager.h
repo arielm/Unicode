@@ -63,7 +63,9 @@ public:
     
 protected:
     int platform;
+    
     std::map<std::pair<std::string, VirtualFont::Style>, std::pair<std::string, float>> globalMap;
+    std::map<std::tuple<std::string, VirtualFont::Style, float>, VirtualFont*> shortcuts;
     
     std::map<VirtualFont::Key, std::unique_ptr<VirtualFont>> virtualFonts;
     std::map<ActualFont::Key, std::unique_ptr<ActualFont>> actualFonts;
