@@ -50,6 +50,10 @@
  *
  * 9) FontManager::getFont()
  *    - FASTER LOOKUPS VIA THE shortcuts MAP
+ *    - BASIC SYSTEM FOR HANDLING UNDEFINED FONT NAMES AND STYLES:
+ *      - getFont() IS NOW SUPPOSED TO CRASH ONLY UPON MALFORMED XML
+ *        OR WHEN A FONT NAME/STYLE COMBINATION DOES NOT EXIST
+ *        AND NO "DEFAULT FONT" HAS BEEN DEFINED
  *
  * 10) PREPARING THE TERRAIN FOR OPTIMIZED DRAWING:
  *     - DRAWING THE HORIZONTAL-LINES AND THE TEXT SEPARATELY
@@ -70,11 +74,10 @@
  *
  * 0) FontManager::getFont()
  *    - XML FORMAT:
+ *      - "DEFAULT FONT" SYSTEM SHOULD BE DEFINED AT THE XML-LEVEL
  *      - POSSIBILITY TO DEFINE ALIASES, E.G.
  *        - "Arial" COULD BE AN ALIAS FOR "sans-serif"
  *        - "Times" COULD BE AN ALIAS FOR "serif"
- *      - POSSIBILITY TO DEFINE A "GLOBAL FALLBACK" FONT, E.G. "sans-serif"
- *      - THEN: getFont() WOULD CRASH ONLY WHEN NO ALIASES NOR "GLOBAL FALLBACK" FONT ARE DEFINED
  *
  * 0) VirtualFont::getFullName()
  *    - DEPENDING ON HOW THE FONT WAS INITIATED, WILL USE EITHER:
@@ -107,8 +110,6 @@ class Sketch : public chr::CinderSketch
 public:
     FontManager fontManager;
     
-    VirtualFont *font;
-    
     std::vector<std::string> sentences;
     ci::Rand rnd;
     std::vector<std::string> lines;
@@ -123,7 +124,7 @@ public:
     void update();
     void draw();
 
-    void drawTextLine(const std::string &text, float y, float left, float right);
+    void drawTextLine(VirtualFont &font, const std::string &text, float y, float left, float right);
     static void drawHLines(int count, float top, float spacing);
     static void drawHLine(float y);
     

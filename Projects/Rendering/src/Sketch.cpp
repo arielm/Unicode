@@ -25,8 +25,7 @@ const int MAX_SENTENCES_PER_LINE = 3;
 
 Sketch::Sketch(void *context, void *delegate)
 :
-CinderSketch(context, delegate),
-font(NULL)
+CinderSketch(context, delegate)
 {}
 
 void Sketch::setup(bool renewContext)
@@ -38,16 +37,7 @@ void Sketch::setup(bool renewContext)
     else
     {
         fontManager.loadGlobalMap(InputSource::getResource("Fonts.xml"));
-        
-        try
-        {
-            font = &fontManager.getFont("sans-serif");
-        }
-        catch (exception &e)
-        {
-            LOGD << "CAN'T LOAD FONT: " << e.what() << endl;
-        }
-        
+
         // ---
         
         XmlTree doc(InputSource::loadResource("Text.xml"));
@@ -58,6 +48,8 @@ void Sketch::setup(bool renewContext)
             auto text = trimText(lineElement->getValue()); // WE'RE NOT USING THE lang ATTRIBUTE
             sentences.push_back(text);
         }
+        
+        // ---
         
         shuffleLines();
         
@@ -91,39 +83,43 @@ void Sketch::draw()
     // ---
     
     drawHLines(lines.size(), LINE_TOP, LINE_SPACING);
-    
-    if (font)
+
+    float y = LINE_TOP;
+    float left = 24;
+    float right = windowSize.x - 24;
+
+    try
     {
-        float y = LINE_TOP;
-        float left = 24;
-        float right = windowSize.x - 24;
+        auto &font = fontManager.getFont("sans-serif"); // CAN THROW
         
-        font->setSize(fontSize);
-        font->setColor(ColorA(1, 1, 1, 0.75f));
-
-        font->begin();
-
+        font.setSize(fontSize);
+        font.setColor(ColorA(1, 1, 1, 0.75f));
+        
+        font.begin();
+        
         for (auto &line : lines)
         {
-            drawTextLine(line, y, left, right);
+            drawTextLine(font, line, y, left, right);
             y += LINE_SPACING;
         }
         
-        font->end();
+        font.end();
     }
+    catch (exception &e)
+    {}
 }
 
-void Sketch::drawTextLine(const string &text, float y, float left, float right)
+void Sketch::drawTextLine(VirtualFont &font, const string &text, float y, float left, float right)
 {
-    auto &layout = font->getCachedLineLayout(text);
+    auto &layout = font.getCachedLineLayout(text);
     
-    float x = (layout.overallDirection == HB_DIRECTION_RTL) ? (right - font->getAdvance(layout)) : left;
-    Vec2f position(x, y + font->getOffsetY(layout, align));
+    float x = (layout.overallDirection == HB_DIRECTION_RTL) ? (right - font.getAdvance(layout)) : left;
+    Vec2f position(x, y + font.getOffsetY(layout, align));
     
     for (auto cluster : layout.clusters)
     {
-        font->drawCluster(cluster, position);
-        position.x += font->getAdvance(cluster);
+        font.drawCluster(cluster, position);
+        position.x += font.getAdvance(cluster);
     }
 }
 

@@ -24,6 +24,12 @@ enum
 
 const string PLATFORM_NAMES[4] = {"osx", "windows", "ios", "android"};
 
+/*
+ * FIXME: SHOULD BE DEFINED AT THE XML-LEVEL
+ */
+const string DEFAULT_FONT_NAME = "sans-serif";
+const VirtualFont::Style DEFAULT_FONT_STYLE = VirtualFont::STYLE_REGULAR;
+
 FontManager::FontManager()
 :
 ftHelper(make_shared<FreetypeHelper>()),
@@ -123,6 +129,25 @@ VirtualFont& FontManager::getFont(const std::string &name, VirtualFont::Style st
         return font;
     }
     
+    /*
+     * BASIC SYSTEM FOR HANDLING UNDEFINED FONT NAMES AND STYLES
+     */
+    if (name != DEFAULT_FONT_NAME)
+    {
+        auto &font = getFont(DEFAULT_FONT_NAME, get<1>(key), get<2>(key));
+        shortcuts[key] = &font;
+        return font;
+    }
+    else if (style != DEFAULT_FONT_STYLE)
+    {
+        auto &font = getFont(DEFAULT_FONT_NAME, DEFAULT_FONT_STYLE, get<2>(key));
+        shortcuts[key] = &font;
+        return font;
+    }
+    
+    /*
+     * SHOULD NOT OCCUR, UNLESS NO "DEFAULT FONT" IS DEFINED
+     */
     throw invalid_argument("UNDEFINED FONT");
 }
 
