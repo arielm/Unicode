@@ -23,6 +23,8 @@ baseSize(baseSize)
     
     setSize(baseSize);
     setColor(ColorA(0, 0, 0, 1));
+    
+    std::cout << "VirtualFont " << (void*)this << std::endl;
 }
 
 bool VirtualFont::add(const string &lang, ActualFont *font)

@@ -47,6 +47,14 @@
  *        - auto &font = fontManager.getFont(...);
  *
  * 8) SETTING DEFAULT COLOR FOR VirtualFont
+ *
+ * 9) FontManager::getFont()
+ *    - FASTER LOOKUPS VIA THE shortcuts MAP
+ *
+ * 10) PREPARING THE TERRAIN FOR OPTIMIZED DRAWING:
+ *     - DRAWING THE HORIZONTAL-LINES AND THE TEXT SEPRARATELY
+ *     - ONE SINGLE VirtualFont::begin() AND VirtualFont::end() PAIRS ARE USED
+ *       - THE NEXT STEP WILL BE TO USE SYSTEM FOR GROUPING SIMILAR GLYPH TEXTURES...
  */
 
 /*
@@ -61,7 +69,6 @@
  * TODO:
  *
  * 0) FontManager::getFont()
- *    - PROVIDE FASTER LOOKUPS (BASED on name AND style)
  *    - XML FORMAT:
  *      - POSSIBILITY TO DEFINE ALIASES, E.G.
  *        - "Arial" COULD BE AN ALIAS FOR "sans-serif"
@@ -101,7 +108,6 @@ public:
     FontManager fontManager;
     
     VirtualFont *font;
-    std::vector<std::unique_ptr<LineLayout>> lineLayouts;
     
     std::vector<std::string> sentences;
     ci::Rand rnd;
@@ -117,7 +123,8 @@ public:
     void update();
     void draw();
 
-    void drawLineLayout(const LineLayout &layout, float y, float left, float right);
+    void drawTextLine(const std::string &text, float y, float left, float right);
+    static void drawHLines(int count, float top, float spacing);
     static void drawHLine(float y);
     
     void shuffleLines();

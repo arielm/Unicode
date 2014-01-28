@@ -63,7 +63,7 @@ void Sketch::setup(bool renewContext)
         
         fontSize = 27;
         align = VirtualFont::ALIGN_BASELINE;
-        oscillate = false;
+        oscillate = true;//false;
     }
     
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -88,6 +88,10 @@ void Sketch::draw()
     Vec2i windowSize = getWindowSize();
     gl::setMatricesWindow(windowSize, true);
     
+    // ---
+    
+    drawHLines(lines.size(), LINE_TOP, LINE_SPACING);
+    
     if (font)
     {
         float y = LINE_TOP;
@@ -96,34 +100,41 @@ void Sketch::draw()
         
         font->setSize(fontSize);
         font->setColor(ColorA(1, 1, 1, 0.75f));
-        
-        for (auto line : lines)
+
+        font->begin();
+
+        for (auto &line : lines)
         {
-            drawLineLayout(font->getCachedLineLayout(line), y, left, right);
+            drawTextLine(line, y, left, right);
             y += LINE_SPACING;
         }
+        
+        font->end();
     }
 }
 
-void Sketch::drawLineLayout(const LineLayout &layout, float y, float left, float right)
+void Sketch::drawTextLine(const string &text, float y, float left, float right)
 {
+    auto &layout = font->getCachedLineLayout(text);
+    
     float x = (layout.overallDirection == HB_DIRECTION_RTL) ? (right - font->getAdvance(layout)) : left;
     Vec2f position(x, y + font->getOffsetY(layout, align));
-    
-    font->begin();
     
     for (auto cluster : layout.clusters)
     {
         font->drawCluster(cluster, position);
         position.x += font->getAdvance(cluster);
     }
-    
-    font->end();
-    
-    // ---
-    
+}
+
+void Sketch::drawHLines(int count, float top, float spacing)
+{
     glColor4f(1, 0.75f, 0, 0.25f);
-    drawHLine(y);
+    
+    for (int i = 0; i < count; i++)
+    {
+        drawHLine(top + spacing * i);
+    }
 }
 
 void Sketch::drawHLine(float y)
