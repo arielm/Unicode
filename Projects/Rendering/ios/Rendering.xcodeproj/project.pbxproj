@@ -199,17 +199,7 @@
 			children = (
 				A88E5BA91884464B00E737F3 /* Sketch.h */,
 				A88E5BA81884464B00E737F3 /* Sketch.cpp */,
-				A838FE4E187F6F430074BFF0 /* scrptrun.h */,
-				A838FE4D187F6F430074BFF0 /* scrptrun.cpp */,
-				A862B779188F442A00818B89 /* LangHelper.h */,
-				A862B778188F442A00818B89 /* LangHelper.cpp */,
-				A8B2BBF2188400BD0053DC36 /* TextRun.h */,
-				A8B2BBF1188400BD0053DC36 /* TextLine.h */,
-				A838FE52187F6F430074BFF0 /* TextItemizer.h */,
-				A838FE51187F6F430074BFF0 /* TextItemizer.cpp */,
-				A8B2BBF0188400BD0053DC36 /* LayoutCache.h */,
-				A8B2BBEF188400BD0053DC36 /* LayoutCache.cpp */,
-				A838FE4B187F6F180074BFF0 /* Rendering */,
+				A8FCEB681897C2F40087670B /* Unicode */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -242,25 +232,6 @@
 				A82C900816DF91D300FF519C /* Default-568h@2x.png */,
 			);
 			path = Resources;
-			sourceTree = "<group>";
-		};
-		A838FE4B187F6F180074BFF0 /* Rendering */ = {
-			isa = PBXGroup;
-			children = (
-				A8C73CC618549F2E0081E110 /* FreetypeHelper.h */,
-				A8C73CC718549F2E0081E110 /* FreetypeHelper.cpp */,
-				A8F9B9FE186B31EF00724EED /* FontManager.h */,
-				A8F9B9FB186B31EF00724EED /* FontManager.cpp */,
-				A8F9BBD9186C982B006E9350 /* ActualFont.h */,
-				A8F9BBD8186C982B006E9350 /* ActualFont.cpp */,
-				A8F9BA02186B31EF00724EED /* VirtualFont.h */,
-				A8F9B9FD186B31EF00724EED /* VirtualFont.cpp */,
-				A8B2BBF4188400EF0053DC36 /* LineLayout.h */,
-				A838FE57187F6F950074BFF0 /* GlyphData.h */,
-				A838FE5B187F6F950074BFF0 /* ReloadableTexture.h */,
-				A838FE5A187F6F950074BFF0 /* ReloadableTexture.cpp */,
-			);
-			name = Rendering;
 			sourceTree = "<group>";
 		};
 		A88E5A79188445C900E737F3 /* chronotext */ = {
@@ -356,6 +327,35 @@
 				A88E5BAD188448B000E737F3 /* AppDelegate.mm */,
 			);
 			path = Classes;
+			sourceTree = "<group>";
+		};
+		A8FCEB681897C2F40087670B /* Unicode */ = {
+			isa = PBXGroup;
+			children = (
+				A838FE4E187F6F430074BFF0 /* scrptrun.h */,
+				A838FE4D187F6F430074BFF0 /* scrptrun.cpp */,
+				A862B779188F442A00818B89 /* LangHelper.h */,
+				A862B778188F442A00818B89 /* LangHelper.cpp */,
+				A8B2BBF2188400BD0053DC36 /* TextRun.h */,
+				A8B2BBF1188400BD0053DC36 /* TextLine.h */,
+				A838FE52187F6F430074BFF0 /* TextItemizer.h */,
+				A838FE51187F6F430074BFF0 /* TextItemizer.cpp */,
+				A8B2BBF0188400BD0053DC36 /* LayoutCache.h */,
+				A8B2BBEF188400BD0053DC36 /* LayoutCache.cpp */,
+				A8C73CC618549F2E0081E110 /* FreetypeHelper.h */,
+				A8C73CC718549F2E0081E110 /* FreetypeHelper.cpp */,
+				A8F9B9FE186B31EF00724EED /* FontManager.h */,
+				A8F9B9FB186B31EF00724EED /* FontManager.cpp */,
+				A8F9BBD9186C982B006E9350 /* ActualFont.h */,
+				A8F9BBD8186C982B006E9350 /* ActualFont.cpp */,
+				A8F9BA02186B31EF00724EED /* VirtualFont.h */,
+				A8F9B9FD186B31EF00724EED /* VirtualFont.cpp */,
+				A8B2BBF4188400EF0053DC36 /* LineLayout.h */,
+				A838FE57187F6F950074BFF0 /* GlyphData.h */,
+				A838FE5B187F6F950074BFF0 /* ReloadableTexture.h */,
+				A838FE5A187F6F950074BFF0 /* ReloadableTexture.cpp */,
+			);
+			name = Unicode;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

@@ -63,7 +63,7 @@ void Sketch::setup(bool renewContext)
         
         fontSize = 27;
         align = VirtualFont::ALIGN_BASELINE;
-        oscillate = true;//false;
+        oscillate = false;
     }
     
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
