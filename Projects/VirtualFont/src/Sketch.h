@@ -55,22 +55,6 @@
  * 11) FIXING REGRESSION (INTRODUCED IN COMMIT 604c7ab) AFFECTING (AT LEAST) HEBREW AND THAI
  */
 
-/*
- * TODO:
- *
- * 0) InputSource: "internal" PROTOCOL:
- *    - TO BE USED FOR "LOADING FONTS COPIED FROM ASSETS" ON ANDROID
- *    - SEE HOW TO COPY FROM ASSETS
- *
- * 1) ADJUST FONTS:
- *    - iOS:
- *      - "Geeza Pro" SHOULD BE REPLACED (ARABIC GLYPHS ARE NOT JOINED)
- *    - ANDROID:
- *      - HEBREW FONT IS MISSING
- *      - ARABIC FONT IS PROBABLY OUTDATED
- *      - THAI FONT IS BUGGY...
- */
-
 #pragma once
 
 #include "chronotext/cinder/CinderSketch.h"
