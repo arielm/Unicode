@@ -10,7 +10,7 @@
 
 #include "GlyphData.h"
 
-#include "cinder/gl/Texture.h"
+#include "cinder/gl/gl.h"
 
 class ReloadableTexture
 {
@@ -18,10 +18,11 @@ public:
     ReloadableTexture(const GlyphData &glyphData);
     ~ReloadableTexture();
     
-    bool isLoaded() const;
     void unload();
     void load(const GlyphData &glyphData);
-    
+    bool isLoaded() const;
+    size_t getMemoryUsage() const;
+
     void bind();
     GLuint getId() const;
     int getWidth() const;

@@ -203,6 +203,18 @@ void ActualFont::discardTextures()
     }
 }
 
+size_t ActualFont::getTextureMemoryUsage() const
+{
+    size_t total = 0;
+    
+    for (auto &texture : standaloneTextures)
+    {
+        total += texture->getMemoryUsage();
+    }
+    
+    return total;
+}
+
 ActualFont::Glyph* ActualFont::getGlyph(uint32_t codepoint)
 {
     Glyph *glyph = NULL;

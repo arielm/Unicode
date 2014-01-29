@@ -127,6 +127,7 @@ public:
     void reload();
     void unload();
     void discardTextures();
+    size_t getTextureMemoryUsage() const;
     
     Glyph* getGlyph(uint32_t codepoint);
     

@@ -60,6 +60,7 @@ public:
     void reload();
     void unload();
     void discardTextures();
+    size_t getTextureMemoryUsage() const;
     
 protected:
     int platform;

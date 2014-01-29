@@ -237,6 +237,18 @@ void FontManager::discardTextures()
     }
 }
 
+size_t FontManager::getTextureMemoryUsage() const
+{
+    size_t total = 0;
+    
+    for (auto &it : actualFonts)
+    {
+        total += it.second->getTextureMemoryUsage();
+    }
+    
+    return total;
+}
+
 ActualFont* FontManager::getActualFont(const ActualFont::Descriptor &descriptor, float baseSize, bool useMipmap)
 {
     ActualFont::Key key(descriptor, baseSize, useMipmap);

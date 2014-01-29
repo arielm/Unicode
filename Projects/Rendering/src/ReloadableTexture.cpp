@@ -26,11 +26,6 @@ ReloadableTexture::~ReloadableTexture()
     unload();
 }
 
-bool ReloadableTexture::isLoaded() const
-{
-    return (textureId != 0);
-}
-
 void ReloadableTexture::unload()
 {
     if (textureId)
@@ -94,6 +89,23 @@ void ReloadableTexture::load(const GlyphData &glyphData)
     
     glBindTexture(GL_TEXTURE_2D, 0);
     delete[] textureData;
+}
+
+bool ReloadableTexture::isLoaded() const
+{
+    return (textureId != 0);
+}
+
+size_t ReloadableTexture::getMemoryUsage() const
+{
+    if (textureId != 0)
+    {
+        return textureWidth * textureHeight;
+    }
+    else
+    {
+        return 0;
+    }
 }
 
 void ReloadableTexture::bind()

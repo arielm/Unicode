@@ -7,6 +7,7 @@
  */
 
 #include "chronotext/cinder/CinderApp.h"
+#include "chronotext/utils/Utils.h"
 
 #include "Sketch.h"
 
@@ -69,6 +70,10 @@ void Application::keyDown(KeyEvent event)
 
         case KeyEvent::KEY_b:
             target->align = VirtualFont::ALIGN_BOTTOM;
+            break;
+            
+        case KeyEvent::KEY_x:
+            std::cout << "TEXTURE MEMORY USAGE: " << prettyBytes(target->fontManager.getTextureMemoryUsage()) << std::endl;
             break;
             
         case KeyEvent::KEY_ESCAPE:
