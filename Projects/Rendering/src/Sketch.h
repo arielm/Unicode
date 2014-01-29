@@ -62,6 +62,7 @@
  */
 
 /*
+ * ON THE DESKTOP:
  * - PRESS U TO CALL FontManager::unload()
  * - PRESS R TO CALL FontManager::reload()
  * - PRESS ENTER TO SHUFFLE THE LINES
