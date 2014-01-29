@@ -15,7 +15,9 @@ LayoutCache::LayoutCache(size_t capacity)
 :
 capacity(capacity),
 size(0)
-{}
+{
+    assert(capacity > 0);
+}
 
 const LineLayout& LayoutCache::getLineLayout(VirtualFont *virtualFont, const string &text, const string &langHint, hb_direction_t overallDirection)
 {
@@ -66,4 +68,21 @@ void LayoutCache::clear()
 {
     cache.clear();
     size = 0;
+}
+
+void LayoutCache::setCapacity(size_t newCapacity)
+{
+    assert(newCapacity > 0);
+    
+    if (newCapacity < size)
+    {
+        clear();
+    }
+    
+    capacity = newCapacity;
+}
+
+size_t LayoutCache::getMemoryUsage() const
+{
+    return size;
 }
