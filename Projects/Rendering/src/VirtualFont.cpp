@@ -318,3 +318,31 @@ void VirtualFont::drawCluster(const Cluster &cluster, const Vec2f &position)
         }
     }
 }
+
+VirtualFont::Style VirtualFont::styleStringToEnum(const string &style)
+{
+    if (style == "bold") return VirtualFont::STYLE_BOLD;
+    if (style == "italic") return VirtualFont::STYLE_ITALIC;
+    if (style == "bold-italic") return VirtualFont::STYLE_BOLD_ITALIC;
+    
+    return VirtualFont::STYLE_REGULAR; // DEFAULT
+}
+
+string VirtualFont::styleEnumToString(VirtualFont::Style style)
+{
+    switch (style)
+    {
+        case VirtualFont::STYLE_BOLD:
+            return "bold";
+            
+        case VirtualFont::STYLE_ITALIC:
+            return "italic";
+            
+        case VirtualFont::STYLE_BOLD_ITALIC:
+            return "bold-italic";
+            
+        default:
+        case VirtualFont::STYLE_REGULAR:
+            return "regular";
+    }
+}

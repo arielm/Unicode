@@ -44,7 +44,7 @@ itemizer(langHelper)
 #elif defined(CINDER_ANDROID)
     platform = PLATFORM_ANDROID;
 #else
-    throw;
+    assert(false);
 #endif
 }
 
@@ -55,8 +55,6 @@ void FontManager::loadGlobalMap(InputSourceRef source)
     /*
      * THE FOLLOWING IS NOT SUPPOSED TO THROW...
      * IN THE WORST-CASE: THE MAP WILL BE EMPTY OR PARTIAL
-     *
-     * TODO: THROW WHEN DOCUMENT IS INVALID
      */
     if (doc.hasChild("GlobalMap"))
     {
@@ -66,7 +64,7 @@ void FontManager::loadGlobalMap(InputSourceRef source)
             
             if (!name.empty())
             {
-                auto style = parseStyle(fontElement.getAttributeValue<string>("style", "regular"));
+                auto style = VirtualFont::styleStringToEnum(fontElement.getAttributeValue<string>("style", "regular"));
                 auto baseSize = fontElement.getAttributeValue<float>("base-size", 0);
                 
                 for (auto &refElement : fontElement.getChildren())
@@ -115,7 +113,7 @@ VirtualFont& FontManager::getFont(const std::string &name, VirtualFont::Style st
         
         if (baseSize == 0)
         {
-            throw invalid_argument("INVALID FONT-SIZE");
+            throw invalid_argument("UNDEFINED FONT-SIZE");
         }
         
         auto uri = it2->second.first;
@@ -148,7 +146,7 @@ VirtualFont& FontManager::getFont(const std::string &name, VirtualFont::Style st
     /*
      * SHOULD NOT OCCUR, UNLESS NO "DEFAULT FONT" IS DEFINED
      */
-    throw invalid_argument("UNDEFINED FONT");
+    throw invalid_argument(string("UNDEFINED FONT: ") + name + " " + VirtualFont::styleEnumToString(style));
 }
 
 VirtualFont& FontManager::getFont(InputSourceRef source, float baseSize, bool useMipmap)
@@ -211,7 +209,7 @@ VirtualFont& FontManager::getFont(InputSourceRef source, float baseSize, bool us
             return *font;
         }
         
-        throw invalid_argument("INVALID FONT-DEFINITION");
+        throw invalid_argument("INVALID FONT-DEFINITION: " + source->getURI());
     }
 }
 
@@ -269,15 +267,6 @@ ActualFont* FontManager::getActualFont(const ActualFont::Descriptor &descriptor,
 vector<string> FontManager::splitLanguages(const string &languages)
 {
 	return split(languages, ":");
-}
-
-VirtualFont::Style FontManager::parseStyle(const string &style)
-{
-    if (style == "bold") return VirtualFont::STYLE_BOLD;
-    if (style == "italic") return VirtualFont::STYLE_ITALIC;
-    if (style == "bold-italic") return VirtualFont::STYLE_BOLD_ITALIC;
-    
-    return VirtualFont::STYLE_REGULAR; // DEFAULT
 }
 
 ActualFont::Descriptor FontManager::parseDescriptor(const XmlTree &element)

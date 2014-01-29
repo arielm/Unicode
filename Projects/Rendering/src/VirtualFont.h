@@ -100,6 +100,9 @@ public:
     void begin();
     void end();
     void drawCluster(const Cluster &cluster, const ci::Vec2f &position);
+    
+    static Style styleStringToEnum(const std::string &style);
+    static std::string styleEnumToString(Style style);
 
 protected:
     float size;

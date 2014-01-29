@@ -73,6 +73,5 @@ protected:
     ActualFont* getActualFont(const ActualFont::Descriptor &descriptor, float baseSize, bool useMipmap = false);
 
     static std::vector<std::string> splitLanguages(const std::string &languages);
-    static VirtualFont::Style parseStyle(const std::string &style);
     static ActualFont::Descriptor parseDescriptor(const ci::XmlTree &element);
 };

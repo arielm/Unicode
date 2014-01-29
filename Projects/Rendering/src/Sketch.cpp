@@ -106,7 +106,9 @@ void Sketch::draw()
         font.end();
     }
     catch (exception &e)
-    {}
+    {
+        LOGI_ONCE("CAN'T GET FONT | " + string(e.what()));
+    }
 }
 
 void Sketch::drawTextLine(VirtualFont &font, const string &text, float y, float left, float right)
