@@ -38,12 +38,13 @@ void ReloadableTexture::unload()
 void ReloadableTexture::load(const GlyphData &glyphData)
 {
     unload();
-    
+
+    useMipmap = glyphData.useMipmap;
     int width = glyphData.width;
     int height = glyphData.height;
     int padding = glyphData.padding;
     auto buffer = glyphData.getBuffer();
-    
+
     textureWidth = nextPowerOfTwo(width + padding * 2);
     textureHeight = nextPowerOfTwo(height + padding * 2);
     auto textureData = new unsigned char[textureWidth * textureHeight](); // ZERO-FILLED
@@ -61,7 +62,7 @@ void ReloadableTexture::load(const GlyphData &glyphData)
     glGenTextures(1, &textureId);
     glBindTexture(GL_TEXTURE_2D, textureId);
     
-    if (glyphData.useMipmap)
+    if (useMipmap)
     {
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
     }
@@ -74,7 +75,7 @@ void ReloadableTexture::load(const GlyphData &glyphData)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
     
-    if (glyphData.useMipmap)
+    if (useMipmap)
     {
         glTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP, GL_TRUE);
         glHint(GL_GENERATE_MIPMAP_HINT, GL_NICEST);
@@ -82,7 +83,7 @@ void ReloadableTexture::load(const GlyphData &glyphData)
     
     glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, textureWidth, textureHeight, 0, GL_ALPHA, GL_UNSIGNED_BYTE, textureData);
     
-    if (glyphData.useMipmap)
+    if (useMipmap)
     {
         glTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP, GL_FALSE);
     }
@@ -98,9 +99,16 @@ bool ReloadableTexture::isLoaded() const
 
 size_t ReloadableTexture::getMemoryUsage() const
 {
-    if (textureId != 0)
+    if (textureId)
     {
-        return textureWidth * textureHeight;
+        if (useMipmap)
+        {
+            return size_t(textureWidth * textureHeight * 1.333f);
+        }
+        else
+        {
+            return textureWidth * textureHeight;
+        }
     }
     else
     {

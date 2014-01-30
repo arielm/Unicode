@@ -32,4 +32,5 @@ protected:
     GLuint textureId;
     int textureWidth;
     int textureHeight;
+    bool useMipmap;
 };
