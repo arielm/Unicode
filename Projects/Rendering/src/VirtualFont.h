@@ -108,8 +108,7 @@ protected:
     float size;
     float sizeRatio;
 
-    std::vector<ci::Vec2f> positions;
-    std::vector<ci::Vec2f> coords;
+    std::vector<ci::Vec2f> vertices;
     std::vector<ci::ColorA> colors;
     
     FontSet defaultFontSet; // ALLOWING getFontSet() TO RETURN CONST VALUES

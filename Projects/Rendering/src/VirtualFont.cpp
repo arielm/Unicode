@@ -11,14 +11,15 @@
 using namespace std;
 using namespace ci;
 
+const int stride = sizeof(Vec2f) * 2;
+
 VirtualFont::VirtualFont(LayoutCache &layoutCache, TextItemizer &itemizer, float baseSize)
 :
 layoutCache(layoutCache),
 itemizer(itemizer),
 baseSize(baseSize)
 {
-    positions.reserve(4);
-    coords.reserve(4);
+    vertices.reserve(4 * 2);
     colors.reserve(4);
     
     setSize(baseSize);
@@ -274,9 +275,9 @@ void VirtualFont::begin()
     glEnableClientState(GL_VERTEX_ARRAY);
     glEnableClientState(GL_TEXTURE_COORD_ARRAY);
     glEnableClientState(GL_COLOR_ARRAY);
-    
-    glVertexPointer(2, GL_FLOAT, 0, positions.data());
-    glTexCoordPointer(2, GL_FLOAT, 0, coords.data());
+
+    glVertexPointer(2, GL_FLOAT, stride, vertices.data());
+    glTexCoordPointer(2, GL_FLOAT, stride, vertices.data() + 1);
     glColorPointer(4, GL_FLOAT, 0, colors.data());
 }
 
@@ -301,17 +302,19 @@ void VirtualFont::drawCluster(const Cluster &cluster, const Vec2f &position)
             auto ul = position + (shape.position + glyph->offset) * sizeRatio;
             auto lr = ul + glyph->size * sizeRatio;
             
-            positions.clear();
-            positions.emplace_back(ul);
-            positions.emplace_back(lr.x, ul.y);
-            positions.emplace_back(lr);
-            positions.emplace_back(ul.x, lr.y);
+            vertices.clear();
             
-            coords.clear();
-            coords.emplace_back(glyph->tx1, glyph->ty1);
-            coords.emplace_back(glyph->tx2, glyph->ty1);
-            coords.emplace_back(glyph->tx2, glyph->ty2);
-            coords.emplace_back(glyph->tx1, glyph->ty2);
+            vertices.emplace_back(ul);
+            vertices.emplace_back(glyph->tx1, glyph->ty1);
+
+            vertices.emplace_back(lr.x, ul.y);
+            vertices.emplace_back(glyph->tx2, glyph->ty1);
+
+            vertices.emplace_back(lr);
+            vertices.emplace_back(glyph->tx2, glyph->ty2);
+
+            vertices.emplace_back(ul.x, lr.y);
+            vertices.emplace_back(glyph->tx1, glyph->ty2);
             
             glyph->texture->bind();
             glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
