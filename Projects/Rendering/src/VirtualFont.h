@@ -63,6 +63,11 @@ public:
     TextItemizer &itemizer;
     float baseSize;
     
+    VirtualFont(LayoutCache &layoutCache, TextItemizer &itemizer, float baseSize);
+    
+    bool add(const std::string &lang, ActualFont *font);
+    const FontSet& getFontSet(const std::string &lang) const;
+    
     float getHeight(const LineLayout &layout) const;
     float getAscent(const LineLayout &layout) const;
     float getDescent(const LineLayout &layout) const;
@@ -75,9 +80,8 @@ public:
     float getAdvance(const LineLayout &layout) const;
     float getAdvance(const Cluster &cluster) const;
 
-    const FontSet& getFontSet(const std::string &lang) const;
     ActualFont::Metrics getMetrics(const Cluster &cluster) const; // RETURNS THE SIZED METRICS OF THE ActualFont USED BY cluster
-    ActualFont::Metrics getMetrics(const std::string &lang = "") const; // RETURNS THE SIZED METRICS OF THE FIRST ActualFont IN THE FontSet USED FOR lang
+    ActualFont::Metrics getMetrics(const std::string &lang = "") const; // RETURNS THE SIZED METRICS OF THE FIRST ActualFont IN THE SET USED FOR lang
 
     /*
      * THE RETURNED INSTANCES ARE NOT MANAGED AND SHOULD BE DELETED BY THE CALLER
@@ -109,9 +113,4 @@ protected:
     
     FontSet defaultFontSet; // ALLOWING getFontSet() TO RETURN CONST VALUES
     std::map<std::string, FontSet> fontSetMap;
-    
-    VirtualFont(LayoutCache &layoutCache, TextItemizer &itemizer, float baseSize);
-    bool add(const std::string &lang, ActualFont *font);
-    
-    friend class FontManager;
 };
