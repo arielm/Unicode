@@ -87,7 +87,7 @@ void FontManager::loadGlobalMap(InputSourceRef source)
     }
 }
 
-shared_ptr<VirtualFont> FontManager::getFont(const std::string &name, VirtualFont::Style style, float baseSize)
+shared_ptr<VirtualFont> FontManager::getCachedFont(const std::string &name, VirtualFont::Style style, float baseSize)
 {
     auto key = make_tuple(name, style, baseSize);
     auto it1 = shortcuts.find(key);
@@ -117,7 +117,7 @@ shared_ptr<VirtualFont> FontManager::getFont(const std::string &name, VirtualFon
         }
         
         auto uri = it2->second.first;
-        auto font = getFont(InputSource::get(uri), baseSize, useMipmap); // CAN THROW
+        auto font = getCachedFont(InputSource::get(uri), baseSize, useMipmap); // CAN THROW
         
         /*
          * ALLOWING CACHING UPON FURTHER ACCESS
@@ -131,13 +131,13 @@ shared_ptr<VirtualFont> FontManager::getFont(const std::string &name, VirtualFon
      */
     if (name != DEFAULT_FONT_NAME)
     {
-        auto font = getFont(DEFAULT_FONT_NAME, get<1>(key), get<2>(key));
+        auto font = getCachedFont(DEFAULT_FONT_NAME, get<1>(key), get<2>(key));
         shortcuts[key] = font;
         return font;
     }
     else if (style != DEFAULT_FONT_STYLE)
     {
-        auto font = getFont(DEFAULT_FONT_NAME, DEFAULT_FONT_STYLE, get<2>(key));
+        auto font = getCachedFont(DEFAULT_FONT_NAME, DEFAULT_FONT_STYLE, get<2>(key));
         shortcuts[key] = font;
         return font;
     }
@@ -148,7 +148,7 @@ shared_ptr<VirtualFont> FontManager::getFont(const std::string &name, VirtualFon
     throw invalid_argument(string("UNDEFINED FONT: ") + name + " " + VirtualFont::styleEnumToString(style));
 }
 
-shared_ptr<VirtualFont> FontManager::getFont(InputSourceRef source, float baseSize, bool useMipmap)
+shared_ptr<VirtualFont> FontManager::getCachedFont(InputSourceRef source, float baseSize, bool useMipmap)
 {
     VirtualFont::Key key(source->getURI(), baseSize, useMipmap);
     auto it = virtualFonts.find(key);

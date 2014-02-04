@@ -55,13 +55,13 @@
  * 11) LayoutCache: POSSIBILITY TO QUERY MEMORY USAGE AND TO CHANGE CAPACITY
  *
  * 12) FINE-TUNING:
- *     - FontManager::getFont() METHODS ARE NOW RETURNING A shared_ptr<VirtualFont>:
+ *     - FontManager::getCachedFont() METHODS ARE NOW RETURNING A shared_ptr<VirtualFont>:
  *       - AVOID RISK OF UN-NECESSARY COPY
  *       - NECESSARY IN ORDER TO PROPERLY REMOVE VirtualFont INSTANCES (TBD)
  *     - FontManager::getCachedLineLayout() AND LayoutCache::getLineLayout() ARE NOW RETURNING A shared_ptr<LineLayout>:
  *       - AVOID RISK OF UN-NECESSARY COPY
  *       - THE CACHE WAS ALREADY USING A shared_ptr INTERNALLY
- *       - MORE ADAPTED TO THE NOTION OF CACHE, AND NOW CONSISTENT WITH FontManger::getFont()
+ *       - MORE ADAPTED TO THE NOTION OF CACHE, AND NOW CONSISTENT WITH FontManger::getCachedFont()
  */
 
 /*

@@ -90,7 +90,7 @@ void Sketch::draw()
 
     try
     {
-        auto font = fontManager.getFont("sans-serif"); // CAN THROW
+        auto font = fontManager.getCachedFont("sans-serif"); // CAN THROW
         
         font->setSize(fontSize);
         font->setColor(ColorA(1, 1, 1, 0.75f));

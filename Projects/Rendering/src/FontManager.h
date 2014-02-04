@@ -43,19 +43,13 @@ public:
      * - THE FONT-SIZE DEFINED AT THE GLOBAL-MAP LEVEL (base-size ATTRIBUTE) IS USED
      * - MIPMAPS ARE ALLOWED
      * - VirtualFont::setSize() SHALL BE USED DURING THE FONT'S LIFE-CYCLE
-     *
-     * RESULTS ARE CACHED:
-     * INSTANCES ARE MANAGED BY FontManager AND WILL BE VALID AS LONG AS THE LATTER IS ALIVE
      */
-    std::shared_ptr<VirtualFont> getFont(const std::string &name, VirtualFont::Style style = VirtualFont::STYLE_REGULAR, float baseSize = 0);
+    std::shared_ptr<VirtualFont> getCachedFont(const std::string &name, VirtualFont::Style style = VirtualFont::STYLE_REGULAR, float baseSize = 0);
     
     /*
      * LOWER-LEVEL METHOD, FOR ACCESSING A FONT DIRECTLY VIA ITS XML-DEFINITION
-     *
-     * RESULTS ARE CACHED:
-     * INSTANCES ARE MANAGED BY FontManager AND WILL BE VALID AS LONG AS THE LATTER IS ALIVE
      */
-    std::shared_ptr<VirtualFont> getFont(chr::InputSourceRef source, float baseSize, bool useMipmap = false);
+    std::shared_ptr<VirtualFont> getCachedFont(chr::InputSourceRef source, float baseSize, bool useMipmap = false);
     
     void reload();
     void unload();

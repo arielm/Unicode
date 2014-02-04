@@ -89,9 +89,6 @@ public:
     LineLayout* createLineLayout(const std::string &text, const std::string &langHint = "", hb_direction_t overallDirection = HB_DIRECTION_INVALID);
     LineLayout* createLineLayout(const TextLine &line);
     
-    /*
-     * THE CACHED INSTANCES ARE MANAGED BY LayoutCache AND WILL BE VALID AS LONG AS THE LATTER IS ALIVE (I.E. AS LONG AS FontManager IS ALIVE)
-     */
     std::shared_ptr<LineLayout> getCachedLineLayout(const std::string &text, const std::string &langHint = "", hb_direction_t overallDirection = HB_DIRECTION_INVALID);
     
     void setSize(float size);
