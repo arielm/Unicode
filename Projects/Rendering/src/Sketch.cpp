@@ -90,20 +90,20 @@ void Sketch::draw()
 
     try
     {
-        auto &font = fontManager.getFont("sans-serif"); // CAN THROW
+        auto font = fontManager.getFont("sans-serif"); // CAN THROW
         
-        font.setSize(fontSize);
-        font.setColor(ColorA(1, 1, 1, 0.75f));
+        font->setSize(fontSize);
+        font->setColor(ColorA(1, 1, 1, 0.75f));
         
-        font.begin();
+        font->begin();
         
         for (auto &line : lines)
         {
-            drawTextLine(font, line, y, left, right);
+            drawTextLine(*font, line, y, left, right);
             y += LINE_SPACING;
         }
         
-        font.end();
+        font->end();
     }
     catch (exception &e)
     {

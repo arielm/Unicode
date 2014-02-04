@@ -47,7 +47,7 @@ public:
      * RESULTS ARE CACHED:
      * INSTANCES ARE MANAGED BY FontManager AND WILL BE VALID AS LONG AS THE LATTER IS ALIVE
      */
-    VirtualFont& getFont(const std::string &name, VirtualFont::Style style = VirtualFont::STYLE_REGULAR, float baseSize = 0);
+    std::shared_ptr<VirtualFont> getFont(const std::string &name, VirtualFont::Style style = VirtualFont::STYLE_REGULAR, float baseSize = 0);
     
     /*
      * LOWER-LEVEL METHOD, FOR ACCESSING A FONT DIRECTLY VIA ITS XML-DEFINITION
@@ -55,7 +55,7 @@ public:
      * RESULTS ARE CACHED:
      * INSTANCES ARE MANAGED BY FontManager AND WILL BE VALID AS LONG AS THE LATTER IS ALIVE
      */
-    VirtualFont& getFont(chr::InputSourceRef source, float baseSize, bool useMipmap = false);
+    std::shared_ptr<VirtualFont> getFont(chr::InputSourceRef source, float baseSize, bool useMipmap = false);
     
     void reload();
     void unload();
@@ -66,9 +66,9 @@ protected:
     int platform;
     
     std::map<std::pair<std::string, VirtualFont::Style>, std::pair<std::string, float>> globalMap;
-    std::map<std::tuple<std::string, VirtualFont::Style, float>, VirtualFont*> shortcuts;
+    std::map<std::tuple<std::string, VirtualFont::Style, float>, std::shared_ptr<VirtualFont>> shortcuts;
     
-    std::map<VirtualFont::Key, std::unique_ptr<VirtualFont>> virtualFonts;
+    std::map<VirtualFont::Key, std::shared_ptr<VirtualFont>> virtualFonts;
     std::map<ActualFont::Key, std::unique_ptr<ActualFont>> actualFonts;
 
     ActualFont* getActualFont(const ActualFont::Descriptor &descriptor, float baseSize, bool useMipmap = false);
