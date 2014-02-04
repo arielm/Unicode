@@ -113,12 +113,12 @@ void Sketch::draw()
 
 void Sketch::drawTextLine(VirtualFont &font, const string &text, float y, float left, float right)
 {
-    auto &layout = font.getCachedLineLayout(text);
+    auto layout = font.getCachedLineLayout(text);
     
-    float x = (layout.overallDirection == HB_DIRECTION_RTL) ? (right - font.getAdvance(layout)) : left;
-    Vec2f position(x, y + font.getOffsetY(layout, align));
+    float x = (layout->overallDirection == HB_DIRECTION_RTL) ? (right - font.getAdvance(*layout)) : left;
+    Vec2f position(x, y + font.getOffsetY(*layout, align));
     
-    for (auto cluster : layout.clusters)
+    for (auto cluster : layout->clusters)
     {
         font.drawCluster(cluster, position);
         position.x += font.getAdvance(cluster);

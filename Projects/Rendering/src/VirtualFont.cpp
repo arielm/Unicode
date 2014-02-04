@@ -249,7 +249,7 @@ LineLayout* VirtualFont::createLineLayout(const TextLine &line)
     return layout;
 }
 
-const LineLayout& VirtualFont::getCachedLineLayout(const string &text, const string &langHint, hb_direction_t overallDirection)
+shared_ptr<LineLayout> VirtualFont::getCachedLineLayout(const string &text, const string &langHint, hb_direction_t overallDirection)
 {
     return layoutCache.getLineLayout(this, text, langHint, overallDirection);
 }

@@ -52,7 +52,7 @@ public:
     /*
      * THE CACHED INSTANCES ARE MANAGED BY LayoutCache AND WILL BE VALID AS LONG AS THE LATTER IS ALIVE
      */
-    const LineLayout& getLineLayout(VirtualFont *virtualFont, const std::string &text, const std::string &langHint = "", hb_direction_t overallDirection = HB_DIRECTION_INVALID);
+    std::shared_ptr<LineLayout> getLineLayout(VirtualFont *virtualFont, const std::string &text, const std::string &langHint = "", hb_direction_t overallDirection = HB_DIRECTION_INVALID);
 
     void clear();
     void setCapacity(size_t newCapacity);
@@ -61,7 +61,7 @@ public:
 protected:
     typedef boost::bimaps::bimap<
     boost::bimaps::set_of<LineLayoutKey>,
-    boost::bimaps::list_of<std::shared_ptr<LineLayout>> // XXX: THIS IS NOT WORKING WITH unique_ptr
+    boost::bimaps::list_of<std::shared_ptr<LineLayout>>
     > container_type;
 
     size_t capacity;
