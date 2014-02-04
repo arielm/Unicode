@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ References:
+ http://en.wikipedia.org/wiki/List_of_typefaces_included_with_OS_X
+ http://support.apple.com/kb/HT5098
+ -->
+<VirtualFont>
+    <!-- Undefined -->
+    <Set>
+        <Ref uri="file:///Library/Fonts/Arial.ttf" />
+    </Set>
+    <!-- Arabic, Persian -->
+    <Set lang="ar:fa">
+        <Ref uri="file:///System/Library/Fonts/Geeza Pro.ttf" /><!-- NOT IDEAL: PUNCTUATION AND NUMBERS ARE MISSING -->
+        <Ref uri="file:///Library/Fonts/Arial.ttf" />
+    </Set>
+    <!-- Hebrew, Yiddish -->
+    <Set lang="he:yi">
+        <Ref uri="file:///Library/Fonts/Arial.ttf" />
+    </Set>
+    <!-- Japanese -->
+    <Set lang="ja">
+        <Ref uri="file:///Library/Fonts/Hiragino Sans GB W3.otf" />
+    </Set>
+    <!-- Korean -->
+    <Set lang="ko">
+        <Ref uri="file:///System/Library/Fonts/AppleSDGothicNeo-Regular.otf" />
+    </Set>
+    <!-- Thai -->
+    <Set lang="th">
+        <Ref uri="file:///System/Library/Fonts/Thonburi.ttf" />
+    </Set>
+    <!-- Hindi -->
+    <Set lang="hi">
+        <Ref uri="file:///Library/Fonts/Devanagari Sangam MN.ttc" />
+    </Set>
+    <!-- Chinese (Simplified, Traditional) -->
+    <Set lang="zh-cn:zh-hk:zh-sg:zh-mo:zh-tw">
+        <Ref uri="file:///System/Library/Fonts/STHeiti Medium.ttc" />
+    </Set>
+</VirtualFont>

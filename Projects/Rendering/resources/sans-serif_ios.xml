@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ References:
+ http://support.apple.com/kb/ht4980
+ http://iosfonts.com/
+ -->
+<VirtualFont>
+    <!-- Undefined -->
+    <Set>
+        <Ref uri="file:///System/Library/Fonts/Cache/Arial.ttf" />
+    </Set>
+    <!-- Arabic, Persian -->
+    <Set lang="ar:fa">
+        <Ref uri="file:///System/Library/Fonts/Cache/GeezaPro.ttf" /><!-- FIXME: LOOKS LIKE "JOINING" IS BROKEN WITH THAT FONT (NOT ON OSX) -->
+    </Set>
+    <!-- Hebrew -->
+    <Set lang="he">
+        <Ref uri="file:///System/Library/Fonts/Cache/ArialHB.ttf" />
+    </Set>
+    <!-- Japanese -->
+    <Set lang="ja">
+        <Ref uri="file:///System/Library/Fonts/Cache/HiraginoKakuGothicProNW3.otf" />
+    </Set>
+    <!-- Korean -->
+    <Set lang="ko">
+        <Ref uri="file:///System/Library/Fonts/Cache/AppleGothic.ttf" />
+    </Set>
+    <!-- Thai -->
+    <Set lang="th">
+        <Ref uri="file:///System/Library/Fonts/Cache/Thonburi.ttf" />
+    </Set>
+    <!-- Hindi -->
+    <Set lang="hi">
+        <Ref uri="file:///System/Library/Fonts/Cache/DevanagariSangamMN.ttc" />
+    </Set>
+    <!-- Chinese (Simplified) -->
+    <Set lang="zh-cn:zh-hk:zh-sg">
+        <Ref uri="file:///System/Library/Fonts/Cache/STHeiti-Medium.ttc" />
+    </Set>
+    <!-- Chinese (Traditional) -->
+    <Set lang="zh-mo:zh-tw">
+        <Ref uri="file:///System/Library/Fonts/Cache/STHeiti-Medium.ttc" />
+    </Set>
+</VirtualFont>

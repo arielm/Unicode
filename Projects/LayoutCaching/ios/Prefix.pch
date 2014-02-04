@@ -8,3 +8,5 @@
 #define HB_NO_MT
 
 #define U_COMMON_IMPLEMENTATION
+
+#define CHR_COMPLEX

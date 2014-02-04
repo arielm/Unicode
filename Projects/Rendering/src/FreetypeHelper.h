@@ -8,11 +8,17 @@
 
 #pragma once
 
-#include "cinder/DataSource.h"
+#include <ft2build.h>
+#include FT_GLYPH_H
+#include FT_TRUETYPE_TABLES_H
 
-class InputSource
+class FreetypeHelper
 {
+    FT_Library library;
+    
 public:
-    static ci::fs::path getFilePath(const std::string &uri);
-    static ci::DataSourceRef getDataSource(const std::string &uri);
+    FreetypeHelper();
+    ~FreetypeHelper();
+    
+    FT_Library getLib() const;
 };
