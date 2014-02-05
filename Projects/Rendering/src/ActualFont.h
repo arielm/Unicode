@@ -118,9 +118,8 @@ public:
 
     ci::Vec2f scale;
     Metrics metrics;
-    
-    ActualFont(std::shared_ptr<FreetypeHelper> ftHelper, const Descriptor &descriptor, float baseSize, bool useMipmap);
-    ~ActualFont();
+
+    ~ActualFont(); // MUST BE PUBLIC BECAUSE OF shared_ptr
 
     std::string getFullName();
 
@@ -128,7 +127,7 @@ public:
     void unload();
     void discardTextures();
     size_t getTextureMemoryUsage() const;
-    
+
     Glyph* getGlyph(uint32_t codepoint);
     
 protected:
@@ -146,8 +145,10 @@ protected:
     
     std::map<uint32_t, std::unique_ptr<Glyph>> glyphCache;
     std::vector<std::unique_ptr<ReloadableTexture>> standaloneTextures;
-    
+
+    ActualFont(std::shared_ptr<FreetypeHelper> ftHelper, const Descriptor &descriptor, float baseSize, bool useMipmap);
     Glyph* createGlyph(uint32_t codepoint);
     
+    friend class FontManager;
     friend class VirtualFont;
 };

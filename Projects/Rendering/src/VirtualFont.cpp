@@ -26,6 +26,9 @@ baseSize(baseSize)
     setColor(ColorA(0, 0, 0, 1));
 }
 
+VirtualFont::~VirtualFont()
+{}
+
 bool VirtualFont::addActualFont(const string &lang, shared_ptr<ActualFont> font)
 {
     if (font)
@@ -65,6 +68,25 @@ const FontSet& VirtualFont::getFontSet(const string &lang) const
     }
     
     return it->second;
+}
+
+ActualFont::Metrics VirtualFont::getMetrics(const Cluster &cluster) const
+{
+    return cluster.font->metrics * sizeRatio;
+}
+
+ActualFont::Metrics VirtualFont::getMetrics(const string &lang) const
+{
+    auto &fontSet = getFontSet(lang);
+    
+    if (fontSet.empty())
+    {
+        return ActualFont::Metrics();
+    }
+    else
+    {
+        return fontSet.front()->metrics * sizeRatio;
+    }
 }
 
 float VirtualFont::getDescent(const LineLayout &layout) const
@@ -123,25 +145,6 @@ float VirtualFont::getAdvance(const LineLayout &layout) const
 float VirtualFont::getAdvance(const Cluster &cluster) const
 {
     return cluster.combinedAdvance * sizeRatio;
-}
-
-ActualFont::Metrics VirtualFont::getMetrics(const Cluster &cluster) const
-{
-    return cluster.font->metrics * sizeRatio;
-}
-
-ActualFont::Metrics VirtualFont::getMetrics(const string &lang) const
-{
-    auto &fontSet = getFontSet(lang);
-    
-    if (fontSet.empty())
-    {
-        return ActualFont::Metrics();
-    }
-    else
-    {
-        return fontSet.front()->metrics * sizeRatio;
-    }
 }
 
 float VirtualFont::getHeight(const LineLayout &layout) const

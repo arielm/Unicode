@@ -73,7 +73,7 @@ void Application::keyDown(KeyEvent event)
             break;
             
         case KeyEvent::KEY_x:
-            std::cout << "TEXTURE MEMORY USAGE: " << prettyBytes(target->fontManager.getTextureMemoryUsage()) << std::endl;
+            cout << "TEXTURE MEMORY USAGE: " << prettyBytes(target->fontManager.getTextureMemoryUsage()) << endl;
             break;
             
         case KeyEvent::KEY_ESCAPE:

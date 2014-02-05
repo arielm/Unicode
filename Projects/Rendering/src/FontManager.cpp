@@ -169,7 +169,7 @@ shared_ptr<VirtualFont> FontManager::getCachedFont(InputSourceRef source, float 
          */
         if (doc.hasChild("VirtualFont"))
         {
-            auto font = make_shared<VirtualFont>(layoutCache, itemizer, baseSize);
+            auto font = shared_ptr<VirtualFont>(new VirtualFont(layoutCache, itemizer, baseSize)); // make_shared WOULD HAVE BEEN BETTER, BUT IT WON'T WORK WITH PROTECTED CONSTRUCTORS
             virtualFonts[key] = font;
 
             for (auto &fontElement : doc.getChild("VirtualFont"))
@@ -261,7 +261,7 @@ shared_ptr<ActualFont> FontManager::getActualFont(const ActualFont::Descriptor &
     {
         try
         {
-            auto font = make_shared<ActualFont>(ftHelper, descriptor, baseSize, useMipmap);
+            auto font = shared_ptr<ActualFont>(new ActualFont(ftHelper, descriptor, baseSize, useMipmap)); // make_shared WOULD HAVE BEEN BETTER, BUT IT WON'T WORK WITH PROTECTED CONSTRUCTORS
             actualFonts[key] = font;
             return font;
         }
