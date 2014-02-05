@@ -58,7 +58,7 @@ void FontManager::loadGlobalMap(InputSourceRef source)
      */
     if (doc.hasChild("GlobalMap"))
     {
-        for (auto fontElement : doc.getChild("GlobalMap"))
+        for (auto &fontElement : doc.getChild("GlobalMap"))
         {
             auto name = fontElement.getAttributeValue<string>("name");
             
@@ -172,11 +172,11 @@ shared_ptr<VirtualFont> FontManager::getCachedFont(InputSourceRef source, float 
             auto font = make_shared<VirtualFont>(layoutCache, itemizer, baseSize);
             virtualFonts[key] = font;
 
-            for (auto fontElement : doc.getChild("VirtualFont"))
+            for (auto &fontElement : doc.getChild("VirtualFont"))
             {
                 auto langList = splitLanguages(fontElement.getAttributeValue<string>("lang", ""));
                 
-                for (auto lang : langList)
+                for (auto &lang : langList)
                 {
                     for (auto &variantElement : fontElement.getChildren())
                     {

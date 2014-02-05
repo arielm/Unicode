@@ -293,7 +293,7 @@ void VirtualFont::end()
 
 void VirtualFont::drawCluster(const Cluster &cluster, const Vec2f &position)
 {
-    for (auto shape : cluster.shapes)
+    for (auto &shape : cluster.shapes)
     {
         auto glyph = cluster.font->getGlyph(shape.codepoint);
         

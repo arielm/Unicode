@@ -117,8 +117,8 @@ void Sketch::drawTextLine(VirtualFont &font, const string &text, float y, float 
     
     float x = (layout->overallDirection == HB_DIRECTION_RTL) ? (right - font.getAdvance(*layout)) : left;
     Vec2f position(x, y + font.getOffsetY(*layout, align));
-    
-    for (auto cluster : layout->clusters)
+
+    for (auto &cluster : layout->clusters)
     {
         font.drawCluster(cluster, position);
         position.x += font.getAdvance(cluster);
@@ -163,7 +163,7 @@ string Sketch::trimText(const string &text)
 {
     auto rawLines = split(text, '\n');
     
-    for (auto line : rawLines)
+    for (auto &line : rawLines)
     {
         auto trimmed = boost::algorithm::trim_copy(line);
         
