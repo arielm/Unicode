@@ -61,9 +61,10 @@
  *     - FontManager::getCachedLineLayout() AND LayoutCache::getLineLayout() ARE NOW RETURNING A shared_ptr<LineLayout>:
  *       - AVOID RISK OF UN-NECESSARY COPY
  *       - THE CACHE WAS ALREADY USING A shared_ptr INTERNALLY
- *       - MORE ADAPTED TO THE NOTION OF CACHE, AND NOW CONSISTENT WITH FontManger::getCachedFont()
+ *       - MORE ADAPTED TO THE NOTION OF CACHE, AND NOW CONSISTENT WITH FontManager::getCachedFont()
  *     - FINALLY FOUND A WAY TO USE PROTECTED CONSTRUCTORS FOR
  *       VirtualFont AND ActualFont (WHICH SHOULD BE CREATED ONLY VIA FontManager)
+ *     - FontManager::loadGlobalMap() CAN ONLY BE CALLED ONCE (FURTHER ATTEMPTS WILL THROW...)
  */
 
 /*
@@ -78,8 +79,6 @@
 
 /*
  * TODO:
- *
- * 0) RENAME FontManager::loadGlobalMap() AND MAKE IT CALLABLE ONLY ONCE
  *
  * 0) FontManager::getFont()
  *    - XML FORMAT:

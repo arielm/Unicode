@@ -28,6 +28,8 @@ public:
      * THE GLOBAL-MAP, MAPPING BETWEEN:
      * - A STRING LIKE "sans-serif" AND SOME STYLE (E.G. VirtualFont::STYLE_BOLD)
      * - AND SOME FONT XML-DEFINITION LIKE "sans-serif_bold_ios.xml"
+     *
+     * NOT MANDATORY, BUT SHOULD BE DEFINED ONLY ONCE
      */
     void loadGlobalMap(chr::InputSourceRef source);
 

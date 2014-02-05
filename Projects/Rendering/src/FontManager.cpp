@@ -50,35 +50,42 @@ itemizer(langHelper)
 
 void FontManager::loadGlobalMap(InputSourceRef source)
 {
-    XmlTree doc(source->loadDataSource()); // EARLY-THROW IF THE DOCUMENT IS MALFORMED
-    
-    /*
-     * THE FOLLOWING IS NOT SUPPOSED TO THROW...
-     * IN THE WORST-CASE: THE MAP WILL BE EMPTY OR PARTIAL
-     */
-    if (doc.hasChild("GlobalMap"))
+    if (!globalMap.empty())
     {
-        for (auto &fontElement : doc.getChild("GlobalMap"))
+        throw runtime_error("GLOBAL-MAP ALREADY DEFINED");
+    }
+    else
+    {
+        XmlTree doc(source->loadDataSource()); // EARLY-THROW IF THE DOCUMENT IS MALFORMED
+        
+        /*
+         * THE FOLLOWING IS NOT SUPPOSED TO THROW...
+         * IN THE WORST-CASE: THE MAP WILL BE EMPTY OR PARTIAL
+         */
+        if (doc.hasChild("GlobalMap"))
         {
-            auto name = fontElement.getAttributeValue<string>("name");
-            
-            if (!name.empty())
+            for (auto &fontElement : doc.getChild("GlobalMap"))
             {
-                auto style = VirtualFont::styleStringToEnum(fontElement.getAttributeValue<string>("style", "regular"));
-                auto baseSize = fontElement.getAttributeValue<float>("base-size", 0);
+                auto name = fontElement.getAttributeValue<string>("name");
                 
-                for (auto &refElement : fontElement.getChildren())
+                if (!name.empty())
                 {
-                    auto os = refElement->getAttributeValue<string>("os", "");
+                    auto style = VirtualFont::styleStringToEnum(fontElement.getAttributeValue<string>("style", "regular"));
+                    auto baseSize = fontElement.getAttributeValue<float>("base-size", 0);
                     
-                    if (os == PLATFORM_NAMES[platform])
+                    for (auto &refElement : fontElement.getChildren())
                     {
-                        auto uri = refElement->getAttributeValue<string>("uri", "");
+                        auto os = refElement->getAttributeValue<string>("os", "");
                         
-                        if (!uri.empty())
+                        if (os == PLATFORM_NAMES[platform])
                         {
-                            globalMap[make_pair(name, style)] = make_pair(uri, baseSize);
-                            break;
+                            auto uri = refElement->getAttributeValue<string>("uri", "");
+                            
+                            if (!uri.empty())
+                            {
+                                globalMap[make_pair(name, style)] = make_pair(uri, baseSize);
+                                break;
+                            }
                         }
                     }
                 }

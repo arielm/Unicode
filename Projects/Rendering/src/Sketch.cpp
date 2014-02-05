@@ -36,8 +36,15 @@ void Sketch::setup(bool renewContext)
     }
     else
     {
-        fontManager.loadGlobalMap(InputSource::getResource("Fonts.xml"));
-
+        try
+        {
+            fontManager.loadGlobalMap(InputSource::getResource("Fonts.xml")); // CAN THROW
+        }
+        catch (exception &e)
+        {
+            LOGI_ONCE("CAN'T INITIALIZE FontManager | " + string(e.what()));
+        }
+        
         // ---
         
         XmlTree doc(InputSource::loadResource("Text.xml"));
@@ -107,7 +114,7 @@ void Sketch::draw()
     }
     catch (exception &e)
     {
-        LOGI_ONCE("CAN'T GET FONT | " + string(e.what()));
+        LOGI_ONCE("CAN'T GET VirtualFont | " + string(e.what()));
     }
 }
 
