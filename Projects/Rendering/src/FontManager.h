@@ -63,9 +63,9 @@ protected:
     std::map<std::tuple<std::string, VirtualFont::Style, float>, std::shared_ptr<VirtualFont>> shortcuts;
     
     std::map<VirtualFont::Key, std::shared_ptr<VirtualFont>> virtualFonts;
-    std::map<ActualFont::Key, std::unique_ptr<ActualFont>> actualFonts;
+    std::map<ActualFont::Key, std::shared_ptr<ActualFont>> actualFonts;
 
-    ActualFont* getActualFont(const ActualFont::Descriptor &descriptor, float baseSize, bool useMipmap = false);
+    std::shared_ptr<ActualFont> getActualFont(const ActualFont::Descriptor &descriptor, float baseSize, bool useMipmap = false);
 
     static std::vector<std::string> splitLanguages(const std::string &languages);
     static ActualFont::Descriptor parseDescriptor(const ci::XmlTree &element);

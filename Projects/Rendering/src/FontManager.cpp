@@ -186,7 +186,7 @@ shared_ptr<VirtualFont> FontManager::getCachedFont(InputSourceRef source, float 
                             {
                                 auto descriptor = parseDescriptor(*refElement);
                                 
-                                if (!descriptor.empty() && font->add(lang, getActualFont(descriptor, baseSize, useMipmap)))
+                                if (!descriptor.empty() && font->addActualFont(lang, getActualFont(descriptor, baseSize, useMipmap)))
                                 {
                                     break;
                                 }
@@ -198,7 +198,7 @@ shared_ptr<VirtualFont> FontManager::getCachedFont(InputSourceRef source, float 
                             
                             if (!descriptor.empty())
                             {
-                                font->add(lang, getActualFont(descriptor, baseSize, useMipmap));
+                                font->addActualFont(lang, getActualFont(descriptor, baseSize, useMipmap));
                             }
                         }
                     }
@@ -248,22 +248,21 @@ size_t FontManager::getTextureMemoryUsage() const
     return total;
 }
 
-ActualFont* FontManager::getActualFont(const ActualFont::Descriptor &descriptor, float baseSize, bool useMipmap)
+shared_ptr<ActualFont> FontManager::getActualFont(const ActualFont::Descriptor &descriptor, float baseSize, bool useMipmap)
 {
     ActualFont::Key key(descriptor, baseSize, useMipmap);
     auto it = actualFonts.find(key);
     
     if (it != actualFonts.end())
     {
-        return it->second.get();
+        return it->second;
     }
     else
     {
         try
         {
-            auto font = new ActualFont(ftHelper, descriptor, baseSize, useMipmap);
-            actualFonts[key] = unique_ptr<ActualFont>(font);
-            
+            auto font = make_shared<ActualFont>(ftHelper, descriptor, baseSize, useMipmap);
+            actualFonts[key] = font;
             return font;
         }
         catch (exception &e)
@@ -271,7 +270,7 @@ ActualFont* FontManager::getActualFont(const ActualFont::Descriptor &descriptor,
             LOGD << e.what() << " - " << descriptor.source->getURI() << endl;
         }
         
-        return NULL;
+        return shared_ptr<ActualFont>();
     }
 }
 

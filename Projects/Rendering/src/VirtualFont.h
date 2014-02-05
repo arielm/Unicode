@@ -15,7 +15,7 @@
 #include <set>
 #include <map>
 
-typedef std::vector<ActualFont*> FontSet;
+typedef std::vector<std::shared_ptr<ActualFont>> FontSet;
 
 class VirtualFont
 {
@@ -65,7 +65,7 @@ public:
     
     VirtualFont(LayoutCache &layoutCache, TextItemizer &itemizer, float baseSize);
     
-    bool add(const std::string &lang, ActualFont *font);
+    bool addActualFont(const std::string &lang, std::shared_ptr<ActualFont> font);
     const FontSet& getFontSet(const std::string &lang) const;
     
     float getHeight(const LineLayout &layout) const;
