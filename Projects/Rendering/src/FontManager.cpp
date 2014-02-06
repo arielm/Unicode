@@ -219,6 +219,72 @@ shared_ptr<VirtualFont> FontManager::getCachedFont(InputSourceRef source, float 
     }
 }
 
+void FontManager::unload(shared_ptr<VirtualFont> virtualFont)
+{
+    for (auto it = shortcuts.begin(); it != shortcuts.end(); ++it)
+    {
+        if (it->second == virtualFont)
+        {
+            shortcuts.erase(it);
+            break;
+        }
+    }
+    
+    for (auto it = virtualFonts.begin(); it != virtualFonts.end(); ++it)
+    {
+        if (it->second == virtualFont)
+        {
+            virtualFonts.erase(it);
+            break;
+        }
+    }
+    
+    // ---
+    
+    set<ActualFont*> actualFontsInUse;
+    
+    for (auto &it1 : virtualFonts)
+    {
+        for (auto &it2 : it1.second->fontSetMap)
+        {
+            for (auto &it3 : it2.second)
+            {
+                actualFontsInUse.insert(it3);
+            }
+        }
+    }
+
+    for (auto it = actualFonts.begin(); it != actualFonts.end(); ++it)
+    {
+        if (!actualFontsInUse.count(it->second.get()))
+        {
+            it->second->unload();
+        }
+    }
+}
+
+void FontManager::unload(const string &name, VirtualFont::Style style, float baseSize)
+{
+    auto key = make_tuple(name, style, baseSize);
+    auto it = shortcuts.find(key);
+    
+    if (it != shortcuts.end())
+    {
+        unload(it->second);
+    }
+}
+
+void FontManager::unload(InputSourceRef source, float baseSize, bool useMipmap)
+{
+    VirtualFont::Key key(source->getURI(), baseSize, useMipmap);
+    auto it = virtualFonts.find(key);
+    
+    if (it != virtualFonts.end())
+    {
+        unload(it->second);
+    }
+}
+
 void FontManager::unload()
 {
     for (auto &it : actualFonts)
