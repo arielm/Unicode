@@ -87,25 +87,26 @@
  *
  * 14) XML FORMAT REDESIGN:
  *     - REFACTORING TO Font::loadConfig()
- *     - "DEFAULT FONT" DEFINED IN FontConfig/DefaultFont
+ *     - "DEFAULT FONT" DEFINED IN FontConfig/DefaultFont:
+ *       - CALLING FontManager::getFont() WITH SOME UNDEFINED
+ *         NAME WILL RETURN THE "DEFAULT FONT"
+ *     - ALIASES DEFINED IN FontConfig/Aliases, E.G.
+ *       - "Arial" FOR "sans-serif"
+ *       - "Times" FOR "serif"
  */
 
 /*
  * ON THE DESKTOP:
- * - PRESS U TO CALL FontManager::unload()
  * - PRESS ENTER TO SHUFFLE THE LINES
  * - PRESS SPACE TO TOGGLE SIZE OSCILLATION
  * - PRESS T, M OR P TO SWITCH BETWEEN TOP, MIDDLE OR BOTTOM ALIGNMENTS
+ * - PRESS U TO CALL FontManager::unload()
+ * - PRESS K TO CALL FontManager::unload("sans-serif")
  * - PRESS X TO PRINT TEXTURE MEMORY USAGE
  */
 
 /*
  * TODO:
- *
- * 0) XML FORMAT REDESIGN:
- *    - POSSIBILITY TO DEFINE ALIASES, E.G.
- *      - "Arial" COULD BE AN ALIAS FOR "sans-serif"
- *      - "Times" COULD BE AN ALIAS FOR "serif"
  *
  * 0) VirtualFont::getFullName()
  *    - DEPENDING ON HOW THE FONT WAS INITIATED, WILL USE EITHER:
@@ -115,14 +116,6 @@
  * 0) InputSource: "internal" PROTOCOL:
  *    - TO BE USED FOR "LOADING FONTS COPIED FROM ASSETS" ON ANDROID
  *    - FIND-OUT HOW TO COPY FROM ASSETS TO "INTERNAL FOLDER" ON ANDROID
- *
- * 0) ADJUST FONTS:
- *    - iOS:
- *      - "Geeza Pro" SHOULD BE REPLACED (ARABIC GLYPHS ARE NOT JOINED)
- *    - ANDROID 3:
- *      - HEBREW FONT IS MISSING
- *      - ARABIC FONT IS PROBABLY OUTDATED
- *      - THAI FONT IS BUGGY...
  *
  * 0) ADVANCED GLYPH RENDERING:
  *    - BATCHING ("TEXTURE BUCKET"):

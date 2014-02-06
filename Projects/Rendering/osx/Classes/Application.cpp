@@ -47,6 +47,10 @@ void Application::keyDown(KeyEvent event)
         case KeyEvent::KEY_u:
             target->fontManager.unload();
             break;
+            
+        case KeyEvent::KEY_k:
+            target->fontManager.unload("sans-serif");
+            break;
 
         case KeyEvent::KEY_RETURN:
             target->shuffleLines();

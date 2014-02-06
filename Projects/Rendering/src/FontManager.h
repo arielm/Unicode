@@ -92,6 +92,7 @@ protected:
     
     std::map<std::pair<std::string, VirtualFont::Style>, std::pair<std::string, float>> globalMap;
     std::map<std::tuple<std::string, VirtualFont::Style, float>, std::shared_ptr<VirtualFont>> shortcuts;
+    std::map<std::string, std::string> aliases;
     
     std::map<VirtualFont::Key, std::shared_ptr<VirtualFont>> virtualFonts;
     std::map<ActualFont::Key, std::unique_ptr<ActualFont>> actualFonts;

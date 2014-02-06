@@ -45,7 +45,7 @@ hasDefaultFont(false)
 
 void FontManager::loadConfig(InputSourceRef source)
 {
-    if (!globalMap.empty())
+    if (!globalMap.empty() || !aliases.empty() || hasDefaultFont)
     {
         throw runtime_error("FONT-CONFIG ALREADY DEFINED");
     }
@@ -68,9 +68,20 @@ void FontManager::loadConfig(InputSourceRef source)
                 defaultFontStyle = VirtualFont::styleStringToEnum(defaultFontElement.getAttributeValue<string>("style", "regular"));
             }
             
+            for (auto &aliasElement : doc.getChild("FontConfig/Aliases"))
+            {
+                auto name = aliasElement.getAttributeValue<string>("name", "");
+                auto target = aliasElement.getAttributeValue<string>("target", "");
+                
+                if (!name.empty() && !target.empty())
+                {
+                    aliases[name] = target;
+                }
+            }
+            
             for (auto &fontElement : doc.getChild("FontConfig/VirtualFonts"))
             {
-                auto name = fontElement.getAttributeValue<string>("name");
+                auto name = fontElement.getAttributeValue<string>("name", "");
                 
                 if (!name.empty())
                 {
@@ -109,16 +120,30 @@ shared_ptr<VirtualFont> FontManager::getCachedFont(const std::string &name, Virt
     }
     
     // ---
+
+    string nameOrAlias;
+    auto it2 = aliases.find(name);
     
-    auto it2 = globalMap.find(make_pair(name, style));
+    if (it2 == aliases.end())
+    {
+        nameOrAlias = name;
+    }
+    else
+    {
+        nameOrAlias = it2->second;
+    }
     
-    if (it2 != globalMap.end())
+    // ---
+    
+    auto it3 = globalMap.find(make_pair(nameOrAlias, style));
+    
+    if (it3 != globalMap.end())
     {
         bool useMipmap = false;
         
         if (baseSize == 0)
         {
-            baseSize = it2->second.second;
+            baseSize = it3->second.second;
             useMipmap = true;
         }
         
@@ -127,7 +152,7 @@ shared_ptr<VirtualFont> FontManager::getCachedFont(const std::string &name, Virt
             throw invalid_argument("UNDEFINED FONT-SIZE");
         }
         
-        auto uri = it2->second.first;
+        auto uri = it3->second.first;
         auto font = getCachedFont(InputSource::get(uri), baseSize, useMipmap); // CAN THROW
         
         /*
