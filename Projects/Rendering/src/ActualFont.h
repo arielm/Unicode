@@ -116,7 +116,7 @@ public:
         }
     };
 
-    ~ActualFont(); // MUST BE PUBLIC BECAUSE OF shared_ptr
+    ~ActualFont(); // MUST BE PUBLIC BECAUSE OF unique_ptr
 
 protected:
     std::shared_ptr<FreetypeHelper> ftHelper;

@@ -34,6 +34,8 @@ public:
     void loadGlobalMap(chr::InputSourceRef source);
 
     /*
+     * HIGHER-LEVEL METHOD, REQUIRING A GLOBAL-MAP
+     *
      * SCENARIO 1:
      * - CALLER IS DEFINING A FONT-SIZE (baseSize != 0)
      * - IF A FONT-SIZE IS DEFINED AT THE GLOBAL-MAP LEVEL (base-size ATTRIBUTE), IT IS IGNORED
@@ -79,9 +81,9 @@ protected:
     std::map<std::tuple<std::string, VirtualFont::Style, float>, std::shared_ptr<VirtualFont>> shortcuts;
     
     std::map<VirtualFont::Key, std::shared_ptr<VirtualFont>> virtualFonts;
-    std::map<ActualFont::Key, std::shared_ptr<ActualFont>> actualFonts;
+    std::map<ActualFont::Key, std::unique_ptr<ActualFont>> actualFonts;
 
-    std::shared_ptr<ActualFont> getActualFont(const ActualFont::Descriptor &descriptor, float baseSize, bool useMipmap = false);
+    ActualFont* getActualFont(const ActualFont::Descriptor &descriptor, float baseSize, bool useMipmap = false);
 
     static std::vector<std::string> splitLanguages(const std::string &languages);
     static ActualFont::Descriptor parseDescriptor(const ci::XmlTree &element);

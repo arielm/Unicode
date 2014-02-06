@@ -26,7 +26,7 @@ baseSize(baseSize)
     setColor(ColorA(0, 0, 0, 1));
 }
 
-bool VirtualFont::addActualFont(const string &lang, shared_ptr<ActualFont> font)
+bool VirtualFont::addActualFont(const string &lang, ActualFont *font)
 {
     if (font)
     {
@@ -199,7 +199,7 @@ LineLayout* VirtualFont::createLineLayout(const TextLine &line)
                     
                     if (codepoint)
                     {
-                        if (clusterFound && (it->second.font != font.get()))
+                        if (clusterFound && (it->second.font != font))
                         {
                             continue; // CLUSTER FOUND, WITH ANOTHER FONT (E.G. SPACE)
                         }
@@ -214,7 +214,7 @@ LineLayout* VirtualFont::createLineLayout(const TextLine &line)
                             }
                             else
                             {
-                                clusterMap.insert(make_pair(cluster, Cluster(font.get(), codepoint, offset, advance)));
+                                clusterMap.insert(make_pair(cluster, Cluster(font, codepoint, offset, advance)));
                             }
                         }
                     }

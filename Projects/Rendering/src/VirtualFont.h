@@ -15,7 +15,7 @@
 #include <set>
 #include <map>
 
-typedef std::vector<std::shared_ptr<ActualFont>> FontSet;
+typedef std::vector<ActualFont*> FontSet;
 
 class VirtualFont
 {
@@ -108,7 +108,7 @@ protected:
     
     VirtualFont(LayoutCache &layoutCache, TextItemizer &itemizer, float baseSize);
     
-    bool addActualFont(const std::string &lang, std::shared_ptr<ActualFont> font);
+    bool addActualFont(const std::string &lang, ActualFont *font);
     const FontSet& getFontSet(const std::string &lang) const;
     
     friend class FontManager;

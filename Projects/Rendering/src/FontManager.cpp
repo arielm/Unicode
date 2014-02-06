@@ -247,21 +247,22 @@ size_t FontManager::getTextureMemoryUsage() const
     return total;
 }
 
-shared_ptr<ActualFont> FontManager::getActualFont(const ActualFont::Descriptor &descriptor, float baseSize, bool useMipmap)
+ActualFont* FontManager::getActualFont(const ActualFont::Descriptor &descriptor, float baseSize, bool useMipmap)
 {
     ActualFont::Key key(descriptor, baseSize, useMipmap);
     auto it = actualFonts.find(key);
     
     if (it != actualFonts.end())
     {
-        return it->second;
+        return it->second.get();
     }
     else
     {
         try
         {
-            auto font = shared_ptr<ActualFont>(new ActualFont(ftHelper, descriptor, baseSize, useMipmap)); // make_shared WOULD HAVE BEEN BETTER, BUT IT WON'T WORK WITH PROTECTED CONSTRUCTORS
-            actualFonts[key] = font;
+            auto font = new ActualFont(ftHelper, descriptor, baseSize, useMipmap);
+            actualFonts[key] = unique_ptr<ActualFont>(font);
+            
             return font;
         }
         catch (exception &e)
@@ -269,7 +270,7 @@ shared_ptr<ActualFont> FontManager::getActualFont(const ActualFont::Descriptor &
             LOGD << e.what() << " - " << descriptor.source->getURI() << endl;
         }
         
-        return shared_ptr<ActualFont>();
+        return NULL;
     }
 }
 

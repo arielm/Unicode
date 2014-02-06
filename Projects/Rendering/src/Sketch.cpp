@@ -99,6 +99,9 @@ void Sketch::draw()
     {
         auto font = fontManager.getCachedFont("sans-serif"); // CAN THROW
         
+//        fontManager.removeFromCache(font);
+//        exit(0);
+        
         font->setSize(fontSize);
         font->setColor(ColorA(1, 1, 1, 0.75f));
         
