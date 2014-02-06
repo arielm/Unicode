@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<GlobalMap>
-    <VirtualFont name="sans-serif" base-size="48">
-        <Ref os="ios" uri="res://sans-serif_ios.xml" />
-        <Ref os="android" uri="res://sans-serif_android.xml" />
-        <!--<Ref os="osx" uri="res://sans-serif_osx.xml" />-->
-        <Ref os="osx" uri="res://sans-serif.xml" />
-    </VirtualFont>
-    
-    <VirtualFont name="sans-serif" style="bold" base-size="48">
-        <Ref os="ios" uri="res://sans-serif_bold_ios.xml" />
-        <Ref os="android" uri="res://sans-serif_bold_android.xml" />
-        <Ref os="osx" uri="res://sans-serif_bold_osx.xml" />
-    </VirtualFont>
-</GlobalMap>
+<FontConfig>
+    <DefaultFont name="sans-serif" />
+    <VirtualFonts>
+        <VirtualFont name="sans-serif" base-size="48">
+            <Ref os="ios" uri="res://sans-serif_ios.xml" />
+            <Ref os="android" uri="res://sans-serif_android.xml" />
+            <!--<Ref os="osx" uri="res://sans-serif_osx.xml" />-->
+            <Ref os="osx" uri="res://sans-serif.xml" />
+        </VirtualFont>
+        <VirtualFont name="sans-serif" style="bold" base-size="48">
+            <Ref os="ios" uri="res://sans-serif_bold_ios.xml" />
+            <Ref os="android" uri="res://sans-serif_bold_android.xml" />
+            <Ref os="osx" uri="res://sans-serif_bold_osx.xml" />
+        </VirtualFont>
+    </VirtualFonts>
+</FontConfig>

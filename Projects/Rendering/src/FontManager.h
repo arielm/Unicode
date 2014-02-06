@@ -25,26 +25,26 @@ public:
     FontManager();
     
     /*
-     * THE GLOBAL-MAP, MAPPING BETWEEN:
+     * THE FONT-CONFIG, MAPPING BETWEEN:
      * - A STRING LIKE "sans-serif" AND SOME STYLE (E.G. VirtualFont::STYLE_BOLD)
      * - AND SOME FONT XML-DEFINITION LIKE "sans-serif_bold_ios.xml"
      *
      * NOT MANDATORY, BUT SHOULD BE DEFINED ONLY ONCE
      */
-    void loadGlobalMap(chr::InputSourceRef source);
+    void loadConfig(chr::InputSourceRef source);
 
     /*
-     * HIGHER-LEVEL METHOD, REQUIRING A GLOBAL-MAP
+     * HIGHER-LEVEL METHOD, REQUIRING A FONT-CONFIG
      *
      * SCENARIO 1:
      * - CALLER IS DEFINING A FONT-SIZE (baseSize != 0)
-     * - IF A FONT-SIZE IS DEFINED AT THE GLOBAL-MAP LEVEL (base-size ATTRIBUTE), IT IS IGNORED
+     * - IF A FONT-SIZE IS DEFINED AT THE FONT-CONFIG LEVEL (base-size ATTRIBUTE), IT IS IGNORED
      * - MIPMAPS ARE NOT ALLOWED
      * - VirtualFont::setSize() IS NOT SUPPOSED TO BE USED DURING THE FONT'S LIFE-CYCLE
      *
      * SCENARIO 2:
      * - CALLER IS NOT DEFINING A FONT-SIZE (baseSize == 0)
-     * - THE FONT-SIZE DEFINED AT THE GLOBAL-MAP LEVEL (base-size ATTRIBUTE) IS USED
+     * - THE FONT-SIZE DEFINED AT THE FONT-CONFIG LEVEL (base-size ATTRIBUTE) IS USED
      * - MIPMAPS ARE ALLOWED
      * - VirtualFont::setSize() SHALL BE USED DURING THE FONT'S LIFE-CYCLE
      */
@@ -82,9 +82,13 @@ public:
      * NOTE THAT THE GPU MAY DECIDE TO USE MORE MEMORY INTERNALLY
      */
     size_t getTextureMemoryUsage() const;
-    
+
 protected:
     int platform;
+    
+    bool hasDefaultFont;
+    std::string defaultFontName;
+    VirtualFont::Style defaultFontStyle;
     
     std::map<std::pair<std::string, VirtualFont::Style>, std::pair<std::string, float>> globalMap;
     std::map<std::tuple<std::string, VirtualFont::Style, float>, std::shared_ptr<VirtualFont>> shortcuts;

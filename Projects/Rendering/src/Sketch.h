@@ -84,6 +84,10 @@
  *          CREATION, WHICH IS GREATLY SIMPLIFYING THE OPERATIONS
  *     - IF MEMORY REALLY MATTERS: IT'S ALWAYS POSSIBLE TO CALL FontManager::unload()
  *       RIGHT AFTER CREATING ALL YOUR VirtualFont INSTANCES
+ *
+ * 14) XML FORMAT REDESIGN:
+ *     - REFACTORING TO Font::loadConfig()
+ *     - "DEFAULT FONT" DEFINED IN FontConfig/DefaultFont
  */
 
 /*
@@ -98,12 +102,10 @@
 /*
  * TODO:
  *
- * 0) FontManager::getFont()
- *    - XML FORMAT:
- *      - "DEFAULT FONT" SYSTEM SHOULD BE DEFINED AT THE XML-LEVEL
- *      - POSSIBILITY TO DEFINE ALIASES, E.G.
- *        - "Arial" COULD BE AN ALIAS FOR "sans-serif"
- *        - "Times" COULD BE AN ALIAS FOR "serif"
+ * 0) XML FORMAT REDESIGN:
+ *    - POSSIBILITY TO DEFINE ALIASES, E.G.
+ *      - "Arial" COULD BE AN ALIAS FOR "sans-serif"
+ *      - "Times" COULD BE AN ALIAS FOR "serif"
  *
  * 0) VirtualFont::getFullName()
  *    - DEPENDING ON HOW THE FONT WAS INITIATED, WILL USE EITHER:

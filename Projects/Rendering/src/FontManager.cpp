@@ -24,16 +24,11 @@ enum
 
 const string PLATFORM_NAMES[4] = {"osx", "windows", "ios", "android"};
 
-/*
- * FIXME: SHOULD BE DEFINED AT THE XML-LEVEL
- */
-const string DEFAULT_FONT_NAME = "sans-serif";
-const VirtualFont::Style DEFAULT_FONT_STYLE = VirtualFont::STYLE_REGULAR;
-
 FontManager::FontManager()
 :
 ftHelper(make_shared<FreetypeHelper>()),
-itemizer(langHelper)
+itemizer(langHelper),
+hasDefaultFont(false)
 {
 #if defined(CINDER_MAC)
     platform = PLATFORM_OSX;
@@ -48,11 +43,11 @@ itemizer(langHelper)
 #endif
 }
 
-void FontManager::loadGlobalMap(InputSourceRef source)
+void FontManager::loadConfig(InputSourceRef source)
 {
     if (!globalMap.empty())
     {
-        throw runtime_error("GLOBAL-MAP ALREADY DEFINED");
+        throw runtime_error("FONT-CONFIG ALREADY DEFINED");
     }
     else
     {
@@ -62,9 +57,18 @@ void FontManager::loadGlobalMap(InputSourceRef source)
          * THE FOLLOWING IS NOT SUPPOSED TO THROW...
          * IN THE WORST-CASE: THE MAP WILL BE EMPTY OR PARTIAL
          */
-        if (doc.hasChild("GlobalMap"))
+        if (doc.hasChild("FontConfig"))
         {
-            for (auto &fontElement : doc.getChild("GlobalMap"))
+            if (doc.hasChild("FontConfig/DefaultFont"))
+            {
+                hasDefaultFont = true;
+
+                auto &defaultFontElement = doc.getChild("FontConfig/DefaultFont");
+                defaultFontName = defaultFontElement.getAttributeValue<string>("name", "");
+                defaultFontStyle = VirtualFont::styleStringToEnum(defaultFontElement.getAttributeValue<string>("style", "regular"));
+            }
+            
+            for (auto &fontElement : doc.getChild("FontConfig/VirtualFonts"))
             {
                 auto name = fontElement.getAttributeValue<string>("name");
                 
@@ -136,17 +140,20 @@ shared_ptr<VirtualFont> FontManager::getCachedFont(const std::string &name, Virt
     /*
      * BASIC SYSTEM FOR HANDLING UNDEFINED FONT NAMES AND STYLES
      */
-    if (name != DEFAULT_FONT_NAME)
+    if (hasDefaultFont)
     {
-        auto font = getCachedFont(DEFAULT_FONT_NAME, get<1>(key), get<2>(key));
-        shortcuts[key] = font;
-        return font;
-    }
-    else if (style != DEFAULT_FONT_STYLE)
-    {
-        auto font = getCachedFont(DEFAULT_FONT_NAME, DEFAULT_FONT_STYLE, get<2>(key));
-        shortcuts[key] = font;
-        return font;
+        if (name != defaultFontName)
+        {
+            auto font = getCachedFont(defaultFontName, get<1>(key), get<2>(key));
+            shortcuts[key] = font;
+            return font;
+        }
+        else if (style != defaultFontStyle)
+        {
+            auto font = getCachedFont(defaultFontName, defaultFontStyle, get<2>(key));
+            shortcuts[key] = font;
+            return font;
+        }
     }
     
     /*
