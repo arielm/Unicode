@@ -219,14 +219,6 @@ shared_ptr<VirtualFont> FontManager::getCachedFont(InputSourceRef source, float 
     }
 }
 
-void FontManager::reload()
-{
-    for (auto &it : actualFonts)
-    {
-        it.second->reload();
-    }
-}
-
 void FontManager::unload()
 {
     for (auto &it : actualFonts)

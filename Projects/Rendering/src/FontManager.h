@@ -53,9 +53,23 @@ public:
      */
     std::shared_ptr<VirtualFont> getCachedFont(chr::InputSourceRef source, float baseSize, bool useMipmap = false);
     
-    void reload();
+    /*
+     * CLEARS THE FONT RESOURCES (HARFBUZZ AND FREETYPE RELATED) AND DISCARDS THE GLYPH TEXTURES
+     * FROM THIS POINT: FONTS WILL BE RELOADED AND TEXTURES RECREATED ONLY WHEN NECESSARY
+     */
     void unload();
+
+    /*
+     * DISCARDS THE GLYPH TEXTURES (THIS MUST BE CALLED AFTER OPENGL CONTEXT-LOSS)
+     * FROM THIS POINT: TEXTURES WILL BE RECREATED ONLY WHEN NECESSARY
+     */
     void discardTextures();
+    
+    /*
+     * RETURNS THE MEMORY USED BY ALL THE GLYPH TEXTURES
+     * CURRENTLY: "ALPHA" TEXTURES ARE USED (ONE BYTE PER PIXEL)
+     * NOTE THAT THE GPU MAY DECIDE TO USE MORE MEMORY INTERNALLY
+     */
     size_t getTextureMemoryUsage() const;
     
 protected:

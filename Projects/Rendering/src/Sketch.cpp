@@ -42,7 +42,7 @@ void Sketch::setup(bool renewContext)
         }
         catch (exception &e)
         {
-            LOGI_ONCE("CAN'T INITIALIZE FontManager | " + string(e.what()));
+            LOGI << "CAN'T INITIALIZE FontManager | " << e.what() << endl;
         }
         
         // ---

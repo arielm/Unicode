@@ -26,9 +26,6 @@ baseSize(baseSize)
     setColor(ColorA(0, 0, 0, 1));
 }
 
-VirtualFont::~VirtualFont()
-{}
-
 bool VirtualFont::addActualFont(const string &lang, shared_ptr<ActualFont> font)
 {
     if (font)
@@ -175,7 +172,9 @@ LineLayout* VirtualFont::createLineLayout(const TextLine &line)
         
         for (auto &font : getFontSet(run.language))
         {
-            if (font->hbFont)
+            font->reload();
+            
+            if (font->loaded)
             {
                 layout->maxHeight = std::max(layout->maxHeight, font->metrics.height);
                 layout->maxAscent = std::max(layout->maxAscent, font->metrics.ascent);

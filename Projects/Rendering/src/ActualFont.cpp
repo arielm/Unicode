@@ -73,18 +73,6 @@ ActualFont::~ActualFont()
     unload();
 }
 
-string ActualFont::getFullName()
-{
-    if (ftFace)
-    {
-        return string(ftFace->family_name) + " " + ftFace->style_name;
-    }
-    else
-    {
-        return "";
-    }
-}
-
 void ActualFont::reload()
 {
     if (!loaded)
@@ -136,7 +124,7 @@ void ActualFont::reload()
         };
         
         FT_Set_Transform(ftFace, &matrix, NULL);
-
+        
         /*
          * THIS MUST TAKE PLACE AFTER ftFace IS PROPERLY SCALED AND TRANSFORMED
          */
@@ -219,6 +207,8 @@ ActualFont::Glyph* ActualFont::getGlyph(uint32_t codepoint)
 {
     Glyph *glyph = NULL;
     
+    reload();
+    
     if (loaded)
     {
         auto entry = glyphCache.find(codepoint);
@@ -277,4 +267,16 @@ ActualFont::Glyph* ActualFont::createGlyph(uint32_t codepoint)
     }
     
     return NULL;
+}
+
+string ActualFont::getFullName()
+{
+    if (ftFace)
+    {
+        return string(ftFace->family_name) + " " + ftFace->style_name;
+    }
+    else
+    {
+        return "";
+    }
 }

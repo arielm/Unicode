@@ -62,10 +62,7 @@ public:
     LayoutCache &layoutCache;
     TextItemizer &itemizer;
     float baseSize;
-    
-    ~VirtualFont(); // MUST BE PUBLIC BECAUSE OF shared_ptr
 
-    const FontSet& getFontSet(const std::string &lang) const;
     ActualFont::Metrics getMetrics(const Cluster &cluster) const; // RETURNS THE SIZED METRICS OF THE ActualFont USED BY cluster
     ActualFont::Metrics getMetrics(const std::string &lang = "") const; // RETURNS THE SIZED METRICS OF THE FIRST ActualFont IN THE SET USED FOR lang
     
@@ -110,7 +107,9 @@ protected:
     std::map<std::string, FontSet> fontSetMap;
     
     VirtualFont(LayoutCache &layoutCache, TextItemizer &itemizer, float baseSize);
+    
     bool addActualFont(const std::string &lang, std::shared_ptr<ActualFont> font);
+    const FontSet& getFontSet(const std::string &lang) const;
     
     friend class FontManager;
 };

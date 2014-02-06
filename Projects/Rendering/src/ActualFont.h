@@ -116,20 +116,8 @@ public:
         }
     };
 
-    ci::Vec2f scale;
-    Metrics metrics;
-
     ~ActualFont(); // MUST BE PUBLIC BECAUSE OF shared_ptr
 
-    std::string getFullName();
-
-    void reload();
-    void unload();
-    void discardTextures();
-    size_t getTextureMemoryUsage() const;
-
-    Glyph* getGlyph(uint32_t codepoint);
-    
 protected:
     std::shared_ptr<FreetypeHelper> ftHelper;
 
@@ -138,17 +126,29 @@ protected:
     bool useMipmap;
     int padding;
 
+    ci::Vec2f scale;
+    Metrics metrics;
+    bool loaded;
+
     ci::Buffer memoryBuffer;
     FT_Face ftFace;
     hb_font_t *hbFont;
-    bool loaded;
     
     std::map<uint32_t, std::unique_ptr<Glyph>> glyphCache;
     std::vector<std::unique_ptr<ReloadableTexture>> standaloneTextures;
 
     ActualFont(std::shared_ptr<FreetypeHelper> ftHelper, const Descriptor &descriptor, float baseSize, bool useMipmap);
-    Glyph* createGlyph(uint32_t codepoint);
     
+    void reload();
+    void unload();
+    void discardTextures();
+    size_t getTextureMemoryUsage() const;
+    
+    Glyph* getGlyph(uint32_t codepoint);
+    Glyph* createGlyph(uint32_t codepoint);
+
+    std::string getFullName();
+
     friend class FontManager;
     friend class VirtualFont;
 };
