@@ -56,6 +56,8 @@ void FontManager::loadConfig(InputSourceRef source)
         /*
          * THE FOLLOWING IS NOT SUPPOSED TO THROW...
          * IN THE WORST-CASE: THE MAP WILL BE EMPTY OR PARTIAL
+         *
+         * TODO: THROW WHEN DOCUMENT IS INVALID?
          */
         if (doc.hasChild("FontConfig"))
         {
@@ -68,10 +70,10 @@ void FontManager::loadConfig(InputSourceRef source)
                 defaultFontStyle = VirtualFont::styleStringToEnum(defaultFontElement.getAttributeValue<string>("style", "regular"));
             }
             
-            for (auto &aliasElement : doc.getChild("FontConfig/Aliases"))
+            for (auto aliasElement = doc.begin("FontConfig/Aliases/Alias"); aliasElement != doc.end(); ++aliasElement)
             {
-                auto name = aliasElement.getAttributeValue<string>("name", "");
-                auto target = aliasElement.getAttributeValue<string>("target", "");
+                auto name = aliasElement->getAttributeValue<string>("name", "");
+                auto target = aliasElement->getAttributeValue<string>("target", "");
                 
                 if (!name.empty() && !target.empty())
                 {
@@ -79,16 +81,16 @@ void FontManager::loadConfig(InputSourceRef source)
                 }
             }
             
-            for (auto &fontElement : doc.getChild("FontConfig/VirtualFonts"))
+            for (auto fontElement = doc.begin("FontConfig/VirtualFonts/VirtualFont"); fontElement != doc.end(); ++fontElement)
             {
-                auto name = fontElement.getAttributeValue<string>("name", "");
+                auto name = fontElement->getAttributeValue<string>("name", "");
                 
                 if (!name.empty())
                 {
-                    auto style = VirtualFont::styleStringToEnum(fontElement.getAttributeValue<string>("style", "regular"));
-                    auto baseSize = fontElement.getAttributeValue<float>("base-size", 0);
+                    auto style = VirtualFont::styleStringToEnum(fontElement->getAttributeValue<string>("style", "regular"));
+                    auto baseSize = fontElement->getAttributeValue<float>("base-size", 0);
                     
-                    for (auto &refElement : fontElement.getChildren())
+                    for (auto &refElement : fontElement->getChildren())
                     {
                         auto os = refElement->getAttributeValue<string>("os", "");
                         
@@ -204,20 +206,20 @@ shared_ptr<VirtualFont> FontManager::getCachedFont(InputSourceRef source, float 
          * THE FOLLOWING IS NOT SUPPOSED TO THROW...
          * IN THE WORST-CASE: THE FONT WILL BE "EMPTY" OR "PARTIAL"
          *
-         * TODO: THROW WHEN DOCUMENT IS INVALID
+         * TODO: THROW WHEN DOCUMENT IS INVALID?
          */
         if (doc.hasChild("VirtualFont"))
         {
             auto font = shared_ptr<VirtualFont>(new VirtualFont(layoutCache, itemizer, baseSize)); // make_shared WOULD HAVE BEEN BETTER, BUT IT WON'T WORK WITH PROTECTED CONSTRUCTORS
             virtualFonts[key] = font;
 
-            for (auto &fontElement : doc.getChild("VirtualFont"))
+            for (auto setElement = doc.begin("VirtualFont/Set"); setElement != doc.end(); ++setElement)
             {
-                auto langList = splitLanguages(fontElement.getAttributeValue<string>("lang", ""));
+                auto langList = splitLanguages(setElement->getAttributeValue<string>("lang", ""));
                 
                 for (auto &lang : langList)
                 {
-                    for (auto &variantElement : fontElement.getChildren())
+                    for (auto &variantElement : setElement->getChildren())
                     {
                         if (variantElement->getTag() == "Group")
                         {

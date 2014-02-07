@@ -147,7 +147,7 @@ protected:
     Glyph* getGlyph(uint32_t codepoint);
     Glyph* createGlyph(uint32_t codepoint);
 
-    std::string getFullName();
+    std::string getFullName() const;
 
     friend class FontManager;
     friend class VirtualFont;

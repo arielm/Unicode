@@ -269,7 +269,7 @@ ActualFont::Glyph* ActualFont::createGlyph(uint32_t codepoint)
     return NULL;
 }
 
-string ActualFont::getFullName()
+string ActualFont::getFullName() const
 {
     if (ftFace)
     {
