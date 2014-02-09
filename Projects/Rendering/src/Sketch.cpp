@@ -36,8 +36,15 @@ void Sketch::setup(bool renewContext)
     }
     else
     {
-        fontManager.loadGlobalMap(InputSource::getResource("Fonts.xml"));
-
+        try
+        {
+            fontManager.loadConfig(InputSource::getResource("Fonts.xml")); // CAN THROW
+        }
+        catch (exception &e)
+        {
+            LOGI << "CAN'T INITIALIZE FontManager | " << e.what() << endl;
+        }
+        
         // ---
         
         XmlTree doc(InputSource::loadResource("Text.xml"));
@@ -90,35 +97,35 @@ void Sketch::draw()
 
     try
     {
-        auto &font = fontManager.getFont("sans-serif"); // CAN THROW
+        auto font = fontManager.getCachedFont("sans-serif"); // CAN THROW
         
-        font.setSize(fontSize);
-        font.setColor(ColorA(1, 1, 1, 0.75f));
+        font->setSize(fontSize);
+        font->setColor(ColorA(1, 1, 1, 0.75f));
         
-        font.begin();
+        font->begin();
         
         for (auto &line : lines)
         {
-            drawTextLine(font, line, y, left, right);
+            drawTextLine(*font, line, y, left, right);
             y += LINE_SPACING;
         }
         
-        font.end();
+        font->end();
     }
     catch (exception &e)
     {
-        LOGI_ONCE("CAN'T GET FONT | " + string(e.what()));
+        LOGI_ONCE("CAN'T GET VirtualFont | " + string(e.what()));
     }
 }
 
 void Sketch::drawTextLine(VirtualFont &font, const string &text, float y, float left, float right)
 {
-    auto &layout = font.getCachedLineLayout(text);
+    auto layout = font.getCachedLineLayout(text);
     
-    float x = (layout.overallDirection == HB_DIRECTION_RTL) ? (right - font.getAdvance(layout)) : left;
-    Vec2f position(x, y + font.getOffsetY(layout, align));
-    
-    for (auto cluster : layout.clusters)
+    float x = (layout->overallDirection == HB_DIRECTION_RTL) ? (right - font.getAdvance(*layout)) : left;
+    Vec2f position(x, y + font.getOffsetY(*layout, align));
+
+    for (auto &cluster : layout->clusters)
     {
         font.drawCluster(cluster, position);
         position.x += font.getAdvance(cluster);
@@ -163,7 +170,7 @@ string Sketch::trimText(const string &text)
 {
     auto rawLines = split(text, '\n');
     
-    for (auto line : rawLines)
+    for (auto &line : rawLines)
     {
         auto trimmed = boost::algorithm::trim_copy(line);
         

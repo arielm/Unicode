@@ -25,50 +25,76 @@ public:
     FontManager();
     
     /*
-     * THE GLOBAL-MAP, MAPPING BETWEEN:
+     * THE FONT-CONFIG, MAPPING BETWEEN:
      * - A STRING LIKE "sans-serif" AND SOME STYLE (E.G. VirtualFont::STYLE_BOLD)
      * - AND SOME FONT XML-DEFINITION LIKE "sans-serif_bold_ios.xml"
+     *
+     * NOT MANDATORY, BUT SHOULD BE DEFINED ONLY ONCE
      */
-    void loadGlobalMap(chr::InputSourceRef source);
+    void loadConfig(chr::InputSourceRef source);
 
     /*
+     * HIGHER-LEVEL METHOD, REQUIRING A FONT-CONFIG
+     *
      * SCENARIO 1:
      * - CALLER IS DEFINING A FONT-SIZE (baseSize != 0)
-     * - IF A FONT-SIZE IS DEFINED AT THE GLOBAL-MAP LEVEL (base-size ATTRIBUTE), IT IS IGNORED
+     * - IF A FONT-SIZE IS DEFINED AT THE FONT-CONFIG LEVEL (base-size ATTRIBUTE), IT IS IGNORED
      * - MIPMAPS ARE NOT ALLOWED
      * - VirtualFont::setSize() IS NOT SUPPOSED TO BE USED DURING THE FONT'S LIFE-CYCLE
      *
      * SCENARIO 2:
      * - CALLER IS NOT DEFINING A FONT-SIZE (baseSize == 0)
-     * - THE FONT-SIZE DEFINED AT THE GLOBAL-MAP LEVEL (base-size ATTRIBUTE) IS USED
+     * - THE FONT-SIZE DEFINED AT THE FONT-CONFIG LEVEL (base-size ATTRIBUTE) IS USED
      * - MIPMAPS ARE ALLOWED
      * - VirtualFont::setSize() SHALL BE USED DURING THE FONT'S LIFE-CYCLE
-     *
-     * RESULTS ARE CACHED:
-     * INSTANCES ARE MANAGED BY FontManager AND WILL BE VALID AS LONG AS THE LATTER IS ALIVE
      */
-    VirtualFont& getFont(const std::string &name, VirtualFont::Style style = VirtualFont::STYLE_REGULAR, float baseSize = 0);
+    std::shared_ptr<VirtualFont> getCachedFont(const std::string &name, VirtualFont::Style style = VirtualFont::STYLE_REGULAR, float baseSize = 0);
     
     /*
      * LOWER-LEVEL METHOD, FOR ACCESSING A FONT DIRECTLY VIA ITS XML-DEFINITION
-     *
-     * RESULTS ARE CACHED:
-     * INSTANCES ARE MANAGED BY FontManager AND WILL BE VALID AS LONG AS THE LATTER IS ALIVE
      */
-    VirtualFont& getFont(chr::InputSourceRef source, float baseSize, bool useMipmap = false);
+    std::shared_ptr<VirtualFont> getCachedFont(chr::InputSourceRef source, float baseSize, bool useMipmap = false);
     
-    void reload();
+    /*
+     * CLEARS THE FONT RESOURCES (HARFBUZZ AND FREETYPE RELATED) AND DISCARDS THE GLYPH TEXTURES
+     * ASSOCIATED SOLELY WITH A SPECIFIC VirtualFont
+     * FROM THIS POINT: RESOURCES WILL BE RELOADED AND TEXTURES RECREATED ONLY WHEN NECESSARY
+     */
+    void unload(std::shared_ptr<VirtualFont> virtualFont);
+    void unload(const std::string &name, VirtualFont::Style style = VirtualFont::STYLE_REGULAR, float baseSize = 0); // NO-OP IF NO SUCH VirtualFont IS DEFINED
+    void unload(chr::InputSourceRef source, float baseSize, bool useMipmap = false); // NO-OP IF NO SUCH VirtualFont IS DEFINED
+
+    /*
+     * CLEARS ALL THE FONT RESOURCES (HARFBUZZ AND FREETYPE RELATED) AND DISCARDS ALL THE GLYPH TEXTURES
+     * FROM THIS POINT: RESOURCES WILL BE RELOADED AND TEXTURES RECREATED ONLY WHEN NECESSARY
+     */
     void unload();
+
+    /*
+     * DISCARDS ALL THE GLYPH TEXTURES (MUST BE CALLED AFTER OPENGL CONTEXT-LOSS)
+     * FROM THIS POINT: TEXTURES WILL BE RECREATED ONLY WHEN NECESSARY
+     */
     void discardTextures();
-    size_t getTextureMemoryUsage() const;
     
+    /*
+     * RETURNS THE MEMORY USED BY ALL THE GLYPH TEXTURES
+     * CURRENTLY: "ALPHA" TEXTURES ARE USED (ONE BYTE PER PIXEL)
+     * NOTE THAT THE GPU MAY DECIDE TO USE MORE MEMORY INTERNALLY
+     */
+    size_t getTextureMemoryUsage() const;
+
 protected:
     int platform;
     
-    std::map<std::pair<std::string, VirtualFont::Style>, std::pair<std::string, float>> globalMap;
-    std::map<std::tuple<std::string, VirtualFont::Style, float>, VirtualFont*> shortcuts;
+    bool hasDefaultFont;
+    std::string defaultFontName;
+    VirtualFont::Style defaultFontStyle;
     
-    std::map<VirtualFont::Key, std::unique_ptr<VirtualFont>> virtualFonts;
+    std::map<std::pair<std::string, VirtualFont::Style>, std::pair<std::string, float>> globalMap;
+    std::map<std::tuple<std::string, VirtualFont::Style, float>, std::shared_ptr<VirtualFont>> shortcuts;
+    std::map<std::string, std::string> aliases;
+    
+    std::map<VirtualFont::Key, std::shared_ptr<VirtualFont>> virtualFonts;
     std::map<ActualFont::Key, std::unique_ptr<ActualFont>> actualFonts;
 
     ActualFont* getActualFont(const ActualFont::Descriptor &descriptor, float baseSize, bool useMipmap = false);

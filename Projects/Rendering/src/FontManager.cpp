@@ -24,16 +24,11 @@ enum
 
 const string PLATFORM_NAMES[4] = {"osx", "windows", "ios", "android"};
 
-/*
- * FIXME: SHOULD BE DEFINED AT THE XML-LEVEL
- */
-const string DEFAULT_FONT_NAME = "sans-serif";
-const VirtualFont::Style DEFAULT_FONT_STYLE = VirtualFont::STYLE_REGULAR;
-
 FontManager::FontManager()
 :
 ftHelper(make_shared<FreetypeHelper>()),
-itemizer(langHelper)
+itemizer(langHelper),
+hasDefaultFont(false)
 {
 #if defined(CINDER_MAC)
     platform = PLATFORM_OSX;
@@ -48,37 +43,66 @@ itemizer(langHelper)
 #endif
 }
 
-void FontManager::loadGlobalMap(InputSourceRef source)
+void FontManager::loadConfig(InputSourceRef source)
 {
-    XmlTree doc(source->loadDataSource()); // EARLY-THROW IF THE DOCUMENT IS MALFORMED
-    
-    /*
-     * THE FOLLOWING IS NOT SUPPOSED TO THROW...
-     * IN THE WORST-CASE: THE MAP WILL BE EMPTY OR PARTIAL
-     */
-    if (doc.hasChild("GlobalMap"))
+    if (!globalMap.empty() || !aliases.empty() || hasDefaultFont)
     {
-        for (auto fontElement : doc.getChild("GlobalMap"))
+        throw runtime_error("FONT-CONFIG ALREADY DEFINED");
+    }
+    else
+    {
+        XmlTree doc(source->loadDataSource()); // EARLY-THROW IF THE DOCUMENT IS MALFORMED
+        
+        /*
+         * THE FOLLOWING IS NOT SUPPOSED TO THROW...
+         * IN THE WORST-CASE: THE MAP WILL BE EMPTY OR PARTIAL
+         *
+         * TODO: THROW WHEN DOCUMENT IS INVALID?
+         */
+        if (doc.hasChild("FontConfig"))
         {
-            auto name = fontElement.getAttributeValue<string>("name");
-            
-            if (!name.empty())
+            if (doc.hasChild("FontConfig/DefaultFont"))
             {
-                auto style = VirtualFont::styleStringToEnum(fontElement.getAttributeValue<string>("style", "regular"));
-                auto baseSize = fontElement.getAttributeValue<float>("base-size", 0);
+                hasDefaultFont = true;
+
+                auto &defaultFontElement = doc.getChild("FontConfig/DefaultFont");
+                defaultFontName = defaultFontElement.getAttributeValue<string>("name", "");
+                defaultFontStyle = VirtualFont::styleStringToEnum(defaultFontElement.getAttributeValue<string>("style", "regular"));
+            }
+            
+            for (auto aliasElement = doc.begin("FontConfig/Aliases/Alias"); aliasElement != doc.end(); ++aliasElement)
+            {
+                auto name = aliasElement->getAttributeValue<string>("name", "");
+                auto target = aliasElement->getAttributeValue<string>("target", "");
                 
-                for (auto &refElement : fontElement.getChildren())
+                if (!name.empty() && !target.empty())
                 {
-                    auto os = refElement->getAttributeValue<string>("os", "");
+                    aliases[name] = target;
+                }
+            }
+            
+            for (auto fontElement = doc.begin("FontConfig/VirtualFonts/VirtualFont"); fontElement != doc.end(); ++fontElement)
+            {
+                auto name = fontElement->getAttributeValue<string>("name", "");
+                
+                if (!name.empty())
+                {
+                    auto style = VirtualFont::styleStringToEnum(fontElement->getAttributeValue<string>("style", "regular"));
+                    auto baseSize = fontElement->getAttributeValue<float>("base-size", 0);
                     
-                    if (os == PLATFORM_NAMES[platform])
+                    for (auto &refElement : fontElement->getChildren())
                     {
-                        auto uri = refElement->getAttributeValue<string>("uri", "");
+                        auto os = refElement->getAttributeValue<string>("os", "");
                         
-                        if (!uri.empty())
+                        if (os == PLATFORM_NAMES[platform])
                         {
-                            globalMap[make_pair(name, style)] = make_pair(uri, baseSize);
-                            break;
+                            auto uri = refElement->getAttributeValue<string>("uri", "");
+                            
+                            if (!uri.empty())
+                            {
+                                globalMap[make_pair(name, style)] = make_pair(uri, baseSize);
+                                break;
+                            }
                         }
                     }
                 }
@@ -87,27 +111,41 @@ void FontManager::loadGlobalMap(InputSourceRef source)
     }
 }
 
-VirtualFont& FontManager::getFont(const std::string &name, VirtualFont::Style style, float baseSize)
+shared_ptr<VirtualFont> FontManager::getCachedFont(const std::string &name, VirtualFont::Style style, float baseSize)
 {
     auto key = make_tuple(name, style, baseSize);
     auto it1 = shortcuts.find(key);
     
     if (it1 != shortcuts.end())
     {
-        return *it1->second;
+        return it1->second;
+    }
+    
+    // ---
+
+    string nameOrAlias;
+    auto it2 = aliases.find(name);
+    
+    if (it2 == aliases.end())
+    {
+        nameOrAlias = name;
+    }
+    else
+    {
+        nameOrAlias = it2->second;
     }
     
     // ---
     
-    auto it2 = globalMap.find(make_pair(name, style));
+    auto it3 = globalMap.find(make_pair(nameOrAlias, style));
     
-    if (it2 != globalMap.end())
+    if (it3 != globalMap.end())
     {
         bool useMipmap = false;
         
         if (baseSize == 0)
         {
-            baseSize = it2->second.second;
+            baseSize = it3->second.second;
             useMipmap = true;
         }
         
@@ -116,31 +154,33 @@ VirtualFont& FontManager::getFont(const std::string &name, VirtualFont::Style st
             throw invalid_argument("UNDEFINED FONT-SIZE");
         }
         
-        auto uri = it2->second.first;
-        auto &font = getFont(InputSource::get(uri), baseSize, useMipmap); // CAN THROW
+        auto uri = it3->second.first;
+        auto font = getCachedFont(InputSource::get(uri), baseSize, useMipmap); // CAN THROW
         
         /*
          * ALLOWING CACHING UPON FURTHER ACCESS
          */
-        shortcuts[key] = &font;
-        
+        shortcuts[key] = font;
         return font;
     }
     
     /*
      * BASIC SYSTEM FOR HANDLING UNDEFINED FONT NAMES AND STYLES
      */
-    if (name != DEFAULT_FONT_NAME)
+    if (hasDefaultFont)
     {
-        auto &font = getFont(DEFAULT_FONT_NAME, get<1>(key), get<2>(key));
-        shortcuts[key] = &font;
-        return font;
-    }
-    else if (style != DEFAULT_FONT_STYLE)
-    {
-        auto &font = getFont(DEFAULT_FONT_NAME, DEFAULT_FONT_STYLE, get<2>(key));
-        shortcuts[key] = &font;
-        return font;
+        if (name != defaultFontName)
+        {
+            auto font = getCachedFont(defaultFontName, get<1>(key), get<2>(key));
+            shortcuts[key] = font;
+            return font;
+        }
+        else if (style != defaultFontStyle)
+        {
+            auto font = getCachedFont(defaultFontName, defaultFontStyle, get<2>(key));
+            shortcuts[key] = font;
+            return font;
+        }
     }
     
     /*
@@ -149,14 +189,14 @@ VirtualFont& FontManager::getFont(const std::string &name, VirtualFont::Style st
     throw invalid_argument(string("UNDEFINED FONT: ") + name + " " + VirtualFont::styleEnumToString(style));
 }
 
-VirtualFont& FontManager::getFont(InputSourceRef source, float baseSize, bool useMipmap)
+shared_ptr<VirtualFont> FontManager::getCachedFont(InputSourceRef source, float baseSize, bool useMipmap)
 {
     VirtualFont::Key key(source->getURI(), baseSize, useMipmap);
     auto it = virtualFonts.find(key);
     
     if (it != virtualFonts.end())
     {
-        return *it->second.get();
+        return it->second;
     }
     else
     {
@@ -166,20 +206,20 @@ VirtualFont& FontManager::getFont(InputSourceRef source, float baseSize, bool us
          * THE FOLLOWING IS NOT SUPPOSED TO THROW...
          * IN THE WORST-CASE: THE FONT WILL BE "EMPTY" OR "PARTIAL"
          *
-         * TODO: THROW WHEN DOCUMENT IS INVALID
+         * TODO: THROW WHEN DOCUMENT IS INVALID?
          */
         if (doc.hasChild("VirtualFont"))
         {
-            auto font = new VirtualFont(layoutCache, itemizer, baseSize);
-            virtualFonts[key] = unique_ptr<VirtualFont>(font);
+            auto font = shared_ptr<VirtualFont>(new VirtualFont(layoutCache, itemizer, baseSize)); // make_shared WOULD HAVE BEEN BETTER, BUT IT WON'T WORK WITH PROTECTED CONSTRUCTORS
+            virtualFonts[key] = font;
 
-            for (auto fontElement : doc.getChild("VirtualFont"))
+            for (auto setElement = doc.begin("VirtualFont/Set"); setElement != doc.end(); ++setElement)
             {
-                auto langList = splitLanguages(fontElement.getAttributeValue<string>("lang", ""));
+                auto langList = splitLanguages(setElement->getAttributeValue<string>("lang", ""));
                 
-                for (auto lang : langList)
+                for (auto &lang : langList)
                 {
-                    for (auto &variantElement : fontElement.getChildren())
+                    for (auto &variantElement : setElement->getChildren())
                     {
                         if (variantElement->getTag() == "Group")
                         {
@@ -187,7 +227,7 @@ VirtualFont& FontManager::getFont(InputSourceRef source, float baseSize, bool us
                             {
                                 auto descriptor = parseDescriptor(*refElement);
                                 
-                                if (!descriptor.empty() && font->add(lang, getActualFont(descriptor, baseSize, useMipmap)))
+                                if (!descriptor.empty() && font->addActualFont(lang, getActualFont(descriptor, baseSize, useMipmap)))
                                 {
                                     break;
                                 }
@@ -199,25 +239,83 @@ VirtualFont& FontManager::getFont(InputSourceRef source, float baseSize, bool us
                             
                             if (!descriptor.empty())
                             {
-                                font->add(lang, getActualFont(descriptor, baseSize, useMipmap));
+                                font->addActualFont(lang, getActualFont(descriptor, baseSize, useMipmap));
                             }
                         }
                     }
                 }
             }
             
-            return *font;
+            return font;
         }
         
         throw invalid_argument("INVALID FONT-DEFINITION: " + source->getURI());
     }
 }
 
-void FontManager::reload()
+void FontManager::unload(shared_ptr<VirtualFont> virtualFont)
 {
-    for (auto &it : actualFonts)
+    for (auto it = shortcuts.begin(); it != shortcuts.end(); ++it)
     {
-        it.second->reload();
+        if (it->second == virtualFont)
+        {
+            shortcuts.erase(it);
+            break;
+        }
+    }
+    
+    for (auto it = virtualFonts.begin(); it != virtualFonts.end(); ++it)
+    {
+        if (it->second == virtualFont)
+        {
+            virtualFonts.erase(it);
+            break;
+        }
+    }
+    
+    // ---
+    
+    set<ActualFont*> actualFontsInUse;
+    
+    for (auto &it1 : virtualFonts)
+    {
+        for (auto &it2 : it1.second->fontSetMap)
+        {
+            for (auto &it3 : it2.second)
+            {
+                actualFontsInUse.insert(it3);
+            }
+        }
+    }
+
+    for (auto it = actualFonts.begin(); it != actualFonts.end(); ++it)
+    {
+        if (!actualFontsInUse.count(it->second.get()))
+        {
+            it->second->unload();
+        }
+    }
+}
+
+void FontManager::unload(const string &name, VirtualFont::Style style, float baseSize)
+{
+    auto key = make_tuple(name, style, baseSize);
+    auto it = shortcuts.find(key);
+    
+    if (it != shortcuts.end())
+    {
+        unload(it->second);
+    }
+}
+
+void FontManager::unload(InputSourceRef source, float baseSize, bool useMipmap)
+{
+    VirtualFont::Key key(source->getURI(), baseSize, useMipmap);
+    auto it = virtualFonts.find(key);
+    
+    if (it != virtualFonts.end())
+    {
+        unload(it->second);
     }
 }
 

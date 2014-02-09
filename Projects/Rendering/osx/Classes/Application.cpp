@@ -48,8 +48,8 @@ void Application::keyDown(KeyEvent event)
             target->fontManager.unload();
             break;
             
-        case KeyEvent::KEY_r:
-            target->fontManager.reload();
+        case KeyEvent::KEY_k:
+            target->fontManager.unload("sans-serif");
             break;
 
         case KeyEvent::KEY_RETURN:
@@ -73,7 +73,7 @@ void Application::keyDown(KeyEvent event)
             break;
             
         case KeyEvent::KEY_x:
-            std::cout << "TEXTURE MEMORY USAGE: " << prettyBytes(target->fontManager.getTextureMemoryUsage()) << std::endl;
+            cout << "TEXTURE MEMORY USAGE: " << prettyBytes(target->fontManager.getTextureMemoryUsage()) << endl;
             break;
             
         case KeyEvent::KEY_ESCAPE:

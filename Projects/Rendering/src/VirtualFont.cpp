@@ -26,7 +26,7 @@ baseSize(baseSize)
     setColor(ColorA(0, 0, 0, 1));
 }
 
-bool VirtualFont::add(const string &lang, ActualFont *font)
+bool VirtualFont::addActualFont(const string &lang, ActualFont *font)
 {
     if (font)
     {
@@ -35,7 +35,7 @@ bool VirtualFont::add(const string &lang, ActualFont *font)
          * BECAUSE ORDER OF INSERTION MATTERS
          */
         
-        for (auto tmp : fontSetMap[lang])
+        for (auto &tmp : fontSetMap[lang])
         {
             if (tmp == font)
             {
@@ -65,6 +65,25 @@ const FontSet& VirtualFont::getFontSet(const string &lang) const
     }
     
     return it->second;
+}
+
+ActualFont::Metrics VirtualFont::getMetrics(const Cluster &cluster) const
+{
+    return cluster.font->metrics * sizeRatio;
+}
+
+ActualFont::Metrics VirtualFont::getMetrics(const string &lang) const
+{
+    auto &fontSet = getFontSet(lang);
+    
+    if (fontSet.empty())
+    {
+        return ActualFont::Metrics();
+    }
+    else
+    {
+        return fontSet.front()->metrics * sizeRatio;
+    }
 }
 
 float VirtualFont::getDescent(const LineLayout &layout) const
@@ -125,25 +144,6 @@ float VirtualFont::getAdvance(const Cluster &cluster) const
     return cluster.combinedAdvance * sizeRatio;
 }
 
-ActualFont::Metrics VirtualFont::getMetrics(const Cluster &cluster) const
-{
-    return cluster.font->metrics * sizeRatio;
-}
-
-ActualFont::Metrics VirtualFont::getMetrics(const string &lang) const
-{
-    auto &fontSet = getFontSet(lang);
-    
-    if (fontSet.empty())
-    {
-        return ActualFont::Metrics();
-    }
-    else
-    {
-        return fontSet.front()->metrics * sizeRatio;
-    }
-}
-
 float VirtualFont::getHeight(const LineLayout &layout) const
 {
     return layout.maxHeight * sizeRatio;
@@ -170,9 +170,11 @@ LineLayout* VirtualFont::createLineLayout(const TextLine &line)
     {
         clusterMap.clear();
         
-        for (auto font : getFontSet(run.language))
+        for (auto &font : getFontSet(run.language))
         {
-            if (font->hbFont)
+            font->reload();
+            
+            if (font->loaded)
             {
                 layout->maxHeight = std::max(layout->maxHeight, font->metrics.height);
                 layout->maxAscent = std::max(layout->maxAscent, font->metrics.ascent);
@@ -249,7 +251,7 @@ LineLayout* VirtualFont::createLineLayout(const TextLine &line)
     return layout;
 }
 
-const LineLayout& VirtualFont::getCachedLineLayout(const string &text, const string &langHint, hb_direction_t overallDirection)
+shared_ptr<LineLayout> VirtualFont::getCachedLineLayout(const string &text, const string &langHint, hb_direction_t overallDirection)
 {
     return layoutCache.getLineLayout(this, text, langHint, overallDirection);
 }
@@ -293,7 +295,7 @@ void VirtualFont::end()
 
 void VirtualFont::drawCluster(const Cluster &cluster, const Vec2f &position)
 {
-    for (auto shape : cluster.shapes)
+    for (auto &shape : cluster.shapes)
     {
         auto glyph = cluster.font->getGlyph(shape.codepoint);
         

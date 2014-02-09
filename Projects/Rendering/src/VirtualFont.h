@@ -62,11 +62,9 @@ public:
     LayoutCache &layoutCache;
     TextItemizer &itemizer;
     float baseSize;
-    
-    VirtualFont(LayoutCache &layoutCache, TextItemizer &itemizer, float baseSize);
-    
-    bool add(const std::string &lang, ActualFont *font);
-    const FontSet& getFontSet(const std::string &lang) const;
+
+    ActualFont::Metrics getMetrics(const Cluster &cluster) const; // RETURNS THE SIZED METRICS OF THE ActualFont USED BY cluster
+    ActualFont::Metrics getMetrics(const std::string &lang = "") const; // RETURNS THE SIZED METRICS OF THE FIRST ActualFont IN THE SET USED FOR lang
     
     float getHeight(const LineLayout &layout) const;
     float getAscent(const LineLayout &layout) const;
@@ -80,19 +78,13 @@ public:
     float getAdvance(const LineLayout &layout) const;
     float getAdvance(const Cluster &cluster) const;
 
-    ActualFont::Metrics getMetrics(const Cluster &cluster) const; // RETURNS THE SIZED METRICS OF THE ActualFont USED BY cluster
-    ActualFont::Metrics getMetrics(const std::string &lang = "") const; // RETURNS THE SIZED METRICS OF THE FIRST ActualFont IN THE SET USED FOR lang
-
     /*
      * THE RETURNED INSTANCES ARE NOT MANAGED AND SHOULD BE DELETED BY THE CALLER
      */
     LineLayout* createLineLayout(const std::string &text, const std::string &langHint = "", hb_direction_t overallDirection = HB_DIRECTION_INVALID);
     LineLayout* createLineLayout(const TextLine &line);
     
-    /*
-     * THE CACHED INSTANCES ARE MANAGED BY LayoutCache AND WILL BE VALID AS LONG AS THE LATTER IS ALIVE (I.E. AS LONG AS FontManager IS ALIVE)
-     */
-    const LineLayout& getCachedLineLayout(const std::string &text, const std::string &langHint = "", hb_direction_t overallDirection = HB_DIRECTION_INVALID);
+    std::shared_ptr<LineLayout> getCachedLineLayout(const std::string &text, const std::string &langHint = "", hb_direction_t overallDirection = HB_DIRECTION_INVALID);
     
     void setSize(float size);
     void setColor(const ci::ColorA &color);
@@ -113,4 +105,11 @@ protected:
     
     FontSet defaultFontSet; // ALLOWING getFontSet() TO RETURN CONST VALUES
     std::map<std::string, FontSet> fontSetMap;
+    
+    VirtualFont(LayoutCache &layoutCache, TextItemizer &itemizer, float baseSize);
+    
+    bool addActualFont(const std::string &lang, ActualFont *font);
+    const FontSet& getFontSet(const std::string &lang) const;
+    
+    friend class FontManager;
 };

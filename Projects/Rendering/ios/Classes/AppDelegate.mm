@@ -11,7 +11,7 @@
         [NSNumber numberWithInt:kEAGLRenderingAPIOpenGLES1], kGLViewControllerPropertyRenderingAPI,
         [NSNumber numberWithInt:GLKViewDrawableDepthFormatNone], kGLViewControllerPropertyDepthFormat,
         [NSNumber numberWithBool:YES], kGLViewControllerPropertyMultipleTouchEnabled,
-        [NSNumber numberWithInt:UIInterfaceOrientationLandscapeRight], kGLViewControllerPropertyInterfaceOrientation,
+        [NSNumber numberWithInt:UIInterfaceOrientationMaskLandscapeLeft | UIInterfaceOrientationMaskLandscapeRight], kGLViewControllerPropertyInterfaceOrientationMask,
          nil]];
     
     viewController.cinderDelegate = self;

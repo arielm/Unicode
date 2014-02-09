@@ -19,7 +19,7 @@ size(0)
     assert(capacity > 0);
 }
 
-const LineLayout& LayoutCache::getLineLayout(VirtualFont *virtualFont, const string &text, const string &langHint, hb_direction_t overallDirection)
+shared_ptr<LineLayout> LayoutCache::getLineLayout(VirtualFont *virtualFont, const string &text, const string &langHint, hb_direction_t overallDirection)
 {
     const LineLayoutKey key(virtualFont, text, langHint, overallDirection);
     auto it = cache.left.find(key);
@@ -30,7 +30,7 @@ const LineLayout& LayoutCache::getLineLayout(VirtualFont *virtualFont, const str
          * MOVING USED-ENTRY TO THE TAIL OF THE bimaps::list_of
          */
         cache.right.relocate(cache.right.end(), cache.project_right(it));
-        return *it->second;
+        return it->second;
     }
     else
     {
@@ -57,10 +57,10 @@ const LineLayout& LayoutCache::getLineLayout(VirtualFont *virtualFont, const str
         /*
          * NEW ENTRIES ARE INSERTED AT THE TAIL OF THE bimaps::list_of
          */
-        auto value = virtualFont->createLineLayout(text, langHint, overallDirection);
-        cache.insert(typename container_type::value_type(key, shared_ptr<LineLayout>(value)));
+        auto value = shared_ptr<LineLayout>(virtualFont->createLineLayout(text, langHint, overallDirection));
+        cache.insert(typename container_type::value_type(key, value));
         
-        return *value;
+        return value;
     }
 }
 
