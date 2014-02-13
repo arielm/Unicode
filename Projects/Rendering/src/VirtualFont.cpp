@@ -302,16 +302,16 @@ void VirtualFont::drawCluster(const Cluster &cluster, const Vec2f &position)
             vertices.clear();
             
             vertices.emplace_back(ul);
-            vertices.emplace_back(glyph->tx1, glyph->ty1);
+            vertices.emplace_back(glyph->u1, glyph->v1);
 
             vertices.emplace_back(lr.x, ul.y);
-            vertices.emplace_back(glyph->tx2, glyph->ty1);
+            vertices.emplace_back(glyph->u2, glyph->v1);
 
             vertices.emplace_back(lr);
-            vertices.emplace_back(glyph->tx2, glyph->ty2);
+            vertices.emplace_back(glyph->u2, glyph->v2);
 
             vertices.emplace_back(ul.x, lr.y);
-            vertices.emplace_back(glyph->tx1, glyph->ty2);
+            vertices.emplace_back(glyph->u1, glyph->v2);
             
             glyph->texture->bind();
             glDrawArrays(GL_TRIANGLE_FAN, 0, 4);

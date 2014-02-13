@@ -71,10 +71,10 @@ public:
         ci::Vec2f offset;
         ci::Vec2f size;
         
-        float tx1;
-        float ty1;
-        float tx2;
-        float ty2;
+        float u1;
+        float v1;
+        float u2;
+        float v2;
         
         Glyph()
         :
@@ -87,10 +87,10 @@ public:
         offset(offset),
         size(size)
         {
-            tx1 = 0;
-            ty1 = 0;
-            tx2 = size.x / texture->getWidth();
-            ty2 = size.y / texture->getHeight();
+            u1 = 0;
+            v1 = 0;
+            u2 = size.x / texture->getWidth();
+            v2 = size.y / texture->getHeight();
         }
     };
     
