@@ -73,7 +73,7 @@ public:
     
     float getOffsetX(const LineLayout &layout, Alignment align) const;
     float getOffsetY(const LineLayout &layout, Alignment align) const;
-    ci::Vec2f getOffset(const LineLayout &layout, Alignment alignX, Alignment alignY) const;
+    inline ci::Vec2f getOffset(const LineLayout &layout, Alignment alignX, Alignment alignY) const { return ci::Vec2f(getOffsetX(layout, alignX), getOffsetY(layout, alignY)); }
 
     float getAdvance(const LineLayout &layout) const;
     float getAdvance(const Cluster &cluster) const;

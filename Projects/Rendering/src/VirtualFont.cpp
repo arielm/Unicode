@@ -100,11 +100,11 @@ float VirtualFont::getOffsetX(const LineLayout &layout, Alignment align) const
 {
     switch (align)
     {
-        case ALIGN_RIGHT:
-            return -getAdvance(layout);
-            
         case ALIGN_MIDDLE:
             return -0.5f * getAdvance(layout);
+
+        case ALIGN_RIGHT:
+            return -getAdvance(layout);
             
         default:
             return 0;
@@ -115,11 +115,11 @@ float VirtualFont::getOffsetY(const LineLayout &layout, Alignment align) const
 {
     switch (align)
     {
-        case ALIGN_TOP:
-            return +getAscent(layout);
-            
         case ALIGN_MIDDLE:
             return getMiddleLine(layout);
+
+        case ALIGN_TOP:
+            return +getAscent(layout);
 
         case ALIGN_BOTTOM:
             return -getDescent(layout);
@@ -127,11 +127,6 @@ float VirtualFont::getOffsetY(const LineLayout &layout, Alignment align) const
         default:
             return 0;
     }
-}
-
-Vec2f VirtualFont::getOffset(const LineLayout &layout, Alignment alignX, Alignment alignY) const
-{
-    return Vec2f(getOffsetX(layout, alignX), getOffsetY(layout, alignY));
 }
 
 float VirtualFont::getAdvance(const LineLayout &layout) const
