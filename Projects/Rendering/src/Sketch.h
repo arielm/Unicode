@@ -146,14 +146,14 @@
 class Sketch : public chr::CinderSketch
 {
 public:
-    FontManager fontManager;
+    chr::zf::FontManager fontManager;
     
     std::vector<std::string> sentences;
     ci::Rand rnd;
     std::vector<std::string> lines;
 
     float fontSize;
-    VirtualFont::Alignment align;
+    chr::ZFont::Alignment align;
     bool oscillate;
     
     Sketch(void *context, void *delegate = NULL);
@@ -162,7 +162,7 @@ public:
     void update();
     void draw();
 
-    void drawTextLine(VirtualFont &font, const std::string &text, float y, float left, float right);
+    void drawTextLine(chr::ZFont &font, const std::string &text, float y, float left, float right);
     static void drawHLines(int count, float top, float spacing);
     static void drawHLine(float y);
     

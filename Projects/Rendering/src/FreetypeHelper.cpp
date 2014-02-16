@@ -8,17 +8,23 @@
 
 #include "FreetypeHelper.h"
 
-FreetypeHelper::FreetypeHelper()
+namespace chronotext
 {
-    FT_Init_FreeType(&library);
-}
-
-FreetypeHelper::~FreetypeHelper()
-{
-    FT_Done_FreeType(library);
-}
-
-FT_Library FreetypeHelper::getLib() const
-{
-    return library;
+    namespace zf
+    {
+        FreetypeHelper::FreetypeHelper()
+        {
+            FT_Init_FreeType(&library);
+        }
+        
+        FreetypeHelper::~FreetypeHelper()
+        {
+            FT_Done_FreeType(library);
+        }
+        
+        FT_Library FreetypeHelper::getLib() const
+        {
+            return library;
+        }
+    }
 }

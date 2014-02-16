@@ -12,13 +12,21 @@
 #include FT_GLYPH_H
 #include FT_TRUETYPE_TABLES_H
 
-class FreetypeHelper
+namespace chronotext
 {
-    FT_Library library;
-    
-public:
-    FreetypeHelper();
-    ~FreetypeHelper();
-    
-    FT_Library getLib() const;
-};
+    namespace zf
+    {
+        class FreetypeHelper
+        {
+            FT_Library library;
+            
+        public:
+            FreetypeHelper();
+            ~FreetypeHelper();
+            
+            FT_Library getLib() const;
+        };
+    }
+}
+
+namespace chr = chronotext;

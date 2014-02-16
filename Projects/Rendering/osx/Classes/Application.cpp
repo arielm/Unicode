@@ -15,6 +15,7 @@ using namespace std;
 using namespace ci;
 using namespace app;
 using namespace chr;
+using namespace zf;
 
 class Application : public CinderApp
 {
@@ -61,15 +62,15 @@ void Application::keyDown(KeyEvent event)
             break;
             
         case KeyEvent::KEY_t:
-            target->align = VirtualFont::ALIGN_TOP;
+            target->align = ZFont::ALIGN_TOP;
             break;
             
         case KeyEvent::KEY_m:
-            target->align = VirtualFont::ALIGN_MIDDLE;
+            target->align = ZFont::ALIGN_MIDDLE;
             break;
 
         case KeyEvent::KEY_b:
-            target->align = VirtualFont::ALIGN_BOTTOM;
+            target->align = ZFont::ALIGN_BOTTOM;
             break;
             
         case KeyEvent::KEY_x:

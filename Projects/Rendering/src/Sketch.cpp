@@ -16,6 +16,7 @@
 using namespace std;
 using namespace ci;
 using namespace chr;
+using namespace zf;
 
 const float LINE_TOP = 66;
 const float LINE_SPACING = 66;
@@ -61,7 +62,7 @@ void Sketch::setup(bool renewContext)
         shuffleLines();
         
         fontSize = 27;
-        align = VirtualFont::ALIGN_BASELINE;
+        align = ZFont::ALIGN_BASELINE;
         oscillate = true; // TOGGLE BY PRESSING SPACE ON THE DESKTOP
     }
     
@@ -118,7 +119,7 @@ void Sketch::draw()
     }
 }
 
-void Sketch::drawTextLine(VirtualFont &font, const string &text, float y, float left, float right)
+void Sketch::drawTextLine(ZFont &font, const string &text, float y, float left, float right)
 {
     auto layout = font.getCachedLineLayout(text);
     

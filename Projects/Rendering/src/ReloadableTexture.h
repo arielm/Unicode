@@ -12,25 +12,33 @@
 
 #include "cinder/gl/gl.h"
 
-class ReloadableTexture
+namespace chronotext
 {
-public:
-    ReloadableTexture(const GlyphData &glyphData);
-    ~ReloadableTexture();
-    
-    void unload();
-    void load(const GlyphData &glyphData);
-    bool isLoaded() const;
-    size_t getMemoryUsage() const;
+    namespace zf
+    {
+        class ReloadableTexture
+        {
+        public:
+            ReloadableTexture(const GlyphData &glyphData);
+            ~ReloadableTexture();
+            
+            void unload();
+            void load(const GlyphData &glyphData);
+            bool isLoaded() const;
+            size_t getMemoryUsage() const;
+            
+            void bind();
+            GLuint getId() const;
+            int getWidth() const;
+            int getHeight() const;
+            
+        protected:
+            GLuint textureId;
+            int textureWidth;
+            int textureHeight;
+            bool useMipmap;
+        };
+    }
+}
 
-    void bind();
-    GLuint getId() const;
-    int getWidth() const;
-    int getHeight() const;
-    
-protected:
-    GLuint textureId;
-    int textureWidth;
-    int textureHeight;
-    bool useMipmap;
-};
+namespace chr = chronotext;
