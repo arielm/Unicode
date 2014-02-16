@@ -93,6 +93,8 @@
  *     - ALIASES DEFINED IN FontConfig/Aliases, E.G.
  *       - "Arial" FOR "sans-serif"
  *       - "Times" FOR "serif"
+ *
+ * 15) STARTING TO USE chr::zf VERSION IN new-chronotext-toolkit REPOSITORY
  */
 
 /*
@@ -138,8 +140,7 @@
 #pragma once
 
 #include "chronotext/cinder/CinderSketch.h"
-
-#include "FontManager.h"
+#include "chronotext/font/zf/FontManager.h"
 
 #include "cinder/Rand.h"
 
