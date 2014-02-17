@@ -101,7 +101,7 @@ void Sketch::draw()
         auto font = fontManager.getCachedFont("sans-serif"); // CAN THROW
         
         font->setSize(fontSize);
-        font->setColor(ColorA(1, 1, 1, 0.75f));
+        font->setColor(1, 1, 1, 0.75f);
         
         font->begin();
         
@@ -128,7 +128,7 @@ void Sketch::drawTextLine(ZFont &font, const string &text, float y, float left, 
 
     for (auto &cluster : layout->clusters)
     {
-        font.drawCluster(cluster, position);
+        font.addCluster(cluster, position);
         position.x += font.getAdvance(cluster);
     }
 }
