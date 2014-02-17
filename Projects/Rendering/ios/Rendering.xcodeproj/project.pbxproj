@@ -95,6 +95,7 @@
 		A8213FF518B0CFA000EAE901 /* TextRun.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextRun.h; sourceTree = "<group>"; };
 		A8213FF618B0CFA000EAE901 /* VirtualFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VirtualFont.cpp; sourceTree = "<group>"; };
 		A8213FF718B0CFA000EAE901 /* VirtualFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VirtualFont.h; sourceTree = "<group>"; };
+		A821400318B276A000EAE901 /* GlyphSequence.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GlyphSequence.h; sourceTree = "<group>"; };
 		A82C900716DF91D300FF519C /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
 		A82C900816DF91D300FF519C /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		A8363B95188855720015C5FF /* Fonts.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = Fonts.xml; path = ../resources/Fonts.xml; sourceTree = "<group>"; };
@@ -276,6 +277,7 @@
 				A8213FF518B0CFA000EAE901 /* TextRun.h */,
 				A8213FF618B0CFA000EAE901 /* VirtualFont.cpp */,
 				A8213FF718B0CFA000EAE901 /* VirtualFont.h */,
+				A821400318B276A000EAE901 /* GlyphSequence.h */,
 			);
 			path = zf;
 			sourceTree = "<group>";
