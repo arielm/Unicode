@@ -93,9 +93,8 @@
 		A8213FD718B0556500EAE901 /* VirtualFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VirtualFont.cpp; sourceTree = "<group>"; };
 		A8213FD818B0556500EAE901 /* VirtualFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VirtualFont.h; sourceTree = "<group>"; };
 		A821400518B2D2BA00EAE901 /* GlyphQuad.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GlyphQuad.h; sourceTree = "<group>"; };
-		A821400618B2D5EA00EAE901 /* GlyphSequence3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GlyphSequence3D.h; sourceTree = "<group>"; };
-		A821400718B2D5EA00EAE901 /* GlyphSequence2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GlyphSequence2D.h; sourceTree = "<group>"; };
 		A8363B9318876C5A0015C5FF /* Fonts.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = Fonts.xml; path = ../resources/Fonts.xml; sourceTree = "<group>"; };
+		A865B93F18B3B89A00AF0174 /* GlyphSequence.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GlyphSequence.h; sourceTree = "<group>"; };
 		A88E590318842D0D00E737F3 /* CinderApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CinderApp.cpp; sourceTree = "<group>"; };
 		A88E590418842D0D00E737F3 /* CinderApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CinderApp.h; sourceTree = "<group>"; };
 		A88E590518842D0D00E737F3 /* CinderSketch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CinderSketch.h; sourceTree = "<group>"; };
@@ -244,8 +243,7 @@
 			isa = PBXGroup;
 			children = (
 				A821400518B2D2BA00EAE901 /* GlyphQuad.h */,
-				A821400718B2D5EA00EAE901 /* GlyphSequence2D.h */,
-				A821400618B2D5EA00EAE901 /* GlyphSequence3D.h */,
+				A865B93F18B3B89A00AF0174 /* GlyphSequence.h */,
 				A8213FA218B0503B00EAE901 /* FontMatrix.h */,
 				A8213FA118B0503B00EAE901 /* FontMatrix.cpp */,
 				A8213FA318B0503B00EAE901 /* xf */,
