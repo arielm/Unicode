@@ -95,6 +95,7 @@
 		A821400518B2D2BA00EAE901 /* GlyphQuad.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GlyphQuad.h; sourceTree = "<group>"; };
 		A8363B9318876C5A0015C5FF /* Fonts.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = Fonts.xml; path = ../resources/Fonts.xml; sourceTree = "<group>"; };
 		A865B99F18B4E99D00AF0174 /* GlyphBatch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GlyphBatch.h; sourceTree = "<group>"; };
+		A865B9A018B507B300AF0174 /* GlyphBatchMap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GlyphBatchMap.h; sourceTree = "<group>"; };
 		A88E590318842D0D00E737F3 /* CinderApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CinderApp.cpp; sourceTree = "<group>"; };
 		A88E590418842D0D00E737F3 /* CinderApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CinderApp.h; sourceTree = "<group>"; };
 		A88E590518842D0D00E737F3 /* CinderSketch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CinderSketch.h; sourceTree = "<group>"; };
@@ -276,6 +277,7 @@
 				A8213FC618B0556500EAE901 /* FontManager.h */,
 				A8213FC818B0556500EAE901 /* FreetypeHelper.h */,
 				A8213FC918B0556500EAE901 /* GlyphData.h */,
+				A865B9A018B507B300AF0174 /* GlyphBatchMap.h */,
 				A8213FCA18B0556500EAE901 /* LangHelper.cpp */,
 				A8213FCB18B0556500EAE901 /* LangHelper.h */,
 				A8213FCC18B0556500EAE901 /* LayoutCache.cpp */,
