@@ -41,6 +41,7 @@
 		A88E5A0818842D0D00E737F3 /* Utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A88E59A318842D0D00E737F3 /* Utils.cpp */; };
 		A88E5A151884389F00E737F3 /* Sketch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A88E5A131884389F00E737F3 /* Sketch.cpp */; };
 		A88E5BB1188449B300E737F3 /* Application.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A88E5BB0188449B300E737F3 /* Application.cpp */; };
+		A8A4BB8C18B51F2A009BE68D /* FontSequence.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A8A4BB8A18B51F2A009BE68D /* FontSequence.cpp */; };
 		A8BCDEE0187D86EF00A7FCB8 /* sans-serif_osx.xml in Resources */ = {isa = PBXBuildFile; fileRef = A8BCDEDD187D86EF00A7FCB8 /* sans-serif_osx.xml */; };
 		A8BCDEE1187D86EF00A7FCB8 /* sans-serif.xml in Resources */ = {isa = PBXBuildFile; fileRef = A8BCDEDE187D86EF00A7FCB8 /* sans-serif.xml */; };
 		A8BCDEE2187D86EF00A7FCB8 /* Text.xml in Resources */ = {isa = PBXBuildFile; fileRef = A8BCDEDF187D86EF00A7FCB8 /* Text.xml */; };
@@ -123,6 +124,8 @@
 		A88E5A131884389F00E737F3 /* Sketch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Sketch.cpp; path = ../src/Sketch.cpp; sourceTree = "<group>"; };
 		A88E5A141884389F00E737F3 /* Sketch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Sketch.h; path = ../src/Sketch.h; sourceTree = "<group>"; };
 		A88E5BB0188449B300E737F3 /* Application.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Application.cpp; sourceTree = "<group>"; };
+		A8A4BB8A18B51F2A009BE68D /* FontSequence.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FontSequence.cpp; sourceTree = "<group>"; };
+		A8A4BB8B18B51F2A009BE68D /* FontSequence.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FontSequence.h; sourceTree = "<group>"; };
 		A8BCDEDD187D86EF00A7FCB8 /* sans-serif_osx.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = "sans-serif_osx.xml"; path = "../resources/sans-serif_osx.xml"; sourceTree = "<group>"; };
 		A8BCDEDE187D86EF00A7FCB8 /* sans-serif.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = "sans-serif.xml"; path = "../resources/sans-serif.xml"; sourceTree = "<group>"; };
 		A8BCDEDF187D86EF00A7FCB8 /* Text.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = Text.xml; path = ../resources/Text.xml; sourceTree = "<group>"; };
@@ -256,14 +259,14 @@
 		A8213FA318B0503B00EAE901 /* xf */ = {
 			isa = PBXGroup;
 			children = (
-				A8213FA418B0503B00EAE901 /* Font.cpp */,
 				A8213FA518B0503B00EAE901 /* Font.h */,
-				A8213FA618B0503B00EAE901 /* FontManager.cpp */,
+				A8213FA418B0503B00EAE901 /* Font.cpp */,
 				A8213FA718B0503B00EAE901 /* FontManager.h */,
-				A8213FA818B0503B00EAE901 /* FontSequence.cpp */,
+				A8213FA618B0503B00EAE901 /* FontManager.cpp */,
 				A8213FA918B0503B00EAE901 /* FontSequence.h */,
-				A8213FAA18B0503B00EAE901 /* TextHelper.cpp */,
+				A8213FA818B0503B00EAE901 /* FontSequence.cpp */,
 				A8213FAB18B0503B00EAE901 /* TextHelper.h */,
+				A8213FAA18B0503B00EAE901 /* TextHelper.cpp */,
 			);
 			path = xf;
 			sourceTree = "<group>";
@@ -293,6 +296,8 @@
 				A8213FD618B0556500EAE901 /* TextRun.h */,
 				A8213FD718B0556500EAE901 /* VirtualFont.cpp */,
 				A8213FD818B0556500EAE901 /* VirtualFont.h */,
+				A8A4BB8B18B51F2A009BE68D /* FontSequence.h */,
+				A8A4BB8A18B51F2A009BE68D /* FontSequence.cpp */,
 			);
 			path = zf;
 			sourceTree = "<group>";
@@ -453,6 +458,7 @@
 				A8213FDC18B0556500EAE901 /* LangHelper.cpp in Sources */,
 				A8213FB018B0503B00EAE901 /* TextHelper.cpp in Sources */,
 				A88E59EC18842D0D00E737F3 /* Handler.cpp in Sources */,
+				A8A4BB8C18B51F2A009BE68D /* FontSequence.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

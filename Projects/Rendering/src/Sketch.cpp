@@ -103,7 +103,7 @@ void Sketch::draw()
         font->setSize(fontSize);
         font->setColor(1, 1, 1, 0.75f);
         
-        font->begin();
+        font->beginSequence();
         
         for (auto &line : lines)
         {
@@ -111,7 +111,7 @@ void Sketch::draw()
             y += LINE_SPACING;
         }
         
-        font->end();
+        font->endSequence();
     }
     catch (exception &e)
     {
