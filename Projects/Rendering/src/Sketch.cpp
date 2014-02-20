@@ -104,7 +104,7 @@ void Sketch::draw()
         font->setColor(1, 1, 1, 0.75f);
         
         font->beginSequence();
-        
+
         for (auto &line : lines)
         {
             drawTextLine(*font, line, y, left, right);
@@ -124,12 +124,12 @@ void Sketch::drawTextLine(ZFont &font, const string &text, float y, float left, 
     auto layout = font.getCachedLineLayout(text);
     
     float x = (layout->overallDirection == HB_DIRECTION_RTL) ? (right - font.getAdvance(*layout)) : left;
-    Vec2f position(x, y + font.getOffsetY(*layout, align));
+    y += font.getOffsetY(*layout, align);
 
     for (auto &cluster : layout->clusters)
     {
-        font.addCluster(cluster, position);
-        position.x += font.getAdvance(cluster);
+        font.addCluster(cluster, x, y);
+        x += font.getAdvance(cluster);
     }
 }
 
