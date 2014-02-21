@@ -27,6 +27,7 @@
 		A8213FFE18B0CFA000EAE901 /* TextItemizer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A8213FF218B0CFA000EAE901 /* TextItemizer.cpp */; };
 		A8213FFF18B0CFA000EAE901 /* VirtualFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A8213FF618B0CFA000EAE901 /* VirtualFont.cpp */; };
 		A82C4E5A18B6580100B9BAF4 /* FontSequence.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A82C4E5718B6580100B9BAF4 /* FontSequence.cpp */; };
+		A82C4F3118B6E2D900B9BAF4 /* LineLayout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A82C4F3018B6E2D900B9BAF4 /* LineLayout.cpp */; };
 		A82C900916DF91D300FF519C /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = A82C900716DF91D300FF519C /* icon.png */; };
 		A82C900A16DF91D300FF519C /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A82C900816DF91D300FF519C /* Default-568h@2x.png */; };
 		A8363B96188855720015C5FF /* Fonts.xml in Resources */ = {isa = PBXBuildFile; fileRef = A8363B95188855720015C5FF /* Fonts.xml */; };
@@ -100,6 +101,7 @@
 		A82C4E5718B6580100B9BAF4 /* FontSequence.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FontSequence.cpp; sourceTree = "<group>"; };
 		A82C4E5818B6580100B9BAF4 /* GlyphBatchMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GlyphBatchMap.h; sourceTree = "<group>"; };
 		A82C4E5918B6580100B9BAF4 /* FontSequence.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FontSequence.h; sourceTree = "<group>"; };
+		A82C4F3018B6E2D900B9BAF4 /* LineLayout.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LineLayout.cpp; sourceTree = "<group>"; };
 		A82C900716DF91D300FF519C /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
 		A82C900816DF91D300FF519C /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		A8363B95188855720015C5FF /* Fonts.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = Fonts.xml; path = ../resources/Fonts.xml; sourceTree = "<group>"; };
@@ -275,6 +277,7 @@
 				A8213FEB18B0CFA000EAE901 /* LayoutCache.cpp */,
 				A8213FEC18B0CFA000EAE901 /* LayoutCache.h */,
 				A8213FED18B0CFA000EAE901 /* LineLayout.h */,
+				A82C4F3018B6E2D900B9BAF4 /* LineLayout.cpp */,
 				A8213FEE18B0CFA000EAE901 /* ReloadableTexture.cpp */,
 				A8213FEF18B0CFA000EAE901 /* ReloadableTexture.h */,
 				A8213FF018B0CFA000EAE901 /* scrptrun.cpp */,
@@ -487,6 +490,7 @@
 				A8213FBE18B0517300EAE901 /* Font.cpp in Sources */,
 				A8213FFD18B0CFA000EAE901 /* scrptrun.cpp in Sources */,
 				A88E5B7D188445CA00E737F3 /* CinderSketchComplex.mm in Sources */,
+				A82C4F3118B6E2D900B9BAF4 /* LineLayout.cpp in Sources */,
 				A88E5B81188445CA00E737F3 /* Handler.cpp in Sources */,
 				A8213FBD18B0517300EAE901 /* FontMatrix.cpp in Sources */,
 				A88E5B68188445CA00E737F3 /* FileSystem.cpp in Sources */,

@@ -29,6 +29,7 @@
 		A8213FDF18B0556500EAE901 /* scrptrun.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A8213FD118B0556500EAE901 /* scrptrun.cpp */; };
 		A8213FE018B0556500EAE901 /* TextItemizer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A8213FD318B0556500EAE901 /* TextItemizer.cpp */; };
 		A8213FE118B0556500EAE901 /* VirtualFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A8213FD718B0556500EAE901 /* VirtualFont.cpp */; };
+		A82C4F2F18B6E14A00B9BAF4 /* LineLayout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A82C4F2E18B6E14A00B9BAF4 /* LineLayout.cpp */; };
 		A8363B9418876C5A0015C5FF /* Fonts.xml in Resources */ = {isa = PBXBuildFile; fileRef = A8363B9318876C5A0015C5FF /* Fonts.xml */; };
 		A88E59CE18842D0D00E737F3 /* CinderApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A88E590318842D0D00E737F3 /* CinderApp.cpp */; };
 		A88E59CF18842D0D00E737F3 /* CinderSketchSimple.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A88E590718842D0D00E737F3 /* CinderSketchSimple.cpp */; };
@@ -94,6 +95,7 @@
 		A8213FD718B0556500EAE901 /* VirtualFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VirtualFont.cpp; sourceTree = "<group>"; };
 		A8213FD818B0556500EAE901 /* VirtualFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VirtualFont.h; sourceTree = "<group>"; };
 		A821400518B2D2BA00EAE901 /* GlyphQuad.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GlyphQuad.h; sourceTree = "<group>"; };
+		A82C4F2E18B6E14A00B9BAF4 /* LineLayout.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LineLayout.cpp; sourceTree = "<group>"; };
 		A8363B9318876C5A0015C5FF /* Fonts.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = Fonts.xml; path = ../resources/Fonts.xml; sourceTree = "<group>"; };
 		A865B99F18B4E99D00AF0174 /* GlyphBatch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GlyphBatch.h; sourceTree = "<group>"; };
 		A865B9A018B507B300AF0174 /* GlyphBatchMap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GlyphBatchMap.h; sourceTree = "<group>"; };
@@ -286,6 +288,7 @@
 				A8213FCC18B0556500EAE901 /* LayoutCache.cpp */,
 				A8213FCD18B0556500EAE901 /* LayoutCache.h */,
 				A8213FCE18B0556500EAE901 /* LineLayout.h */,
+				A82C4F2E18B6E14A00B9BAF4 /* LineLayout.cpp */,
 				A8213FCF18B0556500EAE901 /* ReloadableTexture.cpp */,
 				A8213FD018B0556500EAE901 /* ReloadableTexture.h */,
 				A8213FD118B0556500EAE901 /* scrptrun.cpp */,
@@ -439,6 +442,7 @@
 				A8213FAF18B0503B00EAE901 /* FontSequence.cpp in Sources */,
 				A8213FDD18B0556500EAE901 /* LayoutCache.cpp in Sources */,
 				A88E59CE18842D0D00E737F3 /* CinderApp.cpp in Sources */,
+				A82C4F2F18B6E14A00B9BAF4 /* LineLayout.cpp in Sources */,
 				A8213FD918B0556500EAE901 /* ActualFont.cpp in Sources */,
 				A88E5A151884389F00E737F3 /* Sketch.cpp in Sources */,
 				A8213FAD18B0503B00EAE901 /* Font.cpp in Sources */,
