@@ -13,6 +13,7 @@
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		28FD15000DC6FC520079059D /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28FD14FF0DC6FC520079059D /* OpenGLES.framework */; };
 		28FD15080DC6FC5B0079059D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28FD15070DC6FC5B0079059D /* QuartzCore.framework */; };
+		A801BAC718BBA299003EAB35 /* FontTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A801BAC518BBA299003EAB35 /* FontTexture.cpp */; };
 		A8213FBD18B0517300EAE901 /* FontMatrix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A8213FB218B0517300EAE901 /* FontMatrix.cpp */; };
 		A8213FBE18B0517300EAE901 /* Font.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A8213FB518B0517300EAE901 /* Font.cpp */; };
 		A8213FBF18B0517300EAE901 /* FontManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A8213FB718B0517300EAE901 /* FontManager.cpp */; };
@@ -22,7 +23,6 @@
 		A8213FF918B0CFA000EAE901 /* FontManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A8213FE518B0CFA000EAE901 /* FontManager.cpp */; };
 		A8213FFA18B0CFA000EAE901 /* LangHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A8213FE918B0CFA000EAE901 /* LangHelper.cpp */; };
 		A8213FFB18B0CFA000EAE901 /* LayoutCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A8213FEB18B0CFA000EAE901 /* LayoutCache.cpp */; };
-		A8213FFC18B0CFA000EAE901 /* ReloadableTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A8213FEE18B0CFA000EAE901 /* ReloadableTexture.cpp */; };
 		A8213FFD18B0CFA000EAE901 /* scrptrun.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A8213FF018B0CFA000EAE901 /* scrptrun.cpp */; };
 		A8213FFE18B0CFA000EAE901 /* TextItemizer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A8213FF218B0CFA000EAE901 /* TextItemizer.cpp */; };
 		A8213FFF18B0CFA000EAE901 /* VirtualFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A8213FF618B0CFA000EAE901 /* VirtualFont.cpp */; };
@@ -66,6 +66,8 @@
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		28FD14FF0DC6FC520079059D /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		28FD15070DC6FC5B0079059D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		A801BAC518BBA299003EAB35 /* FontTexture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FontTexture.cpp; sourceTree = "<group>"; };
+		A801BAC618BBA299003EAB35 /* FontTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FontTexture.h; sourceTree = "<group>"; };
 		A8213FB218B0517300EAE901 /* FontMatrix.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FontMatrix.cpp; sourceTree = "<group>"; };
 		A8213FB318B0517300EAE901 /* FontMatrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FontMatrix.h; sourceTree = "<group>"; };
 		A8213FB518B0517300EAE901 /* Font.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Font.cpp; sourceTree = "<group>"; };
@@ -87,8 +89,6 @@
 		A8213FEB18B0CFA000EAE901 /* LayoutCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LayoutCache.cpp; sourceTree = "<group>"; };
 		A8213FEC18B0CFA000EAE901 /* LayoutCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LayoutCache.h; sourceTree = "<group>"; };
 		A8213FED18B0CFA000EAE901 /* LineLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LineLayout.h; sourceTree = "<group>"; };
-		A8213FEE18B0CFA000EAE901 /* ReloadableTexture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ReloadableTexture.cpp; sourceTree = "<group>"; };
-		A8213FEF18B0CFA000EAE901 /* ReloadableTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReloadableTexture.h; sourceTree = "<group>"; };
 		A8213FF018B0CFA000EAE901 /* scrptrun.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = scrptrun.cpp; sourceTree = "<group>"; };
 		A8213FF118B0CFA000EAE901 /* scrptrun.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = scrptrun.h; sourceTree = "<group>"; };
 		A8213FF218B0CFA000EAE901 /* TextItemizer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TextItemizer.cpp; sourceTree = "<group>"; };
@@ -278,8 +278,6 @@
 				A8213FEC18B0CFA000EAE901 /* LayoutCache.h */,
 				A8213FED18B0CFA000EAE901 /* LineLayout.h */,
 				A82C4F3018B6E2D900B9BAF4 /* LineLayout.cpp */,
-				A8213FEE18B0CFA000EAE901 /* ReloadableTexture.cpp */,
-				A8213FEF18B0CFA000EAE901 /* ReloadableTexture.h */,
 				A8213FF018B0CFA000EAE901 /* scrptrun.cpp */,
 				A8213FF118B0CFA000EAE901 /* scrptrun.h */,
 				A8213FF218B0CFA000EAE901 /* TextItemizer.cpp */,
@@ -290,6 +288,8 @@
 				A8213FF718B0CFA000EAE901 /* VirtualFont.h */,
 				A82C4E5918B6580100B9BAF4 /* FontSequence.h */,
 				A82C4E5718B6580100B9BAF4 /* FontSequence.cpp */,
+				A801BAC618BBA299003EAB35 /* FontTexture.h */,
+				A801BAC518BBA299003EAB35 /* FontTexture.cpp */,
 			);
 			path = zf;
 			sourceTree = "<group>";
@@ -486,12 +486,12 @@
 				A88E5B63188445CA00E737F3 /* CinderApp.cpp in Sources */,
 				A88E5BAE188448B000E737F3 /* AppDelegate.mm in Sources */,
 				A8213FF818B0CFA000EAE901 /* ActualFont.cpp in Sources */,
-				A8213FFC18B0CFA000EAE901 /* ReloadableTexture.cpp in Sources */,
 				A8213FBE18B0517300EAE901 /* Font.cpp in Sources */,
 				A8213FFD18B0CFA000EAE901 /* scrptrun.cpp in Sources */,
 				A88E5B7D188445CA00E737F3 /* CinderSketchComplex.mm in Sources */,
 				A82C4F3118B6E2D900B9BAF4 /* LineLayout.cpp in Sources */,
 				A88E5B81188445CA00E737F3 /* Handler.cpp in Sources */,
+				A801BAC718BBA299003EAB35 /* FontTexture.cpp in Sources */,
 				A8213FBD18B0517300EAE901 /* FontMatrix.cpp in Sources */,
 				A88E5B68188445CA00E737F3 /* FileSystem.cpp in Sources */,
 				A8213FC118B0517300EAE901 /* TextHelper.cpp in Sources */,
