@@ -34,8 +34,12 @@
     <Set lang="hi">
         <Ref uri="file:///Library/Fonts/Devanagari Sangam MN.ttc" />
     </Set>
-    <!-- Chinese (Simplified, Traditional) -->
-    <Set lang="zh-cn:zh-hk:zh-sg:zh-mo:zh-tw">
+    <!-- Chinese (Simplified) -->
+    <Set lang="zh-cn:zh-sg">
+        <Ref uri="file:///System/Library/Fonts/STHeiti Medium.ttc" />
+    </Set>
+    <!-- Chinese (Traditional) -->
+    <Set lang="zh-hk:zh-mo:zh-tw">
         <Ref uri="file:///System/Library/Fonts/STHeiti Medium.ttc" />
     </Set>
 </VirtualFont>
