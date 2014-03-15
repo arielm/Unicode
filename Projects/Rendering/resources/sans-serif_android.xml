@@ -49,8 +49,12 @@
         <Ref uri="file:///system/fonts/DroidSansDevanagari-Regular.ttf" />
         <Ref uri="file:///system/fonts/DroidSansFallback.ttf" />
     </Set>
-    <!-- Chinese (Simplified, Traditional) -->
-    <Set lang="zh-cn:zh-hk:zh-sg:zh-mo:zh-tw">
-        <Ref uri="file:///system/fonts/DroidSansFallback.ttf" />
+    <!-- Chinese (Simplified) -->
+    <Set lang="zh-cn:zh-sg">
+        <Ref uri="assets://fonts/DroidSansFallback.ttf" />
+    </Set>
+    <!-- Chinese (Traditional) -->
+    <Set lang="zh-hk:zh-mo:zh-tw">
+        <Ref uri="assets://fonts/DroidSansFallback.ttf" />
     </Set>
 </VirtualFont>

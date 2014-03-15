@@ -93,6 +93,11 @@
  *     - ALIASES DEFINED IN FontConfig/Aliases, E.G.
  *       - "Arial" FOR "sans-serif"
  *       - "Times" FOR "serif"
+ *
+ * 15) DEVELOPMENT HAS MOVED TO THE new-chronotext-toolkit REPOSITORY (CURRENTLY IN SYNC WITH THE develop BRANCH):
+ *     - NUMEROUS TWEAKS, BUT IN ESSENCE:
+ *       - API UNIFICATION WITH THE XFont SYSTEM
+ *       - POSSIBILITY TO DO BATCH-RENDERING
  */
 
 /*
@@ -105,55 +110,24 @@
  * - PRESS X TO PRINT TEXTURE MEMORY USAGE
  */
 
-/*
- * TODO:
- *
- * 0) InputSource: "internal" PROTOCOL:
- *    - TO BE USED FOR "LOADING FONTS COPIED FROM ASSETS" ON ANDROID
- *    - FIND-OUT HOW TO COPY FROM ASSETS TO "INTERNAL FOLDER" ON ANDROID
- *
- * 0) ADVANCED GLYPH RENDERING:
- *    - BATCHING ("TEXTURE BUCKET"):
- *      - USING A MAP, WITH AN ENTRY FOR EACH TEXTURE:
- *        - EACH ENTRY CONTAINING A VECTOR OF FLOATS FILLED-WITH:
- *          - INDICES
- *          - INTERLEAVED POSITIONS, TEXTURE-COORDS AND COLORS
- *    - TRANSFORMING VERTICES VIA FontMatrix LIKE IN XFont
- *    - "BEGIN / END" MODES:
- *      - "DIRECT"
- *      - "TEXTURE BUCKET"
- *
- * 0) TEXTURE-ATLASES:
- *    - SIMILAR TO THE SYSTEM USED IN XFont, BUT WITH N TEXTURES
- *    - WE NEED A SYSTEM FOR USERS TO DEFINE WHICH GLYPHS ARE CACHED
- *      - BECAUSE OF MIPMAPPING, WE CAN'T ADD GLYPHS ON-THE-FLY
- *      - THERE SHOULD BE A WAY TO ADD/REMOVE GROUPS OF GLYPHS, E.G. PER LANGUAGE
- *
- * 0) FontManager:
- *    - WE NEED A KIND OF "GLOBAL TEXTURE STORE" FOR STANDALONE-TEXTURES AND ATLASES:
- *      - LRU STRATEGY FOR STANDALONE-TEXTURES?
- *      - AUTOMATIC REMOVAL OF STANDALONE-TEXTURE WHENEVER AN ATLAS IS STORING THE ASSOCIATED GLYPH'S TEXTURE
- */
-
 #pragma once
 
 #include "chronotext/cinder/CinderSketch.h"
-
-#include "FontManager.h"
+#include "chronotext/font/zf/FontManager.h"
 
 #include "cinder/Rand.h"
 
 class Sketch : public chr::CinderSketch
 {
 public:
-    FontManager fontManager;
+    chr::zf::FontManager fontManager;
     
     std::vector<std::string> sentences;
     ci::Rand rnd;
     std::vector<std::string> lines;
 
     float fontSize;
-    VirtualFont::Alignment align;
+    chr::ZFont::Alignment align;
     bool oscillate;
     
     Sketch(void *context, void *delegate = NULL);
@@ -162,7 +136,7 @@ public:
     void update();
     void draw();
 
-    void drawTextLine(VirtualFont &font, const std::string &text, float y, float left, float right);
+    void drawTextLine(chr::ZFont &font, const std::string &text, float y, float left, float right);
     static void drawHLines(int count, float top, float spacing);
     static void drawHLine(float y);
     

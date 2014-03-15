@@ -34,11 +34,11 @@
         <Ref uri="file:///System/Library/Fonts/Cache/DevanagariSangamMN.ttc" />
     </Set>
     <!-- Chinese (Simplified) -->
-    <Set lang="zh-cn:zh-hk:zh-sg">
+    <Set lang="zh-cn:zh-sg">
         <Ref uri="file:///System/Library/Fonts/Cache/STHeiti-Medium.ttc" />
     </Set>
     <!-- Chinese (Traditional) -->
-    <Set lang="zh-mo:zh-tw">
+    <Set lang="zh-hk:zh-mo:zh-tw">
         <Ref uri="file:///System/Library/Fonts/Cache/STHeiti-Medium.ttc" />
     </Set>
 </VirtualFont>

@@ -16,6 +16,7 @@
 using namespace std;
 using namespace ci;
 using namespace chr;
+using namespace zf;
 
 const float LINE_TOP = 66;
 const float LINE_SPACING = 66;
@@ -61,7 +62,7 @@ void Sketch::setup(bool renewContext)
         shuffleLines();
         
         fontSize = 27;
-        align = VirtualFont::ALIGN_BASELINE;
+        align = ZFont::ALIGN_BASELINE;
         oscillate = true; // TOGGLE BY PRESSING SPACE ON THE DESKTOP
     }
     
@@ -100,17 +101,17 @@ void Sketch::draw()
         auto font = fontManager.getCachedFont("sans-serif"); // CAN THROW
         
         font->setSize(fontSize);
-        font->setColor(ColorA(1, 1, 1, 0.75f));
+        font->setColor(1, 1, 1, 0.75f);
         
-        font->begin();
-        
+        font->beginSequence();
+
         for (auto &line : lines)
         {
             drawTextLine(*font, line, y, left, right);
             y += LINE_SPACING;
         }
         
-        font->end();
+        font->endSequence();
     }
     catch (exception &e)
     {
@@ -118,17 +119,17 @@ void Sketch::draw()
     }
 }
 
-void Sketch::drawTextLine(VirtualFont &font, const string &text, float y, float left, float right)
+void Sketch::drawTextLine(ZFont &font, const string &text, float y, float left, float right)
 {
     auto layout = font.getCachedLineLayout(text);
     
     float x = (layout->overallDirection == HB_DIRECTION_RTL) ? (right - font.getAdvance(*layout)) : left;
-    Vec2f position(x, y + font.getOffsetY(*layout, align));
+    y += font.getOffsetY(*layout, align);
 
     for (auto &cluster : layout->clusters)
     {
-        font.drawCluster(cluster, position);
-        position.x += font.getAdvance(cluster);
+        font.addCluster(cluster, x, y);
+        x += font.getAdvance(cluster);
     }
 }
 
