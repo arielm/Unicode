@@ -31,6 +31,9 @@
 		A8213FE118B0556500EAE901 /* VirtualFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A8213FD718B0556500EAE901 /* VirtualFont.cpp */; };
 		A82C4F2F18B6E14A00B9BAF4 /* LineLayout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A82C4F2E18B6E14A00B9BAF4 /* LineLayout.cpp */; };
 		A8363B9418876C5A0015C5FF /* Fonts.xml in Resources */ = {isa = PBXBuildFile; fileRef = A8363B9318876C5A0015C5FF /* Fonts.xml */; };
+		A87D20AA18E456AA005BB293 /* Clock.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A87D20A218E456AA005BB293 /* Clock.cpp */; };
+		A87D20AB18E456AA005BB293 /* FrameClock.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A87D20A518E456AA005BB293 /* FrameClock.cpp */; };
+		A87D20AC18E456AA005BB293 /* MasterClock.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A87D20A718E456AA005BB293 /* MasterClock.cpp */; };
 		A88E59CE18842D0D00E737F3 /* CinderApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A88E590318842D0D00E737F3 /* CinderApp.cpp */; };
 		A88E59CF18842D0D00E737F3 /* CinderSketchSimple.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A88E590718842D0D00E737F3 /* CinderSketchSimple.cpp */; };
 		A88E59D318842D0D00E737F3 /* FileSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A88E591118842D0D00E737F3 /* FileSystem.cpp */; };
@@ -99,6 +102,14 @@
 		A8363B9318876C5A0015C5FF /* Fonts.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = Fonts.xml; path = ../resources/Fonts.xml; sourceTree = "<group>"; };
 		A865B99F18B4E99D00AF0174 /* GlyphBatch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GlyphBatch.h; sourceTree = "<group>"; };
 		A865B9A018B507B300AF0174 /* GlyphBatchMap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GlyphBatchMap.h; sourceTree = "<group>"; };
+		A87D20A218E456AA005BB293 /* Clock.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Clock.cpp; sourceTree = "<group>"; };
+		A87D20A318E456AA005BB293 /* Clock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Clock.h; sourceTree = "<group>"; };
+		A87D20A418E456AA005BB293 /* DefaultTimeBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DefaultTimeBase.h; sourceTree = "<group>"; };
+		A87D20A518E456AA005BB293 /* FrameClock.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FrameClock.cpp; sourceTree = "<group>"; };
+		A87D20A618E456AA005BB293 /* FrameClock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FrameClock.h; sourceTree = "<group>"; };
+		A87D20A718E456AA005BB293 /* MasterClock.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MasterClock.cpp; sourceTree = "<group>"; };
+		A87D20A818E456AA005BB293 /* MasterClock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MasterClock.h; sourceTree = "<group>"; };
+		A87D20A918E456AA005BB293 /* TimeBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimeBase.h; sourceTree = "<group>"; };
 		A88E590318842D0D00E737F3 /* CinderApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CinderApp.cpp; sourceTree = "<group>"; };
 		A88E590418842D0D00E737F3 /* CinderApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CinderApp.h; sourceTree = "<group>"; };
 		A88E590518842D0D00E737F3 /* CinderSketch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CinderSketch.h; sourceTree = "<group>"; };
@@ -305,6 +316,21 @@
 			path = zf;
 			sourceTree = "<group>";
 		};
+		A87D20A118E456AA005BB293 /* time */ = {
+			isa = PBXGroup;
+			children = (
+				A87D20A218E456AA005BB293 /* Clock.cpp */,
+				A87D20A318E456AA005BB293 /* Clock.h */,
+				A87D20A418E456AA005BB293 /* DefaultTimeBase.h */,
+				A87D20A518E456AA005BB293 /* FrameClock.cpp */,
+				A87D20A618E456AA005BB293 /* FrameClock.h */,
+				A87D20A718E456AA005BB293 /* MasterClock.cpp */,
+				A87D20A818E456AA005BB293 /* MasterClock.h */,
+				A87D20A918E456AA005BB293 /* TimeBase.h */,
+			);
+			path = time;
+			sourceTree = "<group>";
+		};
 		A88E58F318842D0D00E737F3 /* chronotext */ = {
 			isa = PBXGroup;
 			children = (
@@ -315,6 +341,7 @@
 				A88E590218842D0D00E737F3 /* cinder */,
 				A8213FA018B0503B00EAE901 /* font */,
 				A88E594D18842D0D00E737F3 /* os */,
+				A87D20A118E456AA005BB293 /* time */,
 				A88E599518842D0D00E737F3 /* utils */,
 			);
 			name = chronotext;
@@ -447,12 +474,15 @@
 				A8213FAD18B0503B00EAE901 /* Font.cpp in Sources */,
 				A88E59D318842D0D00E737F3 /* FileSystem.cpp in Sources */,
 				A88E5A0818842D0D00E737F3 /* Utils.cpp in Sources */,
+				A87D20AB18E456AA005BB293 /* FrameClock.cpp in Sources */,
+				A87D20AC18E456AA005BB293 /* MasterClock.cpp in Sources */,
 				A88E59E618842D0D00E737F3 /* InputSource.cpp in Sources */,
 				A88E59ED18842D0D00E737F3 /* SuperHandler.cpp in Sources */,
 				A8213FAC18B0503B00EAE901 /* FontMatrix.cpp in Sources */,
 				A88E5A0618842D0D00E737F3 /* GLUtils.cpp in Sources */,
 				A8213FE018B0556500EAE901 /* TextItemizer.cpp in Sources */,
 				A801BAC418BBA247003EAB35 /* FontTexture.cpp in Sources */,
+				A87D20AA18E456AA005BB293 /* Clock.cpp in Sources */,
 				A8213FE118B0556500EAE901 /* VirtualFont.cpp in Sources */,
 				A88E5A0718842D0D00E737F3 /* MathUtils.cpp in Sources */,
 				A8213FDF18B0556500EAE901 /* scrptrun.cpp in Sources */,
