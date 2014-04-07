@@ -15,10 +15,6 @@
 		28FD15080DC6FC5B0079059D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28FD15070DC6FC5B0079059D /* QuartzCore.framework */; };
 		A801BAC718BBA299003EAB35 /* FontTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A801BAC518BBA299003EAB35 /* FontTexture.cpp */; };
 		A8213FBD18B0517300EAE901 /* FontMatrix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A8213FB218B0517300EAE901 /* FontMatrix.cpp */; };
-		A8213FBE18B0517300EAE901 /* Font.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A8213FB518B0517300EAE901 /* Font.cpp */; };
-		A8213FBF18B0517300EAE901 /* FontManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A8213FB718B0517300EAE901 /* FontManager.cpp */; };
-		A8213FC018B0517300EAE901 /* FontSequence.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A8213FB918B0517300EAE901 /* FontSequence.cpp */; };
-		A8213FC118B0517300EAE901 /* TextHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A8213FBB18B0517300EAE901 /* TextHelper.cpp */; };
 		A8213FF818B0CFA000EAE901 /* ActualFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A8213FE318B0CFA000EAE901 /* ActualFont.cpp */; };
 		A8213FF918B0CFA000EAE901 /* FontManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A8213FE518B0CFA000EAE901 /* FontManager.cpp */; };
 		A8213FFA18B0CFA000EAE901 /* LangHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A8213FE918B0CFA000EAE901 /* LangHelper.cpp */; };
@@ -74,14 +70,6 @@
 		A801BAC618BBA299003EAB35 /* FontTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FontTexture.h; sourceTree = "<group>"; };
 		A8213FB218B0517300EAE901 /* FontMatrix.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FontMatrix.cpp; sourceTree = "<group>"; };
 		A8213FB318B0517300EAE901 /* FontMatrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FontMatrix.h; sourceTree = "<group>"; };
-		A8213FB518B0517300EAE901 /* Font.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Font.cpp; sourceTree = "<group>"; };
-		A8213FB618B0517300EAE901 /* Font.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Font.h; sourceTree = "<group>"; };
-		A8213FB718B0517300EAE901 /* FontManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FontManager.cpp; sourceTree = "<group>"; };
-		A8213FB818B0517300EAE901 /* FontManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FontManager.h; sourceTree = "<group>"; };
-		A8213FB918B0517300EAE901 /* FontSequence.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FontSequence.cpp; sourceTree = "<group>"; };
-		A8213FBA18B0517300EAE901 /* FontSequence.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FontSequence.h; sourceTree = "<group>"; };
-		A8213FBB18B0517300EAE901 /* TextHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TextHelper.cpp; sourceTree = "<group>"; };
-		A8213FBC18B0517300EAE901 /* TextHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextHelper.h; sourceTree = "<group>"; };
 		A8213FE318B0CFA000EAE901 /* ActualFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ActualFont.cpp; sourceTree = "<group>"; };
 		A8213FE418B0CFA000EAE901 /* ActualFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActualFont.h; sourceTree = "<group>"; };
 		A8213FE518B0CFA000EAE901 /* FontManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FontManager.cpp; sourceTree = "<group>"; };
@@ -255,25 +243,9 @@
 				A82C4E5618B657F200B9BAF4 /* GlyphBatch.h */,
 				A8213FB318B0517300EAE901 /* FontMatrix.h */,
 				A8213FB218B0517300EAE901 /* FontMatrix.cpp */,
-				A8213FB418B0517300EAE901 /* xf */,
 				A8213FE218B0CFA000EAE901 /* zf */,
 			);
 			path = font;
-			sourceTree = "<group>";
-		};
-		A8213FB418B0517300EAE901 /* xf */ = {
-			isa = PBXGroup;
-			children = (
-				A8213FB518B0517300EAE901 /* Font.cpp */,
-				A8213FB618B0517300EAE901 /* Font.h */,
-				A8213FB718B0517300EAE901 /* FontManager.cpp */,
-				A8213FB818B0517300EAE901 /* FontManager.h */,
-				A8213FB918B0517300EAE901 /* FontSequence.cpp */,
-				A8213FBA18B0517300EAE901 /* FontSequence.h */,
-				A8213FBB18B0517300EAE901 /* TextHelper.cpp */,
-				A8213FBC18B0517300EAE901 /* TextHelper.h */,
-			);
-			path = xf;
 			sourceTree = "<group>";
 		};
 		A8213FE218B0CFA000EAE901 /* zf */ = {
@@ -516,9 +488,7 @@
 			files = (
 				A88E5BAA1884464B00E737F3 /* Sketch.cpp in Sources */,
 				A8213FFE18B0CFA000EAE901 /* TextItemizer.cpp in Sources */,
-				A8213FC018B0517300EAE901 /* FontSequence.cpp in Sources */,
 				A88E5B7B188445CA00E737F3 /* InputSource.cpp in Sources */,
-				A8213FBF18B0517300EAE901 /* FontManager.cpp in Sources */,
 				A8213FFB18B0CFA000EAE901 /* LayoutCache.cpp in Sources */,
 				A8213FFF18B0CFA000EAE901 /* VirtualFont.cpp in Sources */,
 				A88E5B9C188445CA00E737F3 /* MathUtils.cpp in Sources */,
@@ -527,7 +497,6 @@
 				A87D209418E455FE005BB293 /* SystemInfoImplCocoaTouch.mm in Sources */,
 				A88E5BAE188448B000E737F3 /* AppDelegate.mm in Sources */,
 				A8213FF818B0CFA000EAE901 /* ActualFont.cpp in Sources */,
-				A8213FBE18B0517300EAE901 /* Font.cpp in Sources */,
 				A8213FFD18B0CFA000EAE901 /* scrptrun.cpp in Sources */,
 				A88E5B7D188445CA00E737F3 /* CinderSketchComplex.mm in Sources */,
 				A82C4F3118B6E2D900B9BAF4 /* LineLayout.cpp in Sources */,
@@ -535,7 +504,6 @@
 				A801BAC718BBA299003EAB35 /* FontTexture.cpp in Sources */,
 				A8213FBD18B0517300EAE901 /* FontMatrix.cpp in Sources */,
 				A88E5B68188445CA00E737F3 /* FileSystem.cpp in Sources */,
-				A8213FC118B0517300EAE901 /* TextHelper.cpp in Sources */,
 				A87D209F18E45608005BB293 /* FrameClock.cpp in Sources */,
 				A88E5B9B188445CA00E737F3 /* GLUtils.cpp in Sources */,
 				A82C4E5A18B6580100B9BAF4 /* FontSequence.cpp in Sources */,

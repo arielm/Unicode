@@ -106,7 +106,6 @@
  * - PRESS SPACE TO TOGGLE SIZE OSCILLATION
  * - PRESS T, M OR P TO SWITCH BETWEEN TOP, MIDDLE OR BOTTOM ALIGNMENTS
  * - PRESS U TO CALL FontManager::unload()
- * - PRESS K TO CALL FontManager::unload("sans-serif")
  * - PRESS X TO PRINT TEXTURE MEMORY USAGE
  */
 
@@ -133,6 +132,7 @@ public:
     Sketch(void *context, void *delegate = NULL);
     
     void setup(bool renewContext);
+    void event(int id);
     void update();
     void draw();
 

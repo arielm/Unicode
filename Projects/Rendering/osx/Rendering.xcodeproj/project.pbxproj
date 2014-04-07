@@ -18,10 +18,6 @@
 		A801BAC418BBA247003EAB35 /* FontTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A801BAC218BBA247003EAB35 /* FontTexture.cpp */; };
 		A809523B16F360660011FAA3 /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = A809523A16F360660011FAA3 /* icon.icns */; };
 		A8213FAC18B0503B00EAE901 /* FontMatrix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A8213FA118B0503B00EAE901 /* FontMatrix.cpp */; };
-		A8213FAD18B0503B00EAE901 /* Font.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A8213FA418B0503B00EAE901 /* Font.cpp */; };
-		A8213FAE18B0503B00EAE901 /* FontManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A8213FA618B0503B00EAE901 /* FontManager.cpp */; };
-		A8213FAF18B0503B00EAE901 /* FontSequence.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A8213FA818B0503B00EAE901 /* FontSequence.cpp */; };
-		A8213FB018B0503B00EAE901 /* TextHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A8213FAA18B0503B00EAE901 /* TextHelper.cpp */; };
 		A8213FD918B0556500EAE901 /* ActualFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A8213FC318B0556500EAE901 /* ActualFont.cpp */; };
 		A8213FDA18B0556500EAE901 /* FontManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A8213FC518B0556500EAE901 /* FontManager.cpp */; };
 		A8213FDC18B0556500EAE901 /* LangHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A8213FCA18B0556500EAE901 /* LangHelper.cpp */; };
@@ -70,14 +66,6 @@
 		A809523A16F360660011FAA3 /* icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = icon.icns; sourceTree = "<group>"; };
 		A8213FA118B0503B00EAE901 /* FontMatrix.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FontMatrix.cpp; sourceTree = "<group>"; };
 		A8213FA218B0503B00EAE901 /* FontMatrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FontMatrix.h; sourceTree = "<group>"; };
-		A8213FA418B0503B00EAE901 /* Font.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Font.cpp; sourceTree = "<group>"; };
-		A8213FA518B0503B00EAE901 /* Font.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Font.h; sourceTree = "<group>"; };
-		A8213FA618B0503B00EAE901 /* FontManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FontManager.cpp; sourceTree = "<group>"; };
-		A8213FA718B0503B00EAE901 /* FontManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FontManager.h; sourceTree = "<group>"; };
-		A8213FA818B0503B00EAE901 /* FontSequence.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FontSequence.cpp; sourceTree = "<group>"; };
-		A8213FA918B0503B00EAE901 /* FontSequence.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FontSequence.h; sourceTree = "<group>"; };
-		A8213FAA18B0503B00EAE901 /* TextHelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TextHelper.cpp; sourceTree = "<group>"; };
-		A8213FAB18B0503B00EAE901 /* TextHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextHelper.h; sourceTree = "<group>"; };
 		A8213FC318B0556500EAE901 /* ActualFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ActualFont.cpp; sourceTree = "<group>"; };
 		A8213FC418B0556500EAE901 /* ActualFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActualFont.h; sourceTree = "<group>"; };
 		A8213FC518B0556500EAE901 /* FontManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FontManager.cpp; sourceTree = "<group>"; };
@@ -263,25 +251,9 @@
 				A865B99F18B4E99D00AF0174 /* GlyphBatch.h */,
 				A8213FA218B0503B00EAE901 /* FontMatrix.h */,
 				A8213FA118B0503B00EAE901 /* FontMatrix.cpp */,
-				A8213FA318B0503B00EAE901 /* xf */,
 				A8213FC218B0556500EAE901 /* zf */,
 			);
 			path = font;
-			sourceTree = "<group>";
-		};
-		A8213FA318B0503B00EAE901 /* xf */ = {
-			isa = PBXGroup;
-			children = (
-				A8213FA518B0503B00EAE901 /* Font.h */,
-				A8213FA418B0503B00EAE901 /* Font.cpp */,
-				A8213FA718B0503B00EAE901 /* FontManager.h */,
-				A8213FA618B0503B00EAE901 /* FontManager.cpp */,
-				A8213FA918B0503B00EAE901 /* FontSequence.h */,
-				A8213FA818B0503B00EAE901 /* FontSequence.cpp */,
-				A8213FAB18B0503B00EAE901 /* TextHelper.h */,
-				A8213FAA18B0503B00EAE901 /* TextHelper.cpp */,
-			);
-			path = xf;
 			sourceTree = "<group>";
 		};
 		A8213FC218B0556500EAE901 /* zf */ = {
@@ -465,13 +437,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				A88E5BB1188449B300E737F3 /* Application.cpp in Sources */,
-				A8213FAF18B0503B00EAE901 /* FontSequence.cpp in Sources */,
 				A8213FDD18B0556500EAE901 /* LayoutCache.cpp in Sources */,
 				A88E59CE18842D0D00E737F3 /* CinderApp.cpp in Sources */,
 				A82C4F2F18B6E14A00B9BAF4 /* LineLayout.cpp in Sources */,
 				A8213FD918B0556500EAE901 /* ActualFont.cpp in Sources */,
 				A88E5A151884389F00E737F3 /* Sketch.cpp in Sources */,
-				A8213FAD18B0503B00EAE901 /* Font.cpp in Sources */,
 				A88E59D318842D0D00E737F3 /* FileSystem.cpp in Sources */,
 				A88E5A0818842D0D00E737F3 /* Utils.cpp in Sources */,
 				A87D20AB18E456AA005BB293 /* FrameClock.cpp in Sources */,
@@ -488,9 +458,7 @@
 				A8213FDF18B0556500EAE901 /* scrptrun.cpp in Sources */,
 				A88E59CF18842D0D00E737F3 /* CinderSketchSimple.cpp in Sources */,
 				A8213FDA18B0556500EAE901 /* FontManager.cpp in Sources */,
-				A8213FAE18B0503B00EAE901 /* FontManager.cpp in Sources */,
 				A8213FDC18B0556500EAE901 /* LangHelper.cpp in Sources */,
-				A8213FB018B0503B00EAE901 /* TextHelper.cpp in Sources */,
 				A88E59EC18842D0D00E737F3 /* Handler.cpp in Sources */,
 				A8A4BB8C18B51F2A009BE68D /* FontSequence.cpp in Sources */,
 			);

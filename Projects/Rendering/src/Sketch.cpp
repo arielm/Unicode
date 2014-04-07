@@ -31,11 +31,7 @@ CinderSketch(context, delegate)
 
 void Sketch::setup(bool renewContext)
 {
-    if (renewContext)
-    {
-        fontManager.discardTextures(); // NECESSARY ON ANDROID (AFTER OPENGL CONTEXT-LOSS...)
-    }
-    else
+    if (!renewContext)
     {
         try
         {
@@ -66,11 +62,23 @@ void Sketch::setup(bool renewContext)
         oscillate = true; // TOGGLE BY PRESSING SPACE ON THE DESKTOP
     }
     
+    // ---
+    
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glEnable(GL_BLEND);
     
     glDisable(GL_DEPTH_TEST);
     glDepthMask(GL_FALSE);
+}
+
+void Sketch::event(int id)
+{
+    switch (id)
+    {
+        case EVENT_CONTEXT_LOST:
+            fontManager.discardTextures();
+            break;
+    }
 }
 
 void Sketch::update()
