@@ -109,6 +109,12 @@
  * - PRESS X TO PRINT TEXTURE MEMORY USAGE
  */
 
+/*
+ * ON iOS, WE'RE USING FONTS FROM THE "CACHE":
+ * - IT'S NOT WORKING IN THE SIMULATOR
+ * - IT PROBABLY WON'T PASS APP-STORE VALIDATION
+ */
+
 #pragma once
 
 #include "chronotext/cinder/CinderSketch.h"
