@@ -1,6 +1,14 @@
 The Unicode test suite for Cinder & C++11
 =========================================
 
+**Post mortem:** this project is no longer maintained.  
+
+The outcome has been integrated in the [new-chronotext-toolkit](https://github.com/arielm/new-chronotext-toolkit), under the *ZFont* (aka *VirtualFont*) denomination.  
+
+The 15 examples below still worth being visited. They provide valuable insights and allow to grasp the complexity and subtlety of international text rendering.
+
+---
+
 The goal is to provide building blocks for handling Unicode text rendering from the ground-up on OSX, iOS and Android (**Windows support should be trivial to add**, contributions are welcome...)  
 
 **Topics of interest**
@@ -66,7 +74,7 @@ The folder hierarchy should look like:
 2. Open the relevant XCode project (under `osx` or `ios`)
 
 Tested with OSX 10.7.5 and XCode 4.6.2.  
-Tested with OSX 10.5.8 and XCode 5.0.2.  
+Tested with OSX 10.8.5 and XCode 5.0.2.  
 
 **Running on Android**
 
